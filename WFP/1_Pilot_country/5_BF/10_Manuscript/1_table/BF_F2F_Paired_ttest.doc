@@ -1,0 +1,126 @@
+{\rtf1\ansi\deff0 {\fonttbl{\f0\fnil Garamond;}}
+{\info {\author .}{\company .}{\title .}}
+\deflang1033\plain\fs20
+{\footer\pard\qc\plain\f0\fs20\chpgn\par}
+{
+{\fs20\b\qc\line Paired t test : CARI_FES_Bad rCARI_Inc_Bad  }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx3080
+\fs20\pard\intbl\qr { }\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx4169
+\fs20\pard\intbl\qr {{ obs}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx5257
+\fs20\pard\intbl\qr {{ Mean1}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx6346
+\fs20\pard\intbl\qr {{ Mean2}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx7434
+\fs20\pard\intbl\qr {{ dif}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx8523
+\fs20\pard\intbl\qr {{ St Err}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx9611
+\fs20\pard\intbl\qr {{ t value}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx10700
+\fs20\pard\intbl\qr {{ p value}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx3080
+\fs20\pard\intbl\ql {{\b CARI FES Bad - rCARI Inc Bad}}\cell
+\cellx4169
+\qr {{1863.000}}\cell
+\cellx5257
+\qr {{0.886}}\cell
+\cellx6346
+\qr {{0.772}}\cell
+\cellx7434
+\qr {{0.114}}\cell
+\cellx8523
+\qr {{0.007}}\cell
+\cellx9611
+\qr {{15.050}}\cell
+\cellx10700
+\qr {{0.000}}\cell
+\row}
+
+
+{\trowd\trgaph108\trleft-108
+\cellx3080
+\fs20\pard\intbl\ql {{\b C FES 1 - rC Inc 1}}\cell
+\cellx4169
+\qr {{1863.000}}\cell
+\cellx5257
+\qr {{0.013}}\cell
+\cellx6346
+\qr {{0.050}}\cell
+\cellx7434
+\qr {{-0.037}}\cell
+\cellx8523
+\qr {{0.005}}\cell
+\cellx9611
+\qr {{-8.450}}\cell
+\cellx10700
+\qr {{0.000}}\cell
+\row}
+
+
+{\trowd\trgaph108\trleft-108
+\cellx3080
+\fs20\pard\intbl\ql {{\b C FES 2 - rC Inc 2}}\cell
+\cellx4169
+\qr {{1863.000}}\cell
+\cellx5257
+\qr {{0.102}}\cell
+\cellx6346
+\qr {{0.178}}\cell
+\cellx7434
+\qr {{-0.077}}\cell
+\cellx8523
+\qr {{0.009}}\cell
+\cellx9611
+\qr {{-8.550}}\cell
+\cellx10700
+\qr {{0.000}}\cell
+\row}
+
+
+{\trowd\trgaph108\trleft-108
+\cellx3080
+\fs20\pard\intbl\ql {{\b C FES 3 - rC Inc 3}}\cell
+\cellx4169
+\qr {{1863.000}}\cell
+\cellx5257
+\qr {{0.592}}\cell
+\cellx6346
+\qr {{0.678}}\cell
+\cellx7434
+\qr {{-0.086}}\cell
+\cellx8523
+\qr {{0.013}}\cell
+\cellx9611
+\qr {{-6.350}}\cell
+\cellx10700
+\qr {{0.000}}\cell
+\row}
+
+
+{\trowd\trgaph108\trleft-108
+\cellx3080
+\fs20\pard\intbl\ql {{\b C FES 4 - rC Inc 4}}\cell
+\cellx4169
+\qr {{1863.000}}\cell
+\cellx5257
+\qr {{0.294}}\cell
+\cellx6346
+\qr {{0.094}}\cell
+\cellx7434
+\qr {{0.201}}\cell
+\cellx8523
+\qr {{0.010}}\cell
+\cellx9611
+\qr {{19.800}}\cell
+\cellx10700
+\qr {{0.000}}\cell
+\row}
+
+
+\writepositionforappend
+}}

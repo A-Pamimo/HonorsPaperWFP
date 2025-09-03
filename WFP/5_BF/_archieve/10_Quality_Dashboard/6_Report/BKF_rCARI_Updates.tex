@@ -1,0 +1,201 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+
+\author{Nicole Wu}
+\date{\today}
+\title{CAR rCARI Validation Study Primary Results}
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+	
+	
+	% ------- 
+	\section{Survey Progress}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Sample Completion: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/CAR_rCARI_Completion} 
+				\label{tab:CAR_rCARI_Completion}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{figure}[H]
+		\caption{Data Collection Progress by Date and Modality}
+		\label{fig:CAR_rCARI_Progress_Day}
+		\begin{center}
+			\includegraphics[scale=.3]{2_figure/CAR_rCARI_Progress_Day.png}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\caption{F2F Data Collection Progress by Date and Enumerator}
+		\label{fig:CAR_rCARI_Progress_Enum_F2F_Date}
+		\begin{center}
+			\includegraphics[scale=.3]{2_figure/CAR_rCARI_Progress_Enum_F2F_Date.png}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\caption{Remote Data Collection Progress by Date and Enumerator}
+		\label{fig:CAR_rCARI_Progress_Enum_RM_Date}
+		\begin{center}
+			\includegraphics[scale=.3]{2_figure/CAR_rCARI_Progress_Enum_RM_Date.png}
+		\end{center}
+	\end{figure}
+	
+	\pagebreak
+	
+	% ------- 
+	\section{Randomization Quality}
+	
+	To assess the balance of the treatment (Remote) and control (F2F) groups, we examined various respondent and household characteristics, including basic demographics, income sources, and changes over time. This allowed us to evaluate whether the two groups were similar in terms of these factors, ensuring a fair comparison between the treatment and control conditions.
+	
+	\subsection{Modality Randomization}
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Modality Assignment: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/CAR_Demo_Modality_Balance} 
+				\label{tab:CAR_Demo_Modality_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	\subsection{F2F Length Randomization}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Length Assignment in F2F Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/CAR_Demo_F2F_Length_Balance} 
+				\label{tab:CAR_Demo_F2F_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	\subsection{Remote Length Randomization}
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Length Assignment in Remote Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/CAR_Demo_RM_Length_Balance} 
+				\label{tab:CAR_Demo_RM_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	% ------- 
+	\section{Primary Results}
+	\subsection{Impact of Survey Modality on Key Food Security Outcomes}
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/CAR_Outcome_Modality_Balance} 
+				\label{tab:CAR_Outcome_Modality_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Length in F2F Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/CAR_Outcome_F2F_Length_Balance} 
+				\label{tab:CAR_Outcome_F2F_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Length in Remote Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/CAR_Outcome_RM_Length_Balance} 
+				\label{tab:CAR_Outcome_RM_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	% ------- 
+	\section{Outlier Checks}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Outlier Check for FCS}
+				\scriptsize
+				\input{1_table/Summary_Stats_Outlier} 
+				\label{tab:Summary_Stats_Outlier}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+\end{document}
+

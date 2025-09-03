@@ -1,0 +1,426 @@
+Index,ADMIN1,ADMIN1Name,ADMIN3Name,ADMIN5Name,GENDER,AGE,hhname,MARITAL STATUS,EDU LEVEL,EDUCATION,HHSIZE,UNDER 15YRS,60YRS+,DISABILITY,Sample_Eligible,eligible,Modality_Type,Length_Type,Uid,STATUS
+1225,SIERRA,2,COLTA,COLUMBE,Female,71,Elena Yuquilema Anilema,Viudo,Primaria,8,2,1,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190700,FALSE
+1201,SIERRA,2,COLTA,COLUMBE,Male,62,Jorge Cristóbal Ríos Casco,Casado,Primaria,8,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190701,FALSE
+1491,SIERRA,2,COLTA,COLUMBE,Female,40,Cubi yucaylla Maria Transito,Casado,Primaria,6,4,2,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190702,FALSE
+1155,SIERRA,2,COLTA,COLUMBE,Female,42,María Natividad Pilamunga Caiza,Casado,Primaria,6,6,4,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190703,FALSE
+1023,SIERRA,2,COLTA,COLUMBE,Female,65,Dolores Soraida Ríos Veloz,Otro,Primaria,8,3,0,2,No,Selected,1,Face-to-Face,Long Form,ECU0190704,FALSE
+1701,SIERRA,2,COLTA,COLUMBE,Female,46,María Juana Atupaña Lema,Casado,Primaria,7,7,5,0,No,Selected,1,Face-to-Face,Long Form,ECU0190705,FALSE
+1024,SIERRA,2,COLTA,COLUMBE,Female,61,María Eliza Inguillay Mullo,Viudo,Primaria,9,2,0,1,No,Selected,1,Face-to-Face,Long Form,ECU0190706,FALSE
+1436,SIERRA,2,COLTA,COLUMBE,Female,49,Toctonaula María Rosalía,Casado,Primaria,8,6,3,0,No,Selected,1,Face-to-Face,Long Form,ECU0190707,FALSE
+1380,SIERRA,2,COLTA,COLUMBE,Male,44,Patricio Fernando Chacha Rios,Casado,Superior,21,7,4,4,No,Selected,1,Face-to-Face,Long Form,ECU0190708,FALSE
+1227,SIERRA,2,COLTA,COLUMBE,Female,62,María Mercedes Perez Yangol,Soltero,Primaria,8,3,1,2,Sí,Selected,1,Face-to-Face,Long Form,ECU0190709,FALSE
+1548,SIERRA,2,COLTA,COLUMBE,Female,31,María Carolina Quisphe Guaman,Casado,Primaria,8,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190710,FALSE
+1073,SIERRA,2,COLTA,COLUMBE,Male,59,Luis Eduardo Caiza Guanolema,Casado,Secundaria,11,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190711,FALSE
+1497,SIERRA,2,COLTA,COLUMBE,Female,77,Mercedes Quisphe Minagua,Viudo,Primaria,1,2,0,1,No,Selected,1,Face-to-Face,Long Form,ECU0190712,FALSE
+1333,SIERRA,2,COLTA,COLUMBE,Female,49,Laura María Yumbo Morocho,Soltero,Secundaria,12,2,0,1,No,Selected,1,Face-to-Face,Long Form,ECU0190713,FALSE
+1255,SIERRA,2,COLTA,COLUMBE,Female,37,Estela del Rocío Torres Yangol,Soltero,Secundaria,15,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190714,FALSE
+1444,SIERRA,2,Cotacachi,IMANTAG,Male,59,Manuel mesías Lita campos,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190715,FALSE
+1127,SIERRA,2,Cotacachi,IMANTAG,Female,28,Silvia Alexandra Guagalango Suárez,Casado,Primaria,5,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU0190716,FALSE
+1711,SIERRA,2,Cotacachi,IMANTAG,Female,72,Piñan Tambaco Digna Maria,Viudo,NSNC,0,2,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190717,FALSE
+1527,SIERRA,2,Cotacachi,IMANTAG,Male,63,José Manuel Ramos Orbes,Casado,Primaria,5,3,0,2,No,Selected,1,Face-to-Face,Long Form,ECU0190718,FALSE
+1373,SIERRA,2,Cotacachi,IMANTAG,Male,27,Diego Marcelo Inga Monrroy,Soltero,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190719,FALSE
+1479,SIERRA,2,Cotacachi,IMANTAG,Male,69,Maria Tránsito Chico Lopez,Casado,NSNC,0,6,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190720,FALSE
+1215,SIERRA,2,Cotacachi,IMANTAG,Female,19,@Gabriel Mishel Ruiz Orbe,Soltero,Secundaria,6,2,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190721,FALSE
+1537,SIERRA,2,Cotacachi,IMANTAG,Female,42,Maria Nicolasa Menacho,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190722,FALSE
+1430,SIERRA,2,Cotacachi,IMANTAG,Female,35,Aira Silvana Tambaco Inga,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190723,FALSE
+1220,SIERRA,2,Cotacachi,IMANTAG,Female,30,Jeanette Alexandra Liquinchano Campaña,Casado,Secundaria,5,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190724,FALSE
+1374,SIERRA,2,Cotacachi,IMANTAG,Female,60,Inga Monrroy María Dominga,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190725,FALSE
+1637,SIERRA,2,Cotacachi,IMANTAG,Male,42,Luis Alfonso Albacando Paucar,Casado,Primaria,6,5,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190726,FALSE
+1682,SIERRA,2,Cotacachi,IMANTAG,Female,39,María Isabel Chico,Casado,Secundaria,3,5,1,2,No,Selected,1,Face-to-Face,Long Form,ECU0190727,FALSE
+1633,SIERRA,2,Cotacachi,IMANTAG,Male,35,Luis Alberto piñan de la cruz,Unión Libre,Primaria,7,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190728,FALSE
+1678,SIERRA,2,Cotacachi,QUIROGA,Female,43,Maria Virginia guajan galapi,Soltero,NSNC,0,5,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190729,FALSE
+1028,SIERRA,2,Cotacachi,QUIROGA,Female,56,María piedad yanchaguano chasi,Casado,Superior,18,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190730,FALSE
+1640,SIERRA,2,Cotacachi,QUIROGA,Female,68,Carmen Hermelinda Proaño Gomez,Casado,Primaria,6,7,2,2,No,Selected,1,Face-to-Face,Long Form,ECU0190731,FALSE
+1585,SIERRA,2,Cotacachi,QUIROGA,Male,83,Carlos Alberto Ruiz Benavides,Casado,Primaria,4,2,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190732,FALSE
+1602,SIERRA,2,Cotacachi,QUIROGA,Female,37,María Lupe Peñaquishpe Flores,Soltero,Primaria,6,3,2,2,No,Selected,1,Face-to-Face,Long Form,ECU0190733,FALSE
+1403,SIERRA,2,Cotacachi,QUIROGA,Female,30,Ana del Rocío Inga Lima,Divorciado,Secundaria,9,4,2,1,No,Selected,1,Face-to-Face,Long Form,ECU0190734,FALSE
+1107,SIERRA,2,Cotacachi,QUIROGA,Male,63,Yarina Maite Morocho Perugachi,Casado,NSNC,0,3,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190735,FALSE
+1140,SIERRA,2,Cotacachi,QUIROGA,Female,63,María Francisca Morocho Jerez,Divorciado,Primaria,3,4,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU0190736,FALSE
+1476,SIERRA,2,Cotacachi,QUIROGA,Female,23,Nadia Liseth Quishpe Fuerez,Casado,Secundaria,12,4,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190737,FALSE
+1653,SIERRA,2,Cotacachi,QUIROGA,Female,22,Paulina Guitarra Caiza,Soltero,Secundaria,12,6,3,0,No,Selected,1,Face-to-Face,Long Form,ECU0190738,FALSE
+1686,SIERRA,2,Cotacachi,QUIROGA,Female,56,Salazar Morales Maria Rosa,Casado,NSNC,0,5,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190739,FALSE
+1595,SIERRA,2,Cotacachi,QUIROGA,Female,48,Virginia Morán Cushcagua,Divorciado,Primaria,3,8,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190740,FALSE
+1366,SIERRA,2,Cotacachi,QUIROGA,Male,53,Segundo Ramiro benalcazar Benavides,Divorciado,Primaria,6,1,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190741,FALSE
+1688,SIERRA,2,Cotacachi,QUIROGA,Female,91,Amelia del Rosario Andrade Valverde,Casado,NSNC,0,2,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190742,FALSE
+1150,SIERRA,2,Cotacachi,QUIROGA,Female,28,Nancy Elizabeth Andrango Flores,Unión Libre,Primaria,6,7,4,0,No,Selected,1,Face-to-Face,Long Form,ECU0190743,FALSE
+1043,SIERRA,2,Cotacachi,QUIROGA,Female,55,Luz Narcisa urbano castillo,Soltero,Primaria,6,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190744,FALSE
+1576,SIERRA,2,Cotacachi,QUIROGA,Female,67,Lourdes Maribel Terán Alvarez,Casado,Primaria,4,2,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190745,FALSE
+1285,SIERRA,2,Cotacachi,QUIROGA,Female,80,María Juana Flores Calapi,Casado,NSNC,0,2,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190746,FALSE
+1554,SIERRA,2,Cotacachi,QUIROGA,Male,69,Gloria Patricia Andrade Andrade,Soltero,Primaria,6,1,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190747,FALSE
+1185,SIERRA,2,Cotacachi,QUIROGA,Female,43,Rosa Elena Mantilla Chavez,Casado,NSNC,0,5,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190748,FALSE
+1549,SIERRA,2,Cotacachi,QUIROGA,Male,20,Jhon Brayan Pulsara Andrrango,Casado,Primaria,0,3,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU0190749,FALSE
+1304,SIERRA,2,Cotacachi,QUIROGA,Male,58,José Miguel Panamá Perugachi,Divorciado,NSNC,0,3,1,1,No,Selected,1,Face-to-Face,Long Form,ECU0190750,FALSE
+1027,SIERRA,2,Cotacachi,QUIROGA,Female,77,Luisa enriqueta Vaca Sanchez,Casado,Primaria,3,5,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190751,FALSE
+1575,SIERRA,2,Guamote,CEBADAS,Male,42,Luis Lara Pinta,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190752,FALSE
+1401,SIERRA,2,Guamote,CEBADAS,Female,50,Laura Cecilia Guambo Chuto,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190753,FALSE
+1684,SIERRA,2,Guamote,CEBADAS,Female,29,Gladys Esthela Apugllon Yaguarshungo,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190754,FALSE
+1262,SIERRA,2,Guamote,CEBADAS,Male,63,José Manuel Aucancela Delgado,Casado,Primaria,6,3,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190755,FALSE
+1700,SIERRA,2,Guamote,CEBADAS,Female,44,Hilda Hortis Toapanta,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190756,FALSE
+1605,SIERRA,2,Guamote,CEBADAS,Female,76,María Rosario Taco Caranqui,Viudo,NSNC,0,2,0,2,No,Selected,1,Face-to-Face,Long Form,ECU0190757,FALSE
+1714,SIERRA,2,Guamote,CEBADAS,Female,41,María Nelly Ortiz Toapanta,Otro,Secundaria,12,4,2,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190758,FALSE
+1490,SIERRA,2,Guamote,CEBADAS,Female,47,Hilda Mercedes Romero Álvarez,Casado,Primaria,6,4,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190759,FALSE
+1205,SIERRA,2,Guamote,CEBADAS,Female,83,Elsa Nauya,Viudo,NSNC,0,3,1,1,No,Selected,1,Face-to-Face,Long Form,ECU0190760,FALSE
+1212,SIERRA,2,Guamote,PALMIRA ,Female,22,Nelli Noemí Guaraca Roldán,Casado,Secundaria,7,2,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190761,FALSE
+1581,SIERRA,2,Guamote,PALMIRA ,Male,58,José Manuel Roldán Buelva,Casado,Primaria,6,8,3,0,No,Selected,1,Face-to-Face,Long Form,ECU0190762,FALSE
+1158,SIERRA,2,Guamote,PALMIRA ,Male,35,Petrona Rivera,Soltero,NSNC,0,1,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190763,FALSE
+1300,SIERRA,2,Guamote,PALMIRA ,Female,23,María Josefa Rivera Cislema,Soltero,Secundaria,12,2,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190764,FALSE
+1199,SIERRA,2,Guamote,PALMIRA ,Female,83,Rosario Chumbulema Guaraca,Casado,NSNC,0,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190765,FALSE
+1465,SIERRA,2,Guamote,PALMIRA ,Female,23,María Josefa Rivera Cislema,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU0190766,FALSE
+1644,SIERRA,2,Guamote,PALMIRA ,Female,54,Ambrosía Roldán Buelva,Casado,NSNC,0,9,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190767,FALSE
+1577,SIERRA,2,Guamote,PALMIRA ,Male,51,Delfín Roldán Buelva,Casado,Primaria,3,9,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190768,FALSE
+1712,SIERRA,2,Guamote,PALMIRA ,Male,68,Celestino Roldán Chimbolema,Casado,NSNC,0,3,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU0190769,FALSE
+1298,SIERRA,2,Guamote,PALMIRA ,Male,14,Mario Pullay,Soltero,Secundaria,7,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190770,FALSE
+1620,SIERRA,2,Guamote,PALMIRA ,Male,59,Rosendo Roldán Roldán,Casado,NSNC,0,9,5,0,No,Selected,1,Face-to-Face,Long Form,ECU0190771,FALSE
+3020,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,59,Lucia Quilumbango Perugachi,Divorciado,Primaria,0,7,3,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190795,
+3025,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,34,Tania Sisa Cachimuel López,Casado,Secundaria,10,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190796,
+3030,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,63,Rosa Zoila Perugachi Quilumbango,Casado,Primaria,6,5,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190797,
+3043,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,59,María Santos Quilumbango Anrrango,Viudo,Primaria,0,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190798,
+3064,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,62,Yolanda Doralisa Bravo Castañeda,Divorciado,Primaria,3,3,1,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190799,
+3060,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,39,Seneida Isabel Pazmiño Perugachi,Divorciado,Secundaria,6,4,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190800,
+3021,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,42,María Estela Quilumbango,Casado,Primaria,0,8,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190801,
+3027,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,39,Cristina Patricia Changa Padilla,Casado,Primaria,6,7,4,0,No,Selected,1,Face-to-Face,Long Form,ECU0190802,
+3055,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,53,Laura Marcillo Perugachi,Casado,NSNC,0,7,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190803,
+3002,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,71,Carmela Cabascango Quilumbango,Viudo,NSNC,0,1,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190804,
+3059,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,56,Manuela Transito Anangono Alguacer,Casado,Primaria,0,2,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190805,
+3007,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Male,79,Antonio Quilumbango Quilumbango,Viudo,Primaria,0,1,0,1,No,Selected,1,Face-to-Face,Long Form,ECU0190806,
+3044,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,36,María Patricia Tituaña Moran,Casado,Primaria,6,6,3,0,No,Selected,1,Face-to-Face,Long Form,ECU0190807,
+3022,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Male,48,Segundo Milton Flores Andrango,Soltero,Primaria,6,4,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU0190808,
+3028,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,51,Celiana Quilumbango Marcillo,Casado,Primaria,0,7,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190809,
+3018,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,45,Carmela Panamá Cabascango,Casado,Primaria,6,4,2,1,No,Selected,1,Face-to-Face,Long Form,ECU0190810,
+3230,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,25,Yanet Angelica Ramirez Cacuango,Casado,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190811,
+3229,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,57,María Rosa Córdoba Tituaña,Casado,Primaria,0,4,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190812,
+3209,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,39,Ana Alejandra Cordova Diaz,Casado,Primaria,6,5,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190813,
+3228,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,18,Normal Natali Córdoba Días,Soltero,Secundaria,2,6,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190814,
+3220,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Male,40,Carlos Roberto Rodríguez Robalino,Divorciado,Primaria,6,5,2,1,No,Selected,1,Face-to-Face,Long Form,ECU0190815,
+3219,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,39,María Yolanda OTAVALO Córdova,Casado,Primaria,6,5,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190816,
+3197,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,53,Lus María Yamverla Córdova,Casado,Primaria,0,1,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190817,
+3174,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Male,22,Christian Sebastián Yamberla Vinueza,Casado,Primaria,2,3,0,0,No,Selected,1,Face-to-Face,Long Form,ECU0190818,
+3206,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,53,María Mercedes Yamberla Córdova,Casado,Primaria,2,9,2,1,No,Selected,1,Face-to-Face,Long Form,ECU0190819,
+3168,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,37,María Estela OTAVALO,Casado,Secundaria,6,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190820,
+3189,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,43,Yamverla Córdova Ana Cristina,Casado,Primaria,6,9,1,0,No,Selected,1,Face-to-Face,Long Form,ECU0190821,
+3170,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,28,Jessica Verónica Burga Yanverna,Casado,Primaria,6,4,2,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190822,
+3169,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,87,María Simona Córdoba Díaz,Viudo,Primaria,0,1,0,1,No,Selected,1,Face-to-Face,Long Form,ECU0190823,
+3177,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,67,María Mercedes Córdoba Segovia,Casado,Primaria,0,3,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190824,
+3164,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,59,Rosa Elena Diaz Maldonado,Casado,Primaria,3,3,1,1,No,Selected,1,Face-to-Face,Long Form,ECU0190825,
+3203,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,23,Katherine Elizabeth Narváez Peñafiel,Soltero,Primaria,6,4,2,1,Sí,Selected,1,Face-to-Face,Long Form,ECU0190826,
+3171,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,49,Luz María Yanverna Córdoba,Casado,Primaria,0,6,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU0190827,
+3211,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,30,Elsa Guadalupe Tuquerez Quinlluqui,Casado,Secundaria,4,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU0190828,
+3200,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,73,María Lucila Yamverla Pineda,Viudo,Primaria,0,1,0,1,No,Selected,1,Face-to-Face,Long Form,ECU0190829,
+3019,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,74,María Juana Pillajo Torres,Viudo,Primaria,0,1,0,1,Sí,Selected,1,Face-to-Face,Short Form,ECU099000,
+1020,SIERRA,2,COLTA,COLUMBE,Female,66,Rosario Naranjo Rios,Soltero,Secundaria,15,6,1,2,No,Selected,1,Face-to-Face,Short Form,ECU090001,FALSE
+3062,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Male,65,Juan José Pillajo Panama,Viudo,NSNC,0,1,0,0,No,Selected,1,Face-to-Face,Short Form,ECU099001,
+1510,SIERRA,2,COLTA,COLUMBE,Female,62,Guaman Guaraná Mercedes,Casado,NSNC,0,3,1,2,No,Selected,1,Face-to-Face,Short Form,ECU090002,FALSE
+3015,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,53,Mercedes Peruguaqui Gualdaqui,Casado,Primaria,0,9,3,0,No,Selected,1,Face-to-Face,Short Form,ECU099002,
+1413,SIERRA,2,COLTA,COLUMBE,Female,34,Elvia Beatriz Guaraca Quishpi,Casado,Primaria,8,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU090003,FALSE
+3035,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,85,Cabascango Paraguachi Rosa Antonia,Viudo,Primaria,0,1,0,1,No,Selected,1,Face-to-Face,Short Form,ECU099003,
+1544,SIERRA,2,COLTA,COLUMBE,Female,26,Maria Norma Caiza Caiza,Soltero,Secundaria,14,11,4,1,No,Selected,1,Face-to-Face,Short Form,ECU090004,FALSE
+3011,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,33,María Mercedes Perugachi Perugachi,Soltero,Primaria,1,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099004,
+1279,SIERRA,2,COLTA,COLUMBE,Female,21,Mónica Adriana Ríos Naranjo,Unión Libre,Secundaria,15,4,1,1,No,Selected,1,Face-to-Face,Short Form,ECU090005,FALSE
+3024,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,49,María Juana Peruguaqui Torres,Casado,Primaria,0,6,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099005,
+1197,SIERRA,2,COLTA,COLUMBE,Female,72,María Aniseta Lema Lema,Viudo,Primaria,2,2,0,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090006,FALSE
+3034,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,32,María Marlene Perugachi Quilumbango,Casado,Primaria,6,6,4,0,No,Selected,1,Face-to-Face,Short Form,ECU099006,
+1097,SIERRA,2,COLTA,COLUMBE,Female,57,Blanca Resurrección Quishpe,Divorciado,Primaria,8,3,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090007,FALSE
+3026,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Male,62,José  María Juarez Peruguachi,Casado,Primaria,6,6,0,0,Sí,Selected,1,Face-to-Face,Short Form,ECU099007,
+1626,SIERRA,2,COLTA,COLUMBE,Female,44,Alicia Paucar Evas,Casado,Secundaria,12,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090008,FALSE
+3017,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,49,Luzmila Marcillo Sinchico,Viudo,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099008,
+1342,SIERRA,2,COLTA,COLUMBE,Female,50,María Leticia Ortiz Puma,Casado,Secundaria,15,3,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090009,FALSE
+3039,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,58,María Soila Imba Cabascango,Viudo,Primaria,0,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099009,
+1501,SIERRA,2,COLTA,COLUMBE,Female,44,Maria Cecilia Guanolema Guanolema,Viudo,Primaria,6,1,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090010,FALSE
+3040,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,37,María Cecilia Perugachi Quilumbango,Casado,Primaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099010,
+1435,SIERRA,2,COLTA,COLUMBE,Male,67,Jorge Guaraca Yangol,Casado,Primaria,8,4,0,2,Sí,Selected,1,Face-to-Face,Short Form,ECU090011,FALSE
+3056,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,56,Carmela Perugachi Andrango,Viudo,Primaria,4,1,1,1,No,Selected,1,Face-to-Face,Short Form,ECU099011,
+1242,SIERRA,2,COLTA,COLUMBE,Female,77,Dolores Yangol Torres,Divorciado,Primaria,5,3,0,2,No,Selected,1,Face-to-Face,Short Form,ECU090012,FALSE
+3038,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,24,Lady Marisol Perugachi Quilumbango,Soltero,Primaria,8,9,4,0,No,Selected,1,Face-to-Face,Short Form,ECU099012,
+1321,SIERRA,2,COLTA,COLUMBE,Male,34,Erika Marisela Morales Illapa,Soltero,Secundaria,15,3,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090013,FALSE
+3004,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,30,Luz Marisol Andrade Almagor,Unión Libre,Primaria,6,7,3,2,No,Selected,1,Face-to-Face,Short Form,ECU099013,
+1502,SIERRA,2,COLTA,COLUMBE,Male,37,Luis Anibal Quishpe Guanolema,Casado,Primaria,6,8,4,1,No,Selected,1,Face-to-Face,Short Form,ECU090014,FALSE
+3032,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Male,75,Victor Perugachi,Soltero,Primaria,2,1,0,1,Sí,Selected,1,Face-to-Face,Short Form,ECU099014,
+1601,SIERRA,2,COLTA,COLUMBE,Male,78,Vicente Fernando Naranjo Rios,Casado,Primaria,8,3,0,2,No,Selected,1,Face-to-Face,Short Form,ECU090015,FALSE
+3033,SIERRA,2,OTAVALO,SAN JOSE DE QUICHINCHE,Female,45,Mariana Imba Cabascango,Casado,Primaria,0,4,0,0,No,Selected,1,Face-to-Face,Short Form,ECU099015,
+1117,SIERRA,2,Cotacachi,IMANTAG,Female,72,Digna María Piñan Tambaco,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090016,FALSE
+3224,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,62,Maria Diaz Maldonado,Casado,NSNC,0,5,0,2,Sí,Selected,1,Face-to-Face,Short Form,ECU099016,
+1257,SIERRA,2,Cotacachi,IMANTAG,Female,30,Menacho Guevara María Verónica,Casado,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090017,FALSE
+3166,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,29,Benita Alicia Cordova Cordova,Casado,Primaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099017,
+1332,SIERRA,2,Cotacachi,IMANTAG,Female,41,Rosa Elena Pijuango Santacruz,Casado,Secundaria,6,5,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090018,FALSE
+3212,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,62,María Dolores Diaz Cordova,Casado,NSNC,0,3,0,2,No,Selected,1,Face-to-Face,Short Form,ECU099018,
+1477,SIERRA,2,Cotacachi,IMANTAG,Female,36,José Antonio Anrango Liquinchano,Casado,NSNC,0,7,1,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090019,FALSE
+3233,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,34,Ana Maribel Díaz Córdoba,Casado,Secundaria,6,7,3,0,No,Selected,1,Face-to-Face,Short Form,ECU099019,
+1582,SIERRA,2,Cotacachi,IMANTAG,Female,68,Ana María Minacho Ramos,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090020,FALSE
+3225,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Male,22,Jessica Yasmín Córdoba Díaz,Casado,Secundaria,1,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099020,
+1308,SIERRA,2,Cotacachi,IMANTAG,Female,73,5Maria chavez,Casado,Primaria,5,5,0,3,No,Selected,1,Face-to-Face,Short Form,ECU090021,FALSE
+3175,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,37,Ana Gisella Yamberla Córdoba,Casado,Primaria,7,5,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099021,
+1506,SIERRA,2,Cotacachi,IMANTAG,Male,80,María Juana Chico,Viudo,NSNC,0,1,0,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090022,FALSE
+3216,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,40,María Ester Tituaña Santillan,Soltero,NSNC,0,6,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099022,
+1670,SIERRA,2,Cotacachi,IMANTAG,Female,70,María Tuquerez Cajas,Casado,NSNC,0,2,0,2,No,Selected,1,Face-to-Face,Short Form,ECU090023,FALSE
+3193,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,43,Viviana Yamverla Córdova,Casado,Primaria,4,5,0,0,No,Selected,1,Face-to-Face,Short Form,ECU099023,
+1152,SIERRA,2,Cotacachi,IMANTAG,Female,32,Blanca Isabel Guagalango Suárez,Divorciado,Primaria,7,5,4,0,No,Selected,1,Face-to-Face,Short Form,ECU090024,FALSE
+3163,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,80,María Rosa De la Torre Cordova,Soltero,NSNC,0,1,0,1,No,Selected,1,Face-to-Face,Short Form,ECU099024,
+1287,SIERRA,2,Cotacachi,IMANTAG,Female,45,María Juana Chávez,Casado,Primaria,3,3,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090025,FALSE
+3187,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,32,Marisol Córdoba Córdoba,Casado,Primaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099025,
+1540,SIERRA,2,Cotacachi,IMANTAG,Female,58,Anrango Tuquerres María Cecilia,Viudo,NSNC,0,3,0,0,Sí,Selected,1,Face-to-Face,Short Form,ECU090026,FALSE
+3188,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,50,Rosa María Elena Córdoba Segovia,Soltero,Primaria,0,4,0,1,No,Selected,1,Face-to-Face,Short Form,ECU099026,
+1675,SIERRA,2,Cotacachi,IMANTAG,Female,24,Dayana Elizabeth Coral Ayala,Unión Libre,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090027,FALSE
+3223,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,30,Alicia Verónica OTAVALO Cordova,Soltero,NSNC,0,2,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099027,
+1487,SIERRA,2,Cotacachi,IMANTAG,Female,75,Rosa María Cajas Zanches,Divorciado,NSNC,0,1,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090028,FALSE
+3185,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,70,María Rosa Córdoba Días,Casado,Primaria,0,2,0,2,No,Selected,1,Face-to-Face,Short Form,ECU099028,
+1526,SIERRA,2,Cotacachi,IMANTAG,Female,27,Silvia Marisol Ramos Chico,Soltero,Primaria,5,42,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090029,FALSE
+3167,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,39,María Carmen Tituaña Yamberla,Casado,Primaria,6,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099029,
+1483,SIERRA,2,Cotacachi,IMANTAG,Female,38,Lourdes Elizabeth Haro Haro,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090030,FALSE
+3215,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,24,María Matilde Ruiz Pinza,Soltero,Primaria,6,6,2,2,Sí,Selected,1,Face-to-Face,Short Form,ECU099030,
+1409,SIERRA,2,Cotacachi,QUIROGA,Female,19,Yuleidy Jazmín Campos Sánchez,Soltero,Secundaria,12,5,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090031,FALSE
+3213,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,42,lus María de. La Torre,Casado,Primaria,0,10,5,0,No,Selected,1,Face-to-Face,Short Form,ECU099031,
+1371,SIERRA,2,Cotacachi,QUIROGA,Female,27,Maria Isabel Qushcagua Salazar,Soltero,Secundaria,12,3,1,1,No,Selected,1,Face-to-Face,Short Form,ECU090032,FALSE
+3226,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,28,Cristina Alexandra Rosero Salazar,Casado,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099032,
+1207,SIERRA,2,Cotacachi,QUIROGA,Female,24,Josselyn Estefanía De la Torre Bonilla,Casado,Secundaria,12,14,6,0,No,Selected,1,Face-to-Face,Short Form,ECU090033,FALSE
+3192,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,19,Julissa Mariuxi Bernal Etza,Unión Libre,Secundaria,3,8,2,0,No,Selected,1,Face-to-Face,Short Form,ECU099033,
+1557,SIERRA,2,Cotacachi,QUIROGA,Female,31,Katherine Maribel Flores Guzmán,Divorciado,Secundaria,12,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU090034,FALSE
+3202,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,72,Maria Rosa Elena Diaz Cordova,Casado,NSNC,0,2,0,2,No,Selected,1,Face-to-Face,Short Form,ECU099034,
+1628,SIERRA,2,Cotacachi,QUIROGA,Female,50,María Petrona Bonilla Panamá,Casado,Primaria,6,9,3,0,No,Selected,1,Face-to-Face,Short Form,ECU090035,FALSE
+3191,SIERRA,2,OTAVALO,SAN JUAN DE ILUMAN,Female,39,Miriam Narcisa Yamverla Córdova,Divorciado,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU099035,
+1543,SIERRA,2,Cotacachi,QUIROGA,Female,73,Muenala Morán Rosa Margarita,Casado,NSNC,0,2,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090036,FALSE
+1265,SIERRA,2,Cotacachi,QUIROGA,Female,34,Diana Marcedes Calapi Altaña,Otro,Primaria,6,5,3,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090037,FALSE
+1005,SIERRA,2,Cotacachi,QUIROGA,Female,77,Mercedes Maria Haro Flores,Divorciado,Primaria,6,1,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090038,FALSE
+1135,SIERRA,2,Cotacachi,QUIROGA,Female,30,Elsa Marina Perugachi Perugachi,Casado,Secundaria,12,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090039,FALSE
+1170,SIERRA,2,Cotacachi,QUIROGA,Female,46,María Elena Perugachi Flores,Viudo,Primaria,3,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090040,FALSE
+1348,SIERRA,2,Cotacachi,QUIROGA,Female,70,María Tránsito Bonilla,Casado,NSNC,0,2,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090041,FALSE
+1292,SIERRA,2,Cotacachi,QUIROGA,Female,68,Maria Magdalena Inga Vinueza,Viudo,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090042,FALSE
+1641,SIERRA,2,Cotacachi,QUIROGA,Female,56,María Mercedes Guitarra Perugachi,Casado,Primaria,2,3,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090043,FALSE
+1307,SIERRA,2,Cotacachi,QUIROGA,Female,23,Jessica Quilumbaqui Bonilla,Unión Libre,Secundaria,12,6,2,1,No,Selected,1,Face-to-Face,Short Form,ECU090044,FALSE
+1647,SIERRA,2,Cotacachi,QUIROGA,Female,60,Claudia Jackeline Alvarez Hermoza,Casado,NSNC,0,2,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090045,FALSE
+1498,SIERRA,2,Cotacachi,QUIROGA,Female,42,María Ermelinda Perugachi Calapi,Viudo,NSNC,0,5,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090046,FALSE
+1687,SIERRA,2,Cotacachi,QUIROGA,Female,28,Jessica maribel Flores,Soltero,Secundaria,12,3,2,0,Sí,Selected,1,Face-to-Face,Short Form,ECU090047,FALSE
+1341,SIERRA,2,Cotacachi,QUIROGA,Male,27,Cesar Oswaldo Cordova Calapi,Casado,Primaria,3,4,2,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090048,FALSE
+1146,SIERRA,2,Cotacachi,QUIROGA,Female,27,Lourdes Jeanette Pulsara Anrrango,Soltero,Secundaria,12,3,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090049,FALSE
+1254,SIERRA,2,Cotacachi,QUIROGA,Female,45,Guadalupe del Pilar Ruiz Morales,Casado,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090050,FALSE
+1313,SIERRA,2,Cotacachi,QUIROGA,Female,62,María Urufina Bonilla Panamá,Casado,Primaria,2,3,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090051,FALSE
+1681,SIERRA,2,Cotacachi,QUIROGA,Female,64,María Tránsito Lanchimba,Casado,Primaria,1,1,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090052,FALSE
+1378,SIERRA,2,Cotacachi,QUIROGA,Female,63,Maria  Beatriz Castro Moreno,Otro,NSNC,0,2,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090053,FALSE
+1538,SIERRA,2,Cotacachi,QUIROGA,Female,40,Rodriguez Sandra Patricia,Soltero,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090054,FALSE
+1136,SIERRA,2,Guamote,CEBADAS,Male,69,María Rosario Caranqui Yuquilema,Casado,NSNC,0,2,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090055,FALSE
+1125,SIERRA,2,Guamote,CEBADAS,Male,36,Luis Germán Guashpa Villalobos,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090056,FALSE
+1114,SIERRA,2,Guamote,CEBADAS,Female,60,María Aurora Villalobos Quinti,Otro,Primaria,6,8,1,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090057,FALSE
+1363,SIERRA,2,Guamote,CEBADAS,Male,38,Abelardo Fares Copa,Casado,Primaria,9,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090058,FALSE
+1305,SIERRA,2,Guamote,CEBADAS,Male,73,José Andre Guzmán Tenelema,Viudo,NSNC,0,2,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090059,FALSE
+1106,SIERRA,2,Guamote,CEBADAS,Female,78,María Erlinda Chuto Mejia,Viudo,Primaria,3,3,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090060,FALSE
+1586,SIERRA,2,Guamote,CEBADAS,Female,39,Rosa Elvira Guzmán Tenelema,Soltero,Primaria,7,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090061,FALSE
+1677,SIERRA,2,Guamote,CEBADAS,Female,35,Marta Caranqui Coro,Casado,Primaria,6,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU090062,FALSE
+1411,SIERRA,2,Guamote,CEBADAS,Male,54,Jose Antonio Coro  Guashpa,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090063,FALSE
+1519,SIERRA,2,Guamote,CEBADAS,Female,71,Ana Chuto,Casado,NSNC,0,4,1,1,No,Selected,1,Face-to-Face,Short Form,ECU090064,FALSE
+1699,SIERRA,2,Guamote,PALMIRA ,Female,29,Nancy Verónica Roldán Roldán,Casado,Secundaria,12,5,2,1,Sí,Selected,1,Face-to-Face,Short Form,ECU090065,FALSE
+1509,SIERRA,2,Guamote,PALMIRA ,Female,46,Josefa Roldán Guaraca,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090066,FALSE
+1252,SIERRA,2,Guamote,PALMIRA ,Female,38,María Elena Tocachi Guaman,Casado,Primaria,6,6,3,1,No,Selected,1,Face-to-Face,Short Form,ECU090067,FALSE
+1441,SIERRA,2,Guamote,PALMIRA ,Female,62,Juana Roldán Guaman,Viudo,NSNC,0,1,0,0,No,Selected,1,Face-to-Face,Short Form,ECU090068,FALSE
+1697,SIERRA,2,Guamote,PALMIRA ,Female,55,Dominga Guaraca Paca,Casado,NSNC,0,4,1,1,No,Selected,1,Face-to-Face,Short Form,ECU090069,FALSE
+1309,SIERRA,2,Guamote,PALMIRA ,Female,56,Felipa Roldán Roldán,Casado,NSNC,0,3,0,1,No,Selected,1,Face-to-Face,Short Form,ECU090070,FALSE
+1418,SIERRA,2,Guamote,PALMIRA ,Male,69,Juan de Dios Roldán Roldán,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU090071,FALSE
+1440,SIERRA,2,Guamote,PALMIRA ,Female,43,María Margarita Daquilema Roldán,Casado,NSNC,0,6,1,0,No,Selected,1,Face-to-Face,Short Form,ECU090072,FALSE
+1175,SIERRA,2,Guamote,PALMIRA ,Female,50,María Pullay Chimbolema,Casado,NSNC,0,8,3,0,Sí,Selected,1,Face-to-Face,Short Form,ECU090073,FALSE
+1642,SIERRA,2,Guamote,PALMIRA ,Female,57,Antonia Roldán Roldán,Casado,NSNC,0,8,1,1,No,Selected,1,Face-to-Face,Short Form,ECU090074,FALSE
+1241,SIERRA,2,Guamote,PALMIRA ,Female,38,María Dominga Guaraca Roldán,Soltero,Primaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU090075,FALSE
+1709,AMAZONIA,3,LORETO,LORETO,Female,44,Ximena Rocio Andy Chimbo,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190772,FALSE
+1189,AMAZONIA,3,LORETO,LORETO,Female,38,Judith Mercedes Salazar ajon,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190773,FALSE
+1195,AMAZONIA,3,LORETO,LORETO,Female,34,Nazy Rocio Daquilema Reinoso,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190774,FALSE
+1460,AMAZONIA,3,LORETO,LORETO,Female,76,María Eloisa Basquets Montenegro,Unión Libre,Primaria,1,3,0,1,No,Selected,1,Face-to-Face,Long Form,ECU1190775,FALSE
+1276,AMAZONIA,3,LORETO,LORETO,Female,20,Leydi Angélica Cuji Guerron,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190776,FALSE
+1236,AMAZONIA,3,LORETO,LORETO,Female,53,Estehr Maria Ardila Matagira,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190777,FALSE
+1664,AMAZONIA,3,LORETO,LORETO,Female,39,Eva Licuy Grefa,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190778,FALSE
+1517,AMAZONIA,3,LORETO,LORETO,Female,36,Graciela Yaneth Andy Tapuy,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190779,FALSE
+1515,AMAZONIA,3,LORETO,LORETO,Female,38,Angela Marlene Guatatoca Daguay,Casado,Primaria,6,12,6,1,No,Selected,1,Face-to-Face,Long Form,ECU1190780,FALSE
+1417,AMAZONIA,3,LORETO,LORETO,Female,18,Verónica Jani Quimin Moreira,Unión Libre,Primaria,6,2,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU1190781,FALSE
+1694,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,34,Ninfa Patricia Grefa Chimba,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190782,FALSE
+1591,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,23,Lizbeth brisnay Rivadeneira días,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190783,FALSE
+1350,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,50,Tanguila ashanga Claudio marco,Casado,Secundaria,6,8,1,0,No,Selected,1,Face-to-Face,Long Form,ECU1190784,FALSE
+1134,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,28,Cintya Aracely Grefa Calapucha,Soltero,Secundaria,6,3,2,0,No,Selected,1,Face-to-Face,Long Form,ECU1190785,FALSE
+1469,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,22,Noelia Jhoana Rivadeneira Grefa,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190786,FALSE
+1663,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,18,Sheyla Kimberly Cerda Shiguango,Soltero,Secundaria,6,7,2,0,No,Selected,1,Face-to-Face,Long Form,ECU1190787,FALSE
+1396,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,19,Kelly Edith Tanguila Ashanga,Soltero,Secundaria,6,2,1,0,No,Selected,1,Face-to-Face,Long Form,ECU1190788,FALSE
+1182,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,20,Amada Joselyn Tapuy Grefa,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190789,FALSE
+1386,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,24,Shiguango Andy Lourdes Germania,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190790,FALSE
+1124,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,83,Grefa Avilés Mariana,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190791,FALSE
+1377,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,49,Osvaldo Gabriel Tanguila Yumbo,Soltero,Primaria,5,1,0,0,Sí,Selected,1,Face-to-Face,Long Form,ECU1190792,FALSE
+1391,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,57,Germania Amada Chimbo Shiguango,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190793,FALSE
+1698,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,22,Denixe Rosaura Gutiérrez tosupa,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190794,FALSE
+1167,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,27,Grefa cerda Noemí ester,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190795,FALSE
+1692,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,49,Fernando Marcelo Grefa,Casado,Secundaria,4,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU1190796,FALSE
+1472,AMAZONIA,3,LORETO,PUERTO MURIALDO,Otro,40,Luz Piedad Jipa Grefa,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190797,FALSE
+1389,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,43,Rodrigo Roberto tanguila shanga,Unión Libre,Primaria,6,8,6,0,Sí,Selected,1,Face-to-Face,Long Form,ECU1190798,FALSE
+1613,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,31,María Yolanda Tanguila Ashanga,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU1190799,FALSE
+3284,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,54,Mónica Rosa Grefa inmunda,Casado,Primaria,2,9,5,1,No,Selected,1,Face-to-Face,Long Form,ECU1190900,
+3295,AMAZONIA,3,ARAJUNO,ARAJUNO,Male,58,Bolivar Alfredo Calapucha Tapuy,Casado,Superior,15,8,6,0,No,Selected,1,Face-to-Face,Long Form,ECU1190901,
+3275,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,56,Ana Felicia Tzerembo  Charmachi,Casado,Primaria,6,2,0,2,No,Selected,1,Face-to-Face,Long Form,ECU1190902,
+3294,AMAZONIA,3,ARAJUNO,ARAJUNO,Male,47,Elfi Andi Silva,Casado,Primaria,6,8,2,0,No,Selected,1,Face-to-Face,Long Form,ECU1190903,
+3300,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,63,Rebeca Lidia Andy Alvarado,Casado,Primaria,6,4,1,2,No,Selected,1,Face-to-Face,Long Form,ECU1190904,
+3298,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,30,Pamela Isabel Paez Dias,Unión Libre,Superior,16,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU1190905,
+3313,AMAZONIA,3,ARAJUNO,ARAJUNO,Male,46,Alberto Hector Lopez Chimbo,Casado,Secundaria,12,9,3,0,Sí,Selected,1,Face-to-Face,Long Form,ECU1190906,
+3282,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,44,Luz  Mila  Andi Tunay,Unión Libre,Primaria,6,5,1,0,No,Selected,1,Face-to-Face,Long Form,ECU1190907,
+3287,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,27,Leslie Yolanda Dahua Pauchi,Unión Libre,Primaria,6,7,5,0,No,Selected,1,Face-to-Face,Long Form,ECU1190908,
+3283,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,22,Kety Viviana López Andy,Casado,Secundaria,8,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU1190909,
+1558,AMAZONIA,3,LORETO,LORETO,Female,20,Nathaly Fernanda Aroca Zhuzhinga,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190076,FALSE
+1504,AMAZONIA,3,LORETO,LORETO,Female,45,Nací Piedad Zhusinguo Arevalo,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190077,FALSE
+1574,AMAZONIA,3,LORETO,LORETO,Female,26,Viviana Isamar Paredes Barreto,Unión Libre,Secundaria,2,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190078,FALSE
+1173,AMAZONIA,3,LORETO,LORETO,Female,34,Judith Jackeline Ushiña Urapari.,Divorciado,Secundaria,4,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190079,FALSE
+1535,AMAZONIA,3,LORETO,LORETO,Female,40,Maritza Judith Jipa Yumbo,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190080,FALSE
+1277,AMAZONIA,3,LORETO,LORETO,Female,44,Sofia Leonor Huatatoca Andy,Soltero,Primaria,1,9,5,0,No,Selected,1,Face-to-Face,Short Form,ECU190081,FALSE
+1260,AMAZONIA,3,LORETO,LORETO,Male,30,Wilmer Raúl Salazar Grefa,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190082,FALSE
+1547,AMAZONIA,3,LORETO,LORETO,Female,50,Tany Maria Vinuesa Basquets,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190083,FALSE
+1214,AMAZONIA,3,LORETO,LORETO,Female,24,Vanesa Yadira Aguinda Andy,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190084,FALSE
+1530,AMAZONIA,3,LORETO,LORETO,Female,34,Lucia Gina Rendón Vera,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190085,FALSE
+1162,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,31,Patricio Fidel Grefa Díaz,Unión Libre,Secundaria,6,3,1,1,No,Selected,1,Face-to-Face,Short Form,ECU190086,FALSE
+1658,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,23,Digna Luzmila Ajón Mamallacta.,Unión Libre,Secundaria,3,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU190087,FALSE
+1395,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,30,Cerda aguinda  Jenny Eliza,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190088,FALSE
+1690,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,35,Alva Senaida Cerda Aguinda,Casado,Secundaria,6,6,2,2,No,Selected,1,Face-to-Face,Short Form,ECU190089,FALSE
+1275,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,25,Grefa shiguango Yulisa Talia,Unión Libre,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU190090,FALSE
+1369,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,57,Nely Nanci Shiguango Cerda,Casado,Primaria,6,4,1,1,No,Selected,1,Face-to-Face,Short Form,ECU190091,FALSE
+1281,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,59,María Gabriela Del Pilar Grefa Grefa,Casado,Primaria,6,7,1,1,No,Selected,1,Face-to-Face,Short Form,ECU190092,FALSE
+1590,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,51,David Rene Aguinda Grefa,Casado,Primaria,6,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190093,FALSE
+1365,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,47,Ruth Noemi Grefa Tapui,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190094,FALSE
+1240,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,38,María Rocio Chimbo Canelos,Casado,Primaria,6,7,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190095,FALSE
+1379,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,31,Cerda Tapuy Janina estehla,Casado,Secundaria,6,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU190096,FALSE
+1354,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,24,Shiguango cerda Yuri Tamara,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190097,FALSE
+1368,AMAZONIA,3,LORETO,PUERTO MURIALDO,Male,51,Shiguango Grefa Alfredo Luis,Casado,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU190098,FALSE
+1454,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,39,Lila Berenice Chimbo Shiguango,Soltero,Secundaria,1,7,1,1,Sí,Selected,1,Face-to-Face,Short Form,ECU190099,FALSE
+1651,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,30,Elizabeth Isela Alvarado cerda,Casado,Primaria,3,9,3,1,Sí,Selected,1,Face-to-Face,Short Form,ECU190100,FALSE
+1468,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,39,Inés Lidia Tapuy Grefa,Casado,Secundaria,6,7,3,0,No,Selected,1,Face-to-Face,Short Form,ECU190101,FALSE
+1282,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,35,Salome Mardela Cerda Grefa,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190102,FALSE
+1274,AMAZONIA,3,LORETO,PUERTO MURIALDO,Female,33,Grefa Alvarado Olga Patricia,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU190103,FALSE
+3307,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,40,Melia Estela Aguinda Vargas,Casado,Primaria,6,8,5,0,Sí,Selected,1,Face-to-Face,Short Form,ECU190114,
+3304,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,33,Ligia Isabel Lopez Grefa,Viudo,Secundaria,12,5,4,0,No,Selected,1,Face-to-Face,Short Form,ECU190115,
+3280,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,30,Pamela Isabel Paes Días,Unión Libre,Superior,16,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU190116,
+3299,AMAZONIA,3,ARAJUNO,ARAJUNO,Male,47,Antonio Manuel Lopez Andi,Casado,Secundaria,12,6,1,1,No,Selected,1,Face-to-Face,Short Form,ECU190117,
+3303,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,32,Dalia Flora Lopez Andy,Unión Libre,Secundaria,12,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU190118,
+3293,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,48,Estela Daila Illanes Andy,Casado,Primaria,5,6,2,0,No,Selected,1,Face-to-Face,Short Form,ECU190119,
+3314,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,35,Priscila Enovia,Unión Libre,Secundaria,12,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU190120,
+3285,AMAZONIA,3,ARAJUNO,ARAJUNO,Male,35,Franklin Freddy Aguinda Grefa,Unión Libre,Primaria,6,6,4,0,Sí,Selected,1,Face-to-Face,Short Form,ECU190121,
+3305,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,24,Paula Mercedes Lopez Grefa,Unión Libre,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190122,
+3281,AMAZONIA,3,ARAJUNO,ARAJUNO,Male,20,David Paca,Soltero,Secundaria,12,2,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190123,
+3297,AMAZONIA,3,ARAJUNO,ARAJUNO,Female,21,Melisa Edith Cerda Grefa,Soltero,Secundaria,12,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU190124,
+1145,COSTA,1,SALITRE,EL SALITRE,Female,34,Olga estefania Jordan López,Unión Libre,Secundaria,12,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU2190800,FALSE
+1611,COSTA,1,SALITRE,EL SALITRE,Female,55,Nelly Graciela Casquete Bazurto,Soltero,Primaria,5,5,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190801,FALSE
+1191,COSTA,1,SALITRE,EL SALITRE,Male,61,José Alejandro Sánchez Fajardo,Casado,Primaria,5,2,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190802,FALSE
+1219,COSTA,1,SALITRE,EL SALITRE,Female,31,Jessenia mariuxi freire González,Casado,Secundaria,12,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190803,FALSE
+1181,COSTA,1,SALITRE,EL SALITRE,Female,28,Yuli Yomaira pita vera,Unión Libre,Secundaria,12,6,4,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190804,FALSE
+1113,COSTA,1,SALITRE,EL SALITRE,Male,34,José Fernando León Quinto,Soltero,Secundaria,12,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190805,FALSE
+1334,COSTA,1,SALITRE,EL SALITRE,Female,25,Gabriela Ana Rivera Suárez,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU2190806,FALSE
+1474,COSTA,1,SALITRE,EL SALITRE,Female,23,Margarita Guillermina Toaquisa Murillo,Soltero,Secundaria,9,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190807,FALSE
+1672,COSTA,1,SALITRE,EL SALITRE,Female,71,Gaudencia Violeta Villamar Adrian,Soltero,Primaria,3,2,1,1,No,Selected,1,Face-to-Face,Long Form,ECU2190808,FALSE
+1443,COSTA,1,SALITRE,EL SALITRE,Male,32,Eddie Quinto Quito,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU2190809,FALSE
+1399,COSTA,1,SALITRE,EL SALITRE,Male,72,Juan Echeverría Mora,Soltero,Primaria,7,1,0,0,No,Selected,1,Face-to-Face,Long Form,ECU2190810,FALSE
+1290,COSTA,1,SALITRE,EL SALITRE,Female,37,Cecilia Inocenta Segura Quinto,Unión Libre,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU2190811,FALSE
+1673,COSTA,1,SANTA ELENA,MANGLARALTO,Female,32,Pozo Santiana,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU2190812,FALSE
+1622,COSTA,1,SANTA ELENA,MANGLARALTO,Female,43,Victoria Cecilia laine de los Santos / apolinar lo lainez,Unión Libre,Primaria,4,4,0,0,No,Selected,1,Face-to-Face,Long Form,ECU2190813,FALSE
+1319,COSTA,1,SANTA ELENA,MANGLARALTO,Female,71,ANA ÁNGEL LLAGUAL,Divorciado,Primaria,1,7,2,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190814,FALSE
+1446,COSTA,1,SANTA ELENA,MANGLARALTO,Male,39,CARMEN ELISABETH VAQUERISO / Luis Fernando Pozo Tómala,Casado,Primaria,6,6,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190815,FALSE
+1636,COSTA,1,SANTA ELENA,MANGLARALTO,Male,88,Yagual Yagual mauro,Divorciado,Primaria,6,1,0,1,No,Selected,1,Face-to-Face,Long Form,ECU2190816,FALSE
+1311,COSTA,1,SANTA ELENA,MANGLARALTO,Male,62,MANUEL ISAMAEL LAINE LAINE,Casado,Secundaria,10,5,1,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190817,FALSE
+1493,COSTA,1,SANTA ELENA,MANGLARALTO,Female,48,Laura piedad Ángel borbor,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU2190818,FALSE
+1447,COSTA,1,SANTA ELENA,MANGLARALTO,Female,36,Sonia Muñoz,Casado,Primaria,6,8,4,0,No,Selected,1,Face-to-Face,Long Form,ECU2190819,FALSE
+1561,COSTA,1,SANTA ELENA,MANGLARALTO,Female,43,Hilda Clemencia Muñoz,Casado,Primaria,3,6,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190820,FALSE
+1317,COSTA,1,SANTA ELENA,MANGLARALTO,Male,69,Félix Marciano Borbor Santos,Casado,Primaria,2,8,2,2,Sí,Selected,1,Face-to-Face,Long Form,ECU2190821,FALSE
+1433,COSTA,1,SANTA ELENA,MANGLARALTO,Male,38,Milton Javier Muñoz RODRIGUES,Viudo,Primaria,6,4,1,2,No,Selected,1,Face-to-Face,Long Form,ECU2190822,FALSE
+1216,COSTA,1,SANTA ELENA,MANGLARALTO,Male,29,Juana BORBOR DE LA Q / Carlos Enrique Apolinario Borborigmo,Soltero,Primaria,6,4,0,2,No,Selected,1,Face-to-Face,Long Form,ECU2190823,FALSE
+1224,COSTA,1,SANTA ELENA,MANGLARALTO,Male,54,Sixto Herman Rodríguez salinas,,,,,,,,Selected,1,Face-to-Face,Long Form,ECU2190824,FALSE
+1532,COSTA,1,SANTA ELENA,MANGLARALTO,Male,42,José Rodolfo lainez llagual,Unión Libre,Secundaria,6,6,4,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190825,FALSE
+1310,COSTA,1,SANTA ELENA,MANGLARALTO,Female,28,Caren Yajaira Muñoz Rodríguez,Casado,Primaria,6,11,4,0,No,Selected,1,Face-to-Face,Long Form,ECU2190826,FALSE
+1397,COSTA,1,SANTA ELENA,MANGLARALTO,Female,52,Patricia del peso Tomala,Casado,Primaria,6,6,0,0,No,Selected,1,Face-to-Face,Long Form,ECU2190827,FALSE
+1448,COSTA,1,SANTA ELENA,MANGLARALTO,Female,41,Ligia Suárez Rodríguez,Casado,Secundaria,5,6,4,0,No,Selected,1,Face-to-Face,Long Form,ECU2190828,FALSE
+3264,COSTA,1,SALITRE,GENERAL VERNAZA,Female,82,Bertha Aguilar Reyes,Viudo,Primaria,8,2,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190850,
+3272,COSTA,1,SALITRE,GENERAL VERNAZA,Female,22,Gloria Vera Carpii,Soltero,Secundaria,6,3,2,0,No,Selected,1,Face-to-Face,Long Form,ECU2190851,
+1200,COSTA,1,SALITRE,GENERAL VERNAZA,Female,26,Gabriela  tatiana Medina Mero,Unión Libre,Secundaria,9,5,3,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190852,
+3270,COSTA,1,SALITRE,GENERAL VERNAZA,Female,50,Dolores Marilu López Cantosb,Viudo,Primaria,6,8,2,1,No,Selected,1,Face-to-Face,Long Form,ECU2190853,
+3259,COSTA,1,SALITRE,JUNQUILLAL,Female,41,Erica jazmín Espinoza Mejía,Unión Libre,Primaria,6,6,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190854,
+3245,COSTA,1,SALITRE,JUNQUILLAL,Male,70,Virgilio Primitivo Espinoza Arreaga,Unión Libre,Primaria,1,3,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190855,
+3239,COSTA,1,SALITRE,JUNQUILLAL,Female,42,Yomaira Zoraya Yerena Gamboa,Soltero,Primaria,1,4,1,0,No,Selected,1,Face-to-Face,Long Form,ECU2190856,
+1612,COSTA,1,SALITRE,JUNQUILLAL,Male,79,Fermín Segundo Llerena Mora,Soltero,Primaria,6,1,0,1,No,Selected,1,Face-to-Face,Long Form,ECU2190857,
+3252,COSTA,1,SALITRE,JUNQUILLAL,Female,64,Felicita Isabel Martinez Suriaga,Unión Libre,Primaria,3,2,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU2190858,
+1565,COSTA,1,SALITRE,JUNQUILLAL,Male,43,Tirón Darío Barco Candelario,Unión Libre,Superior,12,4,0,2,No,Selected,1,Face-to-Face,Long Form,ECU2190859,
+3260,COSTA,1,SALITRE,JUNQUILLAL,Male,60,Luis Arcadio Espinoza Reyes,Soltero,Primaria,3,2,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU2190860,
+1372,COSTA,1,SALITRE,JUNQUILLAL,Female,27,Eveling Yoanna Llerena Almeida,Soltero,Secundaria,6,3,1,1,No,Selected,1,Face-to-Face,Long Form,ECU2190861,
+3253,COSTA,1,SALITRE,JUNQUILLAL,Male,34,Jefferson Alberto Espinoza Giménez,Casado,Primaria,6,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU2190862,
+3146,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,56,Sonia Candelaria Gonzáles,Casado,Primaria,7,6,2,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190863,
+3143,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,20,Doris Katiuska de la Cruz Orrala,Unión Libre,Secundaria,15,2,1,0,No,Selected,1,Face-to-Face,Long Form,ECU2190864,
+3105,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,24,Pricila Vera,Divorciado,Secundaria,6,6,1,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190865,
+3152,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,52,Yiobanny herisoldy laynez González,Casado,Secundaria,6,6,0,1,No,Selected,1,Face-to-Face,Long Form,ECU2190866,
+3132,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,87,Emiliana Onoria Vera Vera,Soltero,Primaria,1,1,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190867,
+3074,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,68,Rosa Paulina yagual tomalá,Unión Libre,Secundaria,5,2,0,2,No,Selected,1,Face-to-Face,Long Form,ECU2190868,
+3134,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,56,Angela Virginia Villon Gabino,Viudo,Primaria,8,6,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190869,
+3098,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,52,Ramona Elizabeth Matías González,Viudo,Primaria,6,6,2,0,No,Selected,1,Face-to-Face,Long Form,ECU2190870,
+3084,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,62,Angelita Aracely Baquerizo vera,Casado,Secundaria,6,3,0,2,Sí,Selected,1,Face-to-Face,Long Form,ECU2190871,
+3065,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,38,Leti Ramona Tumbaco Severino,Divorciado,Secundaria,15,5,2,0,No,Selected,1,Face-to-Face,Long Form,ECU2190872,
+3088,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,36,Lorena Magdalena Peñarrieta Bravo,Unión Libre,Primaria,4,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU2190873,
+3138,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,36,Verónica Elizabeth Panchana Suárez,Casado,Primaria,8,5,1,0,Sí,Selected,1,Face-to-Face,Long Form,ECU2190874,
+3148,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,41,Verónica Elvira Borbon Salina,Casado,Primaria,3,6,1,0,No,Selected,1,Face-to-Face,Long Form,ECU2190875,
+3114,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,24,Nathalie Jesennia González González,Casado,Secundaria,15,4,2,0,No,Selected,1,Face-to-Face,Long Form,ECU2190876,
+3142,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,35,Livinton Leonardo Rodríguez Lino,Casado,Secundaria,15,5,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190877,
+3122,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,64,Rosa Velgica Vera Yaguar,Viudo,Primaria,3,4,1,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190878,
+3082,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,50,Eliézer Pascual González Clemente,Unión Libre,Secundaria,6,2,0,0,No,Selected,1,Face-to-Face,Long Form,ECU2190879,
+3083,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,60,Mauro Leonel Gómez Muñoz,Unión Libre,Secundaria,6,4,0,1,No,Selected,1,Face-to-Face,Long Form,ECU2190880,
+3077,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,42,Irma Araceli reyes González,Casado,Secundaria,6,7,3,0,No,Selected,1,Face-to-Face,Long Form,ECU2190881,
+3091,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,64,Macario Fernando González González,Soltero,Secundaria,15,1,0,1,Sí,Selected,1,Face-to-Face,Long Form,ECU2190882,
+3159,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,61,María Salomés lino Suárez,Soltero,Primaria,6,1,0,0,No,Selected,1,Face-to-Face,Long Form,ECU2190883,
+3118,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,22,Luisa Daniela Parra Loaisa,Unión Libre,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Long Form,ECU2190884,
+1610,COSTA,1,SALITRE,EL SALITRE,Female,29,Nely Graciela Wong casquete,Casado,Primaria,6,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU290104,FALSE
+1164,COSTA,1,SALITRE,EL SALITRE,Female,57,Vilma jeoconda López Adrián,Unión Libre,Primaria,6,5,0,1,Sí,Selected,1,Face-to-Face,Short Form,ECU290105,FALSE
+1131,COSTA,1,SALITRE,EL SALITRE,Female,46,Azucena Isabel Moncada Lilindro,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290106,FALSE
+1171,COSTA,1,SALITRE,EL SALITRE,Female,53,Tomasa Cecilia Hecheverria Leon,Soltero,Primaria,6,2,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290107,FALSE
+1284,COSTA,1,SALITRE,EL SALITRE,Female,22,Lesny lasenia Mora Torres,Unión Libre,Secundaria,12,4,1,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290108,FALSE
+1484,COSTA,1,SALITRE,EL SALITRE,Female,36,Johana Arriaga Seguro,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290109,FALSE
+1412,COSTA,1,SALITRE,EL SALITRE,Female,20,Leiny Jamileth Carranza Dominguez,Soltero,Secundaria,11,2,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290110,FALSE
+1271,COSTA,1,SALITRE,EL SALITRE,Female,35,Marjorie Evelyn Magallanes Cardoso,Unión Libre,Secundaria,12,4,3,0,No,Selected,1,Face-to-Face,Short Form,ECU290111,FALSE
+1202,COSTA,1,SALITRE,EL SALITRE,Female,35,Kerly Briones Guacon,Soltero,Secundaria,12,3,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290112,FALSE
+1339,COSTA,1,SALITRE,EL SALITRE,Female,23,Eugenia Mariana Pilaló Sánchez,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290113,FALSE
+1101,COSTA,1,SALITRE,EL SALITRE,Female,37,Mariana Jasmin wong casquete,Casado,Secundaria,12,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290114,FALSE
+1431,COSTA,1,SALITRE,EL SALITRE,Female,54,Janneth Ortega Jiménez,Soltero,Primaria,3,3,0,0,No,Selected,1,Face-to-Face,Short Form,ECU290115,FALSE
+1208,COSTA,1,SANTA ELENA,MANGLARALTO,Female,38,Lourdes Alexandra Beltrán Llagual,Casado,Primaria,3,6,1,1,No,Selected,1,Face-to-Face,Short Form,ECU290116,FALSE
+1485,COSTA,1,SANTA ELENA,MANGLARALTO,Female,57,gladis Carmela orrales apolinario,Casado,Primaria,6,6,2,1,No,Selected,1,Face-to-Face,Short Form,ECU290117,FALSE
+1161,COSTA,1,SANTA ELENA,MANGLARALTO,Female,62,Ana Guale Cruz,Viudo,NSNC,4,6,1,1,Sí,Selected,1,Face-to-Face,Short Form,ECU290118,FALSE
+1546,COSTA,1,SANTA ELENA,MANGLARALTO,Male,78,Bernardo Apolimario,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290119,FALSE
+1508,COSTA,1,SANTA ELENA,MANGLARALTO,Female,39,Jacinta Alexandra chila,Viudo,Primaria,5,7,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290120,FALSE
+1126,COSTA,1,SANTA ELENA,MANGLARALTO,Female,48,Carmen laines Apolonia,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290121,FALSE
+1157,COSTA,1,SANTA ELENA,MANGLARALTO,Male,70,Pedro Ignacio Ascencio Reyes,Casado,Primaria,6,3,0,2,No,Selected,1,Face-to-Face,Short Form,ECU290122,FALSE
+1422,COSTA,1,SANTA ELENA,MANGLARALTO,Female,77,GLORIA CLEMENTINA DE LOS SANTOS REYES,Viudo,NSNC,0,1,0,1,Sí,Selected,1,Face-to-Face,Short Form,ECU290123,FALSE
+1562,COSTA,1,SANTA ELENA,MANGLARALTO,Male,52,Celso Clemente mejillones Zuñiga,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290124,FALSE
+1132,COSTA,1,SANTA ELENA,MANGLARALTO,Male,37,jhoni Santos,Unión Libre,Primaria,6,3,1,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290125,FALSE
+1217,COSTA,1,SANTA ELENA,MANGLARALTO,Female,63,Maura yagual laines,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290126,FALSE
+1251,COSTA,1,SANTA ELENA,MANGLARALTO,Female,29,Suli Fabiola Sinin,Casado,Secundaria,12,8,2,2,Sí,Selected,1,Face-to-Face,Short Form,ECU290127,FALSE
+1343,COSTA,1,SANTA ELENA,MANGLARALTO,Male,31,Johana lainez del peso / Javier guales de la Cruz,Unión Libre,Primaria,6,6,4,0,No,Selected,1,Face-to-Face,Short Form,ECU290128,FALSE
+1414,COSTA,1,SANTA ELENA,MANGLARALTO,Male,82,Eugenio Rodríguez Yagual,Viudo,Primaria,6,1,0,0,No,Selected,1,Face-to-Face,Short Form,ECU290129,FALSE
+1233,COSTA,1,SANTA ELENA,MANGLARALTO,Male,62,Silvio Laínez limon,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290130,FALSE
+1144,COSTA,1,SANTA ELENA,MANGLARALTO,Male,53,Francisco Rodríguez SANTOS,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290131,FALSE
+1247,COSTA,1,SANTA ELENA,MANGLARALTO,Female,25,Sandi de la cruz Muñoz,,,,,,,,Selected,1,Face-to-Face,Short Form,ECU290132,FALSE
+1696,COSTA,1,SANTA ELENA,MANGLARALTO,Male,33,yofri quirombai,Casado,Secundaria,12,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290133,FALSE
+3274,COSTA,1,SALITRE,GENERAL VERNAZA,Female,25,Julissa Gabriela Vera Herrero,Casado,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290150,
+1496,COSTA,1,SALITRE,GENERAL VERNAZA,Female,46,Lucia Mora Macias,Unión Libre,Secundaria,9,3,0,0,No,Selected,1,Face-to-Face,Short Form,ECU290151,
+3273,COSTA,1,SALITRE,GENERAL VERNAZA,Female,40,Grisela Del Rocío Vera Alarcón,Soltero,Secundaria,6,4,0,2,No,Selected,1,Face-to-Face,Short Form,ECU290152,
+3269,COSTA,1,SALITRE,GENERAL VERNAZA,Female,22,Anahi Elizabeth Suárez Giménez,Unión Libre,Secundaria,15,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290153,
+3248,COSTA,1,SALITRE,JUNQUILLAL,Male,38,Gustavo Efrain Espinoza Giménez,Unión Libre,Primaria,4,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290154,
+1130,COSTA,1,SALITRE,JUNQUILLAL,Female,41,Hilda Paola Jiménez Arreaga,Soltero,Primaria,5,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290155,
+3243,COSTA,1,SALITRE,JUNQUILLAL,Male,53,Claudio Paulo Hernández Alvarado,Unión Libre,Primaria,8,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290156,
+3256,COSTA,1,SALITRE,JUNQUILLAL,Female,19,Tifanny jordana herrera vera,Unión Libre,Secundaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290157,
+3255,COSTA,1,SALITRE,JUNQUILLAL,Female,23,Kenya Patricia ramos Murillo,Soltero,Primaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290158,
+3263,COSTA,1,SALITRE,JUNQUILLAL,Male,51,Paulo Angel Espinoza Barcos,Unión Libre,Secundaria,6,6,1,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290159,
+3241,COSTA,1,SALITRE,JUNQUILLAL,Female,76,Natividad Adriana Aguilera Arriaga,Viudo,Primaria,1,2,0,1,No,Selected,1,Face-to-Face,Short Form,ECU290160,
+3250,COSTA,1,SALITRE,JUNQUILLAL,Male,37,Eduardo David Yepez Haro,Casado,Primaria,3,4,0,1,No,Selected,1,Face-to-Face,Short Form,ECU290161,
+3254,COSTA,1,SALITRE,JUNQUILLAL,Female,38,Guido Edison ramos Sánchez,Unión Libre,Primaria,6,6,1,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290162,
+3111,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,28,Luis Alfre Pita Gonzáles,Unión Libre,Primaria,1,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290163,
+3149,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,41,Evelyn Gina Borboro Gavina,Casado,Primaria,6,8,3,0,No,Selected,1,Face-to-Face,Short Form,ECU290164,
+3155,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,21,Jorge Francisco Laínez borbor,Casado,Secundaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290165,
+3075,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,62,Zárate igriero González,Casado,NSNC,0,4,1,2,No,Selected,1,Face-to-Face,Short Form,ECU290166,
+3107,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,38,Gustina Narcisa Gabino Rodríguez,Casado,Primaria,8,6,3,0,No,Selected,1,Face-to-Face,Short Form,ECU290167,
+3071,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,23,Heidy Claribel Valencia ganchozo,Casado,Secundaria,6,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290168,
+3135,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,45,Narcisa Marisol Rivera Borbor,Viudo,Primaria,8,5,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290169,
+3128,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,28,Angie Estefania Vera González,Unión Libre,Superior,19,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290170,
+3069,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,41,Gisela rosario González tumbaco,Casado,Secundaria,6,5,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290171,
+3086,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,53,Daysi América vera Clemente,Casado,Secundaria,6,4,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290172,
+3116,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,30,Yomaira Lucia Gonzáles Pita,Unión Libre,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290173,
+3156,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,25,Alexandra Estefanía laynes borbor,Casado,Secundaria,6,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290174,
+3102,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,57,José Tumbaco,Divorciado,Secundaria,6,3,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290175,
+3100,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,49,Manuela Ester Hermenegildo Cruz,Casado,Secundaria,6,5,1,0,No,Selected,1,Face-to-Face,Short Form,ECU290176,
+3153,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,38,Panchana Suárez Katty Janina,Casado,Primaria,6,6,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290177,
+3147,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,25,Rivera Lainez Marlen Elizabeth,Casado,Secundaria,1,4,2,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290178,
+3103,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,47,Nancy Rosio Gonzáles,Divorciado,Secundaria,6,5,2,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290179,
+3072,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,32,Yajaira Rosario Zambrano Ganchoso,Unión Libre,Primaria,8,5,3,0,No,Selected,1,Face-to-Face,Short Form,ECU290180,
+3137,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,42,Jessica Argentina Dominguez Salinas,Unión Libre,Primaria,8,11,3,0,No,Selected,1,Face-to-Face,Short Form,ECU290181,
+3094,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,23,Rosa Angélico Tumbaco Reyes,Unión Libre,Secundaria,15,4,2,0,No,Selected,1,Face-to-Face,Short Form,ECU290182,
+3133,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Male,82,Alban Vera Baquerizo,Soltero,Secundaria,14,6,1,2,No,Selected,1,Face-to-Face,Short Form,ECU290183,
+3141,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,55,Jenny Elena Ramirez Rivera,Unión Libre,Superior,16,4,0,3,No,Selected,1,Face-to-Face,Short Form,ECU290184,
+3139,COSTA,1,SANTA ELENA,SIMÓN BOLIVAR,Female,45,Margarita Salinas Tumbaco,Unión Libre,Primaria,8,4,2,0,Sí,Selected,1,Face-to-Face,Short Form,ECU290185,

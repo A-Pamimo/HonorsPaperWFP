@@ -1,0 +1,37 @@
+event, node, start, end
+form start,,1686305821923,
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/SvyDate,1686305821925,1686305832187
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/EnuName,1686305832188,1686305836085
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/EnuSex,1686305836085,1686305838888
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/ADMIN1Name,1686305838889,1686305842519
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/ADMIN3Name,1686305842520,1686305846190
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/ADMIN5Name,1686305846192,1686305849567
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/sampleYN,1686305849568,1686305853054
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHID,1686305853054,1686305910399
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/generated_note_name_20,1686305910400,1686305911645
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHPhNmb,1686305911647,1686305912692
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/generated_note_name_20,1686305912693,1686305914403
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHPhNmb,1686305914404,1686305931650
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/RESPpart,1686305931650,1686305934863
+end screen,,1686305934863,1686305938533
+form save,,1686305938533,
+form exit,,1686305938533,
+form finalize,,1686305938533,
+form resume,,1686305986915,
+jump,,1686305986915,1686306010415
+end screen,,1686306010472,1686306012812
+form save,,1686306012812,
+form exit,,1686306012812,
+form finalize,,1686306012812,
+form resume,,1686308020688,
+jump,,1686308020688,1686308042919
+end screen,,1686308042969,1686308044483
+form save,,1686308044483,
+form exit,,1686308044483,
+form finalize,,1686308044483,
+form resume,,1686309184958,
+jump,,1686309184959,1686309207416
+end screen,,1686309207468,1686309208943
+form save,,1686309208943,
+form exit,,1686309208943,
+form finalize,,1686309208944,

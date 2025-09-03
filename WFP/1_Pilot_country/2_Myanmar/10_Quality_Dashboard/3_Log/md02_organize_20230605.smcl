@@ -1,0 +1,54 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md02_organize_20230605.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Jun 2023, 13:52:59
+{txt}
+{com}.         di `cdate'
+{res}20230605
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/Myanmar_Full_Household_Prep_`date'.dta", clear 
+{err}{p 0 4 2}
+file {bf:{err}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/2_Temp/Myanmar_Full_Household_Prep_.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+{search r(601), local:r(601);}
+{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD42109.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Myanmar                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Set up appended dataset for full roster sample             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 11, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  5, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_temp{c )-}/Myanmar_F2F_Roster_Correct_`cdate'.dta
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Myanmar_Roster_Prep_`cdate'.dta
+>                                         ${c -(}d_temp{c )-}/Myanmar_Roster_Household_Prep_`cdate'.dta
+>                                                 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Roster Data and Set codebook
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

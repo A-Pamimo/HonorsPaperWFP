@@ -1,0 +1,312 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed03_append_20231119.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}19 Nov 2023, 15:02:09
+{txt}
+{com}.         di `cdate'      
+{res}20231119
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2: Create master dataset for full sample
+. *******************************************************************************/
+.         
+.         * load dataset
+.         * ------------
+.         use "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis.dta", clear
+{txt}
+{com}.         
+.         * append Remote Answers to F2F Answers
+.         append using "${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis.dta"
+{txt}{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_1M} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:RESPPhNmbAl2} was {bf:str10}, now {bf:str17} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}LcsEN_em_ChildWork} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}sampleYN} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN1_byte} already defined)
+(label {bf:{txt}ADMIN3Name_byte} already defined)
+(label {bf:{txt}ADMIN5Name_byte} already defined)
+(label {bf:{txt}Modality_Type_byte} already defined)
+(label {bf:{txt}Length_Type_byte} already defined)
+(label {bf:{txt}HHDisable_byte} already defined)
+(label {bf:{txt}gender_l} already defined)
+(label {bf:{txt}marital_l} already defined)
+(label {bf:{txt}edu_l} already defined)
+
+{com}.         compress
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (44,340 bytes saved)
+
+{com}.         drop S_*
+{txt}
+{com}.         
+.         * merge sample list 
+.         mmerge HHID using "${c -(}sample{c )-}/Ecuador_Sample_Merge.dta", type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}  1416
+{txt}{ralign 20:vars} {c |} {res}   729
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/3_Sampling/Ecuador_Sample_Merge.dta
+{txt}{ralign 20:obs} {c |} {res}  2372{txt}
+{txt}{ralign 20:vars} {c |} {res}    15{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+(label {bf:{txt}ADMIN1_byte} already defined)
+(label {bf:{txt}ADMIN3Name_byte} already defined)
+(label {bf:{txt}ADMIN5Name_byte} already defined)
+(label {bf:{txt}Modality_Type_byte} already defined)
+(label {bf:{txt}Length_Type_byte} already defined)
+(label {bf:{txt}HHDisable_byte} already defined)
+(label {bf:{txt}gender_l} already defined)
+(label {bf:{txt}marital_l} already defined)
+(label {bf:{txt}edu_l} already defined)
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}  2372
+{txt}{ralign 20:vars} {c |} {res}   745{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}    956{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}   1416{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         gen Completion = (Attrition == 0)
+{txt}
+{com}.         
+.         label def com_list 1 "Completed" 0 "Not Completed"
+{txt}
+{com}.         label val Completion com_list
+{txt}
+{com}.         label var Completion "Survey Progress"
+{txt}
+{com}.         
+. *       drop if mi(HHID)
+.         drop _merge 
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Organize Dataset and Labels
+. *******************************************************************************/
+.         
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} start end today deviceid SvyDate HHCoord Sys_HHCoord_latitude Sys_HHCoord_longitude Sys_HHCoord_altitude Sys_HHCoord_precision ADMIN1Name ADMIN3Name ADMIN5Name HHUrbRur EnuName EnuName_Display EnuSex sampleYN HHID_manual HHID calc_ID RESName RESPAge RESPSex RESPStatus ConsentYN ConsentRsn HHStatus HHStatusOth MDDIHHHDisplArrive MDDIHHDisplChoice HHhostDisp MDDIHHIdDoc HHSize count_resp RepeatPID_count R_Err_Resp R_Err_Head R_Err_Spouse R_Err_SpouseAge R_Err_ParentAge R_Err_ParentMinor R_Err_SameSex R_Num_Resp R_Num_Spouse R_Resp_Sex R_Resp_Age R_Num_Household R_RESPRelationHHH R_HHH_Sex R_HHH_Age R_HHH_Literate R_HHH_Education R_Num_Male R_Num_Female R_Num_Child R_Num_Boy R_Num_Girl R_Num_Senior R_Num_Adult MDDIHHDisabledNb MMDIHHHealthFac MMDIHHHealthFac_dist HHHealthAcMildNeed HHHealthAcMildTreat HHHealthAcMildWhy HHHealthAcMildWhy_oth HHHealthAcSevereNeed HHHealthAcSevereTreat HHHealthAcSevereWhy HHHealthAcSevereWhy_oth HHHealthChronNeed HHHealthChronTreat HHHealthChronWhy HHHealthChronWhy_oth HHHealthEmergNeed HHHealthEmergTreat HHHealthEmergWhy HHHealthEmergWhy_oth RESPFoodWorry_YN RESPPercFoodSec RESPPercFoodSec_1 RESPPercFoodSec_2 RESPPercFoodSec_3 RESPPercFoodSec_4 RESPMeals HHSNoFood HHSNoFood_FR_S HHSBedHung HHSBedHung_FR_S HHSNotEat HHSNotEat_FR_S FCSStap FCSPulse FCSDairy FCSPr FCSNPrMeatF FCSNPrMeatO FCSNPrFish FCSNPrEggs FCSVeg FCSNVegOrg FCSNVegGre FCSFruit FCSNFruiOrg FCSFat FCSSugar FCSCond FCS_check FCSG FCSStap_S FCSPulse_S FCSDairy_S FCSPr_S FCSVeg_S FCSFruit_S FCSFat_S FCSSugar_S FCSCond_S FCS_S FCSG_S rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIGenderMealAdult rCSIMealNb rCSI_check LcsEN_stress_DomAsset LcsEN_stress_CrdtFood LcsEN_stress_Saving LcsEN_stress_BorrowCash LhCSIEnAccess_stress LhCSIEnAccess_stress_1 LhCSIEnAccess_stress_2 LhCSIEnAccess_stress_3 LhCSIEnAccess_stress_4 LhCSIEnAccess_stress_5 LhCSIEnAccess_stress_6 LhCSIEnAccess_stress_7 LhCSIEnAccess_stress_8 LhCSIEnAccess_stress_999 LhCSIEnAccess_stress_oth LcsEN_crisis_ProdAssets LcsEN_crisis_HealthEdu LcsEN_crisis_OutSchool LhCSIEnAccess_crisis LhCSIEnAccess_crisis_1 LhCSIEnAccess_crisis_2 LhCSIEnAccess_crisis_3 LhCSIEnAccess_crisis_4 LhCSIEnAccess_crisis_5 LhCSIEnAccess_crisis_6 LhCSIEnAccess_crisis_7 LhCSIEnAccess_crisis_8 LhCSIEnAccess_crisis_999 LhCSIEnAccess_crisis_oth LcsEN_em_ChildWork LcsEN_em_Begged LcsEN_em_IllegalAct LhCSIEnAccess_em LhCSIEnAccess_em_1 LhCSIEnAccess_em_2 LhCSIEnAccess_em_3 LhCSIEnAccess_em_4 LhCSIEnAccess_em_5 LhCSIEnAccess_em_6 LhCSIEnAccess_em_7 LhCSIEnAccess_em_8 LhCSIEnAccess_em_999 LhCSIEnAccess_em_oth Lcs_stress_DomAsset Lcs_stress_CrdtFood Lcs_stress_Saving Lcs_stress_BorrowCash Lcs_crisis_ProdAssets Lcs_crisis_HealthEdu Lcs_crisis_OutSchool Lcs_em_ChildWork Lcs_em_Begged Lcs_em_IllegalAct HHExpFCer_Purch_7D HHExpFCer_Purch_MN_7D HHExpFCer_GiftAid_7D HHExpFCer_GiftAid_MN_7D HHExpFCer_Own_7D HHExpFCer_Own_MN_7D HHExpFTub_Purch_7D HHExpFTub_Purch_MN_7D HHExpFTub_GiftAid_7D HHExpFTub_GiftAid_MN_7D HHExpFTub_Own_7D HHExpFTub_Own_MN_7D HHExpFPuls_Purch_7D HHExpFPuls_Purch_MN_7D HHExpFPuls_GiftAid_7D HHExpFPuls_GiftAid_MN_7D HHExpFPuls_Own_7D HHExpFPuls_Own_MN_7D HHExpFVeg_Purch_7D HHExpFVeg_Purch_MN_7D HHExpFVeg_GiftAid_7D HHExpFVeg_GiftAid_MN_7D HHExpFVeg_Own_7D HHExpFVeg_Own_MN_7D HHExpFFrt_Purch_7D HHExpFFrt_Purch_MN_7D HHExpFFrt_GiftAid_7D HHExpFFrt_GiftAid_MN_7D HHExpFFrt_Own_7D HHExpFFrt_Own_MN_7D HHExpFAnimMeat_Purch_7D HHExpFAnimMeat_Purch_MN_7D HHExpFAnimMeat_GiftAid_7D HHExpFAnimMeat_GiftAid_MN_7D HHExpFAnimMeat_Own_7D HHExpFAnimMeat_Own_MN_7D HHExpFAnimFish_Purch_7D HHExpFAnimFish_Purch_MN_7D HHExpFAnimFish_GiftAid_7D HHExpFAnimFish_GiftAid_MN_7D HHExpFAnimFish_Own_7D HHExpFAnimFish_Own_MN_7D HHExpFFats_Purch_7D HHExpFFats_Purch_MN_7D HHExpFFats_GiftAid_7D HHExpFFats_GiftAid_MN_7D HHExpFFats_Own_7D HHExpFFats_Own_MN_7D HHExpFDairy_Purch_7D HHExpFDairy_Purch_MN_7D HHExpFDairy_GiftAid_7D HHExpFDairy_GiftAid_MN_7D HHExpFDairy_Own_7D HHExpFDairy_Own_MN_7D HHExpFEgg_Purch_7D HHExpFEgg_Purch_MN_7D HHExpFEgg_GiftAid_7D HHExpFEgg_GiftAid_MN_7D HHExpFEgg_Own_7D HHExpFEgg_Own_MN_7D HHExpFSgr_Purch_7D HHExpFSgr_Purch_MN_7D HHExpFSgr_GiftAid_7D HHExpFSgr_GiftAid_MN_7D HHExpFSgr_Own_7D HHExpFSgr_Own_MN_7D HHExpFCond_Purch_7D HHExpFCond_Purch_MN_7D HHExpFCond_GiftAid_7D HHExpFCond_GiftAid_MN_7D HHExpFCond_Own_7D HHExpFCond_Own_MN_7D HHExpFBev_Purch_7D HHExpFBev_Purch_MN_7D HHExpFBev_GiftAid_7D HHExpFBev_GiftAid_MN_7D HHExpFBev_Own_7D HHExpFBev_Own_MN_7D HHExpFOut_Purch_7D HHExpFOut_Purch_MN_7D HHExpFOut_GiftAid_7D HHExpFOut_GiftAid_MN_7D HHExpFOut_Own_7D HHExpFOut_Own_MN_7D HHExpNFHyg_Purch_1M HHExpNFHyg_Purch_MN_1M HHExpNFHyg_GiftAid_1M HHExpNFHyg_GiftAid_MN_1M HHExpNFTransp_Purch_1M HHExpNFTransp_Purch_MN_1M HHExpNFTransp_GiftAid_1M HHExpNFTransp_GiftAid_MN_1M HHExpNFFuel_Purch_1M HHExpNFFuel_Purch_MN_1M HHExpNFFuel_GiftAid_1M HHExpNFFuel_GiftAid_MN_1M HHExpNFWat_Purch_1M HHExpNFWat_Purch_MN_1M HHExpNFWat_GiftAid_1M HHExpNFWat_GiftAid_MN_1M HHExpNFEnerg_Purch_1M HHExpNFEnerg_Purch_MN_1M HHExpNFEnerg_GiftAid_1M HHExpNFEnerg_GiftAid_MN_1M HHExpNFDwelSer_Purch_1M HHExpNFDwelSer_Purch_MN_1M HHExpNFDwelSer_GiftAid_1M HHExpNFDwelSer_GiftAid_MN_1M HHExpNFPhone_Purch_1M HHExpNFPhone_Purch_MN_1M HHExpNFPhone_GiftAid_1M HHExpNFPhone_GiftAid_MN_1M HHExpNFRecr_Purch_1M HHExpNFRecr_Purch_MN_1M HHExpNFRecr_GiftAid_1M HHExpNFRecr_GiftAid_MN_1M HHExpNFAlcTobac_Purch_1M HHExpNFAlcTobac_Purch_MN_1M HHExpNFAlcTobac_GiftAid_1M HHExpNFAlcTobac_GiftAid_MN_1M HHExpNFMedServ_Purch_6M HHExpNFMedServ_Purch_MN_6M HHExpNFMedServ_GiftAid_6M HHExpNFMedServ_GiftAid_MN_6M HHExpNFMedGood_Purch_6M HHExpNFMedGood_Purch_MN_6M HHExpNFMedGood_GiftAid_6M HHExpNFMedGood_GiftAid_MN_6M HHExpNFCloth_Purch_6M HHExpNFCloth_Purch_MN_6M HHExpNFCloth_GiftAid_6M HHExpNFCloth_GiftAid_MN_6M HHExpNFEduFee_Purch_6M HHExpNFEduFee_Purch_MN_6M HHExpNFEduFee_GiftAid_6M HHExpNFEduFee_GiftAid_MN_6M HHExpNFEduGood_Purch_6M HHExpNFEduGood_Purch_MN_6M HHExpNFEduGood_GiftAid_6M HHExpNFEduGood_GiftAid_MN_6M HHExpNFRent_Purch_6M HHExpNFRent_Purch_MN_6M HHExpNFRent_GiftAid_6M HHExpNFRent_GiftAid_MN_6M HHExpNFHHSoft_Purch_6M HHExpNFHHSoft_Purch_MN_6M HHExpNFHHSoft_GiftAid_6M HHExpNFHHSoft_GiftAid_MN_6M HHExpNFHHMaint_Purch_6M HHExpNFHHMaint_Purch_MN_6M HHExpNFHHMaint_GiftAid_6M HHExpNFHHMaint_GiftAid_MN_6M HHExpFCer_Purch_7D_S HHExpFCer_Purch_MN_7D_S HHExpFCer_GiftAid_7D_S HHExpFCer_GiftAid_MN_7D_S HHExpFCer_Own_7D_S HHExpFCer_Own_MN_7D_S HHExpFTub_Purch_7D_S HHExpFTub_Purch_MN_7D_S HHExpFTub_GiftAid_7D_S HHExpFTub_GiftAid_MN_7D_S HHExpFTub_Own_7D_S HHExpFTub_Own_MN_7D_S HHExpFPuls_Purch_7D_S HHExpFPuls_Purch_MN_7D_S HHExpFPuls_GiftAid_7D_S HHExpFPuls_GiftAid_MN_7D_S HHExpFPuls_Own_7D_S HHExpFPuls_Own_MN_7D_S HHExpFVegFrt_Purch_7D_S HHExpFVegFrt_Purch_MN_7D_S HHExpFVegFrt_GiftAid_7D_S HHExpFVegFrt_GiftAid_MN_7D_S HHExpFVegFrt_Own_7D_S HHExpFVegFrt_Own_MN_7D_S HHExpFAnimMeatFishEgg_Purch_7D_S HHExpFAnimMeatFishEgg_Purch_MN_7 HHExpFAnimMeatFishEgg_GiftAid_7D HHExpFAnimMeatFishEgg_GiftAid_MN HHExpFAnimMeatFishEgg_Own_7D_S HHExpFAnimMeatFishEgg_Own_MN_7D_ HHExpFFatsDairy_Purch_7D_S HHExpFFatsDairy_Purch_MN_7D_S HHExpFFatsDairy_GiftAid_7D_S HHExpFFatsDairy_GiftAid_MN_7D_S HHExpFFatsDairy_Own_7D_S HHExpFFatsDairy_Own_MN_7D_S HHExpFSgrCond_Purch_7D_S HHExpFSgrCond_Purch_MN_7D_S HHExpFSgrCond_GiftAid_7D_S HHExpFSgrCond_GiftAid_MN_7D_S HHExpFSgrCond_Own_7D_S HHExpFSgrCond_Own_MN_7D_S HHExpFBev_Purch_7D_S HHExpFBev_Purch_MN_7D_S HHExpFBev_GiftAid_7D_S HHExpFBev_GiftAid_MN_7D_S HHExpFBev_Own_7D_S HHExpFBev_Own_MN_7D_S HHExpFOut_Purch_7D_S HHExpFOut_Purch_MN_7D_S HHExpFOut_GiftAid_7D_S HHExpFOut_GiftAid_MN_7D_S HHExpFOut_Own_7D_S HHExpFOut_Own_MN_7D_S HHExpNFHyg_Purch_1M_S HHExpNFHyg_Purch_MN_1M_S HHExpNFHyg_GiftAid_1M_S HHExpNFHyg_GiftAid_MN_1M_S HHExpNFTranspFuel_Purch_1M_S HHExpNFTranspFuel_Purch_MN_1M_S HHExpNFTranspFuel_GiftAid_1M_S HHExpNFTranspFuel_GiftAid_MN_1M_ HHExpNFEnerg_Purch_1M_S HHExpNFEnerg_Purch_MN_1M_S HHExpNFEnerg_GiftAid_1M_S HHExpNFEnerg_GiftAid_MN_1M_S HHExpNFWat_Purch_1M_S HHExpNFWat_Purch_MN_1M_S HHExpNFWat_GiftAid_1M_S HHExpNFWat_GiftAid_MN_1M_S HHExpNFDwelSer_Purch_1M_S HHExpNFDwelSer_Purch_MN_1M_S HHExpNFDwelSer_GiftAid_1M_S HHExpNFDwelSer_GiftAid_MN_1M_S HHExpNFPhone_Purch_1M_S HHExpNFPhone_Purch_MN_1M_S HHExpNFPhone_GiftAid_1M_S HHExpNFPhone_GiftAid_MN_1M_S HHExpNFRecr_Purch_1M_S HHExpNFRecr_Purch_MN_1M_S HHExpNFRecr_GiftAid_1M_S HHExpNFRecr_GiftAid_MN_1M_S HHExpNFAlcTobac_Purch_1M_S HHExpNFAlcTobac_Purch_MN_1M_S HHExpNFAlcTobac_GiftAid_1M_S HHExpNFAlcTobac_GiftAid_MN_1M_S HHExpNFMedServGood_Purch_6M_S HHExpNFMedServGood_Purch_MN_6M_S HHExpNFMedServGood_GiftAid_6M_S HHExpNFMedServGood_GiftAid_MN_6M HHExpNFCloth_Purch_6M_S HHExpNFCloth_Purch_MN_6M_S HHExpNFCloth_GiftAid_6M_S HHExpNFCloth_GiftAid_MN_6M_S HHExpNFEduFeeGood_Purch_6M_S HHExpNFEduFeeGood_Purch_MN_6M_S HHExpNFEduFeeGood_GiftAid_6M_S HHExpNFEduFeeGood_GiftAid_MN_6M_ HHExpNFRent_Purch_6M_S HHExpNFRent_Purch_MN_6M_S HHExpNFRent_GiftAid_6M_S HHExpNFRent_GiftAid_MN_6M_S HHExpNFHHSoftMaint_Purch_6M_S HHExpNFHHSoftMaint_Purch_MN_6M_S HHExpNFHHSoftMaint_GiftAid_6M_S HHExpNFHHSoftMaint_GiftAid_MN_6M HHAsstWFPCBTRecYN HHAsstWFPCBTRecTot HHAsstUNNGOCBTRecYN HHAsstUNNGOCBTRecTot HHAsstOthCBTRecYN HHAsstOthCBTRecTot HHAsstCBTCShare HHHOccupation HHInc_PCT HHIncNb HHIncFirst_SRi HHIncFirst_oth HHIncFirst_PCT HHIncSec_SRi HHIncSec_PCT HHIncThird_SRi HHIncThird_PCT TotHHInc_PCT HHIncF_PCT HHInc017_PCT HHIncChg HHHOccupation_S HHInc_PCT_S HHIncNb_S HHIncFirst_SRi_S HHIncFirst_oth_S HHIncF_PCT_S HHInc017_PCT_S HHIncChg_S FIESHHWorried FIESHHHealthy FIESHHFewFoods FIESHHSkipped FIESHHAteLess FIESHHRanOut HHSNoFood_FR FIESHHHungry HHSBedHung_FR FIESHHWholeDay HHSNotEat_FR FIESHHWorried_S FIESHHHealthy_S FIESHHFewFoods_S FIESHHSkipped_S FIESHHAteLess_S FIESHHRanOut_S FIESHHHungry_S FIESHHWholeDay_S HHDwellType HHDwellType_oth HHTenureType HHTenureType_oth HHTenureRisk HHRoomUsed HHWallType HHWallType_oth HHRoofType HHRoofType_oth HHFloorType HHFloorType_oth HHToiletType HHToiletType_oth HHToiletWho HHEnerCookStove HHEnerCookStove_oth HHEnerCookSRC HHEnerCookSRC_oth HHEnerLightSRC HHEnerLightSRC_oth HHWaterSRC HHWaterSRC_oth HHWaterLoc HHWaterDistMins WealthSimpleHouseholdItems WealthSimpleHouseholdItems_1 WealthSimpleHouseholdItems_2 WealthSimpleHouseholdItems_3 WealthSimpleHouseholdItems_4 WealthSimpleHouseholdItems_5 WealthBasicElecItems WealthBasicElecItems_1 WealthBasicElecItems_2 WealthBasicElecItems_3 WealthBasicElecItems_4 WealthBasicElecItems_5 WealthAdvElecItems WealthAdvElecItems_1 WealthAdvElecItems_2 WealthAdvElecItems_3 WealthAdvElecItems_4 WealthAdvElecItems_5 WealthTransportAssets WealthTransportAssets_1 WealthTransportAssets_2 WealthTransportAssets_3 WealthTransportAssets_4 WealthTransportAssets_5 MDDIHHPercSafe MDDIHHShInsec6M MDDIHHDiscrim PWMDDWStapCer PWMDDWStapRoo PWMDDWPulse PWMDDWNuts PWMDDWMilk PWMDDWDairy PWMDDWPrMeatO PWMDDWPrMeatF PWMDDWPrMeatPro PWMDDWPrMeatWhite PWMDDWPrFish PWMDDWPrEgg PWMDDWVegGre PWMDDWVegOrg PWMDDWFruitOrg PWMDDWVegOth PWMDDWFruitOth GE4FS_PresMmb Income_No_Permission Own_Decisions_Money Own_Decisions_Medical Own_Decisions_Relatives Own_Decisions_Friends Own_Bank_Account Have_Money_Saved Own_Property Own_Mobile You_Decide_Work Took_Money_No_Permission Permission_Local_Event Permission_Market Most_Time_Housework Housework_Prevented_Work Housework_Prevent_Education Harm Decide_Prevent_Pregnancy RESPPhNmbAlt RESPPhNmbAl2 comments audit instanceID Sys_id Sys_uuid Sys_submission_time HH_Index Sys_parent_table_name Sys_parent_index Sys_tags Sys_notes Sys_version Sys_duration Sys_submitted_by Sys_xform_id Dup Survey_Outcome HH_Final HH_TAG Consent Temp_Complete Attrition Duration_Min Modality ID_Length Form RESPHHH RESPFemale HHDisplaced RESPSingle RESPMarried HHDisable FemaleMale_Ratio FemaleMale_Ratio_1_5 R_Num_Dependent Dependency_Ratio Dep_Ratio_Cat Dep_Ratio_1_5 Dep_Ratio_2 RESPMeals_3More RESPFoodWorry RESPFS_EnoughFood RESPFS_LessPrefer RESPFS_LessMeal RESPFS_DayNoEat CARI_Meals CARI_Worry FCS FCSCat28 rCSI Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping LCS_Cat LCS_None LCS_Stress LCS_Crisis LCS_Emergency HHExp_Food_Purch_MN_7D HHExp_Food_GiftAid_MN_7D HHExp_Food_Own_MN_7D HHExpFoodTotal_7D HHExpFoodTotal_1M HHExp_NonFood_Purch_MN_1M HHExp_NonFood_GiftAid_MN_1M HHExp_NonFood_Purch_MN_6M HHExp_NonFood_GiftAid_MN_6M HHExpNFTotal_Purch_MN_1M HHExpNFTotal_GiftAid_MN_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES FES_Cat HHIncFirst_Accept HHIncFirst_Border HHIncFirst_Poor CARI_Inc CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4 HHInc_None HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50 HHInc_Reduce50More FCS_4pt_CARI CC_FES_Cat CARI_FES_Raw CARI_FES_Cat HH_Vul_FES CC_Inc_Cat CARI_Inc_Raw CARI_Inc_Cat HH_Vul_Income MDD_Staples MDD_Pulses MDD_NutsSeeds MDD_Dairies MDD_MeatFish MDD_Eggs MDD_LeafGVeg MDD_VitA MDD_OtherVeg MDD_OtherFruits MDD_Index MDD_Index_5 HHID_digits HHPhNmb RESPpart RESPpart_oth RESPAvailable RESPcallback RESPvoice RESPRelationHHH RESPRelationHHH_oth HHExpStap_MNCRD_7D HHExpStap_GiftAid_7D HHExpStap_Own_7D HHExpPro_MNCRD_7D HHExpPro_GiftAid_7D HHExpPro_Own_7D HHExpFruVeg_MNCRD_7D HHExpFruVeg_GiftAid_7D HHExpFruVeg_Own_7D HHExpFOther_MNCRD_7D HHExpFOther_GiftAid_7D HHExpFOther_Own_7D HHExpNF_GiftAid_YN1M HHExpNFHyg_MNCRD_1M HHExpNFTranspPh_MNCRD_1M HHExpNFTranspPh_GiftAid_1M HHExpNFUtilities_MNCRD_1M HHExpNFUtilities_GiftAid_1M HHExpNFAlcTobac_MNCRD_1M HHExpNFEduMedCloth_MNCRD_6M HHExpNFEduMedCloth_GiftAid_6M HHExpF_MNCRD_7D HHExpF_GiftAid_7D HHExpF_Own_7D HHExpNF_MNCRD_1M HHExpNF_GiftAid_1M remarks Outcome_Order HHExpNFEduMedCloth_MNCRD_1M HHExpNFEduMedCloth_GiftAid_1M S_Phase S_Assign_Modality S_Assign_Length S_Geo_Admin1 S_Geo_Admin3 S_Geo_Admin5 S_Gender S_Age S_Marital_Status S_HHSize S_Num_Under15 S_Num_Over60 S_Education S_HHDisable Completion:{txt}{p_end}
+2372 observations with missing values
+
+{p}note: ConsentRsn HHStatusOth Sys_parent_table_name Sys_tags Sys_notes RESPpart_oth RESPcallback RESPvoice RESPRelationHHH_oth dropped{p_end}
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} start end today deviceid SvyDate HHCoord Sys_HHCoord_latitude Sys_HHCoord_longitude Sys_HHCoord_altitude Sys_HHCoord_precision ADMIN1Name ADMIN3Name ADMIN5Name HHUrbRur EnuName EnuName_Display EnuSex sampleYN HHID_manual HHID calc_ID RESName RESPAge RESPSex RESPStatus ConsentYN HHStatus MDDIHHHDisplArrive MDDIHHDisplChoice HHhostDisp MDDIHHIdDoc HHSize count_resp RepeatPID_count R_Err_Resp R_Err_Head R_Err_Spouse R_Err_SpouseAge R_Err_ParentAge R_Err_ParentMinor R_Err_SameSex R_Num_Resp R_Num_Spouse R_Resp_Sex R_Resp_Age R_Num_Household R_RESPRelationHHH R_HHH_Sex R_HHH_Age R_HHH_Literate R_HHH_Education R_Num_Male R_Num_Female R_Num_Child R_Num_Boy R_Num_Girl R_Num_Senior R_Num_Adult MDDIHHDisabledNb MMDIHHHealthFac MMDIHHHealthFac_dist HHHealthAcMildNeed HHHealthAcMildTreat HHHealthAcMildWhy HHHealthAcMildWhy_oth HHHealthAcSevereNeed HHHealthAcSevereTreat HHHealthAcSevereWhy HHHealthAcSevereWhy_oth HHHealthChronNeed HHHealthChronTreat HHHealthChronWhy HHHealthChronWhy_oth HHHealthEmergNeed HHHealthEmergTreat HHHealthEmergWhy HHHealthEmergWhy_oth RESPFoodWorry_YN RESPPercFoodSec RESPPercFoodSec_1 RESPPercFoodSec_2 RESPPercFoodSec_3 RESPPercFoodSec_4 RESPMeals HHSNoFood HHSNoFood_FR_S HHSBedHung HHSBedHung_FR_S HHSNotEat HHSNotEat_FR_S FCSStap FCSPulse FCSDairy FCSPr FCSNPrMeatF FCSNPrMeatO FCSNPrFish FCSNPrEggs FCSVeg FCSNVegOrg FCSNVegGre FCSFruit FCSNFruiOrg FCSFat FCSSugar FCSCond FCS_check FCSG FCSStap_S FCSPulse_S FCSDairy_S FCSPr_S FCSVeg_S FCSFruit_S FCSFat_S FCSSugar_S FCSCond_S FCS_S FCSG_S rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIGenderMealAdult rCSIMealNb rCSI_check LcsEN_stress_DomAsset LcsEN_stress_CrdtFood LcsEN_stress_Saving LcsEN_stress_BorrowCash LhCSIEnAccess_stress LhCSIEnAccess_stress_1 LhCSIEnAccess_stress_2 LhCSIEnAccess_stress_3 LhCSIEnAccess_stress_4 LhCSIEnAccess_stress_5 LhCSIEnAccess_stress_6 LhCSIEnAccess_stress_7 LhCSIEnAccess_stress_8 LhCSIEnAccess_stress_999 LhCSIEnAccess_stress_oth LcsEN_crisis_ProdAssets LcsEN_crisis_HealthEdu LcsEN_crisis_OutSchool LhCSIEnAccess_crisis LhCSIEnAccess_crisis_1 LhCSIEnAccess_crisis_2 LhCSIEnAccess_crisis_3 LhCSIEnAccess_crisis_4 LhCSIEnAccess_crisis_5 LhCSIEnAccess_crisis_6 LhCSIEnAccess_crisis_7 LhCSIEnAccess_crisis_8 LhCSIEnAccess_crisis_999 LhCSIEnAccess_crisis_oth LcsEN_em_ChildWork LcsEN_em_Begged LcsEN_em_IllegalAct LhCSIEnAccess_em LhCSIEnAccess_em_1 LhCSIEnAccess_em_2 LhCSIEnAccess_em_3 LhCSIEnAccess_em_4 LhCSIEnAccess_em_5 LhCSIEnAccess_em_6 LhCSIEnAccess_em_7 LhCSIEnAccess_em_8 LhCSIEnAccess_em_999 LhCSIEnAccess_em_oth Lcs_stress_DomAsset Lcs_stress_CrdtFood Lcs_stress_Saving Lcs_stress_BorrowCash Lcs_crisis_ProdAssets Lcs_crisis_HealthEdu Lcs_crisis_OutSchool Lcs_em_ChildWork Lcs_em_Begged Lcs_em_IllegalAct HHExpFCer_Purch_7D HHExpFCer_Purch_MN_7D HHExpFCer_GiftAid_7D HHExpFCer_GiftAid_MN_7D HHExpFCer_Own_7D HHExpFCer_Own_MN_7D HHExpFTub_Purch_7D HHExpFTub_Purch_MN_7D HHExpFTub_GiftAid_7D HHExpFTub_GiftAid_MN_7D HHExpFTub_Own_7D HHExpFTub_Own_MN_7D HHExpFPuls_Purch_7D HHExpFPuls_Purch_MN_7D HHExpFPuls_GiftAid_7D HHExpFPuls_GiftAid_MN_7D HHExpFPuls_Own_7D HHExpFPuls_Own_MN_7D HHExpFVeg_Purch_7D HHExpFVeg_Purch_MN_7D HHExpFVeg_GiftAid_7D HHExpFVeg_GiftAid_MN_7D HHExpFVeg_Own_7D HHExpFVeg_Own_MN_7D HHExpFFrt_Purch_7D HHExpFFrt_Purch_MN_7D HHExpFFrt_GiftAid_7D HHExpFFrt_GiftAid_MN_7D HHExpFFrt_Own_7D HHExpFFrt_Own_MN_7D HHExpFAnimMeat_Purch_7D HHExpFAnimMeat_Purch_MN_7D HHExpFAnimMeat_GiftAid_7D HHExpFAnimMeat_GiftAid_MN_7D HHExpFAnimMeat_Own_7D HHExpFAnimMeat_Own_MN_7D HHExpFAnimFish_Purch_7D HHExpFAnimFish_Purch_MN_7D HHExpFAnimFish_GiftAid_7D HHExpFAnimFish_GiftAid_MN_7D HHExpFAnimFish_Own_7D HHExpFAnimFish_Own_MN_7D HHExpFFats_Purch_7D HHExpFFats_Purch_MN_7D HHExpFFats_GiftAid_7D HHExpFFats_GiftAid_MN_7D HHExpFFats_Own_7D HHExpFFats_Own_MN_7D HHExpFDairy_Purch_7D HHExpFDairy_Purch_MN_7D HHExpFDairy_GiftAid_7D HHExpFDairy_GiftAid_MN_7D HHExpFDairy_Own_7D HHExpFDairy_Own_MN_7D HHExpFEgg_Purch_7D HHExpFEgg_Purch_MN_7D HHExpFEgg_GiftAid_7D HHExpFEgg_GiftAid_MN_7D HHExpFEgg_Own_7D HHExpFEgg_Own_MN_7D HHExpFSgr_Purch_7D HHExpFSgr_Purch_MN_7D HHExpFSgr_GiftAid_7D HHExpFSgr_GiftAid_MN_7D HHExpFSgr_Own_7D HHExpFSgr_Own_MN_7D HHExpFCond_Purch_7D HHExpFCond_Purch_MN_7D HHExpFCond_GiftAid_7D HHExpFCond_GiftAid_MN_7D HHExpFCond_Own_7D HHExpFCond_Own_MN_7D HHExpFBev_Purch_7D HHExpFBev_Purch_MN_7D HHExpFBev_GiftAid_7D HHExpFBev_GiftAid_MN_7D HHExpFBev_Own_7D HHExpFBev_Own_MN_7D HHExpFOut_Purch_7D HHExpFOut_Purch_MN_7D HHExpFOut_GiftAid_7D HHExpFOut_GiftAid_MN_7D HHExpFOut_Own_7D HHExpFOut_Own_MN_7D HHExpNFHyg_Purch_1M HHExpNFHyg_Purch_MN_1M HHExpNFHyg_GiftAid_1M HHExpNFHyg_GiftAid_MN_1M HHExpNFTransp_Purch_1M HHExpNFTransp_Purch_MN_1M HHExpNFTransp_GiftAid_1M HHExpNFTransp_GiftAid_MN_1M HHExpNFFuel_Purch_1M HHExpNFFuel_Purch_MN_1M HHExpNFFuel_GiftAid_1M HHExpNFFuel_GiftAid_MN_1M HHExpNFWat_Purch_1M HHExpNFWat_Purch_MN_1M HHExpNFWat_GiftAid_1M HHExpNFWat_GiftAid_MN_1M HHExpNFEnerg_Purch_1M HHExpNFEnerg_Purch_MN_1M HHExpNFEnerg_GiftAid_1M HHExpNFEnerg_GiftAid_MN_1M HHExpNFDwelSer_Purch_1M HHExpNFDwelSer_Purch_MN_1M HHExpNFDwelSer_GiftAid_1M HHExpNFDwelSer_GiftAid_MN_1M HHExpNFPhone_Purch_1M HHExpNFPhone_Purch_MN_1M HHExpNFPhone_GiftAid_1M HHExpNFPhone_GiftAid_MN_1M HHExpNFRecr_Purch_1M HHExpNFRecr_Purch_MN_1M HHExpNFRecr_GiftAid_1M HHExpNFRecr_GiftAid_MN_1M HHExpNFAlcTobac_Purch_1M HHExpNFAlcTobac_Purch_MN_1M HHExpNFAlcTobac_GiftAid_1M HHExpNFAlcTobac_GiftAid_MN_1M HHExpNFMedServ_Purch_6M HHExpNFMedServ_Purch_MN_6M HHExpNFMedServ_GiftAid_6M HHExpNFMedServ_GiftAid_MN_6M HHExpNFMedGood_Purch_6M HHExpNFMedGood_Purch_MN_6M HHExpNFMedGood_GiftAid_6M HHExpNFMedGood_GiftAid_MN_6M HHExpNFCloth_Purch_6M HHExpNFCloth_Purch_MN_6M HHExpNFCloth_GiftAid_6M HHExpNFCloth_GiftAid_MN_6M HHExpNFEduFee_Purch_6M HHExpNFEduFee_Purch_MN_6M HHExpNFEduFee_GiftAid_6M HHExpNFEduFee_GiftAid_MN_6M HHExpNFEduGood_Purch_6M HHExpNFEduGood_Purch_MN_6M HHExpNFEduGood_GiftAid_6M HHExpNFEduGood_GiftAid_MN_6M HHExpNFRent_Purch_6M HHExpNFRent_Purch_MN_6M HHExpNFRent_GiftAid_6M HHExpNFRent_GiftAid_MN_6M HHExpNFHHSoft_Purch_6M HHExpNFHHSoft_Purch_MN_6M HHExpNFHHSoft_GiftAid_6M HHExpNFHHSoft_GiftAid_MN_6M HHExpNFHHMaint_Purch_6M HHExpNFHHMaint_Purch_MN_6M HHExpNFHHMaint_GiftAid_6M HHExpNFHHMaint_GiftAid_MN_6M HHExpFCer_Purch_7D_S HHExpFCer_Purch_MN_7D_S HHExpFCer_GiftAid_7D_S HHExpFCer_GiftAid_MN_7D_S HHExpFCer_Own_7D_S HHExpFCer_Own_MN_7D_S HHExpFTub_Purch_7D_S HHExpFTub_Purch_MN_7D_S HHExpFTub_GiftAid_7D_S HHExpFTub_GiftAid_MN_7D_S HHExpFTub_Own_7D_S HHExpFTub_Own_MN_7D_S HHExpFPuls_Purch_7D_S HHExpFPuls_Purch_MN_7D_S HHExpFPuls_GiftAid_7D_S HHExpFPuls_GiftAid_MN_7D_S HHExpFPuls_Own_7D_S HHExpFPuls_Own_MN_7D_S HHExpFVegFrt_Purch_7D_S HHExpFVegFrt_Purch_MN_7D_S HHExpFVegFrt_GiftAid_7D_S HHExpFVegFrt_GiftAid_MN_7D_S HHExpFVegFrt_Own_7D_S HHExpFVegFrt_Own_MN_7D_S HHExpFAnimMeatFishEgg_Purch_7D_S HHExpFAnimMeatFishEgg_Purch_MN_7 HHExpFAnimMeatFishEgg_GiftAid_7D HHExpFAnimMeatFishEgg_GiftAid_MN HHExpFAnimMeatFishEgg_Own_7D_S HHExpFAnimMeatFishEgg_Own_MN_7D_ HHExpFFatsDairy_Purch_7D_S HHExpFFatsDairy_Purch_MN_7D_S HHExpFFatsDairy_GiftAid_7D_S HHExpFFatsDairy_GiftAid_MN_7D_S HHExpFFatsDairy_Own_7D_S HHExpFFatsDairy_Own_MN_7D_S HHExpFSgrCond_Purch_7D_S HHExpFSgrCond_Purch_MN_7D_S HHExpFSgrCond_GiftAid_7D_S HHExpFSgrCond_GiftAid_MN_7D_S HHExpFSgrCond_Own_7D_S HHExpFSgrCond_Own_MN_7D_S HHExpFBev_Purch_7D_S HHExpFBev_Purch_MN_7D_S HHExpFBev_GiftAid_7D_S HHExpFBev_GiftAid_MN_7D_S HHExpFBev_Own_7D_S HHExpFBev_Own_MN_7D_S HHExpFOut_Purch_7D_S HHExpFOut_Purch_MN_7D_S HHExpFOut_GiftAid_7D_S HHExpFOut_GiftAid_MN_7D_S HHExpFOut_Own_7D_S HHExpFOut_Own_MN_7D_S HHExpNFHyg_Purch_1M_S HHExpNFHyg_Purch_MN_1M_S HHExpNFHyg_GiftAid_1M_S HHExpNFHyg_GiftAid_MN_1M_S HHExpNFTranspFuel_Purch_1M_S HHExpNFTranspFuel_Purch_MN_1M_S HHExpNFTranspFuel_GiftAid_1M_S HHExpNFTranspFuel_GiftAid_MN_1M_ HHExpNFEnerg_Purch_1M_S HHExpNFEnerg_Purch_MN_1M_S HHExpNFEnerg_GiftAid_1M_S HHExpNFEnerg_GiftAid_MN_1M_S HHExpNFWat_Purch_1M_S HHExpNFWat_Purch_MN_1M_S HHExpNFWat_GiftAid_1M_S HHExpNFWat_GiftAid_MN_1M_S HHExpNFDwelSer_Purch_1M_S HHExpNFDwelSer_Purch_MN_1M_S HHExpNFDwelSer_GiftAid_1M_S HHExpNFDwelSer_GiftAid_MN_1M_S HHExpNFPhone_Purch_1M_S HHExpNFPhone_Purch_MN_1M_S HHExpNFPhone_GiftAid_1M_S HHExpNFPhone_GiftAid_MN_1M_S HHExpNFRecr_Purch_1M_S HHExpNFRecr_Purch_MN_1M_S HHExpNFRecr_GiftAid_1M_S HHExpNFRecr_GiftAid_MN_1M_S HHExpNFAlcTobac_Purch_1M_S HHExpNFAlcTobac_Purch_MN_1M_S HHExpNFAlcTobac_GiftAid_1M_S HHExpNFAlcTobac_GiftAid_MN_1M_S HHExpNFMedServGood_Purch_6M_S HHExpNFMedServGood_Purch_MN_6M_S HHExpNFMedServGood_GiftAid_6M_S HHExpNFMedServGood_GiftAid_MN_6M HHExpNFCloth_Purch_6M_S HHExpNFCloth_Purch_MN_6M_S HHExpNFCloth_GiftAid_6M_S HHExpNFCloth_GiftAid_MN_6M_S HHExpNFEduFeeGood_Purch_6M_S HHExpNFEduFeeGood_Purch_MN_6M_S HHExpNFEduFeeGood_GiftAid_6M_S HHExpNFEduFeeGood_GiftAid_MN_6M_ HHExpNFRent_Purch_6M_S HHExpNFRent_Purch_MN_6M_S HHExpNFRent_GiftAid_6M_S HHExpNFRent_GiftAid_MN_6M_S HHExpNFHHSoftMaint_Purch_6M_S HHExpNFHHSoftMaint_Purch_MN_6M_S HHExpNFHHSoftMaint_GiftAid_6M_S HHExpNFHHSoftMaint_GiftAid_MN_6M HHAsstWFPCBTRecYN HHAsstWFPCBTRecTot HHAsstUNNGOCBTRecYN HHAsstUNNGOCBTRecTot HHAsstOthCBTRecYN HHAsstOthCBTRecTot HHAsstCBTCShare HHHOccupation HHInc_PCT HHIncNb HHIncFirst_SRi HHIncFirst_oth HHIncFirst_PCT HHIncSec_SRi HHIncSec_PCT HHIncThird_SRi HHIncThird_PCT TotHHInc_PCT HHIncF_PCT HHInc017_PCT HHIncChg HHHOccupation_S HHInc_PCT_S HHIncNb_S HHIncFirst_SRi_S HHIncFirst_oth_S HHIncF_PCT_S HHInc017_PCT_S HHIncChg_S FIESHHWorried FIESHHHealthy FIESHHFewFoods FIESHHSkipped FIESHHAteLess FIESHHRanOut HHSNoFood_FR FIESHHHungry HHSBedHung_FR FIESHHWholeDay HHSNotEat_FR FIESHHWorried_S FIESHHHealthy_S FIESHHFewFoods_S FIESHHSkipped_S FIESHHAteLess_S FIESHHRanOut_S FIESHHHungry_S FIESHHWholeDay_S HHDwellType HHDwellType_oth HHTenureType HHTenureType_oth HHTenureRisk HHRoomUsed HHWallType HHWallType_oth HHRoofType HHRoofType_oth HHFloorType HHFloorType_oth HHToiletType HHToiletType_oth HHToiletWho HHEnerCookStove HHEnerCookStove_oth HHEnerCookSRC HHEnerCookSRC_oth HHEnerLightSRC HHEnerLightSRC_oth HHWaterSRC HHWaterSRC_oth HHWaterLoc HHWaterDistMins WealthSimpleHouseholdItems WealthSimpleHouseholdItems_1 WealthSimpleHouseholdItems_2 WealthSimpleHouseholdItems_3 WealthSimpleHouseholdItems_4 WealthSimpleHouseholdItems_5 WealthBasicElecItems WealthBasicElecItems_1 WealthBasicElecItems_2 WealthBasicElecItems_3 WealthBasicElecItems_4 WealthBasicElecItems_5 WealthAdvElecItems WealthAdvElecItems_1 WealthAdvElecItems_2 WealthAdvElecItems_3 WealthAdvElecItems_4 WealthAdvElecItems_5 WealthTransportAssets WealthTransportAssets_1 WealthTransportAssets_2 WealthTransportAssets_3 WealthTransportAssets_4 WealthTransportAssets_5 MDDIHHPercSafe MDDIHHShInsec6M MDDIHHDiscrim PWMDDWStapCer PWMDDWStapRoo PWMDDWPulse PWMDDWNuts PWMDDWMilk PWMDDWDairy PWMDDWPrMeatO PWMDDWPrMeatF PWMDDWPrMeatPro PWMDDWPrMeatWhite PWMDDWPrFish PWMDDWPrEgg PWMDDWVegGre PWMDDWVegOrg PWMDDWFruitOrg PWMDDWVegOth PWMDDWFruitOth GE4FS_PresMmb Income_No_Permission Own_Decisions_Money Own_Decisions_Medical Own_Decisions_Relatives Own_Decisions_Friends Own_Bank_Account Have_Money_Saved Own_Property Own_Mobile You_Decide_Work Took_Money_No_Permission Permission_Local_Event Permission_Market Most_Time_Housework Housework_Prevented_Work Housework_Prevent_Education Harm Decide_Prevent_Pregnancy RESPPhNmbAlt RESPPhNmbAl2 comments audit instanceID Sys_id Sys_uuid Sys_submission_time HH_Index Sys_parent_index Sys_version Sys_duration Sys_submitted_by Sys_xform_id Dup Survey_Outcome HH_Final HH_TAG Consent Temp_Complete Attrition Duration_Min Modality ID_Length Form RESPHHH RESPFemale HHDisplaced RESPSingle RESPMarried HHDisable FemaleMale_Ratio FemaleMale_Ratio_1_5 R_Num_Dependent Dependency_Ratio Dep_Ratio_Cat Dep_Ratio_1_5 Dep_Ratio_2 RESPMeals_3More RESPFoodWorry RESPFS_EnoughFood RESPFS_LessPrefer RESPFS_LessMeal RESPFS_DayNoEat CARI_Meals CARI_Worry FCS FCSCat28 rCSI Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping LCS_Cat LCS_None LCS_Stress LCS_Crisis LCS_Emergency HHExp_Food_Purch_MN_7D HHExp_Food_GiftAid_MN_7D HHExp_Food_Own_MN_7D HHExpFoodTotal_7D HHExpFoodTotal_1M HHExp_NonFood_Purch_MN_1M HHExp_NonFood_GiftAid_MN_1M HHExp_NonFood_Purch_MN_6M HHExp_NonFood_GiftAid_MN_6M HHExpNFTotal_Purch_MN_1M HHExpNFTotal_GiftAid_MN_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES FES_Cat HHIncFirst_Accept HHIncFirst_Border HHIncFirst_Poor CARI_Inc CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4 HHInc_None HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50 HHInc_Reduce50More FCS_4pt_CARI CC_FES_Cat CARI_FES_Raw CARI_FES_Cat HH_Vul_FES CC_Inc_Cat CARI_Inc_Raw CARI_Inc_Cat HH_Vul_Income MDD_Staples MDD_Pulses MDD_NutsSeeds MDD_Dairies MDD_MeatFish MDD_Eggs MDD_LeafGVeg MDD_VitA MDD_OtherVeg MDD_OtherFruits MDD_Index MDD_Index_5 HHID_digits HHPhNmb RESPpart RESPAvailable RESPRelationHHH HHExpStap_MNCRD_7D HHExpStap_GiftAid_7D HHExpStap_Own_7D HHExpPro_MNCRD_7D HHExpPro_GiftAid_7D HHExpPro_Own_7D HHExpFruVeg_MNCRD_7D HHExpFruVeg_GiftAid_7D HHExpFruVeg_Own_7D HHExpFOther_MNCRD_7D HHExpFOther_GiftAid_7D HHExpFOther_Own_7D HHExpNF_GiftAid_YN1M HHExpNFHyg_MNCRD_1M HHExpNFTranspPh_MNCRD_1M HHExpNFTranspPh_GiftAid_1M HHExpNFUtilities_MNCRD_1M HHExpNFUtilities_GiftAid_1M HHExpNFAlcTobac_MNCRD_1M HHExpNFEduMedCloth_MNCRD_6M HHExpNFEduMedCloth_GiftAid_6M HHExpF_MNCRD_7D HHExpF_GiftAid_7D HHExpF_Own_7D HHExpNF_MNCRD_1M HHExpNF_GiftAid_1M remarks Outcome_Order HHExpNFEduMedCloth_MNCRD_1M HHExpNFEduMedCloth_GiftAid_1M S_Phase S_Assign_Modality S_Assign_Length S_Geo_Admin1 S_Geo_Admin3 S_Geo_Admin5 S_Gender S_Age S_Marital_Status S_HHSize S_Num_Under15 S_Num_Over60 S_Education S_HHDisable Completion:{txt}{p_end}
+2372 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         ** Define and Format Strings
+. gl other_specify EnuName_Display HHHealthAcMildWhy_oth HHHealthAcSevereWhy_oth  ///
+>    HHHealthChronWhy_oth HHHealthEmergWhy_oth LhCSIEnAccess_stress_oth               ///
+>    LhCSIEnAccess_crisis_oth LhCSIEnAccess_em_oth HHHOccupation HHIncFirst_oth   ///
+>    HHDwellType_oth HHTenureType_oth HHWallType_oth HHRoofType_oth HHFloorType_oth ///
+>    HHToiletType_oth HHEnerCookStove_oth HHEnerCookSRC_oth HHEnerLightSRC_oth    ///
+>    HHWaterSRC_oth comments remarks
+{txt}
+{com}.         
+.         ** remove unnecessary blanks in string and adjust the proper cases
+. foreach var of global other_specify {c -(}
+{txt}  2{com}.     replace `var' = strproper(strtrim(`var'))
+{txt}  3{com}.     {c )-}
+{txt}(1,416 real changes made)
+(41 real changes made)
+(13 real changes made)
+(16 real changes made)
+(3 real changes made)
+(15 real changes made)
+(14 real changes made)
+(4 real changes made)
+(661 real changes made)
+(0 real changes made)
+(20 real changes made)
+(26 real changes made)
+(30 real changes made)
+(9 real changes made)
+(11 real changes made)
+(8 real changes made)
+(47 real changes made)
+(0 real changes made)
+(12 real changes made)
+(27 real changes made)
+(443 real changes made)
+(126 real changes made)
+
+{com}. 
+.         export excel HHID ${c -(}other_specify{c )-}                                                      ///
+>                    using "${c -(}note{c )-}/Ecuador_other_specify_raw.xlsx",              ///
+>                    firstrow(variables) replace
+{res}{txt}file {bf:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/5_Field_notes/Ecuador_other_specify_raw.xlsx} saved
+
+{com}.         
+.         ** check duplicated labels
+.         labeldup
+
+{txt}13 sets of duplicate value labels found:
+
+{p 0 11}{txt}Dupset {space 1}1: {res:{ul:EnuSex}  PSex RESPSex}{p_end}
+{p 0 11}{txt}Dupset {space 1}2: {res:{ul:Length_Type_byte}  length_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}3: {res:{ul:ConsentYN}  HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN HHExpFAnimFish_GiftAid_7D HHExpFAnimFish_Own_7D HHExpFAnimFish_Purch_7D HHExpFAnimMeat_GiftAid_7D HHExpFAnimMeat_Own_7D HHExpFAnimMeat_Purch_7D HHExpFBev_GiftAid_7D HHExpFBev_GiftAid_7D_S HHExpFBev_Own_7D HHExpFBev_Own_7D_S HHExpFBev_Purch_7D HHExpFBev_Purch_7D_S HHExpFCer_GiftAid_7D HHExpFCer_GiftAid_7D_S HHExpFCer_Own_7D HHExpFCer_Own_7D_S HHExpFCer_Purch_7D HHExpFCer_Purch_7D_S HHExpFCond_GiftAid_7D HHExpFCond_Own_7D HHExpFCond_Purch_7D HHExpFDairy_GiftAid_7D HHExpFDairy_Own_7D HHExpFDairy_Purch_7D HHExpFEgg_GiftAid_7D HHExpFEgg_Own_7D HHExpFEgg_Purch_7D HHExpFFatsDairy_GiftAid_7D_S HHExpFFatsDairy_Own_7D_S HHExpFFatsDairy_Purch_7D_S HHExpFFats_GiftAid_7D HHExpFFats_Own_7D HHExpFFats_Purch_7D HHExpFFrt_GiftAid_7D HHExpFFrt_Own_7D HHExpFFrt_Purch_7D HHExpFOut_GiftAid_7D HHExpFOut_GiftAid_7D_S HHExpFOut_Own_7D HHExpFOut_Own_7D_S HHExpFOut_Purch_7D HHExpFOut_Purch_7D_S HHExpFPro_GiftAid_7D HHExpFPro_Own_7D_S HHExpFPro_Purch_7D_S HHExpFPuls_GiftAid_7D HHExpFPuls_GiftAid_7D_S HHExpFPuls_Own_7D HHExpFPuls_Own_7D_S HHExpFPuls_Purch_7D HHExpFPuls_Purch_7D_S HHExpFSgrCond_GiftAid_7D_S HHExpFSgrCond_Own_7D_S HHExpFSgrCond_Purch_7D_S HHExpFSgr_GiftAid_7D HHExpFSgr_Own_7D HHExpFSgr_Purch_7D HHExpFTub_GiftAid_7D HHExpFTub_GiftAid_7D_S HHExpFTub_Own_7D HHExpFTub_Own_7D_S HHExpFTub_Purch_7D HHExpFTub_Purch_7D_S HHExpFVegFrt_GiftAid_7D_S HHExpFVegFrt_Own_7D_S HHExpFVegFrt_Purch_7D_S HHExpFVeg_GiftAid_7D HHExpFVeg_Own_7D HHExpFVeg_Purch_7D HHExpNFAlcTobac_GiftAid_1M HHExpNFAlcTobac_GiftAid_1M_S HHExpNFAlcTobac_Purch_1M HHExpNFAlcTobac_Purch_1M_S HHExpNFCloth_GiftAid_6M HHExpNFCloth_GiftAid_6M_S HHExpNFCloth_Purch_6M HHExpNFCloth_Purch_6M_S HHExpNFDwelSer_GiftAid_1M HHExpNFDwelSer_GiftAid_1M_S HHExpNFDwelSer_Purch_1M HHExpNFDwelSer_Purch_1M_S HHExpNFEduFeeGood_Purch_6M_S HHExpNFEduFee_GiftAid_6M HHExpNFEduFee_Purch_6M HHExpNFEduGood_GiftAid_6M HHExpNFEduGood_Purch_6M HHExpNFEdu_GiftAid_6M_S HHExpNFEnerg_GiftAid_1M HHExpNFEnerg_GiftAid_1M_S HHExpNFEnerg_Purch_1M HHExpNFEnerg_Purch_1M_S HHExpNFFuel_GiftAid_1M HHExpNFFuel_Purch_1M HHExpNFHHMaint_GiftAid_6M HHExpNFHHMaint_Purch_6M HHExpNFHHSoftMaint_Purch_6M_S HHExpNFHHSoft_GiftAid_6M HHExpNFHHSoft_GiftAid_6M_S HHExpNFHHSoft_Purch_6M HHExpNFHyg_GiftAid_1M HHExpNFHyg_GiftAid_1M_S HHExpNFHyg_Purch_1M HHExpNFHyg_Purch_1M_S HHExpNFMedGood_GiftAid_6M HHExpNFMedGood_Purch_6M HHExpNFMedServGood_Purch_6M_S HHExpNFMedServ_GiftAid_6M HHExpNFMedServ_Purch_6M HHExpNFMed_GiftAid_6M_S HHExpNFPhone_GiftAid_1M HHExpNFPhone_GiftAid_1M_S HHExpNFPhone_Purch_1M HHExpNFPhone_Purch_1M_S HHExpNFRecr_GiftAid_1M HHExpNFRecr_GiftAid_1M_S HHExpNFRecr_Purch_1M HHExpNFRecr_Purch_1M_S HHExpNFRent_GiftAid_6M HHExpNFRent_GiftAid_6M_S HHExpNFRent_Purch_6M HHExpNFRent_Purch_6M_S HHExpNFTrans_GiftAid_1M_S HHExpNFTranspFuel_Purch_1M_S HHExpNFTransp_GiftAid_1M HHExpNFTransp_Purch_1M HHExpNFWat_GiftAid_1M HHExpNFWat_GiftAid_1M_S HHExpNFWat_Purch_1M HHExpNFWat_Purch_1M_S HHExpNF_GiftAid_YN1M HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M MMDIHHHealthFac PSchoolEver PWMDDWDairy PWMDDWFruitOrg PWMDDWFruitOth PWMDDWMilk PWMDDWNuts PWMDDWPrEgg PWMDDWPrFish PWMDDWPrMeatF PWMDDWPrMeatO PWMDDWPrMeatPro PWMDDWPrMeatWhite PWMDDWPulse PWMDDWStapCer PWMDDWStapRoo PWMDDWVegGre PWMDDWVegOrg PWMDDWVegOth RESPFoodWorry_YN RESPvoice YesNo sampleYN}{p_end}
+{p 0 11}{txt}Dupset {space 1}4: {res:{ul:HHSBedHung_FR}  HHSBedHung_FR_S HHSNoFood_FR HHSNoFood_FR_S HHSNotEat_FR HHSNotEat_FR_S}{p_end}
+{p 0 11}{txt}Dupset {space 1}5: {res:{ul:Lcs_crisis_HealthEdu}  Lcs_em_Begged}{p_end}
+{p 0 11}{txt}Dupset {space 1}6: {res:{ul:LcsEN_crisis_HealthEdu}  LcsEN_em_Begged}{p_end}
+{p 0 11}{txt}Dupset {space 1}7: {res:{ul:HHHealthAcMildTreat}  HHHealthAcSevereTreat HHHealthChronTreat HHHealthEmergTreat}{p_end}
+{p 0 11}{txt}Dupset {space 1}8: {res:{ul:FIESHHAteLess}  FIESHHAteLess_S FIESHHFewFoods FIESHHFewFoods_S FIESHHHealthy FIESHHHealthy_S FIESHHHungry FIESHHHungry_S FIESHHRanOut FIESHHRanOut_S FIESHHSkipped FIESHHSkipped_S FIESHHWholeDay FIESHHWholeDay_S FIESHHWorried FIESHHWorried_S HHHealthAcMildNeed HHHealthAcSevereNeed HHHealthChronNeed HHHealthEmergNeed Harm Housework_Prevent_Education Housework_Prevented_Work Own_Decisions_Medical Own_Decisions_Money Own_Mobile Own_Property Permission_Local_Event Permission_Market}{p_end}
+{p 0 11}{txt}Dupset {space 1}9: {res:{ul:HHHealthAcMildWhy}  HHHealthAcSevereWhy HHHealthChronWhy HHHealthEmergWhy}{p_end}
+{p 0 11}{txt}Dupset 10: {res:{ul:Decide_Prevent_Pregnancy}  Have_Money_Saved Income_No_Permission Own_Bank_Account Own_Decisions_Friends Own_Decisions_Relatives Took_Money_No_Permission}{p_end}
+{p 0 11}{txt}Dupset 11: {res:{ul:HHIncChg}  HHIncChg_S}{p_end}
+{p 0 11}{txt}Dupset 12: {res:{ul:PRelationHHH}  RESPRelationHHH}{p_end}
+{p 0 11}{txt}Dupset 13: {res:{ul:HHIncFirst_SRi}  HHIncFirst_SRi_S HHIncSec_SRi HHIncThird_SRi}{p_end}
+
+Specify option {cmd:select} to compress value labels using underlined labels
+Specify option {cmd:names()} to select other value names to be retained
+
+{com}.         
+.         * rename value labels
+.         labelrename EnuSex gender_label
+
+{txt}Value label {res:EnuSex} renamed to {res:gender_label}
+{p 0 8 2}{txt}value label {res:EnuSex} was attached to variables {res}EnuSex{p_end}
+{txt}
+{com}.         
+.         * add value labels
+.         label values RESPSex R_Resp_Sex gender_label
+{txt}
+{com}.         label values ConsentYN HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN ///
+>                                  HHExp*_Purch_7D* HHExp*_GiftAid_7D* HHExp*_Own_7D*                        ///  
+>                                  HHExp*_Purch_1M* HHExp*_GiftAid_1M*                                                       ///
+>                                  HHExp*_Purch_6M* HHExp*_GiftAid_6M*                                                       ///
+>                                  HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp                     ///
+>                                  MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M    ///
+>                                  MMDIHHHealthFac PWMDDW* RESPFoodWorry_YN sampleYN RESPFemale      ///
+>                                  RESPHHH YesNo
+{txt}
+{com}. 
+.         * adjust start and end time
+.         
+.         * save dataset
+.         compress
+  {txt}variable {bf}{res}Completion{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {bf}HHHealthAcMildWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHealthAcSevereWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHealthChronWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}LhCSIEnAccess_crisis_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHDwellType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHTenureType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHWallType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHFloorType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHEnerCookStove_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHWaterSRC_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}remarks{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (51,873 bytes saved)
+
+{com}.         iecodebook export using "${c -(}d_out{c )-}/Ecuador_Full_Codebook.xlsx", replace
+ 
+{res}Codebook for data created using {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/7_Output/Ecuador_Full_Codebook.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/7_Output/Ecuador_Full_Codebook.xlsx}
+{txt}
+{com}.         
+.         save     "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/4_Data/Ecuador_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         save     "${c -(}dta{c )-}/Ecuador_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/1_Data/Ecuador_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         save     "${c -(}all_dta{c )-}/Ecuador_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/Ecuador_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         // not date specific for tableau import consistency
+.         *savespss "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis.sav", replace
+.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.4     Run high-frequency checks
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_out{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `hfc_sum'            do "${c -(}d_dofile{c )-}/ed04_hfc_sum.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Ecuador                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create HFC and Summary Stats                                               *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun  20, 2023                                                                              *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+.         
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,307 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md04_hfc_sum_20230608.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 8 Jun 2023, 23:58:07
+{txt}
+{com}.         di `cdate'      
+{res}20230608
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/Myanmar_Full_Household_Analysis_`cdate'.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD27943.000000"
+{txt}
+{com}.         tab S_Assign_Modality   Modality
+
+             {txt}{c |} Survey Modality: F2F
+Modality_Typ {c |}      vs. Remote
+           e {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-to-Face {c |}{res}        27          0 {txt}{c |}{res}        27 
+{txt}      Remote {c |}{res}         0         40 {txt}{c |}{res}        40 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}        27         40 {txt}{c |}{res}        67 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+           {txt}{c |}  Form Type: Long vs.
+Length_Typ {c |}         Short
+         e {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}        31          0 {txt}{c |}{res}        31 
+{txt}Short Form {c |}{res}         0         36 {txt}{c |}{res}        36 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}        31         36 {txt}{c |}{res}        67 
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab HHTenureType
+
+                {txt}2. What is your housing {c |}
+            occupancy/ownership status? {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+        Tenant/rent (Written agreement) {c |}{res}          4       14.81       14.81
+{txt}     Tenant/rent (No written agreement) {c |}{res}          4       14.81       29.63
+{txt}   Staying for free (Written Agreement) {c |}{res}          7       25.93       55.56
+{txt}Staying for free (No Written Agreement) {c |}{res}          9       33.33       88.89
+{txt}                        Other (specify) {c |}{res}          3       11.11      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}         27      100.00
+
+{com}. tab EnuName if HHTenureType_oth == "Camp"
+
+           {txt}f. Name of {c |}
+  interviewer (or ID) {c |}      Freq.     Percent        Cum.
+{hline 22}{c +}{hline 35}
+              Nay Win {c |}{res}          1      100.00      100.00
+{txt}{hline 22}{c +}{hline 35}
+                Total {c |}{res}          1      100.00
+
+{com}. tab Sys_uuid if HHTenureType_oth == "Camp"
+
+                               {txt}_uuid {c |}      Freq.     Percent        Cum.
+{hline 37}{c +}{hline 35}
+688bca95-3f7f-40dd-9a73-d707409852a6 {c |}{res}          1      100.00      100.00
+{txt}{hline 37}{c +}{hline 35}
+                               Total {c |}{res}          1      100.00
+
+{com}. 
+. 
+. help twoway
+
+. twoway bar EnuName HHSize, colorvar(EnuName)
+{res}
+{com}. twoway bar RESPAge HHSize, colorvar(EnuName)
+{res}
+{com}. twoway bar EnuName HHSize, colorvar(EnuName_Display)
+{err}'EnuName_Display' found where numeric variable expected
+{txt}{search r(7), local:r(7);}
+
+{com}. twoway bar FCS FES, colorvar(HHSize)
+{res}
+{com}. twoway bar EnuName HHSize, colorvar(EnuName_Display)
+{err}'EnuName_Display' found where numeric variable expected
+{txt}{search r(7), local:r(7);}
+
+{com}. twoway bar FCS FES, colorvar(HHSize)
+{res}
+{com}. help graph
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD27943.000000"
+{txt}
+{com}.         graph box HHSize, by(Modality) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)2100, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD27943.000000"
+{txt}
+{com}.         ** 2 Survey Duration: Doesn't Work and can be ignored for now   
+.         graph box HHSize, by(Modality) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(2)10, nogrid labsize(3))  ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD27943.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 12, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   correct                 1       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   1       // Set up datasets
+{txt}
+{com}.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   append                  1       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 1       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}myanmar{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}myanmar{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}myanmar{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}myanmar{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}myanmar{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}. 
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.0 Correct field errors
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.csv
+. *                                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_F2F_Roster_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_RM_Household_Correct_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `correct'            do "${c -(}d_dofile{c )-}/md00a_f2f_correct.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Myanmar                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for F2F Household                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 11, 2023                                                                               *
+> *  LATEST UPDATE:               May 15, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

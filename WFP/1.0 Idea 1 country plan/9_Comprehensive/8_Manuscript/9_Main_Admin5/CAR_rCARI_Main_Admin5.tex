@@ -1,0 +1,503 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT DO NOT SHARE \\ \\STRICTLY FOR INTERNAL USE}
+\SetWatermarkFontSize{5cm}
+\SetWatermarkScale{0.30}
+\SetWatermarkColor[gray]{0.80}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
+\usepackage{indentfirst}
+\usepackage{afterpage}
+
+
+
+
+\author{rCARI validation study team-RAMN}
+\date{\today}
+\title{Validation and Calibration of the Remote Consolidated Approach of Reporting on Food Security (rCARI) Methodology 
+	\\ {\normalsize Preliminary results from the Central African Republic (CAR) pilot study based on a subsample aggregated at ADMIN5} 
+	\\{\normalsize{Version 2.0}} }
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+	\tableofcontents
+	\pagebreak
+	
+% -------
+	
+\textbf{Summary of the Key Points of the Results}
+
+The results show that; 
+\begin{itemize}
+	\item Households without mobile phones (those conventionally excluded in CATI surveys) are significantly more food insecure (more than 37\% points) regardless of the CARI calculation methodology used. 
+	\item The standard rCARI methodology (income choice and income change variable) tend to significantly underestimates AFI (Acute Food Insecurity) compared to the conventional CARI methodology-driven largely by the income indicator (difference is up to 20\% points).
+	\item The replacing the FES indicator with the income source \& income change indicator leads to lower food insecurity numbers (between 16\% and 24\% points).
+	\item Households, generally tend to report better food consumption (better FCS) and worse coping (LCS \& rCSI) over the phone than they report in F2F.
+	\item The form (questionnaire) length does not have any statistical effect on AFI classification.
+	\item Phone ownership has a significant influence on AFI classification (the effect ranges between 14\% to 21\% depending on whether FES or Income indicator is used). 
+	\item Survey modality on the other hand is found not have any statistical effect.
+\end{itemize}
+
+\pagebreak
+
+% ------- 
+\section{Introduction}
+
+This report presents the analysis for a restricted sample that is made of ADMIN5 areas with at least 10 completed remote interviews. This sub-analysis is to control for the disproportionate response rate between remote and F2F (some ADMIN5 either no mobile ownership or did not have respondents completing the remote survey).
+
+Figure 1 shows the distribution of households that completed both survey modalities at the Admin5 level.
+
+ \begin{figure}[H]
+ 	\begin{center}
+ 		\includegraphics[scale=.275]{2_figure/HH_Distribution.png}
+ 	\end{center}
+ 	\label{fig:Sample_Frame}
+ 	\caption{Distributions of completed interviews in the study area}
+ \end{figure}
+ 
+ 
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table by Randomized Survey Modality: Face-to-Face vs. Remote for Completed Surveys}
+			\scriptsize
+			\input{1_table/CAR_Listing_Demo_Balance_Modality_Complete} 
+			\label{tab:CAR_Listing_Demo_Balance_Modality_Complete}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+Table 1 presents the results of the balance test for completed households based on how the households aggregate at the ADMIN5 level. The results, show that large the subsamples are balanced except for head of household education and the household size which is higher in the favour of the remote samples. 
+
+\pagebreak
+
+% ---------
+\section{Main Results using the restricted subsample}
+	
+In this section, the main results of the study aggregated by the food. A test of group means using student t-test of equivalence is performed. The comparison is at the subsample level of phone-ownership, no phone, and the combined full sample. 
+	
+\subsection{CARI vs. rCARI}
+
+Conventional/standard CARI (CARI-FES): Standard CARI console using FES from F2F surveys.
+
+Different CARI calculation consoles to be tested in the analysis
+\begin{itemize}[label=--, left=1.5em]
+	\item rCARI-FES: Standard CARI using FES from remote surveys.
+	\item CARI-Inc: CARI using the income variable from the F2F surveys.
+	\item rCARI-Inc: Standard rCARI using income and income change variable from remote surveys (this is the CARI version that was used during COVID 19 Pandemic).
+\end{itemize}
+
+The different methods of calculating CARI that are tested against the standard/conventional CARI are shown in Table 3. 
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{The different versions of CARI \& their indicators}
+			\scriptsize
+			\input{1_table/Aggregation_Table} 
+			\label{tab:Aggregation_Table}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+Table 3 presents the comparison between standard CARI-FES with standard rCARI-Inc is that, rCARI-Inc significantly underreports the number of food insecure people (phone owners subsample by 20\% points). However, there is no significant statistical difference observed for the no-phone subsample. This means that, the income source in its current form (as was used during the COVID-19 pandemic) overestimated the food security numbers.
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: Standard CARI-FES vs. Standard rCARI-Inc}
+				\scriptsize
+				\input{1_table/CARI_rCARI_Modality_CAR} 
+				\label{tab:CARI_rCARI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+
+The comparison based on the FES indicator collected both in F2F and over the phone is presented in Table 4. The results do not show any significant difference across the different subsamples.
+
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: CARI-FES vs. rCARI-FES}
+				\scriptsize
+				\input{1_table/CARI_FES_rCARI_Modality_CAR} 
+				\label{tab:CARI_FES_rCARI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+Table 5 shows the results calculated using income source and income change variable collected over the different modalities. With the exception of the non-phone owners subsample where the remote version significantly overreports food insecurity (18\% points), no significant difference is observed for the other subgroups.
+
+		
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: CARI-Inc vs. rCARI-Inc}
+				\scriptsize
+				\input{1_table/Inc_CARI_rCARI_Modality_CAR} 
+				\label{tab:Inc_CARI_rCARI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+
+Tables 6 \& 7 shows the results of the paired analysis. The paired analysis is based on the responses provided by the same household (respondent) to both expenditure and income variables in the same modality. Table 6 is for the F2F sample and Table 7 is for the remote sample respectively. 
+Consistent to earlier results, both tables show that the income and income change indicator significantly underreports by food insecurity (16\% to 23\%) regardless of survey modality compared to FES for the same respondents. 
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: CARI-FES vs. CARI-Inc in F2F Surveys (Paired)}
+			\scriptsize
+			\input{1_table/CAR_F2F_Paired_ttest_Full} 
+			\label{tab:CAR_F2F_Paired_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: CARI-FES vs. CARI-Inc in Remote Surveys (Paired)}
+			\scriptsize
+			\input{1_table/CAR_RM_Paired_ttest_Full} 
+			\label{tab:CAR_RM_Paired_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\pagebreak
+
+%------------
+
+\subsection{Comparison of the food security indicators across modality} 
+
+
+\subsubsection{Food Consumption Score (FCS)}
+	
+Table 8 shows the results of the FCS compared over the modality of data collection and between the subsamples. The results show that the FCS reported over the phone is significantly higher (better food consumption) than F2F.  
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Food Consumption Score and Groups}
+				\scriptsize
+				\input{1_table/FCS_Modality_CAR} 
+				\label{tab:FCS_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+\pagebreak	
+	
+% --------
+	
+\subsubsection{Reduced Coping Strategies Index (rCSI)}
+
+The reduced Coping Strategies index (rCSI) is used to compare households’ stress levels due to food shortages. The results (Table 9) show significant difference between remote and F2F modalities with the remote sample significantly reporting higher rCSI by average of 3 points across all subsamples.  
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Reduced Coping Strategy Index Classification}
+				\scriptsize
+				\input{1_table/rCSI_Modality_CAR} 
+				\label{tab:rCSI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+	
+\subsubsection{Livelihood Coping Strategies (LCS)}
+
+The livelihood coping strategy indicator is a household-level indicator that measures the household's capacity to deal with the insufficient food consumption because of shortages or the lack of money in the medium- to long-term bases (30days to 12months).
+	
+Table 10 shows that higher number of the remote sample reported using more crisis and emergency strategies compared to the F2F sample. This is consistent across all subsamples of phone ownership. 
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Livelihood Coping Strategy}
+				\scriptsize
+				\input{1_table/LCS_Modality_CAR} 
+				\label{tab:LCS_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+A decomposition of the individual strategies that make up the aggregate LCS is presented in Table 11. However, in the full sample, the remote modality significantly adopted more of each strategy than the F2F modality. The main drivers of the difference observed in the crisis and emergency coping are begging and/or scavenging, selling of assets,  and selling productive assets.
+
+	\begin{table}[htbp]
+ 		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{CAR: Each Coping Strategy Used}
+				\scriptsize
+				\input{1_table/LCS_Ind_Modality_CAR} 
+				\label{tab:LCS_Ind_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+
+\subsubsection{Food Expenditure Share (FES)}
+	
+Table 12 presents the results of the FES indicator. Although there is a significant difference in the overall aggregated FES between remote and F2F, there are no significant difference when this is disaggregated into the 4 standard FES categories.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Expenditure and Food Expenditure Share}
+				\scriptsize
+				\input{1_table/FES_Modality_CAR} 
+				\label{tab:FES_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+\subsubsection{Income Source and Income Change}
+
+The results of the income source and income change indicator comparison over modality shows that, respondents tend to underreport irregular and no income sources in F2F compared to what is reported over the phone in the remote survey.
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Income}
+				\scriptsize
+				\input{1_table/INC_Modality_CAR} 
+				\label{tab:INC_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+\pagebreak
+% -------
+
+ 
+\section{Regression analysis}
+
+In this section of the analysis, regression analysis is conducted to determine the effect of survey modality and phone ownership in explaining the food security of the household controlling for individual and household level characteristics. The model estimated is specified as follows:
+
+	\[Y_{i}=\beta M_{i}+ \gamma P_{i}+ \delta X_{i}+ \varepsilon_{i} \tag{1}\] 
+
+where \(Y_{i}\) is a binary indicator of the food security status of the \(i^{th}\) household taking the value of one if the respondent is food insecure
+and zero otherwise (calculated independently for FES and income indicators respectively), \(X_{i}\) is a vector of respondent's and household level characteristics such as age of respondent, sex, education in years, household size, dependency ratio and presence of persons with disability in the household, \(M_{i}\) is a binary indicator \(M_{i}=0/1\) taking the value of 1 if the mode of interview was F2F and zero if  phone, \(P_{i}\) is a phone ownership indicator of the respondent \(P_{i}=1/0\) takes the value of one if the respondent owned a phone zero otherwise and \(\varepsilon_{i}\) is the error term clustered at ADMIN5 level. \(\beta\) and \(\gamma\) are the coefficients of interest showing the effect of modality and phone ownership  on the \(i^{th}\) household's food insecurity outcome respectively.
+
+Equation (1) is implemented as a simple logistic regression for the whole sample. The results of the regression analysis are presented in Table 14. The regression is implemented stepwise in three different ways based on the number covariates included at a time. First, the base model which includes only the interview modality and household ownership of phone (columns 1 \& 4). The second model includes the base model and the household demographics collected during the listing (columns 2 \& 5). The third and final model includes all the variables while controlling for the form length (columns 3 \& 6).
+
+The results of the base model (columns 1 \& 4) show that owning a phone significantly reduces the probability of being food insecure by 19 percentage points (FES) and 25 percentage points (income choice \& income change) respectively. This effect is however reduced to 14 percentage (FES) and 17 percentage (Income choice \& income change) respectively. 
+
+Modality of interview and length of forms however are found not to have any statistical significance in explaining food insecurity classification.
+
+The analysis is also performed excluding households that received mobile phones from the research team. This level of analysis would represent a typical CATI survey (i.e., only households with access to mobile phones are included in the sampling frame) with the conventional F2F survey sample. The results are included as Table 18 in the Annex. Although the magnitude of effect is different, the results are similar to what has been reported in Table 14.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Logit Regression on Food Security based Outcomes}
+			\scriptsize
+			\input{1_table/CAR_FS_Logit} 
+			\label{tab:CAR_FS_Logit}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Estimates are marginal effects using logit model regression. Robust standard errors are clustered at village level (Admin5) and reported in parentheses. * denotes statistical significance at 0.05 ** at 0.01 and *** at 0.001.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\pagebreak
+
+%---------
+	
+\section{Summary \& conclusions}
+		
+The following are some key highlights from the results of the households aggregated at ADMIN5 areas are as follows:
+
+	\begin{itemize}[left=2.5em]
+		\item Respondents over the phone generally tend to overreport their food security status compared to F2F interviews. However, the modality doesn’t show significant influence on the final AFI estimation.
+		\item The results comparing the standard F2F subsample with the phone owners’ subsample (i.e., a typical CATI sample) show that using the standard CATI in regions/countries/areas where phone penetration is low tends to exclude more vulnerable and food insecure households in so doing underreporting AFI.
+		\item The results of the food insecurity aggregation show that, rCARI-Inc methodology significantly underestimates acute food insecurity (AFI) by between 9 and 21 percentage points. This is largely driven by the classification  income sources into the 4 four CARI income groups (e.g. the classification of small scale agricultural households as stable income source category inadvertently puts them in the food secure group  using income while FES classifies same households as being food insecure).
+		\item While there is no significant difference between CARI-FES and rCARI-FES in the phone owner subsample, rCARI-Inc significantly underestimates food insecurity by up to 7 percentage points.
+		\item The analysis of the long- and short- LCS, FES and FCS modules (F2F) overall does not show any statistically significant difference. This means that by fine-tuning the short modules could potentially replace the longer versions in F2F surveys to reduce survey fatigue both for the interviewee and interviewer.
+		\item In terms of the food security indicators,  households tend to  reports higher food consumption (FCS) and worse coping situations (rCSI and LCS)  interviewed over the phone (remote modality) compared to when interviewed F2F. Also, when interviewed remotely, households report significantly higher FES compared to F2F. 
+	
+	
+	\end{itemize}
+	
+	
+\pagebreak
+	
+% --------
+	
+\subsection{Study limitations \& implementation challenges}
+Though the study has been implemented with outmost regard for all theoretical and empirical guidelines and protocols underpinning experimental survey designs, the study nonetheless has some limitations worth mentioning
+\begin{itemize}
+	\item First, the completed remote sample small. 
+	\item Second, although there is no statistical difference between the respondents who received phones from the project and phone owners, their response could be influenced by receipt of the mobile phones. 
+	\item Third, the low phone ownership (25\%) and mobile coverage influenced greatly the study implementation, sampling and number of households reached over the phone (remote sample). The response rate was generally low in the remote modality even though phones were distributed to potential respondents.
+	\end{itemize}
+
+\pagebreak
+
+% ------- 
+
+\section{Annexes}
+
+\subsection{Randomization balance test}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table for Randomized Survey Modality Assignment: Face-to-Face vs. Remote}
+			\scriptsize
+			\input{1_table/CAR_Listing_Demo_Balance_Modality} 
+			\label{tab:CAR_Listing_Demo_Balance_Modality}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table for Randomized Questionnaire Length Assignment in F2F Survey: Long vs. Short}
+			\scriptsize
+			\input{1_table/CAR_Listing_Demo_Balance_F2F_Length} 
+			\label{tab:CAR_Listing_Demo_Balance_F2F_Length}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table for Randomized Questionnaire Length Assignment in Remote Survey: Long vs. Short}
+			\scriptsize
+			\input{1_table/CAR_Listing_Demo_Balance_RM_Length} 
+			\label{tab:CAR_Listing_Demo_Balance_RM_Length}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+\pagebreak
+
+\subsection{Regression table for a typical CATI sample with F2F}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Logit Regression on Food Security based Outcomes on CATI Sample}
+			\scriptsize
+			\input{1_table/CAR_FS_Logit_CATI} 
+			\label{tab:CAR_FS_Logit_CATI}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: CATI Sample includes all F2F respomdents and Remote phone-owners, removing 119 Remote surveys without phone. \\
+				Estimates are marginal effects using logit model regression. Robust standard errors are clustered at village level (Admin5) and reported in parentheses. * denotes statistical significance at 0.05 ** at 0.01 and *** at 0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+
+\end{document}

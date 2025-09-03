@@ -1,0 +1,255 @@
+{\rtf1\ansi\deff0 {\fonttbl{\f0\fnil Roboto;}}
+{\info {\author .}{\company .}{\title .}}
+\deflang1033\plain\fs20
+{\footer\pard\qc\plain\f0\fs20\chpgn\par}
+{
+{\fs20\b\qc\line Paired Difference: CARI vs. rCARI }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx1870
+\fs20\pard\intbl\qr { }\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx3025
+\fs20\pard\intbl\qr {{\b obs}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx4180
+\fs20\pard\intbl\qr {{\b Mean1}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx5335
+\fs20\pard\intbl\qr {{\b Mean2}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx6490
+\fs20\pard\intbl\qr {{\b dif}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx7645
+\fs20\pard\intbl\qr {{\b St Err}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx8800
+\fs20\pard\intbl\qr {{\b t value}}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx9955
+\fs20\pard\intbl\qr {{\b p value}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{\b HHSize - r HHSize}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{5.85}}\cell
+\cellx5335
+\qr {{5.85}}\cell
+\cellx6490
+\qr {{-0.01}}\cell
+\cellx7645
+\qr {{0.11}}\cell
+\cellx8800
+\qr {{-0.05}}\cell
+\cellx9955
+\qr {{0.95}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ FCS - r FCS}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{62.22}}\cell
+\cellx5335
+\qr {{56.00}}\cell
+\cellx6490
+\qr {{6.22}}\cell
+\cellx7645
+\qr {{0.95}}\cell
+\cellx8800
+\qr {{6.60}}\cell
+\cellx9955
+\qr {{0.00}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ rCSI - r rCSI}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{14.74}}\cell
+\cellx5335
+\qr {{14.15}}\cell
+\cellx6490
+\qr {{0.59}}\cell
+\cellx7645
+\qr {{0.74}}\cell
+\cellx8800
+\qr {{0.80}}\cell
+\cellx9955
+\qr {{0.43}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ Stress - r Stress}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{0.89}}\cell
+\cellx5335
+\qr {{0.89}}\cell
+\cellx6490
+\qr {{-0.00}}\cell
+\cellx7645
+\qr {{0.02}}\cell
+\cellx8800
+\qr {{-0.25}}\cell
+\cellx9955
+\qr {{0.82}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ Crisis - r Crisis}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{0.69}}\cell
+\cellx5335
+\qr {{0.62}}\cell
+\cellx6490
+\qr {{0.08}}\cell
+\cellx7645
+\qr {{0.03}}\cell
+\cellx8800
+\qr {{2.60}}\cell
+\cellx9955
+\qr {{0.01}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ Emergency - r Emergency}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{0.08}}\cell
+\cellx5335
+\qr {{0.28}}\cell
+\cellx6490
+\qr {{-0.19}}\cell
+\cellx7645
+\qr {{0.02}}\cell
+\cellx8800
+\qr {{-8.35}}\cell
+\cellx9955
+\qr {{0.00}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ HHExpFood - r HHExpFood}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{307827.17}}\cell
+\cellx5335
+\qr {{450377.60}}\cell
+\cellx6490
+\qr {{-142550.43}}\cell
+\cellx7645
+\qr {{25976.26}}\cell
+\cellx8800
+\qr {{-5.50}}\cell
+\cellx9955
+\qr {{0.00}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ HHExpNF - r HHExpNF}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{344632.66}}\cell
+\cellx5335
+\qr {{189632.71}}\cell
+\cellx6490
+\qr {{154999.95}}\cell
+\cellx7645
+\qr {{15317.00}}\cell
+\cellx8800
+\qr {{10.10}}\cell
+\cellx9955
+\qr {{0.00}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ HHExpT - r HHExpT}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{652459.82}}\cell
+\cellx5335
+\qr {{640010.31}}\cell
+\cellx6490
+\qr {{12449.52}}\cell
+\cellx7645
+\qr {{32088.32}}\cell
+\cellx8800
+\qr {{0.40}}\cell
+\cellx9955
+\qr {{0.70}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ PCExpT - r PCExpT}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{126286.60}}\cell
+\cellx5335
+\qr {{125297.83}}\cell
+\cellx6490
+\qr {{988.77}}\cell
+\cellx7645
+\qr {{7008.85}}\cell
+\cellx8800
+\qr {{0.15}}\cell
+\cellx9955
+\qr {{0.89}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ FES - r FES}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{50.20}}\cell
+\cellx5335
+\qr {{69.66}}\cell
+\cellx6490
+\qr {{-19.46}}\cell
+\cellx7645
+\qr {{1.12}}\cell
+\cellx8800
+\qr {{-17.35}}\cell
+\cellx9955
+\qr {{0.00}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx1870
+\fs20\pard\intbl\ql {{ HH Vul CARI - r HH Vul CARI}}\cell
+\cellx3025
+\qr {{454.00}}\cell
+\cellx4180
+\qr {{0.24}}\cell
+\cellx5335
+\qr {{0.55}}\cell
+\cellx6490
+\qr {{-0.31}}\cell
+\cellx7645
+\qr {{0.03}}\cell
+\cellx8800
+\qr {{-10.95}}\cell
+\cellx9955
+\qr {{0.00}}\cell
+\row}
+
+
+\writepositionforappend
+}}

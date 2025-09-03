@@ -1,0 +1,469 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i01b_setup_roster_20230511.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 May 2023, 17:37:01
+{txt}
+{com}.         di `cdate'
+{res}20230511
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+. 
+.         tempfile roster_b resp master 
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         gen Group = 2
+{txt}
+{com}.         save `roster_b'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vA.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str52{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (388,964 bytes saved)
+
+{com}.         gen Group = 1
+{txt}
+{com}.         
+.         lab def G_l 1 "Group A" 2 "Group B"
+{txt}
+{com}.         lab val Group G_l
+{txt}
+{com}.         
+.         append using `roster_b'
+{txt}(label {bf:{txt}MDDIHHHealthPregFacility} already defined)
+(label {bf:{txt}MDDIHHHealthPregCare} already defined)
+(label {bf:{txt}MDDIHHHealthPreg} already defined)
+(label {bf:{txt}HHPreg} already defined)
+(label {bf:{txt}MDDIHHNoSchoolNb_6M} already defined)
+(label {bf:{txt}MDDIHHImmMeas} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}HHIntFirstSec} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         ** drop irrelevant variables 
+.         drop HH_index EnuName EnuSex HHIntFirstSec ___index ___parent_table_name        ///
+>                  ADMIN1Name ADMIN5Name age_diff_actual
+{txt}
+{com}.         
+.         save `master'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000003{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         /* Respondent him/herself is not listed as part of the roster, need to split 
+>         and append back - This is strange!!                     */
+.         
+.         keep HHID RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         ren  RESPName PName
+{res}{txt}
+{com}.         ren  RESPAge  PAge
+{res}{txt}
+{com}.         ren  RESPSex  PSex
+{res}{txt}
+{com}.         ren  RESPRelationHHH PRelationHHH
+{res}{txt}
+{com}.         
+.         sort HHID
+{txt}
+{com}.         egen Respondent = tag(HHID)
+{txt}
+{com}.         keep if Respondent == 1 
+{txt}(2,225 observations deleted)
+
+{com}.         
+.         save `resp'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use `master'
+{txt}
+{com}.         drop RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         
+.         append using `resp'
+{txt}(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+
+{com}.         
+.         ** generate individual index within each household
+.         bysort HHID: gen Ind_Index = _n
+{txt}
+{com}.         
+.         save "${c -(}dta{c )-}/Iraq_F2F_Roster_Raw.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_F2F_Roster_Raw.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. ********************************************************************************
+. *                                       PART 2: Create Household Level Variables
+. *******************************************************************************/
+.         
+.         
+. ********************************************************************************
+. *                               PART 3: Create merged dataset for full sample
+. *******************************************************************************/
+. 
+. 
+.         
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/General - T&P CO Support/Malawi/03_Output/Malawi_Dzaleka_Refugee_Camp_Profiling_cleaned.dta"
+
+. sum HHSize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 6}HHSize {c |}{res}     11,567     4.00951      3.1388          1         36
+
+{com}. tab HHSize
+
+  {txt}Household {c |}
+       Size {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}      3,706       32.04       32.04
+{txt}          2 {c |}{res}      1,178       10.18       42.22
+{txt}          3 {c |}{res}      1,118        9.67       51.89
+{txt}          4 {c |}{res}      1,185       10.24       62.13
+{txt}          5 {c |}{res}      1,058        9.15       71.28
+{txt}          6 {c |}{res}        921        7.96       79.24
+{txt}          7 {c |}{res}        723        6.25       85.49
+{txt}          8 {c |}{res}        567        4.90       90.40
+{txt}          9 {c |}{res}        382        3.30       93.70
+{txt}         10 {c |}{res}        300        2.59       96.29
+{txt}         11 {c |}{res}        169        1.46       97.75
+{txt}         12 {c |}{res}        117        1.01       98.76
+{txt}         13 {c |}{res}         63        0.54       99.31
+{txt}         14 {c |}{res}         37        0.32       99.63
+{txt}         15 {c |}{res}         11        0.10       99.72
+{txt}         16 {c |}{res}         18        0.16       99.88
+{txt}         17 {c |}{res}          5        0.04       99.92
+{txt}         18 {c |}{res}          3        0.03       99.95
+{txt}         20 {c |}{res}          1        0.01       99.96
+{txt}         29 {c |}{res}          2        0.02       99.97
+{txt}         30 {c |}{res}          1        0.01       99.98
+{txt}         35 {c |}{res}          1        0.01       99.99
+{txt}         36 {c |}{res}          1        0.01      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     11,567      100.00
+
+{com}. tab HHHDisease
+
+    {txt}Head of {c |}
+  household {c |}
+has chronic {c |}
+    disease {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}     10,921       94.42       94.42
+{txt}        Yes {c |}{res}        646        5.58      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     11,567      100.00
+
+{com}. tab HHDisease
+
+  {txt}Household {c |}
+ has member {c |}
+       with {c |}
+    chronic {c |}
+    disease {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}      9,888       85.48       85.48
+{txt}        Yes {c |}{res}      1,679       14.52      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     11,567      100.00
+
+{com}. tab Num_Senior
+
+      {txt}Total {c |}
+  number of {c |}
+    elderly {c |}
+     people {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     10,960       94.75       94.75
+{txt}          1 {c |}{res}        535        4.63       99.38
+{txt}          2 {c |}{res}         65        0.56       99.94
+{txt}          3 {c |}{res}          2        0.02       99.96
+{txt}          8 {c |}{res}          5        0.04      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     11,567      100.00
+
+{com}. tab HHOrphan
+
+  {txt}Household {c |}
+ has orphan {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}     10,542       91.14       91.14
+{txt}        Yes {c |}{res}      1,025        8.86      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     11,567      100.00
+
+{com}. tab CARI_Class
+
+ {txt}CARI Category using FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}         32        0.28        0.28
+{txt}  Marginally Food Secure {c |}{res}      1,503       12.99       13.27
+{txt}Moderately Food Insecure {c |}{res}      7,295       63.07       76.34
+{txt}  Severely Food Insecure {c |}{res}      2,737       23.66      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}     11,567      100.00
+
+{com}. tab HHSize
+
+  {txt}Household {c |}
+       Size {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}      3,706       32.04       32.04
+{txt}          2 {c |}{res}      1,178       10.18       42.22
+{txt}          3 {c |}{res}      1,118        9.67       51.89
+{txt}          4 {c |}{res}      1,185       10.24       62.13
+{txt}          5 {c |}{res}      1,058        9.15       71.28
+{txt}          6 {c |}{res}        921        7.96       79.24
+{txt}          7 {c |}{res}        723        6.25       85.49
+{txt}          8 {c |}{res}        567        4.90       90.40
+{txt}          9 {c |}{res}        382        3.30       93.70
+{txt}         10 {c |}{res}        300        2.59       96.29
+{txt}         11 {c |}{res}        169        1.46       97.75
+{txt}         12 {c |}{res}        117        1.01       98.76
+{txt}         13 {c |}{res}         63        0.54       99.31
+{txt}         14 {c |}{res}         37        0.32       99.63
+{txt}         15 {c |}{res}         11        0.10       99.72
+{txt}         16 {c |}{res}         18        0.16       99.88
+{txt}         17 {c |}{res}          5        0.04       99.92
+{txt}         18 {c |}{res}          3        0.03       99.95
+{txt}         20 {c |}{res}          1        0.01       99.96
+{txt}         29 {c |}{res}          2        0.02       99.97
+{txt}         30 {c |}{res}          1        0.01       99.98
+{txt}         35 {c |}{res}          1        0.01       99.99
+{txt}         36 {c |}{res}          1        0.01      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     11,567      100.00
+
+{com}. tab CARI_2Classes
+
+         {txt}CARI {c |}
+Vulnerability {c |}
+    Framework {c |}      Freq.     Percent        Cum.
+{hline 14}{c +}{hline 35}
+  Food Secure {c |}{res}      1,535       13.27       13.27
+{txt}Food Insecure {c |}{res}     10,032       86.73      100.00
+{txt}{hline 14}{c +}{hline 35}
+        Total {c |}{res}     11,567      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                       WFP Ethiopia EFSA 2023 Food Insecure Households Profiling                  * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Data Cleaning & Outcome Variable Construction              *              
+> *  DATE:                                May 08, 2023                                                                               *
+> *  LATEST UPDATE:               May 09, 2023                                                                               *
+> *                 
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 1: Install user-written packages and harmonize settings
+>                                         PART 2: Prepare globals and define paths
+>                                         PART 3: Set log file and codebook template
+>                                         PART 4: Correct variable types
+>                                         PART 5: Variable creation
+>                                         PART 6: Outcome indicators
+>                                         PART 7: Label variables
+>                                         PART 8: Save dataset for analysis
+>                                 
+>         ** REQUIRES:    ${c -(}dataset{c )-}/Tigray_EFSA_27_02_2023HHdataMerged_11_cleaned_140323_V3_1.dta
+>                                         
+>         ** CREATES:             ${c -(}output{c )-}/Ethiopia_EFSA_2023_Household_Cleaned.dta
+>                                         ${c -(}output{c )-}/Ethiopia_EFSA_2023_Household_Cleaned.sav
+>                                 
+> ********************************************************************************
+> *                       PART 1:  Install user-written packages and harmonize settings      *
+> *******************************************************************************/
+. 
+. * Install packages      
+.         local   packages                        0       // Install packages, change to 0 if don't need to update
+{txt}
+{com}.         
+. if `packages'   {c -(}       
+.         local user_commands ietoolkit iefieldkit sumstats savespss
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-}
+. {c )-}
+{txt}
+{com}. * Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+. 
+. * set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         
+. * Harmonize settings across users
+.     ieboilstart, v(13.0)
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.     `r(version)'
+{txt}
+{com}.         graph set window fontface "Roboto"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 2:  Prepare globals and define paths                          *
+. ********************************************************************************
+.         
+. * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.          
+. * set directories
+. * ---------------       
+.         global nicole       1
+{txt}
+{com}.         global kareem           0
+{txt}
+{com}. 
+. * set the GD Folder
+. if $nicole {c -(}
+.         global targeting  "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/General - T&P CO Support"
+.         {c )-}
+{txt}
+{com}. 
+. if $kareem {c -(}
+.         global targeting  "C:/Users/Kareem.Sadik/OneDrive - World Food Programme/T&P CO Support/General"
+.         {c )-} 
+{txt}
+{com}.         
+. * Subfolder globals
+. * -----------------
+.         gl ethiopia     "${c -(}targeting{c )-}/Ethiopia"
+{txt}
+{com}.         
+.         gl tigray               "${c -(}ethiopia{c )-}/Tigray"
+{txt}
+{com}.         gl somali               "${c -(}ethiopia{c )-}/Somali"
+{txt}
+{com}.         gl tigray_23    "${c -(}ethiopia{c )-}/Tigray/99_EFSA23"
+{txt}
+{com}.         
+.         gl dataset              "${c -(}tigray_23{c )-}/01_Data"
+{txt}
+{com}.         gl dofile               "${c -(}tigray_23{c )-}/02_Code"
+{txt}
+{com}.         gl output               "${c -(}tigray_23{c )-}/03_Output"
+{txt}
+{com}.         gl instrument   "${c -(}tigray_23{c )-}/04_Instrument"
+{txt}
+{com}.         gl codebook             "${c -(}tigray_23{c )-}/05_Codebook"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                       PART 3: Set log file and codebook template
+. *******************************************************************************/
+. 
+.         cap log close
+{smcl}
+{com}{sf}{ul off}

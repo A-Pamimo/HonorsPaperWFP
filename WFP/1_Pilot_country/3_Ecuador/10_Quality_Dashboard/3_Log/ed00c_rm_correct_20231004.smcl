@@ -1,0 +1,606 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed00c_rm_correct_20231004.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Oct 2023, 20:32:47
+{txt}
+{com}.         di `cdate'
+{res}20231004
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}sampleYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPpart{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}RESPAvailable{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPcallback{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPvoice{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}FCSStap{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSILessQlty{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIBorrow{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIGenderMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_CrdtFood{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_HealthEdu{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}LcsEN_em_ChildWork{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_YN1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_GiftAid_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpF_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNF_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHInc_PCT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_SRi{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHIncChg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}start{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}end{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str18{sf}
+  {txt}variable {bf}{res}HHID_manual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}calc_ID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str56{sf}
+  {txt}variable {bf}{res}HHID_digits{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHPhNmb{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}RESPRelationHHH_oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}RESPPhNmbAlt{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}RESPPhNmbAl2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str17{sf}
+  {txt}variable {bf}{res}audit{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str14{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,004,643 bytes saved)
+
+{com}.         
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}start{col 15}HHID_digits{col 29}RESPPhNmbAl2{col 43}___notes
+{col 1}end{col 15}HHPhNmb{col 29}remarks{col 43}___version
+{col 1}deviceid{col 15}RESPpart_oth{col 29}audit{col 43}___duration
+{col 1}EnuName_Di~y{col 15}RESPRelati~h{col 29}instanceID{col 43}___submitt~y
+{col 1}HHID_manual{col 15}HHHOccupat~n{col 29}___uuid{col 43}___xform_id
+{col 1}HHID{col 15}HHIncFirst~h{col 29}___parent_~e
+{col 1}calc_ID{col 15}RESPPhNmbAlt{col 29}___tags
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,363 real changes made)
+(34 real changes made)
+(34 real changes made)
+(34 real changes made)
+(0 real changes made)
+(1,558 real changes made)
+(2,395 real changes made)
+(1,711 real changes made)
+(2,273 real changes made)
+(1,711 real changes made)
+(1,724 real changes made)
+(2,178 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,395 real changes made)
+(2,395 real changes made)
+(2,395 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+.         ** temp
+.         replace HHID = HHID_manual if mi(HHID)          // this is temporary
+{txt}(32 real changes made)
+
+{com}.         drop if mi(HHID)
+{txt}(2 observations deleted)
+
+{com}.         
+.         ** check duplicates
+.         duplicates tag HHID, generate(Dup)
+
+{p 0 4}{txt}Duplicates in terms of {res} HHID{p_end}
+{txt}
+{com}.         
+.         ** Recode for best outcome - combining the consent and availability
+.         recode RESPpart (0=4) (1=1) (2=5) (999=6), gen(Outcome_Order)
+{txt}(1,700 differences between {bf:RESPpart} and {bf:Outcome_Order})
+
+{com}.         replace Outcome_Order = 2 if Outcome_Order == 1 & RESPAvailable == 2
+{txt}(8 real changes made)
+
+{com}.         replace Outcome_Order = 3 if Outcome_Order == 1 & RESPAvailable == 0
+{txt}(2 real changes made)
+
+{com}.         
+.         label def Outcome_L 1 "Agreed & Available" 2 "Agreed & Later" ///
+>                                                 3 "Agreed & Not Available" 4 "Not answer" ///
+>                                                 5 "Refused" 6 "Other"
+{txt}
+{com}.         label val Outcome_Order Outcome_L
+{txt}
+{com}.         
+.         bysort HHID: egen Survey_Outcome = min(Outcome_Order) if Dup >= 1
+{txt}(388 missing values generated)
+
+{com}.         replace Survey_Outcome = Outcome_Order if Dup == 0
+{txt}(388 real changes made)
+
+{com}.         
+.         gen HH_Final = (Outcome_Order == Survey_Outcome)
+{txt}
+{com}.         
+.         egen HH_TAG = tag(HHID) if HH_Final == 1
+{txt}
+{com}.         
+.         replace Survey_Outcome = . if HH_TAG == 0 
+{txt}(1,369 real changes made, 1,369 to missing)
+
+{com}.         label val Survey_Outcome Outcome_L
+{txt}
+{com}.                 
+.         ** create one consent variable 
+.         gen  Temp_Complete = !mi(HHIncChg)
+{txt}
+{com}. 
+.         bysort HHID: gen Consent = inlist(Survey_Outcome,1,2,3)
+{txt}
+{com}.         label val Consent sampleYN
+{txt}
+{com}.         
+.         keep if Temp_Complete == 1
+{txt}(1,710 observations deleted)
+
+{com}.         
+.         ** Dup 12
+.         drop if ___uuid == "9a887a11-4a44-413b-ac49-31a59b4125a8"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 13 
+.         drop if ___uuid == "de5b4569-41c8-4cc1-99e7-79e39fc89c49"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 14
+.         drop if ___uuid == "584143cf-e450-4e50-a97f-e1fb6657d6f5"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 15
+.         replace HHID = "ECA0134" if ___uuid == "562086e3-aeaa-4d31-a87b-2853eab773b6"
+{txt}(1 real change made)
+
+{com}.         ** Dup 16
+.         replace HHID = "ECA0137" if ___uuid == "74302195-85fe-43cd-a405-8a0252c108dd"
+{txt}(1 real change made)
+
+{com}.         ** Dup 17
+.         replace HHID = "ECA0138" if ___uuid == "214d31bf-2a7c-4171-8f16-4406f3c91fcc"
+{txt}(1 real change made)
+
+{com}.         ** Dup 18
+.         replace HHID = "ECA0139" if ___uuid == "e1a7c8e8-6073-408c-83e0-9eb6e48d03da"
+{txt}(1 real change made)
+
+{com}.         ** Dup 19
+.         replace HHID = "ECA0140" if ___uuid == "2ac0cd14-b1f5-482e-9c91-cdcea3c90055"
+{txt}(1 real change made)
+
+{com}.         ** Dup 20
+.         replace HHID = "ECA0141" if ___uuid == "1f08711e-4361-45f4-bd21-616e557a7097"
+{txt}(1 real change made)
+
+{com}.         ** Dup 21
+.         replace HHID = "ECA0142" if ___uuid == "3a22ac4a-1a27-46e7-b18a-3ba3e39fbfea"
+{txt}(1 real change made)
+
+{com}.         ** Dup 22
+.         replace HHID = "ECA0143" if ___uuid == "f9dcdbda-a8d7-4307-ba0c-20392053e52b"
+{txt}(1 real change made)
+
+{com}.         ** Dup 23
+.         replace HHID = "ECA0146" if ___uuid == "0866a623-2a1a-4a63-af29-e292ac47f858"
+{txt}(1 real change made)
+
+{com}.         ** Dup 24
+.         replace HHID = "ECA0147" if ___uuid == "1ad689dd-4bbc-406e-83bc-4d1786ab6ef1"
+{txt}(1 real change made)
+
+{com}.         ** Dup 25
+.         drop if ___uuid == "126188eb-13c6-40b1-833e-9838dbe07bde"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 26
+.         replace HHID = "ECA0148" if ___uuid == "7674a793-fd88-4c20-8a20-d6ae83b9ac0f"
+{txt}(1 real change made)
+
+{com}.         ** Dup 27
+.         drop if ___uuid == "fcf8430b-cc54-4a47-937b-9327e58af103"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 28
+.         replace HHID = "ECA0169" if ___uuid == "34fd760b-2568-424c-be83-90632877cbb3"
+{txt}(1 real change made)
+
+{com}.         ** Dup 29
+.         replace HHID = "ECA0174" if ___uuid == "00bc2775-ad29-421b-88c0-cb76c882164a"
+{txt}(1 real change made)
+
+{com}.         ** Dup 30
+.         replace HHID = "ECA0176" if ___uuid == "608ecac4-2924-4caf-8b92-e1774bb33fd3"
+{txt}(1 real change made)
+
+{com}.         ** Dup 31
+.         replace HHID = "ECA0179" if ___uuid == "404aaf88-fbc9-4957-8924-a5e598334220"
+{txt}(1 real change made)
+
+{com}.         ** Dup 32
+.         replace HHID = "ECA0180" if ___uuid == "9e90df8e-3b12-4d40-a805-b2250e884b40"
+{txt}(1 real change made)
+
+{com}.         drop if ___uuid == "ae383d48-5269-4d5d-8612-86d8a642b13b"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 33
+.         replace HHID = "ECA0185" if ___uuid == "0b781af0-43bd-4a1b-8b62-1fc37548176e"
+{txt}(1 real change made)
+
+{com}.         ** Dup 34
+.         replace HHID = "ECA0187" if ___uuid == "8e67a952-9e23-4f23-8e0a-8d6dc4ef4f93"
+{txt}(1 real change made)
+
+{com}.         ** Dup 35
+.         replace HHID = "ECA0195" if ___uuid == "ef53156b-0121-4ea4-9668-5ce0771d8767"
+{txt}(1 real change made)
+
+{com}.         ** Dup 36
+.         replace HHID = "ECA0196" if ___uuid == "6b0fc600-70d7-40aa-a5a7-611a2926d2b6"
+{txt}(1 real change made)
+
+{com}.         ** Dup 37
+.         drop if ___uuid == "d99c3b1a-52da-40e7-8d24-5f336ff607ec"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "5af5e02a-e479-4e58-a88f-d7f52ce1eb39"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 38
+.         replace HHID = "ECA0203" if ___uuid == "60b404cf-aceb-452a-ab25-536c4e6599b8"
+{txt}(1 real change made)
+
+{com}.         drop if ___uuid == "77fd449d-61d4-45b7-87ce-31305479f1da"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 39
+.         replace HHID = "ECA0204" if ___uuid == "a1db9794-c8f5-4d62-906f-8979aa55a5c2"
+{txt}(1 real change made)
+
+{com}.         drop if ___uuid == "49fe3dfb-030f-4106-a16d-12cb6370add0"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "40058476-dbd1-4784-b765-bfcb0dbe9887"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 40
+.         replace HHID = "ECA0206" if ___uuid == "30775b37-bc21-471d-9fbf-59860df7d185"
+{txt}(1 real change made)
+
+{com}.         ** Dup 41
+.         drop if ___uuid == "8aae6694-dc33-4b83-9d1d-a091d4828d22"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 42
+.         replace HHID = "ECA0260" if ___uuid == "c28ee94d-9059-43e5-bdbb-c01f60c9d1a3"
+{txt}(1 real change made)
+
+{com}.         ** Dup 43
+.         replace HHID = "ECA0273" if ___uuid == "1275da75-e5d6-41fd-84a9-ae572d48f7cc"
+{txt}(1 real change made)
+
+{com}.         ** Dup 44
+.         replace HHID = "ECA0277" if ___uuid == "19336eeb-5ec9-47cc-bd3b-ca61076a2f9c"
+{txt}(1 real change made)
+
+{com}.         ** Dup 45
+.         replace HHID = "ECA0280" if ___uuid == "b5593bb9-a799-4dca-98b5-ee320288046a"
+{txt}(1 real change made)
+
+{com}.         ** Dup 46
+.         replace HHID = "ECA0281" if ___uuid == "d9df7653-4f50-43a0-9c16-464c03235dee"
+{txt}(1 real change made)
+
+{com}.         ** Dup 47
+.         replace HHID = "ECA0285" if ___uuid == "0261bd5a-9764-4a4f-a4b7-8c148b1c0e0a"
+{txt}(1 real change made)
+
+{com}.         ** Dup 48
+.         replace HHID = "ECA0292" if ___uuid == "75c3f243-7f28-40fa-b833-384c523ceddb"
+{txt}(1 real change made)
+
+{com}.         ** Dup 49
+.         replace HHID = "ECA0297" if ___uuid == "e35911a3-3027-4195-8a01-d6bad41c6e50"
+{txt}(1 real change made)
+
+{com}.         ** Dup 50
+.         replace HHID = "ECA0299" if ___uuid == "a3e7c6cf-f147-4df1-9da6-43b7a44c3899"
+{txt}(1 real change made)
+
+{com}.         ** Dup 51 
+.         drop if ___uuid == "541beaf8-8822-4649-93cc-ffb5770c9f5b"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 52
+.         drop if ___uuid == "f8473b6b-a3d5-48b2-acbb-19f96afd1745"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 53
+.         drop if ___uuid == "ef412da3-15b9-4b11-b9a2-61235e11fac0"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "85195c11-14e7-43c3-8565-42a778d58802"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 54
+.         replace HHID = "ECA0310" if ___uuid == "405adea7-472c-41be-86b0-f6d071877640"
+{txt}(1 real change made)
+
+{com}.         ** Dup 55
+.         replace HHID = "ECA0312" if ___uuid == "ff043db2-8f16-48ea-9353-20d1daf0835f"
+{txt}(1 real change made)
+
+{com}.         drop if ___uuid == "704720c9-d3f2-4a5d-b9c0-556cfe5b0b02"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 56
+.         replace HHID = "ECA0314" if ___uuid == "048b0426-2fd3-4cea-818b-5857a161ce35"
+{txt}(1 real change made)
+
+{com}.         ** Dup 57 
+.         drop if ___uuid == "3cabe55e-d0ff-4d83-83bf-a14b16c5571f"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 58
+.         replace HHID = "ECA0320" if ___uuid == "84deafbb-1ab4-4778-8252-800adbf3e69e"
+{txt}(1 real change made)
+
+{com}.         ** Dup 59
+.         replace HHID = "ECA0322" if ___uuid == "b154ffe5-d134-4f21-ba9b-3971a0cd546b"
+{txt}(1 real change made)
+
+{com}.         ** Dup 60
+.         replace HHID = "ECA0323" if ___uuid == "f75e68a2-0e82-4cdd-80ae-6b9b9f84974f"
+{txt}(1 real change made)
+
+{com}.         ** Dup 61
+.         replace HHID = "ECA0324" if ___uuid == "1d253cb4-a16a-4ae8-96c9-c1129e0ddbe5"
+{txt}(1 real change made)
+
+{com}.         ** Dup 62
+.         replace HHID = "ECA0325" if ___uuid == "979f3057-98ad-4e3e-8a0e-4de2af139e20"
+{txt}(1 real change made)
+
+{com}.         ** Dup 63
+.         replace HHID = "ECA0327" if ___uuid == "bc6a1e35-02df-47e1-a931-a20faba626bd"
+{txt}(1 real change made)
+
+{com}.         ** Dup 64
+.         drop if ___uuid == "45263464-f11b-48e0-ba51-1973be133912"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "90fada10-23b4-4bc0-b7d8-3d7665ac0084"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 65
+.         drop if ___uuid == "64780aaf-0e33-44de-a414-868454a802d8"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 66
+.         drop if ___uuid == "a07be561-1651-473c-88ae-01384f2ce3a1"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 67
+.         drop if ___uuid == "ce25bb65-a55f-4682-a3e7-3f185de3b7a4"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 68
+.         drop if ___uuid == "c6d844a7-abbc-47c7-8661-928306e408d3"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 69
+.         drop if ___uuid == "975dac47-1fce-4a47-956a-6ab3502d9c73"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 70
+.         drop if ___uuid == "30851617-e130-44ca-8461-4a7ae4cac238"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 71
+.         drop if ___uuid == "da89a425-00c5-4ddf-8307-2c4f3b55cfe1"
+{txt}(1 observation deleted)
+
+{com}. 
+. /*      ieduplicates HHID using "${c -(}note{c )-}/Ecuador_RM_DuplicateID_`cdate'.xlsx",          ///
+>                                           keepvar(EnuName_Display RESPpart RESPAvailable RESPAge RESPSex HHSize)                        ///
+>                                           uniquevars(___uuid) nodaily force 
+> */
+.         isid   HHID     // Yes
+{txt}
+{com}.         
+.         mmerge HHID using "${c -(}sample{c )-}/Ecuador_Sample_Merge.dta", type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/1_Raw/Ecuador_RM_Household_Raw.dta
+{txt}{ralign 20:obs} {c |} {res}   656
+{txt}{ralign 20:vars} {c |} {res}   109
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/3_Sampling/Ecuador_Sample_Merge.dta
+{txt}{ralign 20:obs} {c |} {res}  2372{txt}
+{txt}{ralign 20:vars} {c |} {res}    15{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{p 0 7 2}
+(variable
+{bf:HHID} was {bf:str8}, now {bf:str10} to accommodate using data's values)
+{p_end}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/1_Raw/Ecuador_RM_Household_Raw.dta
+{txt}{ralign 20:obs} {c |} {res}  2372
+{txt}{ralign 20:vars} {c |} {res}   125{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   1716{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    656{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+.         tab S_Assign_Modality Temp_Complete
+
+             {txt}{c |} Temp_Compl
+Modality_Typ {c |}    ete
+           e {c |}         1 {c |}     Total
+{hline 13}{c +}{hline 11}{c +}{hline 10}
+      Remote {c |}{res}       656 {txt}{c |}{res}       656 
+{txt}{hline 13}{c +}{hline 11}{c +}{hline 10}
+       Total {c |}{res}       656 {txt}{c |}{res}       656 
+{txt}
+{com}.         tab S_Phase if Temp_Complete == 1
+
+      {txt}Phase {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        432       65.85       65.85
+{txt}          2 {c |}{res}        224       34.15      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+{txt}
+{com}.         
+.         ** keep only Remote sample for attrition analysis
+.         drop if S_Assign_Modality == 1
+{txt}(1,173 observations deleted)
+
+{com}.         gen Attrition = (_merge == 2)
+{txt}
+{com}.         label val Attrition sampleYN
+{txt}
+{com}.         
+. /* table i.S_Assign_Length i.S_Geo_Admin1 i.S_Geo_Admin3 i.S_Geo_Admin5 ///
+>                    i.S_Gender S_Age i.S_Marital_Status S_HHSize S_Num_Under15     ///
+>                    S_Num_Over60 i.S_Education i.S_HHDisable,                                      ///
+>                    by(Attrition, tests)                         ///
+>                    title(Ecuador rCARI Validation Remote Attrition Analysis)            ///
+>                    export(${c -(}d_tex_tab{c )-}/Ecuador_rCARI_RM_Attrition.docx, replace) 
+> */      
+.         drop if Attrition == 1
+{txt}(543 observations deleted)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         isid HHID                                       // check unique identifier
+{txt}
+{com}.         // check again with the real survey data
+.         ren ___index HH_Index
+{res}{txt}
+{com}.         
+. *************************  ADD CORRECTION LINES HERE ***************************
+.         
+.         save "${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_RM_Household_Correct.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.1     Set up datasets
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_temp{c )-}/Ecuador_F2F_Roster_Correct_`cdate'.dta
+.                                         
+. *       CREATES:        ${c -(}d_temp{c )-}/Ecuador_Roster_Prep_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_Roster_Household_Prep_`cdate'.dta
+. *                               
+. * ------------------------------------------------------------------------------
+.         
+.         if `setup'                      do "${c -(}d_dofile{c )-}/ed01_setup_roster.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Ecuador                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Set up appended dataset for full roster sample             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 11, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  5, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_temp{c )-}/Ecuador_F2F_Roster_Correct_`cdate'.dta
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Ecuador_Roster_Prep_`cdate'.dta
+>                                         ${c -(}d_temp{c )-}/Ecuador_Roster_Household_Prep_`cdate'.dta
+>                                                 
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Roster Data and Set codebook
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

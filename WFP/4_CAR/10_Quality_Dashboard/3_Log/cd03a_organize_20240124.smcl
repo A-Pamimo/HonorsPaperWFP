@@ -1,0 +1,470 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd03a_organize_20240124.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}24 Jan 2024, 14:52:11
+{txt}
+{com}.         di `cdate'
+{res}20240124
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/CAR_F2F_Household_Prep.dta", clear 
+{txt}
+{com}.         
+.         * keep if sampleYN == 1 
+. 
+.         ** rename ___variables
+.         ren ___* Sys_*
+{res}{txt}
+{com}.         order R_*, a(RepeatPID_count)
+{txt}
+{com}.         
+.         * survey duration variable
+.         destring Sys_duration, replace
+{txt}Sys_duration: all characters numeric; {res}replaced {txt}as {res}long
+{txt}
+{com}.         gen     Duration_Min = Sys_duration/60
+{txt}
+{com}.         
+.         * survey modality
+.         gen     Modality        = 1                      // f2f
+{txt}
+{com}.         
+.         * form version long vs. short
+.         gen     ID_Length = length(HHID)
+{txt}
+{com}.         
+.         gen             Form = 1 if ID_Length == 10  // Long
+{txt}(503 missing values generated)
+
+{com}.         replace Form = 2 if ID_Length == 9   // Short
+{txt}(503 real changes made)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Create and Define Variables
+. ********************************************************************************
+. 
+. ** Demongraphics and basic respondents/household information
+.         gen RESPHHH     = (R_RESPRelationHHH == 100)
+{txt}
+{com}.         gen RESPFemale  = (RESPSex                       == 0)
+{txt}
+{com}.         gen HHDisplaced = (HHStatus              == 2)
+{txt}
+{com}.         gen RESPSingle  = (RESPStatus            == 100)
+{txt}
+{com}.         gen RESPMarried = (RESPStatus            == 300)
+{txt}
+{com}.         
+. *       assert  == HHSize
+.         tab HHID if R_Num_Household != HHSize & !mi(R_Num_Household)
+
+  {txt}Household {c |}
+         ID {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+  CAR110101 {c |}{res}          1        8.33        8.33
+{txt} CAR1101103 {c |}{res}          1        8.33       16.67
+{txt} CAR1101124 {c |}{res}          1        8.33       25.00
+{txt} CAR1101155 {c |}{res}          1        8.33       33.33
+{txt} CAR2101093 {c |}{res}          1        8.33       41.67
+{txt} CAR2101158 {c |}{res}          1        8.33       50.00
+{txt} CAR2101239 {c |}{res}          1        8.33       58.33
+{txt} CAR2101243 {c |}{res}          1        8.33       66.67
+{txt} CAR2101351 {c |}{res}          1        8.33       75.00
+{txt} CAR2101370 {c |}{res}          1        8.33       83.33
+{txt}  CAR210190 {c |}{res}          1        8.33       91.67
+{txt}  CAR210351 {c |}{res}          1        8.33      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         12      100.00
+{txt}
+{com}.         
+. **# Lorenzo to add outcomes for Health/MMDI releted variables
+.         gen HHDisable = (MDDIHHDisabledNb > 0)
+{txt}
+{com}.          
+. ** Roster Demongraphics
+.         gen     FemaleMale_Ratio         = R_Num_Female/R_Num_Male
+{txt}(49 missing values generated)
+
+{com}.         sum             FemaleMale_Ratio
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+FemaleMale~o {c |}{res}        920    1.286554    1.062152          0          7
+{txt}
+{com}.         replace FemaleMale_Ratio         = `r(max)' if mi(FemaleMale_Ratio)
+{txt}(49 real changes made)
+
+{com}.         gen     FemaleMale_Ratio_1_5 = (FemaleMale_Ratio >= 1.5)
+{txt}
+{com}.         
+.         egen    R_Num_Dependent          = rowtotal(R_Num_Child R_Num_Senior)
+{txt}
+{com}.         gen     Dependency_Ratio         = R_Num_Dependent/R_Num_Adult
+{txt}(55 missing values generated)
+
+{com}.         sum             Dependency_Ratio
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Dependency~o {c |}{res}        914    2.507129     1.82699          0         11
+{txt}
+{com}.         replace Dependency_Ratio = `r(max)' if mi(Dependency_Ratio)
+{txt}(55 real changes made)
+
+{com}.         
+.         gen     Dep_Ratio_Cat = 0
+{txt}
+{com}.         replace Dep_Ratio_Cat = 1 if Dependency_Ratio <= 1
+{txt}(225 real changes made)
+
+{com}.         replace Dep_Ratio_Cat = 2 if Dependency_Ratio >  1       & Dependency_Ratio <= 1.5
+{txt}(120 real changes made)
+
+{com}.         replace Dep_Ratio_Cat = 3 if Dependency_Ratio >  1.5 & Dependency_Ratio <= 2.5
+{txt}(256 real changes made)
+
+{com}.         replace Dep_Ratio_Cat = 4 if Dependency_Ratio >  2.5
+{txt}(368 real changes made)
+
+{com}. 
+.         gen Dep_Ratio_1_5       = (Dependency_Ratio > 1.5)
+{txt}
+{com}.         gen Dep_Ratio_2         = (Dependency_Ratio > 2)
+{txt}
+{com}.         
+. ** Outcome: Household food security status 
+.         sum RESPFoodWorry_YN RESPPercFoodSec*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+RESPFoodWo~N {c |}{res}        969    .9494324    .2192262          0          1
+{txt}RESPPercFo~c {c |}{res}          0
+{txt}RESPPercFo~1 {c |}{res}        969    .0299278     .170476          0          1
+{txt}RESPPercFo~2 {c |}{res}        969    .7863777    .4100748          0          1
+{txt}RESPPercFo~3 {c |}{res}        969    .7203302    .4490687          0          1
+{txt}{hline 13}{c +}{hline 57}
+RESPPercFo~4 {c |}{res}        969    .8049536    .3964411          0          1
+{txt}
+{com}.         
+.         gen RESPMeals_3More   = (RESPMeals                      == 3)
+{txt}
+{com}.         gen RESPFoodWorry         = (RESPFoodWorry_YN   == 1)
+{txt}
+{com}.         gen RESPFS_EnoughFood = (RESPPercFoodSec_1      == 1)
+{txt}
+{com}.         gen RESPFS_LessPrefer = (RESPPercFoodSec_2      == 1)
+{txt}
+{com}.         gen RESPFS_LessMeal   = (RESPPercFoodSec_3      == 1)
+{txt}
+{com}.         gen RESPFS_DayNoEat   = (RESPPercFoodSec_4      == 1)
+{txt}
+{com}.         
+.         ** Number of Meals & Worried RESPMeals
+.         gen     CARI_Meals = .
+{txt}(969 missing values generated)
+
+{com}.         replace CARI_Meals = 1 if RESPMeals == 3
+{txt}(5 real changes made)
+
+{com}.         replace CARI_Meals = 2 if RESPMeals == 2
+{txt}(96 real changes made)
+
+{com}.         replace CARI_Meals = 3 if RESPMeals == 1 | RESPMeals == 0
+{txt}(868 real changes made)
+
+{com}.         replace CARI_Meals = 4 if RESPMeals == 0 & RESPPercFoodSec_4 == 1
+{txt}(82 real changes made)
+
+{com}. 
+.         gen     CARI_Worry = .
+{txt}(969 missing values generated)
+
+{com}.         replace CARI_Worry = 1 if RESPFoodWorry_YN == 0
+{txt}(49 real changes made)
+
+{com}.         replace CARI_Worry = 2 if RESPFoodWorry_YN == 1
+{txt}(920 real changes made)
+
+{com}.         replace CARI_Worry = 3 if RESPFoodWorry_YN == 1 & RESPPercFoodSec_3 == 1
+{txt}(656 real changes made)
+
+{com}.         replace CARI_Worry = 4 if RESPFoodWorry_YN == 1 & RESPPercFoodSec_4 == 1
+{txt}(744 real changes made)
+
+{com}.         
+. ** Outcome: [FCS] Food consumption score Short vs. Long
+.         sum FCS*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}FCSStap {c |}{res}        466    5.298283    2.196546          0          7
+{txt}{space 4}FCSPulse {c |}{res}        466    2.579399    2.160029          0          7
+{txt}{space 4}FCSDairy {c |}{res}        466    .2296137    1.043599          0          7
+{txt}{space 7}FCSPr {c |}{res}        466    .8433476    1.384681          0          7
+{txt}{space 1}FCSNPrMeatF {c |}{res}        175    .3771429    .7075479          0          4
+{txt}{hline 13}{c +}{hline 57}
+{space 1}FCSNPrMeatO {c |}{res}        175    .0342857     .237253          0          2
+{txt}{space 2}FCSNPrFish {c |}{res}        175    .4171429    .9724615          0          7
+{txt}{space 2}FCSNPrEggs {c |}{res}        175    .0285714    .2497947          0          3
+{txt}{space 6}FCSVeg {c |}{res}        466      2.7897    2.965533          0          7
+{txt}{space 2}FCSNVegOrg {c |}{res}        267    .4307116     1.16249          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSNVegGre {c |}{res}        267    4.389513    2.345601          0          7
+{txt}{space 4}FCSFruit {c |}{res}        466    .3540773    1.113531          0          7
+{txt}{space 1}FCSNFruiOrg {c |}{res}         59    .4745763     1.30458          0          7
+{txt}{space 6}FCSFat {c |}{res}        466    2.800429    2.694654          0          7
+{txt}{space 4}FCSSugar {c |}{res}        466    1.611588    2.166558          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 5}FCSCond {c |}{res}        466    5.482833    2.163412          0          7
+{txt}{space 9}FCS {c |}{res}          0
+{txt}{space 8}FCSG {c |}{res}          0
+{txt}{space 3}FCSStap_S {c |}{res}        503     5.33996    2.031067          0          7
+{txt}{space 2}FCSPulse_S {c |}{res}        503     2.49503    2.244843          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSDairy_S {c |}{res}        503    .1749503    .9474272          0          7
+{txt}{space 5}FCSPr_S {c |}{res}        503    .9125249    1.501759          0          7
+{txt}{space 4}FCSVeg_S {c |}{res}        503    5.105368    2.113048          0          7
+{txt}{space 2}FCSFruit_S {c |}{res}        503    .4095427    1.144565          0          7
+{txt}{space 4}FCSFat_S {c |}{res}        503    2.934394    2.755232          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSSugar_S {c |}{res}        503    1.634195    2.353556          0          7
+{txt}{space 3}FCSCond_S {c |}{res}        503    5.558648    2.111447          0          7
+{txt}{space 7}FCS_S {c |}{res}          0
+{txt}{space 6}FCSG_S {c |}{res}          0
+{txt}
+{com}. gl  fcs FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCSCond FCS
+{txt}
+{com}.         
+. foreach var of global fcs {c -(}
+{txt}  2{com}.         replace `var' = `var'_S if Form == 2 & mi(`var')
+{txt}  3{com}. {c )-}
+{txt}(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+(503 real changes made)
+
+{com}.         destring FCS, replace
+{txt}FCS: all characters numeric; {res}replaced {txt}as {res}double
+{txt}
+{com}.         ren      FCS FCS_check
+{res}{txt}
+{com}.         
+.         gen     FCS = FCSStap * 2 + FCSPulse * 3 + FCSDairy * 4 + FCSPr * 4 +           ///
+>                                   FCSVeg  * 1 + FCSFruit * 1 + FCSFat * 0.5 + FCSSugar * 0.5
+{txt}
+{com}.         
+.         assert  FCS == FCS_check
+{txt}
+{com}.         s
+{err}command {bf}s{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD94352.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - All                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 30, 2023                                                                               *
+> *  LATEST UPDATE:               Dec  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   balance                 0  // Produce balance tables
+{txt}
+{com}.         local   attrition               0       // Attrition analysis
+{txt}
+{com}.         local   indicator               0       // Run indicator level analysis
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+. * add your directory below
+.         display c(username)     // Get your username
+{res}nicolewu
+{txt}
+{com}.          
+. * set directories
+. * ---------------       
+. if "`c(username)'" == "nicolewu" {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         global audit  "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/Documents/ODK Briefcase Storage/forms"
+.         {c )-}
+{txt}
+{com}. 
+.         /*
+> if "`c(username)'" == "alirahweyori" {c -(}
+>         global rcari  "\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"    
+>         {c )-}
+>         */
+.         
+.         * Subfolder globals
+.         * -----------------
+.         gl all                          "${c -(}rcari{c )-}/9_Comprehensive"
+{txt}
+{com}.         gl CAR                          "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl CAR_paper            "${c -(}CAR{c )-}/9_Analysis/8_Manuscript"
+{txt}
+{com}.         gl CAR_tex_tab          "${c -(}CAR_paper{c )-}/1_table"
+{txt}
+{com}.         gl CAR_tex_fig          "${c -(}CAR_paper{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl all_dta                      "${c -(}all{c )-}/1_Data"
+{txt}
+{com}.         gl all_dofile           "${c -(}all{c )-}/2_Dofile"
+{txt}
+{com}.         gl all_logs             "${c -(}all{c )-}/3_Log"
+{txt}
+{com}.         gl all_temp             "${c -(}all{c )-}/4_Temp"
+{txt}
+{com}.         gl all_tabs             "${c -(}all{c )-}/5_Tables"
+{txt}
+{com}.         gl all_figs             "${c -(}all{c )-}/6_Figures"
+{txt}
+{com}.         gl all_paper            "${c -(}all{c )-}/8_Manuscript"
+{txt}
+{com}.         gl all_docs                     "${c -(}all{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl all_paper_main       "${c -(}all_paper{c )-}/1_Main_Report"    
+{txt}
+{com}.         gl all_tex_tab          "${c -(}all_paper_main{c )-}/1_table"
+{txt}
+{com}.         gl all_tex_fig          "${c -(}all_paper_main{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl paper_d                      "${c -(}all_paper{c )-}/2_Duration"
+{txt}
+{com}.         gl tex_tab_d            "${c -(}paper_d{c )-}/1_table"
+{txt}
+{com}.         gl tex_fig_d            "${c -(}paper_d{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl paper_e                      "${c -(}all_paper{c )-}/3_Expenditure"
+{txt}
+{com}.         gl tex_tab_e            "${c -(}paper_e{c )-}/1_table"
+{txt}
+{com}.         gl tex_fig_e            "${c -(}paper_e{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl Myanmar_f2f          "${c -(}audit{c )-}/CARI Validation Study F2F_v1/instances"
+{txt}
+{com}.         gl Myanmar_rm           "${c -(}audit{c )-}/CARI Validation Study Remote_v1/instances"
+{txt}
+{com}.         
+.         gl Ecuador_f2f          "${c -(}audit{c )-}/CARI Estudio de validacion presencia _ESP_/instances"
+{txt}
+{com}.         gl Ecuador_rm           "${c -(}audit{c )-}/CARI Estudio de Validacion Remoto _ESP_/instances"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.1 Organize variables
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}all_dta{c )-}/All_Full_Household_Analysis.dta
+. *                       
+. *       CREATES:        ${c -(}all_dta{c )-}/All_Full_Household_Analysis_rCARI.dta
+. *                               ${c -(}all_dta{c )-}/Complete_Full_Household_Analysis_rCARI.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `organize'           do "${c -(}all_dofile{c )-}/01_Organize.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - All                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Organize full dataset for analsysis                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Oct 04, 2023                                                                               *
+> *  LATEST UPDATE:               Oct 05, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}all_dta{c )-}/Myanmar_Full_Household_Analysis.dta
+>                                         ${c -(}all_dta{c )-}/Ecuador_Full_Household_Analysis.dta
+>                                         ${c -(}all_dta{c )-}/CAR_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             ${c -(}all_dta{c )-}/ALL_Full_Household_Analysis.dta
+>                                         ${c -(}all_dta{c )-}/Complete_Full_Household_Analysis.dta
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

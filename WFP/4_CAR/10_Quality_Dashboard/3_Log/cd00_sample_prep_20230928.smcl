@@ -1,0 +1,439 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd00_sample_prep_20230928.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}28 Sep 2023, 14:09:19
+{txt}
+{com}.         di `cdate'
+{res}20230928
+{txt}
+{com}.         
+.         import delimited "${c -(}sample{c )-}/Full_sample_Uid.csv", case(preserve) clear
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{res}{text}(45 vars, 2,287 obs)
+
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}.         
+.         ** keep relevant variables
+.         keep AMIN1 Admin2Name Admin3Name Admin5Name house_type age relationship ///
+>                  hh_status hh_head_sex hh_head_marital hh_head_educ hh_size             ///
+>                  mem_lessthan15 mem_greaterthan60 mem_disability area_house             ///
+>                  roofing_material_house floor_material_house phone_ownership            ///
+>                  mobile_coverage Modality_Type Length_Type Uid 
+{txt}
+{com}.         
+. local sample_var AMIN1 Admin2Name Admin3Name Admin5Name house_type                      ///
+>                                  relationship hh_status hh_head_sex hh_head_marital             ///
+>                                  mem_disability roofing_material_house floor_material_house ///
+>                                  phone_ownership mobile_coverage Modality_Type Length_Type
+{txt}
+{com}.                                  
+. foreach var of local sample_var {c -(}
+{txt}  2{com}.         replace `var' = strproper(strtrim(`var'))               // format proper cases
+{txt}  3{com}.     encode  `var', gen(`var'_byte)
+{txt}  4{com}.         drop    `var'
+{txt}  5{com}.         ren             `var'_byte `var'
+{txt}  6{com}.     {c )-}
+{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(2,287 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(1,754 real changes made)
+{res}{txt}(2,160 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(2,279 real changes made)
+{res}{txt}(2,206 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(1,264 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 2: Organize Sample Variables
+. *******************************************************************************/
+.         
+.         label def yesno         1 "Yes" 0 "No"
+{txt}
+{com}.         
+. local yesno_var hh_head_sex hh_head_marital mem_disability phone_ownership      ///
+>                                 mobile_coverage
+{txt}
+{com}.         
+. foreach var of local yesno_var {c -(}
+{txt}  2{com}.         replace `var' = `var' - 1
+{txt}  3{com}.         label val `var' yesno
+{txt}  4{com}.     {c )-}
+{txt}(2,287 real changes made)
+(2,287 real changes made)
+(2,287 real changes made)
+(2,287 real changes made)
+(2,287 real changes made)
+
+{com}.         
+.         ren Modality_Type       Assign_Modality
+{res}{txt}
+{com}.         ren Length_Type         Assign_Length
+{res}{txt}
+{com}.         ren AMIN1                       Geo_Admin1
+{res}{txt}
+{com}.         ren Admin2Name          Geo_Admin2
+{res}{txt}
+{com}.         ren Admin3Name          Geo_Admin3
+{res}{txt}
+{com}.         ren Admin5Name          Geo_Admin5
+{res}{txt}
+{com}. 
+.         ren        Uid HHID
+{res}{txt}
+{com}.         order  HHID, first
+{txt}
+{com}.         order  Assign_Modality Assign_Length Geo_Admin*, a(HHID)
+{txt}
+{com}.         order  relationship hh_status, a(age)
+{txt}
+{com}.         order  hh_head_sex hh_head_marital, b(hh_head_educ)
+{txt}
+{com}.         order  house_type area_house, a(mem_disability)
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 3: Label Sample Variables
+. *******************************************************************************/
+.         
+.         label def gender_l  0 "Female" 1 "Male"
+{txt}
+{com}.         label val hh_head_sex   gender_l
+{txt}
+{com}.         
+.         label var HHID                          "Household ID"
+{txt}
+{com}.         label var Assign_Modality       "Assigned Survey Modality"
+{txt}
+{com}.         label var Assign_Length         "Assigned Survey Length"
+{txt}
+{com}.         label var Geo_Admin1            "Geographic Region: Admin 1"
+{txt}
+{com}.         label var Geo_Admin2            "Geographic Region: Admin 2"
+{txt}
+{com}.         label var Geo_Admin3            "Geographic Region: Admin 3"
+{txt}
+{com}.         label var Geo_Admin5            "Geographic Region: Admin 5"
+{txt}
+{com}.         
+.         label var age                           "List respondent age"
+{txt}
+{com}.         label var relationship          "List respondent relationship to head of household"
+{txt}
+{com}.         label var hh_status                     "Household residence status"
+{txt}
+{com}.         label var hh_head_sex           "Household head sex"
+{txt}
+{com}.         label var hh_head_marital       "Household head married"
+{txt}
+{com}.         label var hh_head_educ          "Household head years of education"
+{txt}
+{com}.         label var hh_size                       "Household size"
+{txt}
+{com}.         label var mem_lessthan15        "Number of household member younger than 15"
+{txt}
+{com}.         label var mem_greaterthan60     "Number of household member older than 60"
+{txt}
+{com}.         label var mem_disability        "Has household member with disability/chronic disease"
+{txt}
+{com}.         label var area_house            "Number of rooms"
+{txt}
+{com}.         label var house_type            "Permanent house/structure"
+{txt}
+{com}.         label var roofing_material_house "Household main roof material"
+{txt}
+{com}.         label var floor_material_house   "Household main floor material"
+{txt}
+{com}.         label var phone_ownership       "Household owns phone"
+{txt}
+{com}.         label var mobile_coverage       "Household has mobile network coverage"
+{txt}
+{com}.         
+.         compress
+  {txt}variable {bf}{res}Assign_Modality{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Assign_Length{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin1{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin2{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin3{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin5{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}relationship{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_status{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_sex{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_marital{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_disability{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_type{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}roofing_material_house{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}floor_material_house{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}phone_ownership{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mobile_coverage{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (109,776 bytes saved)
+
+{com}.         save  "${c -(}sample{c )-}/CAR_Sample_Merge.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         import delimited "${c -(}sample{c )-}/Full_sample_Uid.csv", case(preserve) clear
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{res}{text}(45 vars, 2,287 obs)
+
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         import delimited "${c -(}sample{c )-}/Full_sample_Uid.csv", case(preserve) clear
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{res}{text}(45 vars, 2,287 obs)
+
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}.         
+.         ** keep relevant variables
+.         keep AMIN1 Admin2Name Admin3Name Admin5Name house_type age relationship ///
+>                  hh_status hh_head_sex hh_head_marital hh_head_educ hh_size             ///
+>                  mem_lessthan15 mem_greaterthan60 mem_disability area_house             ///
+>                  roofing_material_house floor_material_house phone_ownership            ///
+>                  mobile_coverage Modality_Type Length_Type Uid ___index
+{txt}
+{com}.         
+. local sample_var AMIN1 Admin2Name Admin3Name Admin5Name house_type                      ///
+>                                  relationship hh_status hh_head_sex hh_head_marital             ///
+>                                  mem_disability roofing_material_house floor_material_house ///
+>                                  phone_ownership mobile_coverage Modality_Type Length_Type
+{txt}
+{com}.                                  
+. foreach var of local sample_var {c -(}
+{txt}  2{com}.         replace `var' = strproper(strtrim(`var'))               // format proper cases
+{txt}  3{com}.     encode  `var', gen(`var'_byte)
+{txt}  4{com}.         drop    `var'
+{txt}  5{com}.         ren             `var'_byte `var'
+{txt}  6{com}.     {c )-}
+{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(2,287 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(1,754 real changes made)
+{res}{txt}(2,160 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(2,279 real changes made)
+{res}{txt}(2,206 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(1,264 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Ecuador                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 18, 2023                                                                               *
+> *  LATEST UPDATE:               Jun 19, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Ecuador_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Ecuador_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   sample_prep             1       // Prepare sample list
+{txt}
+{com}.         local   correct                 1       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   1       // Set up datasets
+{txt}
+{com}.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   append                  1       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 1       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+. if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl Ecuador              "${c -(}rcari{c )-}/3_Ecuador"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}Ecuador{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}Ecuador{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}Ecuador{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}Ecuador{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}Ecuador{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}Ecuador{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+. 
+.         if `sample_prep'        do "${c -(}d_dofile{c )-}/ed00_sample_prep.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Ecuador                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Prepare overall sample list                                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jul 24, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}sample{c )-}/Ecuador_Sample_Merge.xlsx
+>                                         
+>         ** CREATES:             ${c -(}sample{c )-}/Ecuador_Sample_Merge.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                       PART 1: Prepare Sample List
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,29 @@
+\contentsline {section}{\numberline {1}Executive Summary}{3}{section.1}%
+\contentsline {section}{\numberline {2}Introduction}{5}{section.2}%
+\contentsline {section}{\numberline {3}Study design}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Selection of study areas and participants}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Myanmar}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Ecuador}{9}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Central African Republic}{10}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Overall study implementation}{11}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Sample Completion}{13}{section.4}%
+\contentsline {section}{\numberline {5}Primary Results: Effect of Survey Modality on Food Security Reporting}{14}{section.5}%
+\contentsline {subsection}{\numberline {5.1}CARI vs. rCARI}{14}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Food Consumption Score (FCS)}{18}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Reduced Coping Strategy Index (rCSI)}{19}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Livelihood Coping Strategy (LCS)}{20}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Food Expenditure Share (FES)}{23}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Income Source and Income Change}{24}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Module Length and Food Security Indicator Reporting}{25}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Standard FCS module vs. Short FCS module}{25}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Standard Expenditure module vs. Short Expenditure module}{25}{subsection.6.2}%
+\contentsline {section}{\numberline {7}LCS for Essential Needs vs LCS for Food Security}{29}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Aggregate LCS-FS/EN (Maximum livelihood coping strategies)}{29}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Specific LCS-FS/EN Adoption by Country}{30}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Summary and conclusions}{32}{section.8}%
+\contentsline {section}{\numberline {9}Challenges of the study by country}{33}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Myanmar}{33}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Ecuador}{33}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}CAR}{33}{subsection.9.3}%
+\contentsline {section}{\numberline {10}Annexes}{35}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Supporting documents}{35}{subsection.10.1}%

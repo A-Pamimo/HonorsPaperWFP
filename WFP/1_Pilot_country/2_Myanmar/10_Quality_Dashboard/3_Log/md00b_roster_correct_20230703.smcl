@@ -1,0 +1,414 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md00b_roster_correct_20230703.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 3 Jul 2023, 20:27:26
+{txt}
+{com}.         di `cdate'
+{res}20230703
+{txt}
+{com}.         
+.         * load dataset
+.         * ---------------       
+.         use "${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PSchoolEver{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PschoolLevel{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PschoolGrade{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthBirth{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PHealthDiarr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_888{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}getP{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str3{sf}
+  {txt}variable {bf}{res}tmp_RESP{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}RESP_position{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str3{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+{txt}  (1,814,678 bytes saved)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         ren ___parent_index      HH_Index
+{res}{txt}
+{com}. 
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}getP{col 15}___uuid{col 29}___duration
+{col 1}RESPName{col 15}___parent_~e{col 29}___submitt~y
+{col 1}PHealthDia~t{col 15}___tags{col 29}___xform_id
+{col 1}tmp_RESP{col 15}___notes
+{col 1}RESP_posit~n{col 15}___version
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(2,784 real changes made)
+(3,485 real changes made)
+(2,784 real changes made)
+(0 real changes made)
+(3,519 real changes made)
+(0 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+
+{com}.         
+. *************************  ADD CORRECTION LINES HERE ***************************
+.         
+.         *** 1. 0 or More Than 1 Respondent
+.         replace RESPYN = 1 if inlist(___index,720,568,715,2420,2065,2598,3094,3468) 
+{txt}(8 real changes made)
+
+{com}.         replace RESPName = "Ma Roi Nu"                          if ___index == 715
+{txt}(1 real change made)
+
+{com}.         replace RESPName = "Daw Bawm Wang"                      if ___index == 2065
+{txt}(1 real change made)
+
+{com}.         replace RESPName = "Daw Hpaune Shawng Hoi"      if ___index == 3094
+{txt}(1 real change made)
+
+{com}.         replace RESPName = "Daw Hkawn Pri"                      if ___index == 3468 
+{txt}(1 real change made)
+
+{com}.         
+.         replace RESPYN = 0 if inlist(___index,72,73,75,76,77,78)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,102,103,104,105,106,107)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,109,110,111,112,113,114,115,116,117)
+{txt}(8 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,292,293,294,295,296,297,298,299)
+{txt}(8 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,301,302)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,304,305)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,307,308,309,310,311,312,313)
+{txt}(7 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,745,746,747,748,749,750)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,752,753,754,755)
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,757,758,759,760,761)
+{txt}(5 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,763,764,765,766)
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,768,769,770,771,772,773,774,775,776)
+{txt}(9 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,912,913,914,915,916,917)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1184,1185,1186,1187,1188)
+{txt}(5 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1190,1191,1192)
+{txt}(3 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1194,1195)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1219,1220,1221,1222) 
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1249,1250,1251,1252)
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1311,1312)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1354,1355,1356)
+{txt}(3 real changes made)
+
+{com}.         replace RESPYN = 0 if ___index == 2597
+{txt}(1 real change made)
+
+{com}.         
+.         replace RESPYN = 0 if ___index == 3093
+{txt}(1 real change made)
+
+{com}.         replace RESPName = ""   if ___index == 3093
+{txt}(1 real change made)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. list if ___index == 296
+
+      {txt}{c TLC}{hline 8}{c TT}{hline 11}{c TT}{hline 9}{c TT}{hline 11}{c TRC}
+ 296. {c |}  getP  {c |}    PSex   {c |}  PAge   {c |}  RESPYN   {c |}
+      {c |}  {res}   6  {txt}{c |}  {res}Female   {txt}{c |}  {res}  29   {txt}{c |}  {res}    No   {txt}{c |}
+      {c LT}{hline 8}{c BT}{hline 5}{c TT}{hline 5}{c BT}{hline 9}{c +}{hline 11}{c RT}
+      {c |}     RESPName {c |} PRelationHHH  {c |} PSchoo~r  {c |}
+      {c |} {res}Daw Eai Moil {txt}{c |} {res}Other relati  {txt}{c |} {res}     Yes  {txt}{c |}
+      {c LT}{hline 14}{c BT}{hline 1}{c TT}{hline 12}{c TT}{c BT}{hline 11}{c RT}
+      {c |}  PschoolLevel  {c |}  Pschoo~e  {c |}  MDDIH~6M  {c |}
+      {c |}  {res}Religious or  {txt}{c |}  {res}       3  {txt}{c |}  {res}       .  {txt}{c |}
+      {c LT}{hline 13}{c TT}{hline 2}{c BT}{hline 10}{c TT}{hline 1}{c BT}{hline 12}{c RT}
+      {c |}  PHealt~h   {c |}  MDDIHH~g   {c |}   MDDIHH~e   {c |}
+      {c |}  {res}      No   {txt}{c |}  {res}      No   {txt}{c |}   {res}       .   {txt}{c |}
+      {c LT}{hline 13}{c +}{hline 13}{c +}{hline 14}{c RT}
+      {c |}  MDDIHH~y   {c |}  MDDIHH~s   {c |}   PHealt~r   {c |}
+      {c |}  {res}       .   {txt}{c |}  {res}       .   {txt}{c |}   {res}       .   {txt}{c |}
+      {c LT}{hline 13}{c +}{hline 13}{c +}{hline 14}{c RT}
+      {c |}  PHealt~t   {c |}  PHealt~1   {c |}   PHealt~2   {c |}
+      {c |}  {res}           {txt}{c |}  {res}       .   {txt}{c |}   {res}       .   {txt}{c |}
+      {c LT}{hline 13}{c +}{hline 13}{c +}{hline 14}{c RT}
+      {c |}  PHealt~3   {c |}  PHealt~4   {c |}   PHea~888   {c |}
+      {c |}  {res}       .   {txt}{c |}  {res}       .   {txt}{c |}   {res}       .   {txt}{c |}
+      {c LT}{hline 10}{c TT}{hline 2}{c BT}{hline 8}{c TT}{hline 4}{c BT}{hline 3}{c TT}{hline 10}{c RT}
+      {c |} tmp_RESP {c |} RESP_p~n  {c |} ___id  {c |} ___uuid  {c |}
+      {c |} {res}       1 {txt}{c |} {res}       6  {txt}{c |} {res}    .  {txt}{c |} {res}         {txt}{c |}
+      {c LT}{hline 10}{c BT}{hline 2}{c TT}{hline 8}{c BT}{hline 4}{c TT}{hline 3}{c BT}{hline 10}{c RT}
+      {c |}  ___sub~e   {c |}  ___index   {c |}   ___par~e   {c |}
+      {c |}  {res}       .   {txt}{c |}  {res}     296   {txt}{c |}   {res}    data   {txt}{c |}
+      {c LT}{hline 10}{c TT}{hline 2}{c BT}{hline 6}{c TT}{hline 6}{c BT}{hline 3}{c TT}{hline 10}{c RT}
+      {c |} HH_Index {c |} ___tags {c |} ___notes {c |} ___ver~n {c |}
+      {c |} {res}      50 {txt}{c |} {res}        {txt}{c |} {res}         {txt}{c |} {res}         {txt}{c |}
+      {c LT}{hline 10}{c BT}{hline 2}{c TT}{hline 6}{c BT}{hline 6}{c TT}{hline 3}{c BT}{hline 10}{c RT}
+      {c |}  ___dur~n   {c |}  ___sub~y   {c |}   ___xfo~d   {c |}
+      {c |}  {res}           {txt}{c |}  {res}           {txt}{c |}   {res}           {txt}{c |}
+      {c BLC}{hline 13}{c BT}{hline 13}{c BT}{hline 14}{c BRC}
+
+{com}. keep if HH_Index == 50
+{txt}(3,510 observations deleted)
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD29782.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 12, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   correct                 1       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   1       // Set up datasets
+{txt}
+{com}.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   append                  1       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 1       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}myanmar{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}myanmar{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}myanmar{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}myanmar{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}myanmar{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}. 
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+.         ** _`cdate' was removed after finishing data collection
+. * ------------------------------------------------------------------------------
+. *                                                       3.0 Correct field errors
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.csv
+. *                                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_F2F_Roster_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_RM_Household_Correct_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `correct'            do "${c -(}d_dofile{c )-}/md00a_f2f_correct.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Myanmar                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for F2F Household                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 11, 2023                                                                               *
+> *  LATEST UPDATE:               Jul 03, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+> 
+>         ** NOTES:               _`cdate' was removed after finishing data collection
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

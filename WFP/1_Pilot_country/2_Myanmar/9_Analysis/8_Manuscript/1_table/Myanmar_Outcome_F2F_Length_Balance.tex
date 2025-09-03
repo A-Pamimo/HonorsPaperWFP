@@ -1,0 +1,30 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab FCS rCSI HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES if Modality == 1, grpvar(Form) nonote nototal replace onerow format(%12.2fc) grplabels(1 Long @ 2 Short) rowvarlabels savetex("/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_Outcome_F2F_Length_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(1)-(2)} \\
+ & \multicolumn{1}{c}{Long}  & \multicolumn{1}{c}{Short}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+Food Consumption Score   & 44.67    & 43.96    & 0.71   \\
+ & (0.71)  & (0.70)  &  \\ [1ex]
+Reduced Consumption Strategies Index (rCSI)   & 5.70    & 5.16    & 0.54   \\
+ & (0.43)  & (0.43)  &  \\ [1ex]
+Total monthly food expenditure (average)   & 300,045.50    & 255,380.15    & 44,665.35***   \\
+ & (8,309.95)  & (8,202.09)  &  \\ [1ex]
+Total monthly non-food expenditure (average)   & 173,898.33    & 140,811.26    & 33,087.08***   \\
+ & (9,319.11)  & (7,313.85)  &  \\ [1ex]
+Monthly total household expenditure   & 473,943.83    & 396,191.41    & 77,752.42***   \\
+ & (14,332.85)  & (12,797.28)  &  \\ [1ex]
+Monthly total household expenditure per capita   & 93,346.30    & 77,100.63    & 16,245.67***   \\
+ & (2,940.57)  & (2,280.92)  &  \\ [1ex]
+Food Expenditure Share   & 0.66    & 0.66    & -0.00   \\
+ & (0.01)  & (0.01)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 305   & 305  & 610  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

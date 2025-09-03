@@ -1,0 +1,43 @@
+event, node, start, end
+form start,,1686377026270,
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/SvyDate,1686377026272,1686377029352
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/EnuName,1686377029353,1686377033304
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/EnuSex,1686377033304,1686377035553
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/ADMIN1Name,1686377035557,1686377039128
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/ADMIN3Name,1686377039129,1686377042351
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/ADMIN5Name,1686377042352,1686377046698
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/sampleYN,1686377046699,1686377052373
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHID,1686377052374,1686377093573
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/generated_note_name_20,1686377093574,1686378129063
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHID,1686378129063,1686378130747
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/sampleYN,1686378130748,1686378131738
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHID,1686378131739,1686378132472
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/generated_note_name_20,1686378132472,1686378168835
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHID,1686378168836,1686378169912
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/sampleYN,1686378169913,1686378171006
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHID,1686378171006,1686378191322
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/generated_note_name_20,1686378191322,1686378335148
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/HHPhNmb,1686378335150,1686378355404
+question,/data/Technical_module[1]/TechnicalBasic_submodule[1]/RESPpart,1686378355405,1686378359122
+end screen,,1686378359122,1686378361356
+form save,,1686378361356,
+form exit,,1686378361356,
+form finalize,,1686378361356,
+form resume,,1686378410300,
+jump,,1686378410301,1686378423414
+end screen,,1686378423469,1686378424924
+form save,,1686378424924,
+form exit,,1686378424924,
+form finalize,,1686378424924,
+form resume,,1686402353547,
+jump,,1686402353547,1686402356513
+end screen,,1686402356558,1686402358211
+form save,,1686402358211,
+form exit,,1686402358211,
+form finalize,,1686402358211,
+form resume,,1686404954756,
+jump,,1686404954757,1686404966332
+end screen,,1686404966387,1686404969654
+form save,,1686404969653,
+form exit,,1686404969654,
+form finalize,,1686404969654,

@@ -1,0 +1,334 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/3_Log/m01_organize_20230922.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Sep 2023, 14:30:12
+{txt}
+{com}.         di `cdate'      
+{res}20230922
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}dta{c )-}/Myanmar_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl out_oth  FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency               ///
+>                                 HHExpTotal PCExpTotal FES 
+{txt}
+{com}.                                 
+.         gl out_fes HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES
+{txt}
+{com}.         
+.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}.         
+.         gl out_cat      CARI_FES_Cat1 CARI_FES_Cat2 CARI_FES_Cat3 CARI_FES_Cat4         ///
+>                                 CARI_FES_Bad rCARI_Inc_Cat1 rCARI_Inc_Cat2 rCARI_Inc_Cat3       ///
+>                                 rCARI_Inc_Cat4 rCARI_Inc_Bad
+{txt}
+{com}.                                 
+.         gl out_lcs LCS_None LCS_Stress LCS_Crisis LCS_Emergency
+{txt}
+{com}.         
+.         gl out_cari CARI_rCARI_1 CARI_rCARI_2 CARI_rCARI_3 CARI_rCARI_4 CARI_rCARI
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+.         
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}out_oth{c )-}, grpvar(Modality) nonote onerow                                                     ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_Outcome_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_Outcome_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_Outcome_Modality_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}out_cat{c )-}, grpvar(Modality) nonote onerow                                                     ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_CARI_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_CARI_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_CARI_Modality_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_fes{c )-} if Modality == 1, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_FES_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_fes{c )-} if Modality == 2, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_FES_RM_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_lcs{c )-} if Modality == 1, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long(EN) @ 2 Short(FS))                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_LCS_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_LCS_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_LCS_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_cari{c )-}, grpvar(Modality) nonote onerow                                            ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_CARI_Modality_Balance_Key.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_CARI_Modality_Balance_Key.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_CARI_Modality_Balance_Key.tex}{p_end}
+{txt}
+{com}.                           
+.         ren CARI_FES_Cat*       C_FES_*
+{res}{txt}
+{com}.         ren rCARI_Inc_Cat*  rC_Inc_*
+{res}{txt}
+{com}.         
+.         asdoc ttest C_FES_1 == rC_Inc_1 if Modality == 1, unpaired replace save(${c -(}tabs{c )-}/Myanmar_F2F_FESINC_Unpaired_ttest.doc) ///
+>                                                                            title(CARI vs. F2F rCARI) fhc(\b) fhr(\b) font(Open Sans) label dec(3) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_1 {c |}{res}{col 12}    610{col 22} .0819672{col 34} .0111158{col 46} .2745399{col 58} .0601373{col 70} .1037972
+{txt}rC_Inc_1 {c |}{res}{col 12}    610{col 22} .1606557{col 34} .0148802{col 46} .3675145{col 58}  .131433{col 70} .1898785
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22}-.0786885{col 34} .0139433{col 46} .3443729{col 58}-.1060712{col 70}-.0513058
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_1{txt} - {res}rC_Inc_1{txt})                        t = {res} -5.6435
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}1.0000
+
+{txt}{p 20 20 2}CARI vs. F2F rCARI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .082}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1605}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0786885}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .014}}}{space 1}{space 1}{ralign 9:{res:{sf:    -5.65}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc"}
+
+{com}.                                                                            
+.         forval i = 2/4 {c -(}
+{txt}  2{com}.         asdoc ttest C_FES_`i' == rC_Inc_`i' if Modality == 1, unpaired rowappend save(${c -(}tabs{c )-}/Myanmar_F2F_FESINC_Unpaired_ttest.doc) ///
+>                                 fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}  3{com}.         {c )-}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_2 {c |}{res}{col 12}    610{col 22} .4442623{col 34} .0201347{col 46} .4972914{col 58} .4047203{col 70} .4838042
+{txt}rC_Inc_2 {c |}{res}{col 12}    610{col 22} .4295082{col 34} .0200587{col 46} .4954122{col 58} .3901157{col 70} .4689007
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0147541{col 34} .0208094{col 46}  .513955{col 58}-.0261129{col 70} .0556211
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_2{txt} - {res}rC_Inc_2{txt})                        t = {res}  0.7090
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.7607         {txt}Pr(|T| > |t|) = {res}0.4786          {txt}Pr(T > t) = {res}0.2393
+
+{txt}{p 20 20 2}Unpaired t test : C_FES_2 rC_Inc_2 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4445}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4295}}}{space 1}{space 1}{ralign 9:{res:{sf: .0147541}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .021}}}{space 1}{space 1}{ralign 9:{res:{sf:       .7}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4785}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_3 {c |}{res}{col 12}    610{col 22} .4409836{col 34} .0201194{col 46} .4969123{col 58} .4014718{col 70} .4804954
+{txt}rC_Inc_3 {c |}{res}{col 12}    610{col 22} .3868852{col 34} .0197357{col 46} .4874367{col 58} .3481269{col 70} .4256436
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0540984{col 34} .0165062{col 46} .4076742{col 58} .0216823{col 70} .0865144
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_3{txt} - {res}rC_Inc_3{txt})                        t = {res}  3.2774
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9994         {txt}Pr(|T| > |t|) = {res}0.0011          {txt}Pr(T > t) = {res}0.0006
+
+{txt}{p 20 20 2}Unpaired t test : C_FES_3 rC_Inc_3 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .441}}}{space 1}{space 1}{ralign 9:{res:{sf:     .387}}}{space 1}{space 1}{ralign 9:{res:{sf: .0540984}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0165}}}{space 1}{space 1}{ralign 9:{res:{sf:      3.3}}}{space 1}{space 1}{ralign 9:{res:{sf:     .001}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_4 {c |}{res}{col 12}    610{col 22} .0327869{col 34} .0072161{col 46} .1782245{col 58} .0186154{col 70} .0469583
+{txt}rC_Inc_4 {c |}{res}{col 12}    610{col 22} .0229508{col 34}  .006068{col 46} .1498696{col 58}  .011034{col 70} .0348676
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0098361{col 34} .0069494{col 46} .1716384{col 58}-.0038117{col 70} .0234838
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_4{txt} - {res}rC_Inc_4{txt})                        t = {res}  1.4154
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9213         {txt}Pr(|T| > |t|) = {res}0.1575          {txt}Pr(T > t) = {res}0.0787
+
+{txt}{p 20 20 2}Unpaired t test : C_FES_4 rC_Inc_4 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .033}}}{space 1}{space 1}{ralign 9:{res:{sf:     .023}}}{space 1}{space 1}{ralign 9:{res:{sf: .0098361}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .007}}}{space 1}{space 1}{ralign 9:{res:{sf:      1.4}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1575}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}
+{com}.         
+.         asdoc ttest CARI_FES_Bad == rCARI_Inc_Bad if Modality == 1, unpaired rowappend save(${c -(}tabs{c )-}/Myanmar_F2F_FESINC_Unpaired_ttest.doc) ///
+>                                 fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+CARI_F~d {c |}{res}{col 12}    610{col 22} .4737705{col 34} .0202331{col 46} .4997213{col 58} .4340353{col 70} .5135057
+{txt}rCARI_~d {c |}{res}{col 12}    610{col 22} .4098361{col 34} .0199289{col 46} .4922069{col 58} .3706984{col 70} .4489737
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0639344{col 34} .0149029{col 46} .3680744{col 58} .0346671{col 70} .0932017
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}CARI_FES_Bad{txt} - {res}rCARI_Inc_Bad{txt})              t = {res}  4.2901
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Unpaired t test : CARI_FES_Bad rCARI_Inc_Bad {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .474}}}{space 1}{space 1}{ralign 9:{res:{sf:      .41}}}{space 1}{space 1}{ralign 9:{res:{sf: .0639344}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .015}}}{space 1}{space 1}{ralign 9:{res:{sf:      4.3}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}
+{com}.         
+.         // onerow
+. 
+.         ** disaggregation by groups 
+.         // LCS, rCSI, FES by food secure vs food insecure
+.         // gender
+.         
+.         iebaltab ${c -(}out_oth{c )-} if Modality == 1, grpvar(HH_Vul_FES)                                        ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(0 Food Secure @ 1 Food Insecure)                 ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_F2F_Outcome_Balance_FS_Disaggregation.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_F2F_Outcome_Balance_FS_Disaggregation.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_F2F_Outcome_Balance_FS_Disaggregation.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_oth{c )-} if Modality == 2, grpvar(HH_Vul_FES)                                        ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(0 Food Secure @ 1 Food Insecure)                 ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_RM_Outcome_Balance_FS_Disaggregation.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_RM_Outcome_Balance_FS_Disaggregation.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_RM_Outcome_Balance_FS_Disaggregation.tex}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}out_oth{c )-} if Modality == 1, grpvar(FCG_Accept)                                                ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(0 FC Poor & Borderline @ 1 FC Acceptable)                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_F2F_Outcome_Balance_FCG.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_F2F_Outcome_Balance_FCG.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_F2F_Outcome_Balance_FCG.tex}{p_end}
+{txt}
+{com}.                          
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03442.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check Balance and Produce Excel Tables                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jul 12, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

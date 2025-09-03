@@ -1,0 +1,515 @@
+event,node,start,end
+form start,,1686587242622,
+question,/data/Technical_module/SvyDate,1686587242624,1686587245497
+question,/data/Technical_module/HHCoord,1686587245512,1686587246326
+question,/data/Technical_module/ADMIN1Name,1686587246338,1686587249184
+question,/data/Technical_module/ADMIN3Name,1686587249207,1686587251882
+question,/data/Technical_module/ADMIN5Name,1686587251910,1686587254585
+question,/data/Technical_module/EnuName,1686587254606,1686587257520
+question,/data/Technical_module/EnuSex,1686587257534,1686587259204
+question,/data/Technical_module/sampleYN,1686587259218,1686587262943
+question,/data/Technical_module/HHID,1686587262954,1686587265608
+form save,,1686587265775,
+form exit,,1686587265776,
+form resume,,1686639637599,
+jump,,1686639637599,1686639658840
+question,/data/Technical_module/HHID,1686639641470,1686639658840
+question,/data/Technical_module/generated_note_name_20,1686639658858,1686639661577
+question,/data/Technical_module/RESPAge,1686639661591,1686639670916
+question,/data/Technical_module/RESPSex,1686639670929,1686639673631
+question,/data/Technical_module/RESPStatus,1686639673648,1686639680977
+question,/data/Consent/Consent_1,1686639680986,1686639687704
+question,/data/Consent/ConsentYN,1686639687718,1686639690773
+question,/data/SurveyYN/Demographic_module/HHStatus,1686639690787,1686639695040
+question,/data/SurveyYN/Demographic_module/MDDIHHHDisplArrive,1686639695053,1686639734195
+question,/data/SurveyYN/Demographic_module/MDDIHHDisplChoice,1686639734207,1686639759532
+question,/data/SurveyYN/Demographic_module/HHhostDisp,1686639759545,1686639768712
+question,/data/SurveyYN/Demographic_module/MDDIHHIdDoc,1686639768726,1686639913451
+question,/data/SurveyYN/Demographic_module/HHSize,1686639913463,1686639916078
+question,/data/SurveyYN/HHMem_health/note_HHMem_health,1686640067095,1686640070457
+question,/data/SurveyYN/HHMem_health/MDDIHHDisabledNb,1686640070471,1686640074005
+question,/data/SurveyYN/HHMem_health/note_HH_Health,1686640074020,1686640075084
+question,/data/SurveyYN/HHMem_health/MMDIHHHealthFac,1686640075097,1686640086193
+question,/data/SurveyYN/HHMem_health/MMDIHHHealthFac_dist,1686640086205,1686640103342
+question,/data/SurveyYN/HHMem_health/HHHealthAcMildNeed,1686640103355,1686640117862
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereNeed,1686640117873,1686640124970
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereTreat,1686640124983,1686640126799
+question,/data/SurveyYN/HHMem_health/HHHealthChronNeed,1686640126813,1686640131669
+question,/data/SurveyYN/HHMem_health/HHHealthEmergNeed,1686640131681,1686640138427
+question,/data/SurveyYN/HHMem_health/HHHealthChronNeed,1686640138439,1686640139718
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereTreat,1686640139728,1686640141637
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereNeed,1686640141647,1686640144744
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereTreat,1686640144756,1686640145592
+question,/data/SurveyYN/HHMem_health/HHHealthChronNeed,1686640145605,1686640152084
+question,/data/SurveyYN/HHMem_health/HHHealthEmergNeed,1686640152095,1686640154312
+question,/data/SurveyYN/HHMem_health/HHHealthChronNeed,1686640154326,1686640157079
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereTreat,1686640157092,1686640157975
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereNeed,1686640157988,1686640159557
+question,/data/SurveyYN/HHMem_health/HHHealthAcSevereTreat,1686640159571,1686640159954
+question,/data/SurveyYN/HHMem_health/HHHealthChronNeed,1686640159962,1686640160763
+question,/data/SurveyYN/HHMem_health/HHHealthEmergNeed,1686640160778,1686640163063
+question,/data/SurveyYN/Foodbased_remote_module/RESPFoodWorry_YN,1686640163075,1686640229544
+question,/data/SurveyYN/Foodbased_remote_module/RESPPercFoodSec,1686640229556,1686640248350
+question,/data/SurveyYN/Foodbased_remote_module/RESPMeals,1686640248364,1686640260125
+question,/data/SurveyYN/HHS_module/HHSNoFood,1686640260140,1686640270173
+question,/data/SurveyYN/HHS_module/HHSBedHung,1686640270185,1686640272394
+question,/data/SurveyYN/HHS_module/HHSNotEat,1686640272410,1686640273873
+question,/data/SurveyYN/FCS_submodule/FCS_note_S,1686640273886,1686640275828
+question,/data/SurveyYN/FCS_submodule/FCSNote_S,1686640275840,1686640277126
+question,/data/SurveyYN/FCS_submodule/FCSStap_S,1686640277140,1686640319843
+question,/data/SurveyYN/FCS_submodule/FCSPulse_S,1686640319857,1686640350452
+question,/data/SurveyYN/FCS_submodule/FCSDairy_S,1686640350467,1686640369234
+question,/data/SurveyYN/FCS_submodule/FCSPr_S,1686640369249,1686640440406
+question,/data/SurveyYN/FCS_submodule/FCSVeg_S,1686640440421,1686640512743
+question,/data/SurveyYN/FCS_submodule/FCSFruit_S,1686640512758,1686640558294
+question,/data/SurveyYN/FCS_submodule/FCSFat_S,1686640558308,1686640564912
+question,/data/SurveyYN/FCS_submodule/FCSSugar_S,1686640564928,1686640633459
+question,/data/SurveyYN/FCS_submodule/FCSCond_S,1686640633472,1686640655985
+question,/data/SurveyYN/genrCSI_submodule/rCSI_note,1686640655998,1686640677944
+question,/data/SurveyYN/genrCSI_submodule/rCSINote,1686640677959,1686640693876
+question,/data/SurveyYN/genrCSI_submodule/rCSI_note,1686640693888,1686640695162
+question,/data/SurveyYN/genrCSI_submodule/rCSINote,1686640695175,1686640696025
+question,/data/SurveyYN/genrCSI_submodule/rCSILessQlty,1686640696036,1686640723206
+question,/data/SurveyYN/genrCSI_submodule/rCSIBorrow,1686640723221,1686640732754
+question,/data/SurveyYN/genrCSI_submodule/rCSIMealSize,1686640732773,1686640735320
+question,/data/SurveyYN/genrCSI_submodule/rCSIMealAdult,1686640735335,1686640737444
+question,/data/SurveyYN/genrCSI_submodule/rCSIMealNb,1686640737455,1686640739138
+question,/data/SurveyYN/LhCSI_submodule/Lcs,1686640739154,1686640741492
+question,/data/SurveyYN/LhCSI_submodule/Lcs_stress_DomAsset,1686640741505,1686640772765
+question,/data/SurveyYN/LhCSI_submodule/Lcs_stress_CrdtFood,1686640772780,1686640779855
+question,/data/SurveyYN/LhCSI_submodule/Lcs_stress_Saving,1686640779869,1686640795860
+question,/data/SurveyYN/LhCSI_submodule/Lcs_stress_BorrowCash,1686640795873,1686640805445
+question,/data/SurveyYN/LhCSI_submodule/Lcs_crisis_ProdAssets,1686640805459,1686640809258
+question,/data/SurveyYN/LhCSI_submodule/Lcs_crisis_Health,1686640809271,1686640827101
+question,/data/SurveyYN/LhCSI_submodule/Lcs_crisis_OutSchool,1686640827117,1686640828408
+question,/data/SurveyYN/LhCSI_submodule/Lcs_crisis_Health,1686640828420,1686640831066
+question,/data/SurveyYN/LhCSI_submodule/Lcs_crisis_OutSchool,1686640831079,1686640839331
+question,/data/SurveyYN/LhCSI_submodule/Lcs_em_ChildWork,1686640839345,1686640845121
+question,/data/SurveyYN/LhCSI_submodule/Lcs_em_Begged,1686640845132,1686640848520
+question,/data/SurveyYN/LhCSI_submodule/Lcs_em_IllegalAct,1686640848532,1686640851557
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFoodNote_S,1686640851576,1686640853236
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFoodNote_7D_S,1686640853247,1686640854598
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFCer_S,1686640854614,1686640858021
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFCer_Purch_7D_S,1686640858032,1686640860457
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFCer_Purch_MN_7D_S,1686640860473,1686640866245
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFCer_GiftAid_7D_S,1686640866259,1686640868165
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFCer_Own_7D_S,1686640868178,1686640869858
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_S,1686640869870,1686640871394
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_Purch_7D_S,1686640871406,1686640873380
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_GiftAid_7D_S,1686640873393,1686640875682
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_Own_7D_S,1686640875694,1686640884248
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_Own_MN_7D_S,1686640884259,1686640896550
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_Own_7D_S,1686640896564,1686640897620
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFTub_Own_MN_7D_S,1686640897633,1686640900300
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFPuls_S,1686640900312,1686640901689
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFPuls_Purch_7D_S,1686640901701,1686640905036
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFPuls_GiftAid_7D_S,1686640905050,1686640907536
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFPuls_Own_7D_S,1686640907550,1686640909655
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFVegFrt_S,1686640909671,1686640911556
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFVegFrt_Purch_7D_S,1686640911570,1686640914503
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFVegFrt_Purch_MN_7D_S,1686640914516,1686640924260
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFVegFrt_GiftAid_7D_S,1686640924275,1686640931809
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFVegFrt_Own_7D_S,1686640931820,1686640934077
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFAnimMeatFishEgg_S,1686640934091,1686640935680
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFAnimMeatFishEgg_Purch_7D_S,1686640935693,1686640938745
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFAnimMeatFishEgg_Purch_MN_7D_S,1686640938756,1686640944311
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFAnimMeatFishEgg_GiftAid_7D_S,1686640944322,1686640946968
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFAnimMeatFishEgg_Own_7D_S,1686640946983,1686640948502
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_S,1686640948516,1686640950613
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_Purch_7D_S,1686640950625,1686640956289
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_S,1686640956302,1686640960740
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_Purch_7D_S,1686640960752,1686640964534
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_Purch_MN_7D_S,1686640964545,1686640969455
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_GiftAid_7D_S,1686640969470,1686640972848
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_Purch_MN_7D_S,1686640972863,1686640978340
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_GiftAid_7D_S,1686640978354,1686640983193
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_Own_7D_S,1686640983206,1686640986161
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFFatsDairy_Own_MN_7D_S,1686640986174,1686640989242
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFSgrCond_S,1686640989260,1686640996310
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFSgrCond_Purch_7D_S,1686640996323,1686640998846
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFSgrCond_Purch_MN_7D_S,1686640998862,1686641001747
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFSgrCond_GiftAid_7D_S,1686641001761,1686641004769
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFSgrCond_GiftAid_MN_7D_S,1686641004783,1686641007352
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFSgrCond_Own_7D_S,1686641007366,1686641011218
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_S,1686641011231,1686641012935
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_Purch_7D_S,1686641012947,1686641015122
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_Purch_MN_7D_S,1686641015135,1686641019388
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_GiftAid_7D_S,1686641019404,1686641023435
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_Own_7D_S,1686641023450,1686641030972
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_GiftAid_7D_S,1686641030985,1686641034709
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFBev_Own_7D_S,1686641034722,1686641035605
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFOut_S,1686641035619,1686641038007
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFOut_Purch_7D_S,1686641038024,1686641039360
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFOut_GiftAid_7D_S,1686641039373,1686641040838
+question,/data/SurveyYN/Expenditures_module_short/Food_submodule_short/HHExpFOut_Own_7D_S,1686641040853,1686641042575
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFConsNote_S,1686641042588,1686641044159
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFHyg_S,1686641044172,1686641058996
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFHyg_Purch_1M_S,1686641059008,1686641062832
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFHyg_Purch_MN_1M_S,1686641062846,1686641087185
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFHyg_GiftAid_1M_S,1686641087198,1686641092827
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFTranspFuel_S,1686641092840,1686641105197
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFTranspFuel_Purch_1M_S,1686641105210,1686641109026
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFTranspFuel_GiftAid_1M_S,1686641109039,1686641110781
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFEnerg_S,1686641110795,1686641118516
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFEnerg_Purch_1M_S,1686641118528,1686641135966
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFEnerg_Purch_MN_1M_S,1686641135979,1686641143420
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFEnerg_GiftAid_1M_S,1686641143435,1686641151976
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFEnerg_Own_1M_S,1686641151989,1686641154860
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFEnerg_Own_MN_1M_S,1686641154877,1686641161597
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFWat_S,1686641161612,1686641163862
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFWat_Purch_1M_S,1686641163875,1686641165490
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFWat_GiftAid_1M_S,1686641165503,1686641166997
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFDwelSer_S,1686641167009,1686641169609
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFDwelSer_Purch_1M_S,1686641169624,1686641171066
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFDwelSer_GiftAid_1M_S,1686641171081,1686641178314
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFPhone_S,1686641178327,1686641180201
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFPhone_Purch_1M_S,1686641180214,1686641183317
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFPhone_Purch_MN_1M_S,1686641183330,1686641229763
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFPhone_GiftAid_1M_S,1686641229779,1686641234427
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFRecr_S,1686641234438,1686641236099
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFRecr_Purch_1M_S,1686641236110,1686641260986
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFRecr_Purch_MN_1M_S,1686641261001,1686641265156
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFRecr_GiftAid_1M_S,1686641265172,1686641271856
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFAlcTobac_S,1686641271871,1686641273293
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFAlcTobac_Purch_1M_S,1686641273307,1686641274794
+question,/data/SurveyYN/Expenditures_module_short/NonFoodConsumption_submodule_short/HHExpNFAlcTobac_GiftAid_1M_S,1686641274806,1686641277362
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFIntNote_S,1686641277378,1686641279691
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFMedServGood_S,1686641279704,1686641280942
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFMedServGood_Purch_6M_S,1686641280959,1686641293393
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFMedServGood_Purch_MN_6M_S,1686641293408,1686641341928
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFMedServGood_GiftAid_6M_S,1686641341942,1686641354165
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFCloth_S,1686641354180,1686641366668
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFCloth_Purch_6M_S,1686641366679,1686641369867
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFCloth_Purch_MN_6M_S,1686641369880,1686641478968
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFCloth_GiftAid_6M_S,1686641478983,1686641482094
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFEduFeeGood_S,1686641482106,1686641483493
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFEduFeeGood_Purch_6M_S,1686641483506,1686641484600
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFEduFeeGood_S,1686641484619,1686641520034
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFEduFeeGood_Purch_6M_S,1686641520044,1686641521974
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFEduFeeGood_Purch_MN_6M_S,1686641521985,1686641563434
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFEduFeeGood_GiftAid_6M_S,1686641563447,1686641567263
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFRent_S,1686641567277,1686641569001
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFRent_Purch_6M_S,1686641569014,1686641570233
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFRent_GiftAid_6M_S,1686641570247,1686641571500
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFHHSoftMaint_S,1686641571516,1686641595121
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFHHSoftMaint_Purch_6M_S,1686641595132,1686641596814
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFHHSoftMaint_Purch_MN_6M_S,1686641596826,1686641610332
+question,/data/SurveyYN/Expenditures_module_short/NonFoodIntermediate_submodule_short/HHExpNFHHSoftMaint_GiftAid_6M_S,1686641610346,1686641613305
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/HHAsstWFPCBTRecYN,1686641613318,1686641642009
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/HHAsstWFPCBTRecTot,1686641642025,1686641650570
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/KachinSevPercentRation,1686641650581,1686641653337
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/KachinHundredPercentRation,1686641653351,1686641655391
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/HHAsstUNNGOCBTRecYN,1686641655405,1686641663313
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/HHAsstOthCBTRecYN,1686641663325,1686641673461
+question,/data/SurveyYN/Assistance_module/AssistanceENA_submodule/HHAsstCBTCShare,1686641673473,1686641691582
+question,/data/SurveyYN/Income_submodule_short/HHHOccupation_S,1686641691596,1686641729941
+question,/data/SurveyYN/Income_submodule_short/HHInc_PCT_S,1686641729951,1686641746725
+question,/data/SurveyYN/Income_submodule_short/HHIncNb_S,1686641746741,1686641749831
+question,/data/SurveyYN/Income_submodule_short/HHInc_PCT_S,1686641749843,1686641752188
+question,/data/SurveyYN/Income_submodule_short/HHIncNb_S,1686641752200,1686641760744
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686641760756,1686641762418
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686641762430,1686641778344
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686641778355,1686641781376
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686641781390,1686641788160
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686641788173,1686641841882
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686641841895,1686641856717
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686641856730,1686641857599
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686641857611,1686641859065
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686641859077,1686641860479
+question,/data/SurveyYN/Income_submodule_short/HHIncNb_S,1686641860492,1686641862206
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686641862218,1686641866764
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686641866776,1686641868877
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686641868889,1686641869392
+question,/data/SurveyYN/Income_submodule_short/HHIncNb_S,1686641869406,1686641870719
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686641870731,1686641871851
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686641871865,1686641872673
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686641872686,1686641873486
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686641873497,1686641881610
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686641881624,1686641886538
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686641886552,1686641900785
+question,/data/SurveyYN/Income_submodule_short/HHIncChg_S,1686641900797,1686641902736
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686641902749,1686641914053
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686641914067,1686641916343
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686641916356,1686641918139
+question,/data/SurveyYN/Income_submodule_short/HHIncChg_S,1686641918152,1686641928138
+question,/data/SurveyYN/FIES_module_short/FIESHHNote_S,1686641928149,1686641930553
+question,/data/SurveyYN/FIES_module_short/FIESHHWorried_S,1686641930564,1686641938353
+question,/data/SurveyYN/FIES_module_short/FIESHHHealthy_S,1686641938365,1686641941053
+question,/data/SurveyYN/FIES_module_short/FIESHHFewFoods_S,1686641941063,1686641943362
+question,/data/SurveyYN/FIES_module_short/FIESHHSkipped_S,1686641943374,1686641945064
+question,/data/SurveyYN/FIES_module_short/FIESHHAteLess_S,1686641945075,1686641946327
+question,/data/SurveyYN/FIES_module_short/FIESHHRanOut_S,1686641946338,1686641949723
+question,/data/SurveyYN/FIES_module_short/FIESHHHungry_S,1686641949735,1686641951282
+question,/data/SurveyYN/FIES_module_short/FIESHHWholeDay_S,1686641951295,1686641953079
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/note_Housing,1686641953097,1686641954317
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHDwellType,1686641954329,1686641955539
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/note_Housing,1686641955553,1686641956557
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHDwellType,1686641956570,1686641960078
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHTenureType,1686641960091,1686641967804
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHTenureRisk,1686641967818,1686641987282
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoomUsed,1686641987295,1686641989234
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHWallType,1686641989247,1686641997930
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoofType,1686641997943,1686642001796
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHFloorType,1686642001810,1686642004425
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHToiletType,1686642004440,1686642011633
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHToiletWho,1686642011645,1686642014825
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHEnerCookStove,1686642014839,1686642031379
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHEnerCookSRC,1686642031392,1686642033416
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHEnerLightSRC,1686642033427,1686642037514
+question,/data/SurveyYN/WaterSources_submodule/HHWaterSRC,1686642037526,1686642042586
+question,/data/SurveyYN/WaterSources_submodule/HHWaterLoc,1686642042598,1686642044229
+question,/data/SurveyYN/WaterSources_submodule/HHWaterDistMins,1686642044240,1686642048873
+question,/data/SurveyYN/Assets_module/WealthSimpleHouseholdItems_submodule/note_assets,1686642048885,1686642050837
+question,/data/SurveyYN/Assets_module/WealthSimpleHouseholdItems_submodule/WealthSimpleHouseholdItems,1686642050848,1686642068574
+question,/data/SurveyYN/Assets_module/WealthBasicElecItems_submodule/WealthBasicElecItems,1686642068585,1686642082463
+question,/data/SurveyYN/Assets_module/WealthAdvElecItems_submodule/WealthAdvElecItems,1686642082477,1686642089785
+question,/data/SurveyYN/Assets_module/WealthTransportAssets_submodule/WealthTransportAssets,1686642089799,1686642099122
+question,/data/SurveyYN/Assets_module/WealthLivestockAssets_submodule/WealthLivestockAssets,1686642099135,1686642105458
+question,/data/SurveyYN/Assets_module/WealthLivelihoodsAssets_submodule/WealthLivelihoodsAssets,1686642105471,1686642109467
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/note_SafetyBasic,1686642109480,1686642116089
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/MDDIHHPercSafe,1686642116099,1686642117444
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/MDDIHHShInsec6M,1686642117458,1686642119003
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/MDDIHHDiscrim,1686642119014,1686642128725
+question,/data/SurveyYN/MDDW_module/MDDW_note,1686642128737,1686642130216
+question,/data/SurveyYN/MDDW_module/noteMDDW,1686642130228,1686642131016
+question,/data/SurveyYN/MDDW_module/PWMDDWStapCer,1686642131029,1686642132926
+question,/data/SurveyYN/MDDW_module/PWMDDWStapRoo,1686642132939,1686642141095
+question,/data/SurveyYN/MDDW_module/PWMDDWPulse,1686642141107,1686642143458
+question,/data/SurveyYN/MDDW_module/PWMDDWNuts,1686642143470,1686642146689
+question,/data/SurveyYN/MDDW_module/PWMDDWMilk,1686642146702,1686642151453
+question,/data/SurveyYN/MDDW_module/PWMDDWDairy,1686642151466,1686642157140
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatO,1686642157154,1686642159301
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatF,1686642159313,1686642171820
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatPro,1686642171834,1686642175789
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatF,1686642175800,1686642183587
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatPro,1686642183599,1686642185774
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatWhite,1686642185785,1686642187797
+question,/data/SurveyYN/MDDW_module/PWMDDWPrFish,1686642187812,1686642192307
+question,/data/SurveyYN/MDDW_module/PWMDDWPrEgg,1686642192321,1686642194594
+question,/data/SurveyYN/MDDW_module/PWMDDWVegGre,1686642194607,1686642200086
+question,/data/SurveyYN/MDDW_module/PWMDDWVegOrg,1686642200099,1686642210629
+question,/data/SurveyYN/MDDW_module/PWMDDWFruitOrg,1686642210643,1686642214338
+question,/data/SurveyYN/MDDW_module/PWMDDWVegOth,1686642214351,1686642217745
+question,/data/SurveyYN/MDDW_module/PWMDDWFruitOrg,1686642217758,1686642221153
+question,/data/SurveyYN/MDDW_module/PWMDDWVegOth,1686642221166,1686642224031
+question,/data/SurveyYN/MDDW_module/PWMDDWFruitOth,1686642224044,1686642226670
+question,/data/SurveyYN/MDDW_module/PWMDDWSnf,1686642226683,1686642234202
+question,/data/SurveyYN/Thank_you/note_end,1686642234215,1686642249449
+question,/data/SurveyYN/Thank_you/RESPPhNmbAlt,1686642249462,1686642271545
+question,/data/SurveyYN/Thank_you/comments,1686642271558,1686642310801
+question,/data/SurveyYN/Thank_you/RESPPhNmbAlt,1686642310815,1686642312274
+question,/data/SurveyYN/Thank_you/comments,1686642312287,1686642313490
+question,/data/SurveyYN/Thank_you/remarks,1686642313502,1686642315559
+question,/data/SurveyYN/Thank_you/comments,1686642315573,1686642316810
+question,/data/SurveyYN/Thank_you/RESPPhNmbAlt,1686642316824,1686642324404
+question,/data/SurveyYN/Thank_you/note_end,1686642324418,1686642329263
+question,/data/SurveyYN/MDDW_module/PWMDDWSnf,1686642329276,1686642330845
+question,/data/SurveyYN/Thank_you/note_end,1686642330858,1686642331930
+question,/data/SurveyYN/Thank_you/RESPPhNmbAlt,1686642331942,1686642334046
+question,/data/SurveyYN/Thank_you/comments,1686642334060,1686642388262
+question,/data/SurveyYN/Thank_you/RESPPhNmbAlt,1686642388277,1686642407477
+question,/data/SurveyYN/Thank_you/comments,1686642407493,1686642428561
+question,/data/SurveyYN/Thank_you/remarks,1686642428575,1686642475706
+end screen,,1686642475722,1686642490174
+form save,,1686642490538,
+form exit,,1686642490538,
+form finalize,,1686642490539,
+form resume,,1686647753792,
+jump,,1686647753793,1686647759057
+question,/data/Technical_module/HHCoord,1686647756958,1686647759057
+question,/data/Technical_module/SvyDate,1686647759070,1686647763040
+form save,,1686647763371,
+form exit,,1686647763371,
+form finalize,,1686647763371,
+form resume,,1686656356277,
+jump,,1686656356278,1686656377162
+question,/data/Technical_module/HHCoord,1686656364153,1686656377162
+question,/data/Technical_module/ADMIN1Name,1686656377176,1686656378417
+question,/data/Technical_module/HHCoord,1686656378429,1686656378840
+question,/data/Technical_module/SvyDate,1686656378854,1686656386328
+question,/data/Technical_module/HHCoord,1686656386343,1686656389313
+form save,,1686656389788,
+form exit,,1686656389788,
+form finalize,,1686656389788,
+form resume,,1686656527493,
+jump,,1686656527493,1686656542810
+question,/data/Technical_module/SvyDate,1686656542840,1686656546129
+form save,,1686656546461,
+form exit,,1686656546461,
+form finalize,,1686656546461,
+form resume,,1686711677984,
+jump,,1686711677985,1686711686188
+question,/data/Technical_module/HHCoord,1686711680470,1686711686188
+form save,,1686711686509,
+form exit,,1686711686509,
+form finalize,,1686711686509,
+form resume,,1686714921181,
+jump,,1686714921181,1686715011749
+question,/data/Technical_module/HHCoord,1686714923566,1686715011749
+question,/data/Technical_module/ADMIN1Name,1686715011766,1686715014370
+question,/data/Technical_module/ADMIN3Name,1686715014387,1686715127617
+question,/data/Technical_module/ADMIN5Name,1686715127632,1686715133250
+jump,,1686715133251,1686715136221
+end screen,,1686715136264,1686715137236
+form save,,1686715137593,
+form exit,,1686715137593,
+form finalize,,1686715137593,
+form resume,,1686718763510,
+jump,,1686718763510,1686718766738
+question,/data/Technical_module/SvyDate,1686718766771,1686718768517
+form save,,1686718768873,
+form exit,,1686718768873,
+form finalize,,1686718768873,
+form resume,,1686721612764,
+jump,,1686721612766,1686721622015
+question,/data/Technical_module/SvyDate,1686721622048,1686721625054
+form save,,1686721625466,
+form exit,,1686721625466,
+form finalize,,1686721625466,
+form resume,,1686721634806,
+jump,,1686721634806,1686721641132
+question,/data/Technical_module/SvyDate,1686721636754,1686721641132
+form exit,,1686721645962,
+form resume,,1686721651511,
+jump,,1686721651511,1686721663212
+question,/data/Technical_module/SvyDate,1686721654609,1686721663212
+form save,,1686721663535,
+form exit,,1686721663535,
+form finalize,,1686721663535,
+form resume,,1686721667594,
+jump,,1686721667596,1686721674065
+question,/data/Technical_module/SvyDate,1686721669735,1686721674065
+form exit,,1686721677234,
+form resume,,1686721682089,
+jump,,1686721682089,1686721691985
+question,/data/Technical_module/SvyDate,1686721685687,1686721691985
+form save,,1686721706615,
+form exit,,1686721706615,
+form finalize,,1686721706615,
+form resume,,1686721710475,
+jump,,1686721710475,1686721719736
+question,/data/Technical_module/SvyDate,1686721719765,1686721721867
+form save,,1686721722207,
+form exit,,1686721722207,
+form finalize,,1686721722207,
+form resume,,1686727092110,
+jump,,1686727092110,1686727103239
+question,/data/Technical_module/SvyDate,1686727103278,1686727105212
+question,/data/Technical_module/HHCoord,1686727105226,1686727106322
+question,/data/Technical_module/ADMIN1Name,1686727106337,1686727106941
+question,/data/Technical_module/ADMIN3Name,1686727106956,1686727107334
+question,/data/Technical_module/ADMIN5Name,1686727107348,1686727107499
+question,/data/Technical_module/EnuName,1686727107509,1686727107683
+question,/data/Technical_module/EnuSex,1686727107697,1686727107835
+question,/data/Technical_module/sampleYN,1686727107846,1686727108080
+question,/data/Technical_module/HHID,1686727108093,1686727108193
+question,/data/Technical_module/generated_note_name_20,1686727108203,1686727108367
+question,/data/Technical_module/RESPAge,1686727108382,1686727108499
+question,/data/Technical_module/RESPSex,1686727108511,1686727108648
+question,/data/Technical_module/RESPStatus,1686727108660,1686727109398
+jump,,1686727109398,1686727217296
+question,/data/Technical_module/RESPStatus,1686727217337,1686754037399
+question,/data/Technical_module/RESPSex,1686754037436,1686754038497
+question,/data/Technical_module/RESPAge,1686754038512,1686754041080
+question,/data/Technical_module/generated_note_name_20,1686754041094,1686754043456
+question,/data/Technical_module/RESPAge,1686754043467,1686754043675
+question,/data/Technical_module/RESPSex,1686754043690,1686754045041
+question,/data/Technical_module/RESPStatus,1686754045053,1686754045912
+question,/data/Consent/Consent_1,1686754045924,1686754046114
+question,/data/Consent/ConsentYN,1686754046127,1686754046280
+question,/data/SurveyYN/Demographic_module/HHStatus,1686754046289,1686754046471
+question,/data/SurveyYN/Demographic_module/MDDIHHHDisplArrive,1686754046483,1686754046590
+question,/data/SurveyYN/Demographic_module/MDDIHHDisplChoice,1686754046601,1686754048624
+jump,,1686754048625,1686754059367
+question,/data/SurveyYN/Income_submodule_short/HHIncNb_S,1686754057497,1686754059367
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686754059381,1686754060988
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686754061001,1686754064664
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686754064674,1686754066146
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686754066156,1686754068771
+question,/data/SurveyYN/Income_submodule_short/HHIncChg_S,1686754068785,1686754074514
+jump,,1686754074514,1686754096690
+question,/data/SurveyYN/Income_submodule_short/HHIncNb_S,1686754094278,1686754096690
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_S,1686754096704,1686754098648
+question,/data/SurveyYN/Income_submodule_short/HHIncFirst_SRi_S,1686754098663,1686754100156
+question,/data/SurveyYN/Income_submodule_short/HHIncAll_S,1686754100168,1686754100790
+question,/data/SurveyYN/Income_submodule_short/HHIncF_PCT_S,1686754100802,1686754100990
+question,/data/SurveyYN/Income_submodule_short/HHIncChg_S,1686754101003,1686754101257
+question,/data/SurveyYN/FIES_module_short/FIESHHNote_S,1686754101271,1686754101845
+question,/data/SurveyYN/FIES_module_short/FIESHHWorried_S,1686754101860,1686754102224
+question,/data/SurveyYN/FIES_module_short/FIESHHHealthy_S,1686754102235,1686754102821
+question,/data/SurveyYN/FIES_module_short/FIESHHFewFoods_S,1686754102833,1686754103012
+question,/data/SurveyYN/FIES_module_short/FIESHHSkipped_S,1686754103023,1686754103783
+question,/data/SurveyYN/FIES_module_short/FIESHHAteLess_S,1686754103795,1686754104550
+question,/data/SurveyYN/FIES_module_short/FIESHHRanOut_S,1686754104560,1686754106129
+question,/data/SurveyYN/FIES_module_short/FIESHHHungry_S,1686754106144,1686754106556
+question,/data/SurveyYN/FIES_module_short/FIESHHWholeDay_S,1686754106569,1686754107099
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/note_Housing,1686754107112,1686754107709
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHDwellType,1686754107722,1686754109351
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHTenureType,1686754109365,1686754110085
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHTenureRisk,1686754110098,1686754110425
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoomUsed,1686754110440,1686754110831
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHWallType,1686754110844,1686754111225
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoofType,1686754111235,1686754111847
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHFloorType,1686754111856,1686754113011
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoofType,1686754113024,1686754113422
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHWallType,1686754113437,1686754115289
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoomUsed,1686754115303,1686754116918
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHWallType,1686754116933,1686754118218
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHRoofType,1686754118229,1686754118761
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHFloorType,1686754118772,1686754119246
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHToiletType,1686754119259,1686754119634
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHToiletWho,1686754119643,1686754120771
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHEnerCookStove,1686754120782,1686754121951
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHEnerCookSRC,1686754121965,1686754122954
+question,/data/SurveyYN/Housing_module/HouseBasic_submodule/HHEnerLightSRC,1686754122968,1686754123988
+question,/data/SurveyYN/WaterSources_submodule/HHWaterSRC,1686754124003,1686754124941
+question,/data/SurveyYN/WaterSources_submodule/HHWaterLoc,1686754124955,1686754128240
+question,/data/SurveyYN/Assets_module/WealthSimpleHouseholdItems_submodule/note_assets,1686754128253,1686754129426
+question,/data/SurveyYN/Assets_module/WealthSimpleHouseholdItems_submodule/WealthSimpleHouseholdItems,1686754129439,1686754132308
+question,/data/SurveyYN/Assets_module/WealthBasicElecItems_submodule/WealthBasicElecItems,1686754132321,1686754133263
+question,/data/SurveyYN/Assets_module/WealthAdvElecItems_submodule/WealthAdvElecItems,1686754133274,1686754135317
+question,/data/SurveyYN/Assets_module/WealthTransportAssets_submodule/WealthTransportAssets,1686754135331,1686754136273
+question,/data/SurveyYN/Assets_module/WealthLivestockAssets_submodule/WealthLivestockAssets,1686754136286,1686754137557
+question,/data/SurveyYN/Assets_module/WealthLivelihoodsAssets_submodule/WealthLivelihoodsAssets,1686754137570,1686754138705
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/note_SafetyBasic,1686754138721,1686754139356
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/MDDIHHPercSafe,1686754139370,1686754140395
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/MDDIHHShInsec6M,1686754140409,1686754141149
+question,/data/SurveyYN/Safety_module/SafetyBasic_submodule/MDDIHHDiscrim,1686754141164,1686754141766
+question,/data/SurveyYN/MDDW_module/MDDW_note,1686754141779,1686754142450
+question,/data/SurveyYN/MDDW_module/noteMDDW,1686754142463,1686754143157
+question,/data/SurveyYN/MDDW_module/PWMDDWStapCer,1686754143172,1686754143334
+question,/data/SurveyYN/MDDW_module/PWMDDWStapRoo,1686754143349,1686754143517
+question,/data/SurveyYN/MDDW_module/PWMDDWPulse,1686754143527,1686754143701
+question,/data/SurveyYN/MDDW_module/PWMDDWNuts,1686754143710,1686754143885
+question,/data/SurveyYN/MDDW_module/PWMDDWMilk,1686754143895,1686754144038
+question,/data/SurveyYN/MDDW_module/PWMDDWDairy,1686754144050,1686754144251
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatO,1686754144261,1686754144401
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatF,1686754144413,1686754145168
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatPro,1686754145180,1686754145828
+question,/data/SurveyYN/MDDW_module/PWMDDWPrMeatWhite,1686754145842,1686754146375
+question,/data/SurveyYN/MDDW_module/PWMDDWPrFish,1686754146388,1686754147000
+question,/data/SurveyYN/MDDW_module/PWMDDWPrEgg,1686754147013,1686754147617
+question,/data/SurveyYN/MDDW_module/PWMDDWVegGre,1686754147631,1686754148270
+question,/data/SurveyYN/MDDW_module/PWMDDWVegOrg,1686754148285,1686754148829
+question,/data/SurveyYN/MDDW_module/PWMDDWFruitOrg,1686754148842,1686754149446
+question,/data/SurveyYN/MDDW_module/PWMDDWVegOth,1686754149458,1686754150192
+question,/data/SurveyYN/MDDW_module/PWMDDWFruitOth,1686754150207,1686754150759
+question,/data/SurveyYN/MDDW_module/PWMDDWSnf,1686754150772,1686754151310
+question,/data/SurveyYN/Thank_you/note_end,1686754151322,1686754152004
+question,/data/SurveyYN/Thank_you/RESPPhNmbAlt,1686754152016,1686754153577
+question,/data/SurveyYN/Thank_you/comments,1686754153593,1686754167519
+question,/data/SurveyYN/Thank_you/remarks,1686754167535,1686754168802
+end screen,,1686754168815,1686754171600
+form save,,1686754171953,
+form exit,,1686754171953,
+form finalize,,1686754171954,
+form resume,,1686754209096,
+jump,,1686754209097,1686754280634
+question,/data/SurveyYN/HHMem_health/note_HHMem_health,1686754280695,1686754282282
+question,/data/SurveyYN/HHMem_health/note_HHMem_health,1686754309389,1686754313614
+jump,,1686754313615,1686754924669
+question,/data/SurveyYN/Thank_you/remarks,1686754322904,1686754924669
+end screen,,1686754924682,1686754926070
+form save,,1686754926615,
+form exit,,1686754926615,
+form finalize,,1686754926615,

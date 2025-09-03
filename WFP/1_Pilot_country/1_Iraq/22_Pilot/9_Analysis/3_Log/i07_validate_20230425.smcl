@@ -1,0 +1,177 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i07_validate_20230425.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}25 Apr 2023, 08:55:06
+{txt}
+{com}.         di `cdate'
+{res}20230425
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}dta{c )-}/Iraq_F2F_Household_Analysis.dta", clear 
+{txt}
+{com}.         
+.         * merge Remote Answers to F2F Answers
+.         mmerge HHID using "${c -(}dta{c )-}/Iraq_RM_Household_Analysis.dta", type(1:1) uname(r_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_F2F_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}   590
+{txt}{ralign 20:vars} {c |} {res}   172
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_RM_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}   540{txt}
+{txt}{ralign 20:vars} {c |} {res}    44{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+(label {bf:{txt}rCSIGenderMealNb} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}rCSIGenderMealSize} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}FCG_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_F2F_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}   676
+{txt}{ralign 20:vars} {c |} {res}   217{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}    136{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}     86{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    454{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+.         ren _merge Source
+{res}{txt}
+{com}.         gen Attrition = (Source != 3)
+{txt}
+{com}. 
+. * check respondents 
+.         tab RESPSex r_RESPSex
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        83        149 {txt}{c |}{res}       232 
+{txt}      Male {c |}{res}        27        195 {txt}{c |}{res}       222 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       110        344 {txt}{c |}{res}       454 
+{txt}
+{com}.         
+. /*      Sex of the | Sex of the respondent
+>         respondent |    Female       Male |     Total
+>         -----------+----------------------+----------
+>                 Female |        83        149 |       232 
+>                   Male |        27        195 |       222 
+>         -----------+----------------------+----------
+>                  Total |       110        344 |       454 
+> */
+.         gen Respondent = (RESPSex == r_RESPSex) & !mi(RESPSex) & !mi(r_RESPSex)
+{txt}
+{com}.         // if Respondent == 1 means the same gender interviewed 
+.         // if Respondent == 0 means the opposite gender in the same household
+.         // potentially can be used for gender comparisons on other outcome variables
+.         
+.         compress
+  {txt}variable {bf}{res}Attrition{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Respondent{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (4,056 bytes saved)
+
+{com}.         save "${c -(}dta{c )-}/Iraq_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD02514.000000"
+{txt}
+{com}.         asdoc ttest FCS == r_FCS if Respondent == 0, replace save(${c -(}tabs_gender{c )-}/Iraq_rCARI_Gender_Paired_ttest.doc) ///
+>         title(Paired Difference) fhc(\b) fhr(\b) font(Roboto) label dec(2) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+     FCS {c |}{res}{col 12}    176{col 22} 61.71875{col 34} 1.211047{col 46} 16.06635{col 58} 59.32861{col 70} 64.10889
+   {txt}r_FCS {c |}{res}{col 12}    176{col 22} 56.27557{col 34} 1.299686{col 46} 17.24229{col 58} 53.71049{col 70} 58.84065
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    176{col 22} 5.443182{col 34} 1.555248{col 46}  20.6327{col 58} 2.373725{col 70} 8.512639
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}FCS{txt} - {res}r_FCS{txt})                               t = {res}  3.4999
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     175
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9997         {txt}Pr(|T| > |t|) = {res}0.0006          {txt}Pr(T > t) = {res}0.0003
+
+{txt}{p 20 20 2}Paired Difference{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:FCS - r_FCS }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      176}}}{space 1}{space 1}{ralign 9:{res:{sf:   61.719}}}{space 1}{space 1}{ralign 9:{res:{sf:  56.2755}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.443182}}}{space 1}{space 1}{ralign 9:{res:{sf:    1.555}}}{space 1}{space 1}{ralign 9:{res:{sf:      3.5}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:FCS - r_FCS }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0005}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCARI_Gender_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCARI_Gender_Paired_ttest.doc"}
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. 
+. 
+. import excel "/Users/nicolewu/Desktop/nutrition.xlsx", sheet("Sheet1") firstrow clear
+{res}{text}(40 vars, 14 obs)
+
+{com}. 
+. import excel "/Users/nicolewu/Desktop/nutrition.xlsx", sheet("Sheet1") firstrow clear
+{res}{text}(40 vars, 14 obs)
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD02514.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Iraq                            * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create clean variables for Remote                                          *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Apr 24, 2023                                                                               *
+> *  LATEST UPDATE:               Apr 24, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Iraq_RM_Household_Raw.dta
+>                                         
+>         ** CREATES:             ${c -(}dta{c )-}/Iraq_RM_Household_Analysis.dta
+>                                                                 
+>         ** NOTES:               N = 540 (Version A = 297 and Version B = 243)
+>                                         
+> ********************************************************************************
+> *                                                               Define Variables
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

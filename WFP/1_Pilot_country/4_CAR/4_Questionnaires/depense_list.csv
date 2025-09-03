@@ -1,0 +1,20 @@
+___index,ADMIN1Name,AMIN1,Admin2Name,Admin3Name,Admin5Name,eligible,EnuName,house_type,consentYN,hhname,age,relationship,hhhead_name,hh_status,hh_head_sex,phone_ownership,phone_number_1,second_phone,phone_number_2,phone_number_3,Modality_Type,Length_Type,Uid,Uni
+1239,1,Mbomou,Bangassou,Bangassou,KOBO,1,DAOUILI NGAPE Judicael,Yes,Yes,Kolozia Victor,60,Household head (self), ,Displaced,Male,Yes,72057747,No, , ,Remote,Long Form,CAR12020,FALSE
+1305,1,Mbomou,Bangassou,Bangassou,KOBO,1,DAOUILI NGAPE Judicael,Yes,Yes,Yepele mamie,38,Household head (self), ,Permanent resident,Female,Yes,72069196,No, , ,Remote,Long Form,CAR12023,FALSE
+2179,1,Mbomou,Bangassou,Bangassou,KOBO,1,SOUKI Jocelyn Max,Yes,Yes,WESSAGBA noella,37,Spouse,OUNDANYEN Jonathan,Permanent resident,Male,Yes,72954899,Yes,75253322,75253322,Remote,Long Form,CAR12025,FALSE
+2186,1,Mbomou,Bangassou,Bangassou,KOBO,1,SOUKI Jocelyn Max,Yes,Yes,YAZOROMBALÉ Élodie,30,Household head (self), ,Permanent resident,Female,Yes,72805577,No, , ,Remote,Long Form,CAR12028,FALSE
+2048,1,Mbomou,Bangassou,Bangassou,DAKPOUTOU,1,KONGO Hervé,Yes,Yes,KOENAN Clarisse,37,Spouse,GOWONDO Romaric,Permanent resident,Male,Yes,72855339,No, , ,Remote,Long Form,CAR12086,FALSE
+2082,1,Mbomou,Bangassou,Bangassou,DAKPOUTOU,1,YANGUILIMA Aime,Yes,Yes,Maimouna Ibrahim,30,Spouse,Tindombi Mohamed,Permanent resident,Male,Yes,74335265,Yes,75948326,75948326,Remote,Long Form,CAR12087,FALSE
+2095,1,Mbomou,Bangassou,Bangassou,DAKPOUTOU,1,KONGO Hervé,Yes,Yes,MAMA SALET,42,Household head (self), ,Permanent resident,Male,Yes,72117783,No, , ,Remote,Long Form,CAR12088,FALSE
+2336,1,Mbomou,Bangassou,Bangassou,DAKPOUTOU,1,SOUKI Jocelyn Max,Yes,Yes,POLISSI grâce à Dieu,27,Household head (self), ,Displaced,Male,Yes,72087197,Yes,72956656,72956656,Remote,Long Form,CAR12095,FALSE
+1995,1,Mbomou,Bangassou,Bangassou,AOUYA,1,YANGUILIMA Aime,Yes,Yes,Lite Joseph,52,Household head (self), ,Permanent resident,Male,Yes,72018714,Yes,75491168,75491168,Remote,Long Form,CAR12101,FALSE
+2045,1,Mbomou,Bangassou,Bangassou,AOUYA,1,YANGUILIMA Aime,Yes,Yes,Bida Nina,40,Spouse,Bida Arthur,Permanent resident,Male,Yes,72696905,No, , ,Remote,Long Form,CAR12102,FALSE
+715,1,Mbomou,Bangassou,Bangassou,KEMBE-LIGNE,1,YANGUILIMA Aime,Yes,Yes,Yagboussou abel,56,Household head (self), ,Permanent resident,Male,Yes,72076806,Yes,75692594,75592494,Remote,Long Form,CAR12143,FALSE
+1717,1,Mbomou,Bangassou,Bangassou,SAOZANGANDOU,1,KONGO Hervé,Yes,Yes,DAGBANDI Shella Chancella,28,Household head (self), ,Permanent resident,Female,Yes,72957614,No, , ,Remote,Long Form,CAR12163,FALSE
+1769,1,Mbomou,Bangassou,Bangassou,SAOZANGANDOU,1,DAOUILI NGAPE Judicael,Yes,Yes,Kobassi Moussa,45,Household head (self), ,Permanent resident,Male,Yes,74142387,No, , ,Remote,Long Form,CAR12165,FALSE
+1813,1,Mbomou,Bangassou,Bangassou,LIOUANGO-TIRAILLEUR,1,KONGO Hervé,Yes,Yes,FATANA Louis,22,Child,BAKOUDA Alexis,Permanent resident,Male,Yes,72061970,No, , ,Remote,Long Form,CAR12178,FALSE
+1932,1,Mbomou,Bangassou,Bangassou,SAMBA-GAMADE,1,SOUKI Jocelyn Max,Yes,Yes,KÔNGA Philomène,60,Household head (self), ,Permanent resident,Female,Yes,74186658,No, , ,Remote,Long Form,CAR12208,FALSE
+498,2,Nana-Gribizi,Kaga-Bandaro,Nana,DAMAKA 2,1,ZOUIBONA Emmanuel,Yes,Yes,Gueleba François,46,Household head (self), ,Permanent resident,Male,No, ,, , ,Remote,Long Form,CAR22021,FALSE
+1193,2,Nana-Gribizi,Kaga-Bandaro,Nana,YAFARA - GOUVA,1,BASSIA Mirmin,Yes,Yes,Yafara Christian,33,Household head (self), ,Permanent resident,Male,Yes,75902765,Yes,74193305,74193305,Remote,Long Form,CAR22118,FALSE
+1488,2,Nana-Gribizi,Kaga-Bandaro,Botto,BEGUEDE   2,1,KOSSINGOU Jordana,Yes,Yes,Mamadou Christian,35,Household head (self), ,Permanent resident,Male,No, ,, , ,Remote,Long Form,CAR22182,FALSE
+237,2,Nana-Gribizi,Kaga-Bandaro,Kaga-Bandoro,MISSION  CATHOLIQUE,1,BASSIA Mirmin,No,Yes,Malika Patricia,44,Household head (self), ,Permanent resident,Female,Yes,72449256,Yes,75802876,75802876,Remote,Long Form,CAR22252,FALSE

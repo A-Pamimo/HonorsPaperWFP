@@ -1,0 +1,560 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md03_append_20230630.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}30 Jun 2023, 10:57:59
+{txt}
+{com}.         di `cdate'      
+{res}20230630
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2: Create master dataset for full sample
+. *******************************************************************************/
+.         
+.         tempfile sample master otherspecify
+{txt}
+{com}.         
+.         * merge assignment record back to check implementation
+.         import excel "${c -(}sample{c )-}/Myanmar_Sample_Merge.xlsx", sheet("Sheet1")     ///
+>                                  firstrow clear
+{res}{text}(6 vars, 1,665 obs)
+
+{com}.         
+.         encode Modality_Type, gen(Assign_Modality)
+{txt}
+{com}.         encode Length_Type, gen(Assign_Length)
+{txt}
+{com}.         encode Region, gen(Region_byte)
+{txt}
+{com}.         encode Township, gen(Township_byte)
+{txt}
+{com}.         encode Camp, gen(Camp_byte)
+{txt}
+{com}.         
+.         drop   Modality_Type Length_Type Region Township Camp
+{txt}
+{com}.         ren    *_byte *
+{res}{txt}
+{com}.         
+.         compress
+  {txt}variable {bf}{res}Assign_Modality{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Assign_Length{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Region{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Township{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Camp{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (24,975 bytes saved)
+
+{com}.         save `sample'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         * load dataset
+.         * ------------
+.         use "${c -(}d_temp{c )-}/Myanmar_F2F_Household_Analysis.dta", clear
+{txt}
+{com}.         
+.         * merge Remote Answers to F2F Answers
+.         append using "${c -(}d_temp{c )-}/Myanmar_RM_Household_Analysis.dta"
+{txt}{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_1M} was {bf:byte}, now {bf:long} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_1M} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}sampleYN} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+
+{com}.         compress
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}remarks{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (33,754 bytes saved)
+
+{com}. 
+.         ** create one consent variable 
+.         gen Consent = (ConsentYN == 1 | RESPpart == 1) 
+{txt}
+{com}.         label val Consent YesNo
+{txt}
+{com}.         
+.         drop if Consent == 0 
+{txt}(5 observations deleted)
+
+{com}.         
+.         drop if mi(HHID)
+{txt}(0 observations deleted)
+
+{com}.         mmerge HHID using `sample', type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/2_Temp/Myanmar_F2F_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}  1093
+{txt}{ralign 20:vars} {c |} {res}   717
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000001
+{txt}{ralign 20:obs} {c |} {res}  1665{txt}
+{txt}{ralign 20:vars} {c |} {res}     6{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/2_Temp/Myanmar_F2F_Household_Analysis.dta
+{txt}{ralign 20:obs} {c |} {res}  1665
+{txt}{ralign 20:vars} {c |} {res}   724{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}    572{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}   1093{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+.         gen Completion = (_merge == 3)
+{txt}
+{com}. *       drop if _merge == 1
+.         
+.         drop _merge 
+{txt}
+{com}.         
+. *       label def com_list 1 "Completed Out-Sample" 2 "To Complete" 3 "Completed In-Sample"
+. 
+.         label def com_list 1 "Completed" 0 "Not Completed"
+{txt}
+{com}.         label val Completion com_list
+{txt}
+{com}.         label var Completion "Survey Progress"
+{txt}
+{com}.         
+.         replace RESPRelationHHH = R_RESPRelationHHH  if  mi(RESPRelationHHH)
+{txt}(606 real changes made)
+
+{com}.         gen     HH_Head   = (RESPRelationHHH == 100) if !mi(RESPRelationHHH)
+{txt}(576 missing values generated)
+
+{com}.         gen     HH_Spouse = (RESPRelationHHH == 200) if !mi(RESPRelationHHH)
+{txt}(576 missing values generated)
+
+{com}.                 
+. ********************************************************************************
+. *                                               PART 3: Organize Dataset and Labels
+. *******************************************************************************/
+. 
+.         ** Define and Format Strings
+. gl other_specify HHHOccupation HHHOccupation_S HHHealthAcMildWhy_oth   ///
+>    HHHealthAcSevereWhy_oth HHHealthChronWhy_oth HHHealthEmergWhy_oth                       ///
+>    LhCSIEnAccess_stress_oth LhCSIEnAccess_crisis_oth LhCSIEnAccess_em_oth                  ///
+>    HHIncFirst_oth HHIncFirst_oth_S HHDwellType_oth HHTenureType_oth HHWallType_oth ///
+>    HHRoofType_oth HHFloorType_oth HHToiletType_oth                         ///
+>    HHEnerLightSRC_oth HHWaterSRC_oth 
+{txt}
+{com}.         
+.         ** remove unnecessary blanks in string and adjust the proper cases
+. foreach var of global other_specify {c -(}
+{txt}  2{com}.     replace `var' = strproper(strtrim(`var'))
+{txt}  3{com}. *       replace `var' = subinstr(`var', "`r(0x0d)'`r(0x0a)'", "", .)
+.     {c )-}
+{txt}(23 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(5 real changes made)
+(1 real change made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}.         
+. *       missings dropvars, force        // remove extra vars
+. *       missings dropobs , force        // remove empty observations
+.         
+. /*      * Export all _other variables
+>         codebook *oth* HHHOccupation HHHOccupation_S HHStatusOth comments
+>         keep HHID EnuName_Display $other_specify comments
+>         drop if mi(EnuName_Display)
+>         export excel using "${c -(}note{c )-}/Myanmar_Full_Otherspecify.xlsx", firstrow(variables) replace
+> */      
+.         save `master'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         import excel "${c -(}note{c )-}/Myanmar_other_specify_translated.xlsx", sheet("Sheet1") ///
+>                    firstrow clear
+{res}{text}(23 vars, 1,089 obs)
+
+{com}.         
+.         drop EnuName_Display
+{txt}
+{com}.         drop if mi(HHID)
+{txt}(0 observations deleted)
+
+{com}.         
+.         compress
+{txt}  (0 bytes saved)
+
+{com}.         save `otherspecify'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000003{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use `master', clear
+{txt}
+{com}.         * translate other specify answers
+.         mmerge HHID using `otherspecify', type(1:1) uname(T_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000002
+{txt}{ralign 20:obs} {c |} {res}  1665
+{txt}{ralign 20:vars} {c |} {res}   725
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000003
+{txt}{ralign 20:obs} {c |} {res}  1089{txt}
+{txt}{ralign 20:vars} {c |} {res}    22{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_85306.000002
+{txt}{ralign 20:obs} {c |} {res}  1665
+{txt}{ralign 20:vars} {c |} {res}   748{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}    576{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}   1089{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+. foreach var of global other_specify {c -(}
+{txt}  2{com}.         order T_`var', a(`var')
+{txt}  3{com}.         drop `var'
+{txt}  4{com}.         ren T_`var' `var'
+{txt}  5{com}. {c )-}
+{res}{txt}
+{com}.         order T_comments, a(comments)
+{txt}
+{com}.         drop comments
+{txt}
+{com}.         ren T_comments comments
+{res}{txt}
+{com}.         
+.         order T_remarks, a(remarks)
+{txt}
+{com}.         drop remarks
+{txt}
+{com}.         ren T_remarks remarks
+{res}{txt}
+{com}.         
+.         compress
+{txt}  (0 bytes saved)
+
+{com}.         drop _merge
+{txt}
+{com}. 
+.         ** Assignment 
+.         gen     Assignment = .
+{txt}(1,665 missing values generated)
+
+{com}.         replace Assignment = 1 if Modality == 1 & Form == 1
+{txt}(305 real changes made)
+
+{com}.         replace Assignment = 2 if Modality == 1 & Form == 2
+{txt}(305 real changes made)
+
+{com}.         replace Assignment = 3 if Modality == 2 & Form == 1
+{txt}(233 real changes made)
+
+{com}.         replace Assignment = 4 if Modality == 2 & Form == 2
+{txt}(250 real changes made)
+
+{com}.         
+.         ** check duplicated labels
+.         labeldup
+
+{txt}12 sets of duplicate value labels found:
+
+{p 0 11}{txt}Dupset {space 1}1: {res:{ul:EnuSex}  PSex RESPSex}{p_end}
+{p 0 11}{txt}Dupset {space 1}2: {res:{ul:Assign_Modality}  survey_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}3: {res:{ul:ADMIN1Name}  Region_byte}{p_end}
+{p 0 11}{txt}Dupset {space 1}4: {res:{ul:Assign_Length}  length_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}5: {res:{ul:ConsentYN}  HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN HHExpFAnimFish_GiftAid_7D HHExpFAnimFish_Own_7D HHExpFAnimFish_Purch_7D HHExpFAnimMeat_GiftAid_7D HHExpFAnimMeat_Own_7D HHExpFAnimMeat_Purch_7D HHExpFBev_GiftAid_7D HHExpFBev_GiftAid_7D_S HHExpFBev_Own_7D HHExpFBev_Own_7D_S HHExpFBev_Purch_7D HHExpFBev_Purch_7D_S HHExpFCer_GiftAid_7D HHExpFCer_GiftAid_7D_S HHExpFCer_Own_7D HHExpFCer_Own_7D_S HHExpFCer_Purch_7D HHExpFCer_Purch_7D_S HHExpFCond_GiftAid_7D HHExpFCond_Own_7D HHExpFCond_Purch_7D HHExpFDairy_GiftAid_7D HHExpFDairy_Own_7D HHExpFDairy_Purch_7D HHExpFEgg_GiftAid_7D HHExpFEgg_Own_7D HHExpFEgg_Purch_7D HHExpFFatsDairy_GiftAid_7D_S HHExpFFatsDairy_Own_7D_S HHExpFFatsDairy_Purch_7D_S HHExpFFats_GiftAid_7D HHExpFFats_Own_7D HHExpFFats_Purch_7D HHExpFFrt_GiftAid_7D HHExpFFrt_Own_7D HHExpFFrt_Purch_7D HHExpFOut_GiftAid_7D HHExpFOut_GiftAid_7D_S HHExpFOut_Own_7D HHExpFOut_Own_7D_S HHExpFOut_Purch_7D HHExpFOut_Purch_7D_S HHExpFPro_GiftAid_7D HHExpFPro_Own_7D_S HHExpFPro_Purch_7D_S HHExpFPuls_GiftAid_7D HHExpFPuls_GiftAid_7D_S HHExpFPuls_Own_7D HHExpFPuls_Own_7D_S HHExpFPuls_Purch_7D HHExpFPuls_Purch_7D_S HHExpFSgrCond_GiftAid_7D_S HHExpFSgrCond_Own_7D_S HHExpFSgrCond_Purch_7D_S HHExpFSgr_GiftAid_7D HHExpFSgr_Own_7D HHExpFSgr_Purch_7D HHExpFTub_GiftAid_7D HHExpFTub_GiftAid_7D_S HHExpFTub_Own_7D HHExpFTub_Own_7D_S HHExpFTub_Purch_7D HHExpFTub_Purch_7D_S HHExpFVegFrt_GiftAid_7D_S HHExpFVegFrt_Own_7D_S HHExpFVegFrt_Purch_7D_S HHExpFVeg_GiftAid_7D HHExpFVeg_Own_7D HHExpFVeg_Purch_7D HHExpNFAlcTobac_GiftAid_1M HHExpNFAlcTobac_GiftAid_1M_S HHExpNFAlcTobac_Purch_1M HHExpNFAlcTobac_Purch_1M_S HHExpNFCloth_GiftAid_6M HHExpNFCloth_GiftAid_6M_S HHExpNFCloth_Purch_6M HHExpNFCloth_Purch_6M_S HHExpNFDwelSer_GiftAid_1M HHExpNFDwelSer_GiftAid_1M_S HHExpNFDwelSer_Purch_1M HHExpNFDwelSer_Purch_1M_S HHExpNFEduFeeGood_Purch_6M_S HHExpNFEduFee_GiftAid_6M HHExpNFEduFee_Purch_6M HHExpNFEduGood_GiftAid_6M HHExpNFEduGood_Purch_6M HHExpNFEdu_GiftAid_6M_S HHExpNFEnerg_GiftAid_1M HHExpNFEnerg_GiftAid_1M_S HHExpNFEnerg_Own_1M HHExpNFEnerg_Own_1M_S HHExpNFEnerg_Purch_1M HHExpNFEnerg_Purch_1M_S HHExpNFFuel_GiftAid_1M HHExpNFFuel_Purch_1M HHExpNFHHMaint_GiftAid_6M HHExpNFHHMaint_Purch_6M HHExpNFHHSoftMaint_Purch_6M_S HHExpNFHHSoft_GiftAid_6M HHExpNFHHSoft_GiftAid_6M_S HHExpNFHHSoft_Purch_6M HHExpNFHyg_GiftAid_1M HHExpNFHyg_GiftAid_1M_S HHExpNFHyg_Purch_1M HHExpNFHyg_Purch_1M_S HHExpNFMedGood_GiftAid_6M HHExpNFMedGood_Purch_6M HHExpNFMedServGood_Purch_6M_S HHExpNFMedServ_GiftAid_6M HHExpNFMedServ_Purch_6M HHExpNFMed_GiftAid_6M_S HHExpNFPhone_GiftAid_1M HHExpNFPhone_GiftAid_1M_S HHExpNFPhone_Purch_1M HHExpNFPhone_Purch_1M_S HHExpNFRecr_GiftAid_1M HHExpNFRecr_GiftAid_1M_S HHExpNFRecr_Purch_1M HHExpNFRecr_Purch_1M_S HHExpNFRent_GiftAid_6M HHExpNFRent_GiftAid_6M_S HHExpNFRent_Purch_6M HHExpNFRent_Purch_6M_S HHExpNFTrans_GiftAid_1M_S HHExpNFTranspFuel_Purch_1M_S HHExpNFTransp_GiftAid_1M HHExpNFTransp_Purch_1M HHExpNFWat_GiftAid_1M HHExpNFWat_GiftAid_1M_S HHExpNFWat_Purch_1M HHExpNFWat_Purch_1M_S HHExpNF_GiftAid_YN1M HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M MMDIHHHealthFac PSchoolEver PWMDDWDairy PWMDDWFruitOrg PWMDDWFruitOth PWMDDWMilk PWMDDWNuts PWMDDWPrEgg PWMDDWPrFish PWMDDWPrMeatF PWMDDWPrMeatO PWMDDWPrMeatPro PWMDDWPrMeatWhite PWMDDWPulse PWMDDWSnf PWMDDWStapCer PWMDDWStapRoo PWMDDWVegGre PWMDDWVegOrg PWMDDWVegOth RESPFoodWorry_YN RESPvoice YesNo sampleYN}{p_end}
+{p 0 11}{txt}Dupset {space 1}6: {res:{ul:HHSBedHung_FR}  HHSBedHung_FR_S HHSNoFood_FR HHSNoFood_FR_S HHSNotEat_FR HHSNotEat_FR_S}{p_end}
+{p 0 11}{txt}Dupset {space 1}7: {res:{ul:HHHealthAcMildTreat}  HHHealthAcSevereTreat HHHealthChronTreat HHHealthEmergTreat}{p_end}
+{p 0 11}{txt}Dupset {space 1}8: {res:{ul:FIESHHAteLess}  FIESHHAteLess_S FIESHHFewFoods FIESHHFewFoods_S FIESHHHealthy FIESHHHealthy_S FIESHHHungry FIESHHHungry_S FIESHHRanOut FIESHHRanOut_S FIESHHSkipped FIESHHSkipped_S FIESHHWholeDay FIESHHWholeDay_S FIESHHWorried FIESHHWorried_S HHHealthAcMildNeed HHHealthAcSevereNeed HHHealthChronNeed HHHealthEmergNeed}{p_end}
+{p 0 11}{txt}Dupset {space 1}9: {res:{ul:HHHealthAcMildWhy}  HHHealthAcSevereWhy HHHealthChronWhy HHHealthEmergWhy}{p_end}
+{p 0 11}{txt}Dupset 10: {res:{ul:HHIncChg}  HHIncChg_S}{p_end}
+{p 0 11}{txt}Dupset 11: {res:{ul:PRelationHHH}  RESPRelationHHH}{p_end}
+{p 0 11}{txt}Dupset 12: {res:{ul:HHIncFirst_SRi}  HHIncFirst_SRi_S HHIncSec_SRi HHIncThird_SRi}{p_end}
+
+Specify option {cmd:select} to compress value labels using underlined labels
+Specify option {cmd:names()} to select other value names to be retained
+
+{com}.         
+.         * rename value labels
+.         labelrename EnuSex gender_label
+
+{txt}Value label {res:EnuSex} renamed to {res:gender_label}
+{p 0 8 2}{txt}value label {res:EnuSex} was attached to variables {res}EnuSex{p_end}
+{txt}
+{com}.         
+.         * add value labels
+.         label values RESPSex R_Resp_Sex R_HHH_Sex gender_label
+{txt}
+{com}.         label values ConsentYN HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN ///
+>                                  HHExp*_Purch_7D* HHExp*_GiftAid_7D* HHExp*_Own_7D*                        ///  
+>                                  HHExp*_Purch_1M* HHExp*_GiftAid_1M* HHExp*_Own_1M*                                ///
+>                                  HHExp*_Purch_6M* HHExp*_GiftAid_6M*                                                       ///
+>                                  HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp                     ///
+>                                  MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M    ///
+>                                  MMDIHHHealthFac PWMDDW* RESPFoodWorry_YN sampleYN RESPFemale      ///
+>                                  RESPHHH YesNo
+{txt}
+{com}. 
+.         label def assign_l 1 "F2F Long" 2 "F2F Short" 3 "Remote Long" 4 "Remote Short"
+{txt}
+{com}.         label val Assignment assign_l
+{txt}
+{com}.         * adjust start and end time
+.         
+.         * save dataset
+.         compress
+  {txt}variable {bf}{res}Assignment{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (4,995 bytes saved)
+
+{com}. *       iecodebook export using "${c -(}d_out{c )-}/Myanmar_Full_Codebook.xlsx", replace
+.         
+.         save     "${c -(}d_dta{c )-}/Myanmar_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/4_Data/Myanmar_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         save     "${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/1_Data/Myanmar_Full_Household_Analysis.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/1_Data/Myanmar_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         // not date specific for tableau import consistency
+.         savespss "${c -(}d_dta{c )-}/Myanmar_Full_Household_Analysis.sav", replace
+{res} {break}{text}Saving {result:1665} observations of {result:726} variables into {result:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/4_Data/Myanmar_Full_Household_Analysis.sav}{break} {break}{text}Saved {result:1665} observations of {result:726} variables into {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/4_Data/Myanmar_Full_Household_Analysis.sav":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/4_Data/Myanmar_Full_Household_Analysis.sav}{break}
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD85306.000000"
+{txt}
+{com}. 
+. * change 0 to 1 to select do-file to run
+.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   balance                 1   // Produce balance tables
+{txt}
+{com}.         local   wealth                  1       // Create wealth index
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         gl nicole       1
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}myanmar{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl tex_tab              "${c -(}paper{c )-}/1_table"
+{txt}
+{com}.         gl tex_fig              "${c -(}paper{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD85306.000000"
+{txt}
+{com}.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         gl nicole       1
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global myanmar          "/Users/nicolewu/Desktop/Myanmar"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+.         
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl tex_tab              "${c -(}paper{c )-}/1_table"
+{txt}
+{com}.         gl tex_fig              "${c -(}paper{c )-}/2_figure"
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD85306.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

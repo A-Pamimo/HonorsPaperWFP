@@ -1,0 +1,1324 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/3_Log/01_organize_20231005.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Oct 2023, 16:57:01
+{txt}
+{com}.         di `cdate'      
+{res}20231005
+{txt}
+{com}. 
+.         use              "${c -(}all_dta{c )-}/Myanmar_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         gen Country = 1 
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}Country{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (4,995 bytes saved)
+
+{com}.         
+.         append using "${c -(}all_dta{c )-}/Ecuador_Full_Household_Analysis.dta", force
+{txt}{p 0 7 2}
+(variable
+{bf:calc_ID} was {bf:str35}, now {bf:str59} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:MMDIHHHealthFac_dist} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthAcMildWhy_oth} was {bf:str57}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthAcSevereWhy_oth} was {bf:str61}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthChronNeed} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthChronWhy_oth} was {bf:str68}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthEmergWhy_oth} was {bf:str59}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_stress} was {bf:str5}, now {bf:str7} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_stress_oth} was {bf:str27}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_crisis_oth} was {bf:str2}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_em} was {bf:str3}, now {bf:str7} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_em_oth} was {bf:str53}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_GiftAid_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Own_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVeg_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVeg_GiftAid_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVeg_Own_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFrt_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFrt_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFrt_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeat_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeat_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeat_Own_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimFish_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimFish_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimFish_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFats_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFats_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFats_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFDairy_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFDairy_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFDairy_Own_MN_7D} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFEgg_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFEgg_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFEgg_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgr_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgr_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgr_Own_MN_7D} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCond_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCond_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCond_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTransp_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFFuel_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFFuel_GiftAid_MN_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_Purch_MN_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFPhone_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_MN_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedServ_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedGood_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedGood_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduFee_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduGood_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHSoft_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHMaint_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Purch_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_GiftAid_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Own_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVegFrt_Purch_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVegFrt_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVegFrt_Own_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeatFishEgg_Purch_MN_7} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeatFishEgg_GiftAid_MN} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeatFishEgg_Own_MN_7D_} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFatsDairy_Purch_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFatsDairy_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFatsDairy_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgrCond_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgrCond_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgrCond_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspFuel_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspFuel_GiftAid_MN_1M_} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_GiftAid_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_Purch_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_GiftAid_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFPhone_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFPhone_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFRecr_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedServGood_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedServGood_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFCloth_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduFeeGood_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFRent_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHSoftMaint_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHSoftMaint_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHAsstOthCBTRecTot} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHOccupation} was {bf:str76}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_oth} was {bf:str71}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_PCT} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHOccupation_S} was {bf:str38}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_oth_S} was {bf:str54}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHFewFoods} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHSkipped} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHAteLess} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHungry} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHWorried_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHealthy_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHSkipped_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHAteLess_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHungry_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHWholeDay_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHDwellType_oth} was {bf:str32}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHTenureType_oth} was {bf:str47}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHWallType_oth} was {bf:str32}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHRoofType_oth} was {bf:str32}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHFloorType_oth} was {bf:str117}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHToiletType_oth} was {bf:str75}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookStove} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookStove_oth} was {bf:str1}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookSRC} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookSRC_oth} was {bf:str1}, now {bf:str3} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerLightSRC_oth} was {bf:str48}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHWaterSRC_oth} was {bf:str138}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:WealthBasicElecItems} was {bf:str7}, now {bf:str9} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:comments} was {bf:str164}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpStap_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpStap_GiftAid_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpStap_Own_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpPro_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpPro_GiftAid_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpPro_Own_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFruVeg_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFruVeg_GiftAid_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFruVeg_Own_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOther_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOther_GiftAid_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOther_Own_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspPh_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspPh_GiftAid_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFUtilities_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFUtilities_GiftAid_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduMedCloth_MNCRD_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}com_list} already defined)
+(label {bf:{txt}length_l} already defined)
+(label {bf:{txt}survey_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}CARI_Worry_lbl} already defined)
+(label {bf:{txt}CARI_Meals_lbl} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}HHWaterLoc} already defined)
+(label {bf:{txt}HHWaterSRC} already defined)
+(label {bf:{txt}HHEnerLightSRC} already defined)
+(label {bf:{txt}HHEnerCookSRC} already defined)
+(label {bf:{txt}HHEnerCookStove} already defined)
+(label {bf:{txt}HHToiletType} already defined)
+(label {bf:{txt}HHFloorType} already defined)
+(label {bf:{txt}HHRoofType} already defined)
+(label {bf:{txt}HHWallType} already defined)
+(label {bf:{txt}HHTenureRisk} already defined)
+(label {bf:{txt}HHTenureType} already defined)
+(label {bf:{txt}HHDwellType} already defined)
+(label {bf:{txt}FIESHHWholeDay_S} already defined)
+(label {bf:{txt}FIESHHHungry_S} already defined)
+(label {bf:{txt}FIESHHRanOut_S} already defined)
+(label {bf:{txt}FIESHHAteLess_S} already defined)
+(label {bf:{txt}FIESHHSkipped_S} already defined)
+(label {bf:{txt}FIESHHFewFoods_S} already defined)
+(label {bf:{txt}FIESHHHealthy_S} already defined)
+(label {bf:{txt}FIESHHWorried_S} already defined)
+(label {bf:{txt}HHSNotEat_FR} already defined)
+(label {bf:{txt}FIESHHWholeDay} already defined)
+(label {bf:{txt}HHSBedHung_FR} already defined)
+(label {bf:{txt}FIESHHHungry} already defined)
+(label {bf:{txt}HHSNoFood_FR} already defined)
+(label {bf:{txt}FIESHHRanOut} already defined)
+(label {bf:{txt}FIESHHAteLess} already defined)
+(label {bf:{txt}FIESHHSkipped} already defined)
+(label {bf:{txt}FIESHHFewFoods} already defined)
+(label {bf:{txt}FIESHHHealthy} already defined)
+(label {bf:{txt}FIESHHWorried} already defined)
+(label {bf:{txt}HHIncChg_S} already defined)
+(label {bf:{txt}HHIncFirst_SRi_S} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncThird_SRi} already defined)
+(label {bf:{txt}HHIncSec_SRi} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}LcsEN_em_IllegalAct} already defined)
+(label {bf:{txt}LcsEN_em_Begged} already defined)
+(label {bf:{txt}LcsEN_em_ChildWork} already defined)
+(label {bf:{txt}LcsEN_crisis_OutSchool} already defined)
+(label {bf:{txt}LcsEN_crisis_ProdAssets} already defined)
+(label {bf:{txt}LcsEN_stress_BorrowCash} already defined)
+(label {bf:{txt}LcsEN_stress_Saving} already defined)
+(label {bf:{txt}LcsEN_stress_CrdtFood} already defined)
+(label {bf:{txt}LcsEN_stress_DomAsset} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}HHSNotEat_FR_S} already defined)
+(label {bf:{txt}HHSBedHung_FR_S} already defined)
+(label {bf:{txt}HHSNoFood_FR_S} already defined)
+(label {bf:{txt}RESPMeals} already defined)
+(label {bf:{txt}HHHealthEmergWhy} already defined)
+(label {bf:{txt}HHHealthEmergTreat} already defined)
+(label {bf:{txt}HHHealthEmergNeed} already defined)
+(label {bf:{txt}HHHealthChronWhy} already defined)
+(label {bf:{txt}HHHealthChronTreat} already defined)
+(label {bf:{txt}HHHealthChronNeed} already defined)
+(label {bf:{txt}HHHealthAcSevereWhy} already defined)
+(label {bf:{txt}HHHealthAcSevereTreat} already defined)
+(label {bf:{txt}HHHealthAcSevereNeed} already defined)
+(label {bf:{txt}HHHealthAcMildWhy} already defined)
+(label {bf:{txt}HHHealthAcMildTreat} already defined)
+(label {bf:{txt}HHHealthAcMildNeed} already defined)
+(label {bf:{txt}MDDIHHIdDoc} already defined)
+(label {bf:{txt}HHStatus} already defined)
+(label {bf:{txt}RESPStatus} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}PschoolLevel} already defined)
+(label {bf:{txt}PSchoolEver} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}HHExpNF_GiftAid_YN1M} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPAvailable} already defined)
+(label {bf:{txt}RESPpart} already defined)
+(label {bf:{txt}gender_label} already defined)
+
+{com}.         replace Country = 2 if mi(Country)
+{txt}(2,372 real changes made)
+
+{com}.         compress 
+  {bf}{res}HHHealthAcSevereWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHWallType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHRoofType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHFloorType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHEnerLightSRC_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}remarks{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (136,588 bytes saved)
+
+{com}.         
+.         append using "${c -(}all_dta{c )-}/CAR_Full_Household_Analysis.dta", force
+{txt}{p 0 7 2}
+(variable
+{bf:EnuName_Display} was {bf:str21}, now {bf:str26} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHStatus} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHStatusOth} was {bf:str1}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthAcSevereNeed} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthEmergNeed} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Own_MN_7D} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHWorried} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHealthy} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHRanOut} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHRanOut_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}gender_label} already defined)
+(label {bf:{txt}RESPpart} already defined)
+(label {bf:{txt}RESPAvailable} already defined)
+(label {bf:{txt}RESPcallback} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}HHExpNF_GiftAid_YN1M} already defined)
+(label {bf:{txt}Outcome_L} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSchoolEver} already defined)
+(label {bf:{txt}PschoolLevel} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}HHUrbRur} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}RESPStatus} already defined)
+(label {bf:{txt}ConsentYN} already defined)
+(label {bf:{txt}HHStatus} already defined)
+(label {bf:{txt}MDDIHHIdDoc} already defined)
+(label {bf:{txt}HHHealthAcMildNeed} already defined)
+(label {bf:{txt}HHHealthAcMildTreat} already defined)
+(label {bf:{txt}HHHealthAcMildWhy} already defined)
+(label {bf:{txt}HHHealthAcSevereNeed} already defined)
+(label {bf:{txt}HHHealthAcSevereTreat} already defined)
+(label {bf:{txt}HHHealthAcSevereWhy} already defined)
+(label {bf:{txt}HHHealthChronNeed} already defined)
+(label {bf:{txt}HHHealthChronTreat} already defined)
+(label {bf:{txt}HHHealthChronWhy} already defined)
+(label {bf:{txt}HHHealthEmergNeed} already defined)
+(label {bf:{txt}HHHealthEmergTreat} already defined)
+(label {bf:{txt}HHHealthEmergWhy} already defined)
+(label {bf:{txt}RESPMeals} already defined)
+(label {bf:{txt}HHSNoFood_FR_S} already defined)
+(label {bf:{txt}HHSBedHung_FR_S} already defined)
+(label {bf:{txt}HHSNotEat_FR_S} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}LcsEN_stress_DomAsset} already defined)
+(label {bf:{txt}LcsEN_stress_Saving} already defined)
+(label {bf:{txt}LcsEN_stress_BorrowCash} already defined)
+(label {bf:{txt}LcsEN_crisis_ProdAssets} already defined)
+(label {bf:{txt}LcsEN_crisis_OutSchool} already defined)
+(label {bf:{txt}LcsEN_em_Begged} already defined)
+(label {bf:{txt}LcsEN_em_IllegalAct} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}HHIncSec_SRi} already defined)
+(label {bf:{txt}HHIncThird_SRi} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi_S} already defined)
+(label {bf:{txt}HHIncChg_S} already defined)
+(label {bf:{txt}FIESHHWorried} already defined)
+(label {bf:{txt}FIESHHHealthy} already defined)
+(label {bf:{txt}FIESHHFewFoods} already defined)
+(label {bf:{txt}FIESHHSkipped} already defined)
+(label {bf:{txt}FIESHHAteLess} already defined)
+(label {bf:{txt}FIESHHRanOut} already defined)
+(label {bf:{txt}HHSNoFood_FR} already defined)
+(label {bf:{txt}FIESHHHungry} already defined)
+(label {bf:{txt}HHSBedHung_FR} already defined)
+(label {bf:{txt}FIESHHWholeDay} already defined)
+(label {bf:{txt}HHSNotEat_FR} already defined)
+(label {bf:{txt}FIESHHWorried_S} already defined)
+(label {bf:{txt}FIESHHHealthy_S} already defined)
+(label {bf:{txt}FIESHHFewFoods_S} already defined)
+(label {bf:{txt}FIESHHSkipped_S} already defined)
+(label {bf:{txt}FIESHHAteLess_S} already defined)
+(label {bf:{txt}FIESHHRanOut_S} already defined)
+(label {bf:{txt}FIESHHHungry_S} already defined)
+(label {bf:{txt}FIESHHWholeDay_S} already defined)
+(label {bf:{txt}HHDwellType} already defined)
+(label {bf:{txt}HHTenureType} already defined)
+(label {bf:{txt}HHTenureRisk} already defined)
+(label {bf:{txt}HHWallType} already defined)
+(label {bf:{txt}HHRoofType} already defined)
+(label {bf:{txt}HHFloorType} already defined)
+(label {bf:{txt}HHToiletType} already defined)
+(label {bf:{txt}HHEnerCookStove} already defined)
+(label {bf:{txt}HHEnerCookSRC} already defined)
+(label {bf:{txt}HHEnerLightSRC} already defined)
+(label {bf:{txt}HHWaterSRC} already defined)
+(label {bf:{txt}HHWaterLoc} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}CARI_Meals_lbl} already defined)
+(label {bf:{txt}CARI_Worry_lbl} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}length_l} already defined)
+(label {bf:{txt}com_list} already defined)
+(label {bf:{txt}survey_l} already defined)
+
+{com}.         replace Country = 3 if mi(Country)
+{txt}(2,080 real changes made)
+
+{com}.         compress 
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHDwellType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHRoofType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHToiletType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (10,306 bytes saved)
+
+{com}.         
+.         label def country 1 "Myanmar" 2 "Ecuador" 3 "CAR"
+{txt}
+{com}.         label val Country country
+{txt}
+{com}.         
+.         save "${c -(}all_dta{c )-}/ALL_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/ALL_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         ** 1 Survey Completion  
+.         dtable i.Modality i.Completion, by(Country)                                              ///
+>                    title(rCARI Validation Survey Completion)                             ///
+>                    export(${c -(}all_tabs{c )-}/rCARI_Overall_Completion.docx, replace) 
+{res}
+{smcl}
+{reset}{...}
+{p}rCARI Validation Survey Completion{p_end}
+{hline 31}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{space 31} {space 25}Country{space 24}
+{space 31} {space 3}Myanmar{space 3} {space 3}Ecuador{space 3} {space 5}CAR{space 5} {space 5}Total{space 4}
+{hline 31}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+N{space 30} {result:1,665 (27.2%)} {result:2,372 (38.8%)} {result:2,080 (34.0%)} {result:6,117 (100.0%)}
+Survey Modality: F2F vs. Remote {space 13} {space 13} {space 13} {space 14}
+  Face-to-Face{space 17} {space 2}{result:610 (55.8%)} {space 2}{result:760 (53.7%)} {space 2}{result:969 (77.8%)} {space 1}{result:2,339 (62.3%)}
+  Remote{space 23} {space 2}{result:483 (44.2%)} {space 2}{result:656 (46.3%)} {space 2}{result:276 (22.2%)} {space 1}{result:1,415 (37.7%)}
+Survey Progress{space 16} {space 13} {space 13} {space 13} {space 14}
+  Not Completed{space 16} {space 2}{result:572 (34.4%)} {space 2}{result:956 (40.3%)} {space 2}{result:835 (40.1%)} {space 1}{result:2,363 (38.6%)}
+  Completed{space 20} {result:1,093 (65.6%)} {result:1,416 (59.7%)} {result:1,245 (59.9%)} {space 1}{result:3,754 (61.4%)}
+{hline 31}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{res}{txt}{p 0 1 2}
+(collection {res:DTable} exported to file {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/rCARI_Overall_Completion.docx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/rCARI_Overall_Completion.docx})
+{p_end}
+
+{com}. 
+.         keep if Completion == 1
+{txt}(2,363 observations deleted)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 2: Create variables
+. *******************************************************************************/
+.         
+.         *********************** OUTCOME VARIABLES ************************
+.         * FCS
+.         tab FCSCat28, gen(FCG_)
+
+        {txt}FCS {c |}
+Categories, {c |}
+ thresholds {c |}
+      28-42 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+       Poor {c |}{res}        942       25.09       25.09
+{txt} Borderline {c |}{res}      1,148       30.58       55.67
+{txt} Acceptable {c |}{res}      1,664       44.33      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         ren FCG_1       FCG_Poor
+{res}{txt}
+{com}.         ren FCG_2       FCG_Borderline
+{res}{txt}
+{com}.         ren FCG_3       FCG_Acceptable
+{res}{txt}
+{com}.         
+.         * rCSI
+.         gen rCSI_Group = cond(rCSI <= 3, 1, cond(rCSI <= 18, 2, 3))
+{txt}
+{com}.         tab rCSI_Group, gen(rCSI_Phase)
+
+ {txt}rCSI_Group {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        776       20.67       20.67
+{txt}          2 {c |}{res}      1,861       49.57       70.25
+{txt}          3 {c |}{res}      1,117       29.75      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         ren rCSI_Phase3 rCSI_Phase3_5
+{res}{txt}
+{com}.         
+.         * FCS + rCSI - Current Status
+.         tab FCS_4pt_CARI, gen(FCS_rCSI_4pt_)
+
+ {txt}CARI: Current Status of {c |}
+            FCS and rCSI {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        419       11.16       11.16
+{txt}  Marginally Food Secure {c |}{res}      1,245       33.16       44.33
+{txt}Moderately Food Insecure {c |}{res}      1,148       30.58       74.91
+{txt}  Severely Food Insecure {c |}{res}        942       25.09      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         
+.         * LCS used different strategies by countries 
+.         // Myanmar
+.         local lcs_var Lcs_stress_DomAsset Lcs_stress_CrdtFood Lcs_stress_Saving ///
+>                   Lcs_stress_BorrowCash Lcs_crisis_ProdAssets Lcs_crisis_Health         ///
+>                   Lcs_crisis_OutSchool Lcs_em_ChildWork Lcs_em_Begged                           ///
+>                   Lcs_em_IllegalAct             ///
+>                   Lcs_crisis_HealthEdu  ///
+>                   Lcs_stress_HealthEdu  Lcs_crisis_DomMigration Lcs_em_ResAsset
+{txt}
+{com}.         
+. foreach var of local lcs_var {c -(}
+{txt}  2{com}.         gen `var'_yn = (`var' == 20 | `var' == 30) if !mi(`var')
+{txt}  3{com}. {c )-}
+{txt}(2 missing values generated)
+(1,247 missing values generated)
+(2 missing values generated)
+(2 missing values generated)
+(2 missing values generated)
+(2,663 missing values generated)
+(2 missing values generated)
+(1,247 missing values generated)
+(2 missing values generated)
+(2 missing values generated)
+(2,338 missing values generated)
+(2,509 missing values generated)
+(2,509 missing values generated)
+(2,509 missing values generated)
+
+{com}.         
+.         // Ecuador: Lcs_crisis_HealthEdu instead of Lcs_crisis_Health
+.         // CAR: Lcs_stress_HealthEdu instead of Lcs_crisis_Health
+.         //              Lcs_crisis_DomMigration Lcs_em_ResAsset
+.         
+.         * FES
+.         * Error flag for translation error in Myanmar
+.         replace Err_ExpNF = 0 if mi(Err_ExpNF)
+{txt}(3,271 real changes made)
+
+{com}.         tab FES_Cat, gen(FES_Cat_) 
+
+  {txt}Food Expenditure Share {c |}
+                  Groups {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        491       13.08       13.08
+{txt}  Marginally Food Secure {c |}{res}        754       20.09       33.16
+{txt}Moderately Food Insecure {c |}{res}        703       18.73       51.89
+{txt}  Severely Food Insecure {c |}{res}      1,806       48.11      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}. 
+.         ** CARI rCARI
+.         gen     CARI_rCARI = HH_Vul_FES         if Modality == 1
+{txt}(1,415 missing values generated)
+
+{com}.         replace CARI_rCARI = HH_Vul_Income      if Modality == 2
+{txt}(1,415 real changes made)
+
+{com}.         
+.         tab CARI_FES_Cat, gen(CARI_FES_Cat)
+
+ {txt}CARI Category using FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}         85        2.26        2.26
+{txt}  Marginally Food Secure {c |}{res}        869       23.15       25.41
+{txt}Moderately Food Insecure {c |}{res}      2,270       60.47       85.88
+{txt}  Severely Food Insecure {c |}{res}        530       14.12      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         tab CARI_Inc_Cat, gen(rCARI_Inc_Cat)
+
+     {txt}CARI Category using {c |}
+                  Income {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        165        4.40        4.40
+{txt}  Marginally Food Secure {c |}{res}      1,289       34.34       38.73
+{txt}Moderately Food Insecure {c |}{res}      2,067       55.06       93.79
+{txt}  Severely Food Insecure {c |}{res}        233        6.21      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         
+.         * real CARI vs. real rCARI
+. forval i = 1/4 {c -(}
+{txt}  2{com}.         gen     CARI_rCARI_`i' = CARI_FES_Cat`i'  if Modality == 1
+{txt}  3{com}.         replace CARI_rCARI_`i' = rCARI_Inc_Cat`i' if Modality == 2
+{txt}  4{com}. {c )-}
+{txt}(1,415 missing values generated)
+(1,415 real changes made)
+(1,415 missing values generated)
+(1,415 real changes made)
+(1,415 missing values generated)
+(1,415 real changes made)
+(1,415 missing values generated)
+(1,415 real changes made)
+
+{com}.         
+.         gen CARI_FES_Bad  = (CARI_FES_Cat3  == 1 | CARI_FES_Cat4  == 1)
+{txt}
+{com}.         gen rCARI_Inc_Bad = (rCARI_Inc_Cat3 == 1 | rCARI_Inc_Cat4 == 1)
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 3: Label variables
+. *******************************************************************************/
+. 
+.         order CARI_Inc_* HHIncFirst_Accept HHIncFirst_Border HHIncFirst_Poor ///
+>                   HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50 ///
+>                   HHInc_Reduce50More, a(FES_Cat_4)
+{txt}
+{com}.         
+.         label var FCG_Poor                      "FCS: Poor"
+{txt}
+{com}.         label var FCG_Borderline        "FCS: Borderline"
+{txt}
+{com}.         label var FCG_Acceptable        "FCS: Acceptable"
+{txt}
+{com}.         label var rCSI_Group            "rCSI Group for IPC Phase"
+{txt}
+{com}.         label var rCSI_Phase1           "rCSI: IPC Phase 1"
+{txt}
+{com}.         label var rCSI_Phase2           "rCSI: IPC Phase 2"
+{txt}
+{com}.         label var rCSI_Phase3_5         "rCSI: IPC Phase 3-5"
+{txt}
+{com}.         label var FCS_rCSI_4pt_1        "FCS & rCSI: Acceptable"
+{txt}
+{com}.         label var FCS_rCSI_4pt_2        "FCS & rCSI: Acceptable with reduced coping"
+{txt}
+{com}.         label var FCS_rCSI_4pt_3        "FCS & rCSI: Borderline"
+{txt}
+{com}.         label var FCS_rCSI_4pt_4        "FCS & rCSI: Poor"
+{txt}
+{com}.         
+.         label var CARI_Inc_1            "Income: Regular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_2            "Income: Regular and Reduced OR Irregular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_3            "Income: Irregular and Reduced"
+{txt}
+{com}.         label var CARI_Inc_4            "Income: No income sources"
+{txt}
+{com}.         
+.         label var FES_Cat_1                     "FES: <50%"
+{txt}
+{com}.         label var FES_Cat_2                     "FES: 50-65%"
+{txt}
+{com}.         label var FES_Cat_3                     "FES: 65-75%"
+{txt}
+{com}.         label var FES_Cat_4                     "FES: >= 75%"
+{txt}
+{com}.         
+.         label var rCARI_Inc_Cat1        "rCARI using Income: Food Secure"
+{txt}
+{com}.         label var rCARI_Inc_Cat2        "rCARI using Income: Marginally Food Secure"
+{txt}
+{com}.         label var rCARI_Inc_Cat3        "rCARI using Income: Moderately Food Insecure"
+{txt}
+{com}.         label var rCARI_Inc_Cat4        "rCARI using Income: Severely Food Insecure"
+{txt}
+{com}.         label var rCARI_Inc_Bad         "rCARI using Income: Food Insecure"
+{txt}
+{com}.         
+.         label var CARI_FES_Cat1         "CARI using FES: Food Secure"
+{txt}
+{com}.         label var CARI_FES_Cat2         "CARI using FES: Marginally Food Secure"
+{txt}
+{com}.         label var CARI_FES_Cat3         "CARI using FES: Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_FES_Cat4         "CARI using FES: Severely Food Insecure"
+{txt}
+{com}.         label var CARI_FES_Bad          "CARI using FES: Food Insecure"
+{txt}
+{com}.         
+.         label var CARI_rCARI_1          "CARI vs. rCARI: Food Secure"
+{txt}
+{com}.         label var CARI_rCARI_2          "CARI vs. rCARI: Marginally Food Secure"
+{txt}
+{com}.         label var CARI_rCARI_3          "CARI vs. rCARI: Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_rCARI_4          "CARI vs. rCARI: Severely Food Insecure"
+{txt}
+{com}.         label var CARI_rCARI            "CARI vs. rCARI: Food Insecure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         compress
+  {txt}variable {bf}{res}rCSI_Group{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_CrdtFood_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_Health_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_ChildWork_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_HealthEdu_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_HealthEdu_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_DomMigration_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_ResAsset_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_1{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_2{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_3{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_4{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Bad{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCARI_Inc_Bad{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (247,764 bytes saved)
+
+{com}.         save "${c -(}all_dta{c )-}/Complete_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/Complete_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.2     Randomization Balance
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/All_Full_Household_rCARI_Analysis.dta
+.         
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `balance'            do "${c -(}all_dofile{c )-}/02_Balance.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check Randomization Balance                                                        *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 30, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

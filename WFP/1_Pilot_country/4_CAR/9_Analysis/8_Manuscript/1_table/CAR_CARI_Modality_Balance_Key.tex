@@ -1,0 +1,26 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab CARI_rCARI_1 CARI_rCARI_2 CARI_rCARI_3 CARI_rCARI_4 CARI_rCARI, grpvar(Modality) nonote onerow nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) rowvarlabels savetex("C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_CARI_Modality_Balance_Key.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(1)-(2)} \\
+ & \multicolumn{1}{c}{F2F}  & \multicolumn{1}{c}{Remote}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+CARI vs. rCARI: Food Secure   & 0.00    & 0.01    & -0.01**   \\
+ & (0.00)  & (0.01)  &  \\ [1ex]
+CARI vs. rCARI: Marginally Food Secure   & 0.14    & 0.36    & -0.22***   \\
+ & (0.01)  & (0.03)  &  \\ [1ex]
+CARI vs. rCARI: Moderately Food Insecure   & 0.70    & 0.56    & 0.14***   \\
+ & (0.01)  & (0.03)  &  \\ [1ex]
+CARI vs. rCARI: Severely Food Insecure   & 0.16    & 0.07    & 0.09***   \\
+ & (0.01)  & (0.02)  &  \\ [1ex]
+CARI vs. rCARI: Food Insecure   & 0.86    & 0.63    & 0.23***   \\
+ & (0.01)  & (0.03)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 969   & 277  & 1246  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

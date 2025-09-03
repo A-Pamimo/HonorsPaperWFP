@@ -1,0 +1,227 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+
+\author{Nicole Wu}
+\date{\today}
+\title{Ecuador rCARI Validation Study Summary Report}
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{8pt} % Set the desired space before and after paragraphs
+	
+	% ------- 
+	\section{Introduction}
+	
+	
+	% ------- 
+	\section{Data}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Sample Completion: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/Ecuador_rCARI_Completion} 
+				\label{tab:Ecuador_rCARI_Completion}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	% ------- 
+	\section{Randomization Quality}
+	
+	To assess the balance of the treatment (Remote) and control (F2F) groups, we examined various respondent and household characteristics, including basic demographics, income sources, and changes over time. This allowed us to evaluate whether the two groups were similar in terms of these factors, ensuring a fair comparison between the treatment and control conditions.
+	
+	\subsection{Modality Randomization}
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Modality Assignment: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/Ecuador_Demo_Modality_Balance} 
+				\label{tab:Ecuador_Demo_Modality_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\subsection{F2F Length Randomization}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Length Assignment in F2F Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/Ecuador_Demo_F2F_Length_Balance} 
+				\label{tab:Ecuador_Demo_F2F_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	\subsection{Remote Length Randomization}
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Length Assignment in Remote Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/Ecuador_Demo_RM_Length_Balance} 
+				\label{tab:Ecuador_Demo_RM_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	% ------- 
+	\section{Primary Results}
+	\subsection{Impact of Survey Modality on Key Food Security Outcomes}
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/Ecuador_Outcome_Modality_Balance} 
+				\label{tab:Ecuador_Outcome_Modality_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Length on LCS in F2F Survey: EN vs. FS}
+				\scriptsize
+				\input{1_table/Ecuador_LCS_F2F_Length_Balance} 
+				\label{tab:Ecuador_LCS_F2F_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Income and FES : Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/Ecuador_IncFes_Modality_Balance} 
+				\label{tab:Ecuador_IncFes_Modality_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on CARI and rCARI : Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/Ecuador_CARI_Modality_Balance} 
+				\label{tab:Ecuador_CARI_Modality_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Real CARI and rCARI : Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/Ecuador_CARI_Modality_Balance_Key} 
+				\label{tab:Ecuador_CARI_Modality_Balance_Key}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Length on Expenditure in F2F Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/Ecuador_FES_F2F_Length_Balance} 
+				\label{tab:Ecuador_FES_F2F_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Length on Expenditure in Remote Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/Ecuador_FES_RM_Length_Balance} 
+				\label{tab:Ecuador_FES_RM_Length_Balance}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+
+\end{document}
+

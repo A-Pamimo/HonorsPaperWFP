@@ -1,0 +1,360 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i08_attrition_20230426.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Apr 2023, 11:43:53
+{txt}
+{com}.         di `cdate'
+{res}20230426
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}dta{c )-}/Iraq_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         
+.         * attrition balance check variables
+.         gl      var_attri RESPAge HHSize FCSStap FCSPulse FCSDairy FCSPr FCSVeg ///
+>                                   FCSFruit FCSFat FCSSugar FCS FCS rCSILessQlty rCSIBorrow ///
+>                                   rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}. 
+. foreach var of global var_attri {c -(}
+{txt}  2{com}.         gen     bal_`var' = `var'
+{txt}  3{com}.         replace bal_`var' = r_`var' if mi(`var')
+{txt}  4{com}. {c )-}
+{txt}(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+{err}variable {bf}bal_FCS{sf} already defined
+{txt}{search r(110), local:r(110);}
+
+end of do-file
+
+{search r(110), local:r(110);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03840.000000"
+{txt}
+{com}.         * load dataset
+.         use "${c -(}dta{c )-}/Iraq_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         
+.         * attrition balance check variables
+.         gl      var_attri RESPAge HHSize FCSStap FCSPulse FCSDairy FCSPr FCSVeg ///
+>                                   FCSFruit FCSFat FCSSugar FCS rCSILessQlty rCSIBorrow ///
+>                                   rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}. 
+. foreach var of global var_attri {c -(}
+{txt}  2{com}.         gen     bal_`var' = `var'
+{txt}  3{com}.         replace bal_`var' = r_`var' if mi(`var')
+{txt}  4{com}. {c )-}
+{txt}(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+
+{com}. 
+.         iebaltab        bal_*,                  ///
+>                                 grpvar(Source)  ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_bal{c )-}/Iraq_rCARI_Attrition_Balance.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_rCARI_Attrition_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_rCARI_Attrition_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab HHAsset_TickTokCar
+
+  {txt}Household {c |}
+       owns {c |}
+ticktok car {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}        581       98.47       98.47
+{txt}        Yes {c |}{res}          9        1.53      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        590      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03840.000000"
+{txt}
+{com}.         use "${c -(}dta{c )-}/Iraq_F2F_Household_Analysis.dta", clear
+{txt}
+{com}.         
+.         
+.                                    
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03840.000000"
+{txt}
+{com}.         
+.         gl  wi_assets HHAsset_WaterFilter HHAsset_Carpet HHAsset_ElecLamp  HHAsset_ElecStove HHAsset_WaterTank HHAsset_MicroOven HHAsset_Fridge HHAsset_Blender HHAsset_GasHeater HHAsset_ElecFan HHAsset_Freezer HHAsset_AC HHAsset_ElecGen HHAsset_ElecVac HHAsset_WashMachine HHAsset_TickTokCar HHAsset_Taxi HHAsset_PriCarTruck HHAsset_Motor HHAsset_Bicycle                  
+{txt}
+{com}.         
+.         gl  wi_house HHDwell_House HHDwell_LeatherTent HHTenure_FreeCon HHTenure_FreeNoCon HHWall_BakedBrick HHWall_UnbakedBrick HHWall_Cement HHWall_PlasticSheet HHRoof_Brick HHRoof_IronSheet HHRoof_Tent HHFloor_Cement HHFloor_Dirt HHFloor_Tiles HHToilet_FlushPit HHToilet_ImprovedPit HHEnerCook_Gas HHEnerLight_Elec HHEnerLight_Gen HHWater_Pipe HHWater_Tube HHWater_Tank
+{txt}
+{com}.                                    
+. ********************************************************************************
+. *                                                       PART 4: Create Wealth Score
+. *******************************************************************************/
+.         
+.         * Common
+.         pca $wi_assets $wi_house, factors(1)
+
+{txt}Principal components/correlation{col 50}Number of obs    = {res}       590
+{col 50}{txt}Number of comp.  = {res}         1
+{col 50}{txt}Trace            {col 67}=  {res}       42
+{col 5}{txt}Rotation: (unrotated = principal){col 50}Rho              = {res}    0.2949
+
+{txt}{col 5}{hline 13}{c TT}{hline 60}
+{col 5}   Component {c |}   Eigenvalue   Difference         Proportion   Cumulative
+{col 5}{hline 13}{c +}{hline 60}
+{col 5}{ralign 12:Comp1} {c |}{res}      12.3843      6.81103             0.2949       0.2949
+{txt}{col 5}{ralign 12:Comp2} {c |}{res}      5.57326      2.13141             0.1327       0.4276
+{txt}{col 5}{ralign 12:Comp3} {c |}{res}      3.44185      1.05623             0.0819       0.5095
+{txt}{col 5}{ralign 12:Comp4} {c |}{res}      2.38562      .631682             0.0568       0.5663
+{txt}{col 5}{ralign 12:Comp5} {c |}{res}      1.75394      .504852             0.0418       0.6081
+{txt}{col 5}{ralign 12:Comp6} {c |}{res}      1.24909     .0714491             0.0297       0.6378
+{txt}{col 5}{ralign 12:Comp7} {c |}{res}      1.17764       .10863             0.0280       0.6658
+{txt}{col 5}{ralign 12:Comp8} {c |}{res}      1.06901     .0388852             0.0255       0.6913
+{txt}{col 5}{ralign 12:Comp9} {c |}{res}      1.03012     .0491997             0.0245       0.7158
+{txt}{col 5}{ralign 12:Comp10} {c |}{res}      .980924     .0268228             0.0234       0.7392
+{txt}{col 5}{ralign 12:Comp11} {c |}{res}      .954101      .104277             0.0227       0.7619
+{txt}{col 5}{ralign 12:Comp12} {c |}{res}      .849824     .0728714             0.0202       0.7821
+{txt}{col 5}{ralign 12:Comp13} {c |}{res}      .776953     .0200119             0.0185       0.8006
+{txt}{col 5}{ralign 12:Comp14} {c |}{res}      .756941     .0543365             0.0180       0.8187
+{txt}{col 5}{ralign 12:Comp15} {c |}{res}      .702604     .0339109             0.0167       0.8354
+{txt}{col 5}{ralign 12:Comp16} {c |}{res}      .668693     .0407216             0.0159       0.8513
+{txt}{col 5}{ralign 12:Comp17} {c |}{res}      .627972     .0219898             0.0150       0.8663
+{txt}{col 5}{ralign 12:Comp18} {c |}{res}      .605982     .0484087             0.0144       0.8807
+{txt}{col 5}{ralign 12:Comp19} {c |}{res}      .557573     .0354862             0.0133       0.8940
+{txt}{col 5}{ralign 12:Comp20} {c |}{res}      .522087     .0338048             0.0124       0.9064
+{txt}{col 5}{ralign 12:Comp21} {c |}{res}      .488282     .0118945             0.0116       0.9180
+{txt}{col 5}{ralign 12:Comp22} {c |}{res}      .476388      .051343             0.0113       0.9294
+{txt}{col 5}{ralign 12:Comp23} {c |}{res}      .425045     .0285712             0.0101       0.9395
+{txt}{col 5}{ralign 12:Comp24} {c |}{res}      .396473     .0450451             0.0094       0.9489
+{txt}{col 5}{ralign 12:Comp25} {c |}{res}      .351428     .0730951             0.0084       0.9573
+{txt}{col 5}{ralign 12:Comp26} {c |}{res}      .278333     .0103969             0.0066       0.9639
+{txt}{col 5}{ralign 12:Comp27} {c |}{res}      .267936     .0441637             0.0064       0.9703
+{txt}{col 5}{ralign 12:Comp28} {c |}{res}      .223772      .027732             0.0053       0.9756
+{txt}{col 5}{ralign 12:Comp29} {c |}{res}       .19604     .0240976             0.0047       0.9803
+{txt}{col 5}{ralign 12:Comp30} {c |}{res}      .171943     .0103769             0.0041       0.9844
+{txt}{col 5}{ralign 12:Comp31} {c |}{res}      .161566     .0570324             0.0038       0.9882
+{txt}{col 5}{ralign 12:Comp32} {c |}{res}      .104534     .0211346             0.0025       0.9907
+{txt}{col 5}{ralign 12:Comp33} {c |}{res}     .0833989    .00637584             0.0020       0.9927
+{txt}{col 5}{ralign 12:Comp34} {c |}{res}     .0770231     .0279036             0.0018       0.9945
+{txt}{col 5}{ralign 12:Comp35} {c |}{res}     .0491195    .00377201             0.0012       0.9957
+{txt}{col 5}{ralign 12:Comp36} {c |}{res}     .0453475    .00975438             0.0011       0.9968
+{txt}{col 5}{ralign 12:Comp37} {c |}{res}     .0355931    .00662491             0.0008       0.9976
+{txt}{col 5}{ralign 12:Comp38} {c |}{res}     .0289682    .00515219             0.0007       0.9983
+{txt}{col 5}{ralign 12:Comp39} {c |}{res}      .023816   .000896639             0.0006       0.9989
+{txt}{col 5}{ralign 12:Comp40} {c |}{res}     .0229194    .00964613             0.0005       0.9994
+{txt}{col 5}{ralign 12:Comp41} {c |}{res}     .0132732    .00294949             0.0003       0.9998
+{txt}{col 5}{ralign 12:Comp42} {c |}{res}     .0103237            .             0.0002       1.0000
+{txt}{col 5}{hline 13}{c BT}{hline 60}
+
+Principal components (eigenvectors) 
+
+{space 4}{hline 13}{c  TT}{hline 10}{c  TT}{hline 13}
+{space 4}{space 0}{ralign 12:Variable}{space 1}{c |}{space 1}{ralign 8:Comp1}{space 1}{c |}{space 1}{ralign 11:Unexplained}{space 1}
+{space 4}{hline 13}{c   +}{hline 10}{c   +}{hline 13}
+{space 4}{space 0}{ralign 12:HHAsset_Wa~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1615}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .6769}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Ca~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1179}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8279}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_El~p}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1636}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .6687}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_El~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0875}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9053}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Wa~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1352}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .7735}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Mi~n}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1571}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .6944}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Fr~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1123}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8438}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Bl~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0691}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9408}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Ga~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0290}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9896}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_E~an}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1394}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .7594}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Fr~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0413}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9789}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_AC}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2222}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .3887}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_E~en}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0422}}}{space 1}{c |}{space 1}{center 11:{res:{sf:       .978}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_El~c}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1688}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .6471}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Wa~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0383}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9818}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Ti~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0056}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9996}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Taxi}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1143}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8381}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Pr~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0098}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9988}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Mo~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0022}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9999}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Bi~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0593}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9564}}}{space 1}
+{space 4}{space 0}{ralign 12:HHDwell_Ho~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2779}}}{space 1}{c |}{space 1}{center 11:{res:{sf:     .04341}}}{space 1}
+{space 4}{space 0}{ralign 12:HHDwell_Le~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.2752}}}{space 1}{c |}{space 1}{center 11:{res:{sf:     .06206}}}{space 1}
+{space 4}{space 0}{ralign 12:HHTenur~eCon}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2046}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .4814}}}{space 1}
+{space 4}{space 0}{ralign 12:HHTenur~oCon}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.2055}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .4772}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Bak~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0993}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8778}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Unb~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1474}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .7311}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Cem~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2763}}}{space 1}{c |}{space 1}{center 11:{res:{sf:     .05451}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Pla~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1197}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8226}}}{space 1}
+{space 4}{space 0}{ralign 12:HHRoof_Brick}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1162}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8329}}}{space 1}
+{space 4}{space 0}{ralign 12:HHRoof_Iro~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2325}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .3306}}}{space 1}
+{space 4}{space 0}{ralign 12:HHRoof_Tent}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1917}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .5451}}}{space 1}
+{space 4}{space 0}{ralign 12:HHFloor_Ce~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0360}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9839}}}{space 1}
+{space 4}{space 0}{ralign 12:HHFloor_Dirt}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1156}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .8345}}}{space 1}
+{space 4}{space 0}{ralign 12:HHFloor_Ti~s}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0889}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9021}}}{space 1}
+{space 4}{space 0}{ralign 12:HHToilet_F~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1405}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .7556}}}{space 1}
+{space 4}{space 0}{ralign 12:HHToilet_I~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1745}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .6229}}}{space 1}
+{space 4}{space 0}{ralign 12:HHEnerCook~s}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0625}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .9516}}}{space 1}
+{space 4}{space 0}{ralign 12:HHEnerLigh~c}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2189}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .4067}}}{space 1}
+{space 4}{space 0}{ralign 12:HHEnerLigh~n}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.2141}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .4321}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWater_Pipe}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2501}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .2253}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWater_Tube}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1534}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .7087}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWater_Tank}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1592}}}{space 1}{c |}{space 1}{center 11:{res:{sf:       .686}}}{space 1}
+{space 4}{hline 13}{c  BT}{hline 10}{c  BT}{hline 13}
+
+{com}.         
+.         predict HHWealth_Score, score
+
+{txt}Scoring coefficients 
+{col 5}sum of squares(column-loading) = 1
+
+{space 4}{hline 13}{c  TT}{hline 10}
+{space 4}{space 0}{ralign 12:Variable}{space 1}{c |}{space 1}{ralign 8:Comp1}{space 1}
+{space 4}{hline 13}{c   +}{hline 10}
+{space 4}{space 0}{ralign 12:HHAsset_Wa~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1615}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Ca~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1179}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_El~p}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1636}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_El~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0875}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Wa~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1352}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Mi~n}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1571}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Fr~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1123}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Bl~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0691}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Ga~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0290}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_E~an}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1394}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Fr~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0413}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_AC}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2222}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_E~en}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0422}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_El~c}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1688}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Wa~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0383}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Ti~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0056}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Taxi}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1143}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Pr~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0098}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Mo~r}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0022}}}{space 1}
+{space 4}{space 0}{ralign 12:HHAsset_Bi~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0593}}}{space 1}
+{space 4}{space 0}{ralign 12:HHDwell_Ho~e}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2779}}}{space 1}
+{space 4}{space 0}{ralign 12:HHDwell_Le~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.2752}}}{space 1}
+{space 4}{space 0}{ralign 12:HHTenur~eCon}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2046}}}{space 1}
+{space 4}{space 0}{ralign 12:HHTenur~oCon}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.2055}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Bak~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.0993}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Unb~k}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1474}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Cem~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2763}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWall_Pla~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1197}}}{space 1}
+{space 4}{space 0}{ralign 12:HHRoof_Brick}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1162}}}{space 1}
+{space 4}{space 0}{ralign 12:HHRoof_Iro~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2325}}}{space 1}
+{space 4}{space 0}{ralign 12:HHRoof_Tent}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1917}}}{space 1}
+{space 4}{space 0}{ralign 12:HHFloor_Ce~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0360}}}{space 1}
+{space 4}{space 0}{ralign 12:HHFloor_Dirt}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1156}}}{space 1}
+{space 4}{space 0}{ralign 12:HHFloor_Ti~s}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0889}}}{space 1}
+{space 4}{space 0}{ralign 12:HHToilet_F~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.1405}}}{space 1}
+{space 4}{space 0}{ralign 12:HHToilet_I~t}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1745}}}{space 1}
+{space 4}{space 0}{ralign 12:HHEnerCook~s}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.0625}}}{space 1}
+{space 4}{space 0}{ralign 12:HHEnerLigh~c}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2189}}}{space 1}
+{space 4}{space 0}{ralign 12:HHEnerLigh~n}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.2141}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWater_Pipe}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.2501}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWater_Tube}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1534}}}{space 1}
+{space 4}{space 0}{ralign 12:HHWater_Tank}{space 1}{c |}{space 1}{ralign 8:{res:{sf: -0.1592}}}{space 1}
+{space 4}{hline 13}{c  BT}{hline 10}
+
+{com}.         
+.         * Percentile & Quintile
+.         sort    HHWealth_Score
+{txt}
+{com}.         pctile  WI_Ppct = HHWealth_Score, nq(306) genp(WI_Ppercent)
+{txt}
+{com}.         gen     WI_Ppercentile = round(WI_Ppercent)
+{txt}(285 missing values generated)
+
+{com}.         egen    WI_Pquin = cut(WI_Ppercentile), at (0,20,40,60,80,100) 
+{txt}(286 missing values generated)
+
+{com}.         gen     WI_Pquintile = (WI_Pquin / 20) + 1 
+{txt}(286 missing values generated)
+
+{com}.         
+.         drop WI_Pquin
+{txt}
+{com}.         
+.         lab var HHWealth_Score  "Household Common Wealth Score PCA"
+{txt}
+{com}.         lab var WI_Ppct                 "Household wealth score for percentile"
+{txt}
+{com}.         lab var WI_Ppercent             "Household wealth score raw percentage"
+{txt}
+{com}.         lab var WI_Ppercentile  "Household wealth score rounded percentage"
+{txt}
+{com}.         lab var WI_Pquintile    "Household wealth score quintile"
+{txt}
+{com}.         
+.         sum     HHWealth_Score, detail
+
+              {txt}Household Common Wealth Score PCA
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-4.812768      -4.842883
+{txt} 5%    {res}-4.278193      -4.842883
+{txt}10%    {res}-3.992153      -4.812768       {txt}Obs         {res}        590
+{txt}25%    {res}-3.398004      -4.812768       {txt}Sum of wgt. {res}        590
+
+{txt}50%    {res}-2.182423                      {txt}Mean          {res} 3.33e-09
+                        {txt}Largest       Std. dev.     {res} 3.519132
+{txt}75%    {res} 3.624973       4.816782
+{txt}90%    {res}   4.1655       4.825087       {txt}Variance      {res} 12.38429
+{txt}95%    {res} 4.320634       4.825087       {txt}Skewness      {res} .0621613
+{txt}99%    {res} 4.595654       4.978206       {txt}Kurtosis      {res} 1.146675
+{txt}
+{com}.         hist    HHWealth_Score, freq
+{txt}(bin={res}24{txt}, start={res}-4.8428826{txt}, width={res}.40921201{txt})
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. 

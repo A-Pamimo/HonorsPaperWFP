@@ -1,0 +1,2641 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i02_organize_20230502.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 2 May 2023, 11:19:05
+{txt}
+{com}.         di `cdate'
+{res}20230502
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}dta{c )-}/Iraq_F2F_Household_Raw.dta", clear 
+{txt}
+{com}.         
+.         gen     Status = 1 if (ADMIN5Name == 1 | ADMIN5Name == 8) 
+{txt}(283 missing values generated)
+
+{com}.         replace Status = 2 if (ADMIN5Name == 2 | ADMIN5Name == 7) 
+{txt}(283 real changes made)
+
+{com}.         
+.         gen     Modality        = (F2F_Rmt == 1 | F2F_Rmt == 3)
+{txt}
+{com}.         replace Modality        = 2 if Modality == 0
+{txt}(324 real changes made)
+
+{com}.         
+. ** Demongraphics and basic respondents/household information
+. 
+.         gen RESPHHH     = (RESPRelationHHH              == 100)
+{txt}
+{com}.         gen RESPFemale  = (RESPSex                              == 0)
+{txt}
+{com}.         gen RESPPLW     = (RESPplw                              == 1)
+{txt}
+{com}.         gen HHDisplaced = (HHStatus                     == 2)
+{txt}
+{com}.         gen HHRefugee   = (HHStatus                     == 3)
+{txt}
+{com}.         
+.         // Household roster dropped in this dataset, potentially add more vars
+.         gl var_demo RESPAge RESPSex RESPFemale RESPHHH RESPPLW HHSize MDDIHHDisabledNb ///
+>                                 MDDIHHChronIllNb HHDisplaced HHRefugee HHhostDisp
+{txt}
+{com}. 
+. ** Asset
+.         ** Household Assets Items (missing as 0 due to the design)
+.         gen HHAsset_WaterFilter = (WealthSimpleHouseholdItems_1 == 1)
+{txt}
+{com}.         gen HHAsset_Carpet      = (WealthSimpleHouseholdItems_2 == 1)
+{txt}
+{com}.         gen HHAsset_ElecLamp    = (WealthSimpleHouseholdItems_3 == 1)
+{txt}
+{com}.         gen HHAsset_ElecStove   = (WealthSimpleHouseholdItems_4 == 1)
+{txt}
+{com}.         gen HHAsset_WaterTank   = (WealthSimpleHouseholdItems_5 == 1)
+{txt}
+{com}.         
+.         gen HHAsset_MicroOven   = (WealthBasicElecItems_1 == 1)
+{txt}
+{com}.         gen HHAsset_Fridge              = (WealthBasicElecItems_2 == 1)
+{txt}
+{com}.         gen HHAsset_Blender             = (WealthBasicElecItems_3 == 1)
+{txt}
+{com}.         gen HHAsset_GasHeater   = (WealthBasicElecItems_4 == 1)
+{txt}
+{com}.         gen HHAsset_ElecFan             = (WealthBasicElecItems_5 == 1)
+{txt}
+{com}.         
+.         gen HHAsset_Freezer             = (WealthAdvElecItems_1 == 1)
+{txt}
+{com}.         gen HHAsset_AC                  = (WealthAdvElecItems_2 == 1)
+{txt}
+{com}.         gen HHAsset_ElecGen             = (WealthAdvElecItems_3 == 1)
+{txt}
+{com}.         gen HHAsset_ElecVac             = (WealthAdvElecItems_4 == 1)
+{txt}
+{com}.         gen HHAsset_WashMachine = (WealthAdvElecItems_5 == 1)
+{txt}
+{com}.         
+.         gen HHAsset_TickTokCar  = (WealthTransportAssets_1 == 1)
+{txt}
+{com}.         gen HHAsset_Taxi                = (WealthTransportAssets_2 == 1)
+{txt}
+{com}.         gen HHAsset_PriCarTruck = (WealthTransportAssets_3 == 1)
+{txt}
+{com}.         gen HHAsset_Motor               = (WealthTransportAssets_4 == 1)
+{txt}
+{com}.         gen HHAsset_Bicycle             = (WealthTransportAssets_5 == 1)
+{txt}
+{com}.                 
+. gl  var_assets HHAsset_WaterFilter HHAsset_Carpet HHAsset_ElecLamp HHAsset_ElecStove  ///
+>                            HHAsset_WaterTank HHAsset_MicroOven HHAsset_Fridge HHAsset_Blender     ///
+>                            HHAsset_GasHeater HHAsset_ElecFan HHAsset_Freezer HHAsset_AC                   ///
+>                            HHAsset_ElecGen HHAsset_ElecVac HHAsset_WashMachine HHAsset_TickTokCar ///
+>                            HHAsset_Taxi HHAsset_PriCarTruck HHAsset_Motor HHAsset_Bicycle
+{txt}
+{com}.                            
+.         ** Housing Type
+.         tab  HHDwellType_oth
+{txt}no observations
+
+{com}.         tab  HHDwellType, gen(HHDwellType_)
+
+   {txt}What kind of dwelling unit does your {c |}
+household live in? (If possible, do not {c |}
+                                    ask {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                                  House {c |}{res}        282       47.80       47.80
+{txt}                         Flat/apartment {c |}{res}          1        0.17       47.97
+{txt}                    Tent/plastic sheets {c |}{res}          2        0.34       48.31
+{txt}                            Canvas tent {c |}{res}          3        0.51       48.81
+{txt}                           Leather tent {c |}{res}        302       51.19      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHDwellType_1 HHDwell_House
+{res}{txt}
+{com}.         ren  HHDwellType_5 HHDwell_LeatherTent
+{res}{txt}
+{com}.         drop HHDwellType_2 HHDwellType_3 HHDwellType_4
+{txt}
+{com}.         
+.         ** Tenure Type
+.         tab  HHTenureType_oth
+{txt}no observations
+
+{com}.         tab  HHTenureType, gen(HHTenureType_)
+
+                   {txt}What is your housing {c |}
+            occupancy/ownership status? {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+        Tenant/rent (Written agreement) {c |}{res}          1        0.17        0.17
+{txt}     Tenant/rent (No written agreement) {c |}{res}          4        0.68        0.85
+{txt}          Staying in family owned house {c |}{res}          2        0.34        1.19
+{txt}                     Plot/permit holder {c |}{res}          2        0.34        1.53
+{txt}   Staying for free (Written Agreement) {c |}{res}        354       60.00       61.53
+{txt}Staying for free (No Written Agreement) {c |}{res}        227       38.47      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHTenureType_5 HHTenure_FreeCon
+{res}{txt}
+{com}.         ren  HHTenureType_6 HHTenure_FreeNoCon
+{res}{txt}
+{com}.         drop HHTenureType_1 HHTenureType_2 HHTenureType_3 HHTenureType_4
+{txt}
+{com}. 
+.         ** Wall Materials
+.         tab  HHWallType_oth
+
+    {txt}Other (specify) {c |}      Freq.     Percent        Cum.
+{hline 20}{c +}{hline 35}
+               خيمة {c |}{res}          1       50.00       50.00
+{txt}         خيمه جلديه {c |}{res}          1       50.00      100.00
+{txt}{hline 20}{c +}{hline 35}
+              Total {c |}{res}          2      100.00
+{txt}
+{com}.         tab  HHWallType, gen(HHWallType_)
+
+   {txt}What is the major construction {c |}
+  material of the exterior walls? {c |}
+                (If possible, do  {c |}      Freq.     Percent        Cum.
+{hline 34}{c +}{hline 35}
+                     Baked bricks {c |}{res}         61       10.34       10.34
+{txt}                   Unbaked bricks {c |}{res}        163       27.63       37.97
+{txt}                           Cement {c |}{res}        283       47.97       85.93
+{txt}Corrugated materials (Semi-rigid) {c |}{res}          1        0.17       86.10
+{txt}      Plastic sheets (Semi-rigid) {c |}{res}         78       13.22       99.32
+{txt}                       Iron sheet {c |}{res}          2        0.34       99.66
+{txt}                  Other (specify) {c |}{res}          2        0.34      100.00
+{txt}{hline 34}{c +}{hline 35}
+                            Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHWallType_1 HHWall_BakedBrick
+{res}{txt}
+{com}.         ren  HHWallType_2 HHWall_UnbakedBrick
+{res}{txt}
+{com}.         ren  HHWallType_3 HHWall_Cement
+{res}{txt}
+{com}.         ren  HHWallType_5 HHWall_PlasticSheet
+{res}{txt}
+{com}.         drop HHWallType_4 HHWallType_6 HHWallType_7
+{txt}
+{com}.                                    
+.         ** Roof Materials // other specify to be cleaned
+.         tab  HHRoofType_oth
+
+    {txt}Other (specify) {c |}      Freq.     Percent        Cum.
+{hline 20}{c +}{hline 35}
+         توتيا محشي {c |}{res}         39       61.90       61.90
+{txt}            سقف بنل {c |}{res}          2        3.17       65.08
+{txt}         سندويش بنل {c |}{res}         22       34.92      100.00
+{txt}{hline 20}{c +}{hline 35}
+              Total {c |}{res}         63      100.00
+{txt}
+{com}.         tab  HHRoofType
+
+{txt}What is the major material {c |}
+of the roof? (If possible, {c |}
+do not ask, answer based o {c |}      Freq.     Percent        Cum.
+{hline 27}{c +}{hline 35}
+                    Bricks {c |}{res}         79       13.39       13.39
+{txt}           Cement/Concrete {c |}{res}          6        1.02       14.41
+{txt}            Plastic sheets {c |}{res}         12        2.03       16.44
+{txt}Straw/bamboo/thatched roof {c |}{res}          1        0.17       16.61
+{txt}                Iron sheet {c |}{res}        218       36.95       53.56
+{txt}           Other (specify) {c |}{res}         63       10.68       64.24
+{txt}                      Tent {c |}{res}        209       35.42       99.66
+{txt}                   No roof {c |}{res}          1        0.17       99.83
+{txt}               Pelts, skin {c |}{res}          1        0.17      100.00
+{txt}{hline 27}{c +}{hline 35}
+                     Total {c |}{res}        590      100.00
+{txt}
+{com}.         tab  HHRoofType, gen(HHRoofType_)
+
+{txt}What is the major material {c |}
+of the roof? (If possible, {c |}
+do not ask, answer based o {c |}      Freq.     Percent        Cum.
+{hline 27}{c +}{hline 35}
+                    Bricks {c |}{res}         79       13.39       13.39
+{txt}           Cement/Concrete {c |}{res}          6        1.02       14.41
+{txt}            Plastic sheets {c |}{res}         12        2.03       16.44
+{txt}Straw/bamboo/thatched roof {c |}{res}          1        0.17       16.61
+{txt}                Iron sheet {c |}{res}        218       36.95       53.56
+{txt}           Other (specify) {c |}{res}         63       10.68       64.24
+{txt}                      Tent {c |}{res}        209       35.42       99.66
+{txt}                   No roof {c |}{res}          1        0.17       99.83
+{txt}               Pelts, skin {c |}{res}          1        0.17      100.00
+{txt}{hline 27}{c +}{hline 35}
+                     Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHRoofType_1 HHRoof_Brick
+{res}{txt}
+{com}.         ren  HHRoofType_5 HHRoof_IronSheet
+{res}{txt}
+{com}.         ren  HHRoofType_7 HHRoof_Tent
+{res}{txt}
+{com}.         drop HHRoofType_2 HHRoofType_3 HHRoofType_4 HHRoofType_6 HHRoofType_8 HHRoofType_9
+{txt}
+{com}.         
+.         ** Floor Materials // other specify as ceramic, keep as is
+.         tab  HHFloorType_oth
+
+         {txt}Other {c |}
+     (specify) {c |}      Freq.     Percent        Cum.
+{hline 15}{c +}{hline 35}
+       سيراميك {c |}{res}          5      100.00      100.00
+{txt}{hline 15}{c +}{hline 35}
+         Total {c |}{res}          5      100.00
+{txt}
+{com}.         tab  HHFloorType, gen(HHFloorType_)
+
+    {txt}What is the major {c |}
+      material of the {c |}
+ floor? (If possible, {c |}
+   do not ask, answer {c |}
+               based  {c |}      Freq.     Percent        Cum.
+{hline 22}{c +}{hline 35}
+      Cement/Concrete {c |}{res}        458       77.63       77.63
+{txt}           Dirt floor {c |}{res}         75       12.71       90.34
+{txt}                 Sand {c |}{res}          1        0.17       90.51
+{txt}      Other (specify) {c |}{res}          5        0.85       91.36
+{txt}                Tiles {c |}{res}         44        7.46       98.81
+{txt}                 Tent {c |}{res}          7        1.19      100.00
+{txt}{hline 22}{c +}{hline 35}
+                Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHFloorType_1 HHFloor_Cement
+{res}{txt}
+{com}.         ren  HHFloorType_2 HHFloor_Dirt
+{res}{txt}
+{com}.         ren  HHFloorType_5 HHFloor_Tiles
+{res}{txt}
+{com}.         drop HHFloorType_3 HHFloorType_4 HHFloorType_6
+{txt}
+{com}.         
+.         ** Toilet Facility
+.         tab  HHToiletType, gen(HHToiletType_)
+
+        {txt}What is the main type of toilet {c |}
+       facility used by your household? {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                           Flush toilet {c |}{res}         37        6.27        6.27
+{txt}                      Pour-flush to pit {c |}{res}        366       62.03       68.31
+{txt}                 Composting/dry latrine {c |}{res}          1        0.17       68.47
+{txt}                   Improved pit latrine {c |}{res}        180       30.51       98.98
+{txt}                Ventilated Improved Pit {c |}{res}          3        0.51       99.49
+{txt}                 Hanging toilet/latrine {c |}{res}          2        0.34       99.83
+{txt}Non ventilated/improved pit (VIP) latri {c |}{res}          1        0.17      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        590      100.00
+{txt}
+{com}.         tab  HHToiletType_oth
+{txt}no observations
+
+{com}.         ren  HHToiletType_2 HHToilet_FlushPit
+{res}{txt}
+{com}.         ren  HHToiletType_4 HHToilet_ImprovedPit
+{res}{txt}
+{com}.         drop HHToiletType_1 HHToiletType_3 HHToiletType_5 HHToiletType_6 HHToiletType_7
+{txt}
+{com}.         
+.         ** Cooking Fuel
+.         tab  HHEnerCookSRC, gen(HHEnerCookSRC_)
+
+    {txt}What is the main {c |}
+source of energy for {c |}
+cooking used by your {c |}
+          household? {c |}      Freq.     Percent        Cum.
+{hline 21}{c +}{hline 35}
+                None {c |}{res}          1        0.17        0.17
+{txt}Firewood (Purchased) {c |}{res}          2        0.34        0.51
+{txt}            Charcoal {c |}{res}          1        0.17        0.68
+{txt}                 Gas {c |}{res}        563       95.42       96.10
+{txt}         Electricity {c |}{res}          1        0.17       96.27
+{txt}     Other (specify) {c |}{res}         22        3.73      100.00
+{txt}{hline 21}{c +}{hline 35}
+               Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHEnerCookSRC_4 HHEnerCook_Gas
+{res}{txt}
+{com}.         drop HHEnerCookSRC_1 HHEnerCookSRC_2 HHEnerCookSRC_3 HHEnerCookSRC_5 HHEnerCookSRC_6
+{txt}
+{com}.         
+.         ** Lighting Energy
+.         tab  HHEnerLightSRC, gen(HHEnerLightSRC_)
+
+ {txt}What is the main source {c |}
+of lighting used by your {c |}
+              household? {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+                     Gas {c |}{res}          7        1.19        1.19
+{txt}    Electricity provider {c |}{res}        349       59.15       60.34
+{txt}               Generator {c |}{res}        233       39.49       99.83
+{txt}         Other (specify) {c |}{res}          1        0.17      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHEnerLightSRC_2 HHEnerLight_Elec
+{res}{txt}
+{com}.         ren  HHEnerLightSRC_3 HHEnerLight_Gen
+{res}{txt}
+{com}.         drop HHEnerLightSRC_1 HHEnerLightSRC_4
+{txt}
+{com}.         
+.         ** Water Source
+.         tab  HHWaterSRC, gen(HHWaterSRC_)
+
+    {txt}What is the MAIN source of drinking {c |}
+              water for your household? {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+Piped water (inside or outside the dwel {c |}{res}        255       43.22       43.22
+{txt}                   Public tap/standpipe {c |}{res}         18        3.05       46.27
+{txt}          Tube well/borehole (and pump) {c |}{res}        157       26.61       72.88
+{txt}Protected source (dug well, protected s {c |}{res}          1        0.17       73.05
+{txt}                           Tanker truck {c |}{res}        142       24.07       97.12
+{txt}                     Small water vendor {c |}{res}          1        0.17       97.29
+{txt}                          Bottled water {c |}{res}          4        0.68       97.97
+{txt}                        Other (specify) {c |}{res}         12        2.03      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        590      100.00
+{txt}
+{com}.         ren  HHWaterSRC_1 HHWater_Pipe
+{res}{txt}
+{com}.         ren  HHWaterSRC_3 HHWater_Tube
+{res}{txt}
+{com}.         ren  HHWaterSRC_5 HHWater_Tank
+{res}{txt}
+{com}.         drop HHWaterSRC_2 HHWaterSRC_4 HHWaterSRC_6 HHWaterSRC_7 HHWaterSRC_8
+{txt}
+{com}.         
+.         gl   var_house HHDwell_House HHDwell_LeatherTent HHTenure_FreeCon HHTenure_FreeNoCon    ///
+>                                    HHWall_BakedBrick HHWall_UnbakedBrick HHWall_Cement HHWall_PlasticSheet      ///
+>                                    HHRoof_Brick HHRoof_IronSheet HHRoof_Tent HHFloor_Cement HHFloor_Dirt        ///
+>                                    HHFloor_Tiles HHToilet_FlushPit HHToilet_ImprovedPit HHEnerCook_Gas          ///
+>                                    HHEnerLight_Elec HHEnerLight_Gen HHWater_Pipe HHWater_Tube HHWater_Tank
+{txt}
+{com}.                         
+. ** Outcome: Household food security status 
+.         sum RESPFoodWorry_YN RESPPercFoodSec*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+RESPFoodWo~N {c |}{res}        590    .7169492    .4508632          0          1
+{txt}RESPPercFo~c {c |}{res}          0
+{txt}RESPPercFo~1 {c |}{res}        590    .1118644     .315467          0          1
+{txt}RESPPercFo~2 {c |}{res}        590    .8322034    .3740027          0          1
+{txt}RESPPercFo~3 {c |}{res}        590    .2101695    .4077746          0          1
+{txt}{hline 13}{c +}{hline 57}
+RESPPercFo~4 {c |}{res}        590    .0067797    .0821287          0          1
+{txt}
+{com}.         
+.         gen RESPMeals_3More   = (RESPMeals                      == 3)
+{txt}
+{com}.         gen RESPFoodWorry         = (RESPFoodWorry_YN   == 1)
+{txt}
+{com}.         gen RESPFS_EnoughFood = (RESPPercFoodSec_1      == 1)
+{txt}
+{com}.         gen RESPFS_LessPrefer = (RESPPercFoodSec_2      == 1)
+{txt}
+{com}.         gen RESPFS_LessMeal   = (RESPPercFoodSec_3      == 1)
+{txt}
+{com}.         gen RESPFS_DayNoEat   = (RESPPercFoodSec_4      == 1)
+{txt}
+{com}.         
+.         ** Number of Meals & Worried RESPMeals
+.         gen CARI_Meals = .
+{txt}(590 missing values generated)
+
+{com}.         replace CARI_Meals = 1 if RESPMeals == 3
+{txt}(361 real changes made)
+
+{com}.         replace CARI_Meals = 2 if RESPMeals == 2
+{txt}(219 real changes made)
+
+{com}.         replace CARI_Meals = 3 if RESPMeals == 1
+{txt}(10 real changes made)
+
+{com}.         replace CARI_Meals = 4 if RESPMeals == 1 & RESPPercFoodSec_4 == 1
+{txt}(0 real changes made)
+
+{com}. 
+.         gen CARI_Worry = .
+{txt}(590 missing values generated)
+
+{com}.         replace CARI_Worry = 1 if RESPFoodWorry_YN == 0
+{txt}(167 real changes made)
+
+{com}.         replace CARI_Worry = 2 if RESPFoodWorry_YN == 1
+{txt}(423 real changes made)
+
+{com}.         replace CARI_Worry = 3 if RESPFoodWorry_YN == 1 & RESPPercFoodSec_3 == 1
+{txt}(96 real changes made)
+
+{com}.         replace CARI_Worry = 4 if RESPFoodWorry_YN == 1 & RESPPercFoodSec_4 == 1
+{txt}(4 real changes made)
+
+{com}.                                                         
+.         gl       out_fs RESPFoodWorry RESPFS_EnoughFood RESPFS_LessPrefer RESPFS_LessMeal               ///
+>                                 RESPFS_DayNoEat RESPMeals_3More
+{txt}
+{com}.         
+. ** Outcome: [FCS] Food consumption score 
+.         sum FCS*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}FCSStap {c |}{res}        590    6.725424     1.00889          1          7
+{txt}{space 4}FCSPulse {c |}{res}        590    2.284746      1.4393          0          7
+{txt}{space 4}FCSDairy {c |}{res}        590    5.116949    2.326831          0          7
+{txt}{space 7}FCSPr {c |}{res}        590    2.940678    2.237557          0          7
+{txt}{space 1}FCSNPrMeatF {c |}{res}        266    .9699248    .9229963          0          6
+{txt}{hline 13}{c +}{hline 57}
+{space 1}FCSNPrMeatO {c |}{res}        266    .0150376    .1219318          0          1
+{txt}{space 2}FCSNPrFish {c |}{res}        266     .093985    .3288079          0          3
+{txt}{space 2}FCSNPrEggs {c |}{res}        266     3.06015    2.073223          0          7
+{txt}{space 6}FCSVeg {c |}{res}        590    3.040678    1.967056          0          7
+{txt}{space 2}FCSNVegOrg {c |}{res}        276    .6884058    1.039585          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSNVegGre {c |}{res}        276    .4202899    .9481971          0          7
+{txt}{space 4}FCSFruit {c |}{res}        590    .9966102    1.357863          0          7
+{txt}{space 1}FCSNFruiOrg {c |}{res}        162    .0987654    .3561331          0          2
+{txt}{space 6}FCSFat {c |}{res}        590    6.535593    1.233896          0          7
+{txt}{space 4}FCSSugar {c |}{res}        590    4.044068    3.105626          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 5}FCSCond {c |}{res}        590    6.338983    1.476588          0          7
+{txt}
+{com}.         
+. /* quality checks
+>         egen FCSPr_Check = rowmax(FCSNPrMeatF FCSNPrMeatO FCSNPrFish FCSNPrEggs)
+>         replace FCSPr_Check = 0 if mi(FCSPr_Check)
+>         assert FCSPr >= FCSPr_Check                                             // YES! 
+>         egen FCSVeg_Check = rowmax(FCSNVegOrg FCSNVegGre)
+>         replace FCSVeg_Check = 0 if mi(FCSVeg_Check)
+>         assert FCSVeg >= FCSVeg_Check                                           // YES! 
+>         assert FCSFruit >= FCSNFruiOrg if !mi(FCSNFruiOrg)  // YES!     
+> */      
+.         gen FCS = FCSStap * 2 + FCSPulse * 3 + FCSDairy * 4 + FCSPr * 4 +                ///
+>                           FCSVeg  * 1 + FCSFruit * 1 + FCSFat * 0.5 + FCSSugar * 0.5
+{txt}
+{com}.         gen FCSCat28 = cond(FCS <= 28, 1, cond(FCS <= 42, 2, 3))
+{txt}
+{com}.         
+.         gen     FCG = 1 if (FCSCat28 == 1 | FCSCat28 == 2)
+{txt}(513 missing values generated)
+
+{com}.         replace FCG = 2 if (FCSCat28 == 3)
+{txt}(513 real changes made)
+
+{com}.         
+.         gl  out_fcs FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat               ///
+>                                 FCSSugar FCSCond FCS FCSCat28 FCG 
+{txt}
+{com}. 
+. ** Outcome: [rCSI] Reduced Coping Strategies (rCSI - Gendered)
+. 
+.         gen rCSI         = rCSILessQlty * 1 + rCSIBorrow * 2 + rCSIMealNb * 1 +         ///
+>                                    rCSIMealSize * 1 + rCSIMealAdult * 3
+{txt}
+{com}.         gen rCSI_oth = rCSILessQlty_oth * 1 + rCSIBorrow_oth * 2 +                              ///
+>                                    rCSIMealNb_oth * 1 + rCSIMealSize_oth * 1 +                          ///
+>                                    rCSIMealAdult_oth * 3
+{txt}(179 missing values generated)
+
+{com}. 
+.         gl out_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIGenderMealSize rCSIMealAdult    ///
+>                                 rCSIGenderMealAdult rCSIMealNb rCSIGenderMealNb rCSI rCSILessQlty_oth    ///
+>                                 rCSIBorrow_oth rCSIMealSize_oth rCSIGenderMealSize_oth rCSIMealAdult_oth ///
+>                                 rCSIGenderMealAdult_oth rCSIMealNb_oth rCSIGenderMealNb_oth                      ///
+>                                 rCSIRESPSex_oth rCSI_oth
+{txt}
+{com}.         
+. ** LCS 
+.         local  lcs  stress_DomAsset stress_CrdtFood stress_Saving                       ///
+>                                 stress_BorrowCash crisis_ProdAssets crisis_HealthEdu    ///
+>                                 crisis_OutSchool em_ChildWork em_Begged em_IllegalAct
+{txt}
+{com}.                                 
+. foreach item of local lcs{c -(}
+{txt}  2{com}.         replace Lcs_`item' = LcsEN_`item' if mi(Lcs_`item') & Group == 1
+{txt}  3{com}.         sum Lcs_`item'
+{txt}  4{com}.         label val Lcs_`item' LcsEN_`item'
+{txt}  5{com}. {c )-}       
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~t {c |}{res}        590    1861.493     3877.05         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~d {c |}{res}        590    390.6915    1892.576         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~g {c |}{res}        590    5180.551    4988.884         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~h {c |}{res}        590    2441.351    4278.289         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_crisis~s {c |}{res}        590    7206.873    4484.936         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_crisis~u {c |}{res}        590    23.22034    9.330869         10         30
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_crisis~l {c |}{res}        590    2517.444    4332.917         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_em_Chi~k {c |}{res}        590    2127.805     4084.49         10       9999
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_em_Beg~d {c |}{res}        590    10.10169    1.299012         10         30
+{txt}(305 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_em_Ill~t {c |}{res}        590          10           0         10         10
+{txt}
+{com}.         
+.         gen Lcs_Stress_Coping    = (Lcs_stress_DomAsset   == 20 | Lcs_stress_DomAsset   == 30 | ///
+>                                                                 Lcs_stress_CrdtFood   == 20 | Lcs_stress_CrdtFood   == 30 | ///
+>                                                                 Lcs_stress_Saving     == 20 | Lcs_stress_Saving     == 30 | ///
+>                                                                 Lcs_stress_BorrowCash == 20 | Lcs_stress_BorrowCash == 30 )
+{txt}
+{com}.                                                                 
+.         gen Lcs_Crisis_Coping    = (Lcs_crisis_ProdAssets == 20 | Lcs_crisis_ProdAssets == 30 | ///
+>                                                                 Lcs_crisis_HealthEdu  == 20 | Lcs_crisis_HealthEdu  == 30 | ///
+>                                                                 Lcs_crisis_OutSchool  == 20 | Lcs_crisis_OutSchool  == 30 )                     
+{txt}
+{com}.         gen Lcs_Emergency_Coping = (Lcs_em_ChildWork  == 20 | Lcs_em_ChildWork  == 30 | ///
+>                                                                 Lcs_em_Begged     == 20 | Lcs_em_Begged     == 30 | ///
+>                                                                 Lcs_em_IllegalAct == 20 | Lcs_em_IllegalAct == 30 )
+{txt}
+{com}.                                                                 
+.         gen     LCS_Cat = 1
+{txt}
+{com}.         replace LCS_Cat = 2 if Lcs_Stress_Coping == 1
+{txt}(526 real changes made)
+
+{com}.         replace LCS_Cat = 3 if Lcs_Crisis_Coping == 1 
+{txt}(411 real changes made)
+
+{com}.         replace LCS_Cat = 4 if Lcs_Emergency_Coping == 1
+{txt}(53 real changes made)
+
+{com}.         
+.         gl  out_lcs  Lcs_Stress_Coping Lcs_Crisis_Coping                          ///
+>                                  Lcs_Emergency_Coping LCS_Cat
+{txt}
+{com}.         
+. ** Outcome: [FES] Food Expenditure Share
+. 
+.         * 7 days food purchase in cash/credit (18 vars)
+. egen HHExp_Food_Purch_MN_7D = rowtotal(HHExpFCer_Purch_MN_7D HHExpFTub_Purch_MN_7D ///
+>          HHExpFPuls_Purch_MN_7D HHExpFVeg_Purch_MN_7D HHExpFFrt_Purch_MN_7D                ///
+>          HHExpFAnimMeat_Purch_MN_7D HHExpFAnimFish_Purch_MN_7D HHExpFFats_Purch_MN_7D  ///
+>          HHExpFDairy_Purch_MN_7D HHExpFEgg_Purch_MN_7D HHExpFSgr_Purch_MN_7D               ///
+>          HHExpFCond_Purch_MN_7D HHExpFBev_Purch_MN_7D HHExpFOut_Purch_MN_7D                ///
+>          HHExpFVegFrt_Purch_MN_7D HHExpFAnimMeatFishEgg_Purch_MN_7                                         ///
+>          HHExpFFatsDairy_Purch_MN_7D HHExpFSgrCond_Purch_MN_7D)
+{txt}
+{com}.         
+.         * 7 days food gift/aid value (18 vars)
+. egen HHExp_Food_GiftAid_MN_7D = rowtotal(HHExpFCer_GiftAid_MN_7D HHExpFTub_GiftAid_MN_7D ///
+>          HHExpFPuls_GiftAid_MN_7D HHExpFVeg_GiftAid_MN_7D HHExpFFrt_GiftAid_MN_7D                        ///
+>          HHExpFAnimMeat_GiftAid_MN_7D HHExpFAnimFish_GiftAid_MN_7D HHExpFFats_GiftAid_MN_7D  ///
+>          HHExpFDairy_GiftAid_MN_7D HHExpFEgg_GiftAid_MN_7D HHExpFSgr_GiftAid_MN_7D                       ///
+>          HHExpFCond_GiftAid_MN_7D HHExpFBev_GiftAid_MN_7D HHExpFOut_GiftAid_MN_7D                        ///
+>          HHExpFVegFrt_GiftAid_MN_7D HHExpFAnimMeatFishEgg_GiftAid_MN                                             ///
+>          HHExpFFatsDairy_GiftAid_MN_7D HHExpFSgrCond_GiftAid_MN_7D)
+{txt}
+{com}. 
+.         * 7 days food own-production value (15 vars - check with Alirah)
+. egen HHExp_Food_Own_MN_7D = rowtotal(HHExpFCer_Own_MN_7D HHExpFTub_Own_MN_7D                     ///
+>          HHExpFPuls_Own_MN_7D HHExpFVeg_Own_MN_7D HHExpFAnimMeat_Own_MN_7D                                       ///
+>          HHExpFDairy_Own_MN_7D HHExpFEgg_Own_MN_7D HHExpFSgr_Own_MN_7D HHExpFCond_Own_MN_7D  ///
+>          HHExpFBev_Own_MN_7D HHExpFOut_Own_MN_7D HHExpFVegFrt_Own_MN_7D                                          ///
+>          HHExpFAnimMeatFishEgg_Own_MN_7D HHExpFFatsDairy_Own_MN_7D HHExpFSgrCond_Own_MN_7D)
+{txt}
+{com}. 
+.         * 7 days food values in total and 1 month average 
+.         gen HHExpFoodTotal_7D = HHExp_Food_Purch_MN_7D + HHExp_Food_GiftAid_MN_7D + HHExp_Food_Own_MN_7D
+{txt}
+{com}.         gen HHExpFoodTotal_1M = (HHExpFoodTotal_7D/7) * 30
+{txt}
+{com}.         
+. ***** NON-FOOD EXPENDITURE *****************************************************
+.         
+.         **** 1 MONTH ****
+.         * Monthly non food expenditure in cash/credit (10 vars)
+. egen HHExp_NonFood_Purch_MN_1M = rowtotal(HHExpNFHyg_Purch_MN_1M HHExpNFTransp_Purch_MN_1M ///
+>          HHExpNFFuel_Purch_MN_1M HHExpNFWat_Purch_MN_1M HHExpNFEnerg_Purch_MN_1M                           ///
+>          HHExpNFDwelSer_Purch_MN_1M HHExpNFPhone_Purch_MN_1M HHExpNFRecr_Purch_MN_1M               ///
+>          HHExpNFAlcTobac_Purch_MN_1M HHExpNFTranspFuel_Purch_MN_1M)
+{txt}
+{com}. 
+.          * Monthly non food gift/aid value (10 vars)
+. egen HHExp_NonFood_GiftAid_MN_1M = rowtotal(HHExpNFHyg_GiftAid_MN_1M                            ///
+>          HHExpNFTransp_GiftAid_MN_1M HHExpNFFuel_GiftAid_MN_1M HHExpNFWat_GiftAid_MN_1M ///
+>          HHExpNFEnerg_GiftAid_MN_1M HHExpNFDwelSer_GiftAid_MN_1M                                                ///
+>          HHExpNFPhone_GiftAid_MN_1M HHExpNFRecr_GiftAid_MN_1M                                                   ///
+>          HHExpNFAlcTobac_GiftAid_MN_1M HHExpNFTranspFuel_GiftAid_MN_1M)
+{txt}
+{com}. 
+.         **** 6 MONTHS ****
+.         * Non food expenditure in cash/credit in 6 months (10 vars)
+. egen HHExp_NonFood_Purch_MN_6M = rowtotal(HHExpNFMedServ_Purch_MN_6M HHExpNFMedGood_Purch_MN_6M ///
+>          HHExpNFCloth_Purch_MN_6M HHExpNFEduFee_Purch_MN_6M HHExpNFEduGood_Purch_MN_6M                          ///
+>          HHExpNFHHSoft_Purch_MN_6M HHExpNFHHMaint_Purch_MN_6M HHExpNFMedServGood_Purch_MN_6M            ///
+>          HHExpNFEduFeeGood_Purch_MN_6M HHExpNFHHSoftMaint_Purch_MN_6M)
+{txt}
+{com}. 
+.          * Non food expenditure gift/aid value in 6 months
+. egen HHExp_NonFood_GiftAid_MN_6M = rowtotal(HHExpNFMedServ_GiftAid_MN_6M HHExpNFMedGood_GiftAid_MN_6M ///
+>          HHExpNFCloth_GiftAid_MN_6M HHExpNFEduFee_GiftAid_MN_6M HHExpNFEduGood_GiftAid_MN_6M                      ///
+>          HHExpNFHHSoft_GiftAid_MN_6M HHExpNFHHMaint_GiftAid_MN_6M HHExpNFMedServGood_GiftAid_MN_6M                ///
+>          HHExpNFEduFeeGood_GiftAid_MN_6M HHExpNFHHSoftMaint_GiftAid_MN_6M)
+{txt}
+{com}. 
+.         **** TOTAL 1 MONTH AVERAGE ****
+.         * Total monthly non food expenditure in cash/credit 
+.         gen HHExpNFTotal_Purch_MN_1M    = HHExp_NonFood_Purch_MN_1M + (HHExp_NonFood_Purch_MN_6M/6)
+{txt}
+{com}.         * Total monthly non-food gift/aid value
+.         gen HHExpNFTotal_GiftAid_MN_1M = HHExp_NonFood_GiftAid_MN_1M + (HHExp_NonFood_GiftAid_MN_6M/6)
+{txt}
+{com}.         * Total monthly non-food
+.         gen HHExpNFTotal_1M = HHExpNFTotal_Purch_MN_1M + HHExpNFTotal_GiftAid_MN_1M
+{txt}
+{com}.         
+.         **** TOTAL **** 
+.         gen HHExpTotal = HHExpFoodTotal_1M + HHExpNFTotal_1M
+{txt}
+{com}.         gen PCExpTotal = HHExpTotal/HHSize
+{txt}
+{com}. 
+.         * FES // household level
+.         gen     FES = HHExpFoodTotal_1M/HHExpTotal * 100
+{txt}
+{com}.         count if HHExpFoodTotal_1M == 0 // 3 missing
+  {res}3
+{txt}
+{com}.         
+.         replace FES = 0          if mi(FES)
+{txt}(0 real changes made)
+
+{com}.         
+.         gen byte FES_Cat = 1 if FES <  50
+{txt}(305 missing values generated)
+
+{com}.         replace  FES_Cat = 2 if FES >= 50 & FES < 65
+{txt}(177 real changes made)
+
+{com}.         replace  FES_Cat = 3 if FES >= 65 & FES < 75
+{txt}(84 real changes made)
+
+{com}.         replace  FES_Cat = 4 if FES >= 75
+{txt}(44 real changes made)
+
+{com}.         
+.         gl out_fes HHExpFoodTotal_1M HHExpNFTotal_Purch_MN_1M HHExpNFTotal_GiftAid_MN_1M  ///
+>                            HHExpNFTotal_1M HHExpTotal PCExpTotal FES FES_Cat
+{txt}
+{com}.         
+. ** Outcome: [CARI] COMBINING CURRENT STATUS AND COPING CAPACITY
+.         recode  FCSCat28 (1 = 4) (2 = 3) (3 = 1), gen(FCS_4pt_CARI)
+{txt}(590 differences between {bf:FCSCat28} and {bf:FCS_4pt_CARI})
+
+{com}.         replace FCS_4pt_CARI = 2 if FCSCat28 == 3 & rCSI >= 4
+{txt}(384 real changes made)
+
+{com}.         
+.         gen CC_FES_Cat   = (FES_Cat + LCS_Cat)/2        // no round here
+{txt}
+{com}.         gen CARI_FES_Raw = (FCS_4pt_CARI + CC_FES_Cat)/2
+{txt}
+{com}.         gen CARI_FES_Cat = round(CARI_FES_Raw)
+{txt}
+{com}.         
+.         gen HH_Vul_CARI  = (CARI_FES_Cat == 3 | CARI_FES_Cat == 4)
+{txt}
+{com}. 
+.         gl out_cari FCS_4pt_CARI CC_FES_Cat CARI_FES_Cat HH_Vul_CARI
+{txt}
+{com}.         
+. ** Gendered Comparison: Minimum Dietary Diversity for an adult
+.         tab MDDR_Sex RESPSex
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}       162         76 {txt}{c |}{res}       238 
+{txt}      Male {c |}{res}        24        169 {txt}{c |}{res}       193 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       186        245 {txt}{c |}{res}       431 
+{txt}
+{com}.         tab MDDWSexR MDDR_Sex
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        79        163 {txt}{c |}{res}       242 
+{txt}      Male {c |}{res}       145         24 {txt}{c |}{res}       169 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       224        187 {txt}{c |}{res}       411 
+{txt}
+{com}.         tab RESPSex  MDDWSexR
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        10        163 {txt}{c |}{res}       173 
+{txt}      Male {c |}{res}       232          6 {txt}{c |}{res}       238 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       242        169 {txt}{c |}{res}       411 
+{txt}
+{com}.         
+.         // very different results which seem like 3 people involved
+.         // Standard MDDW method - SNF home group will be grains
+.         gen MDDW_Staples         = (PWMDDWStapCerR == 1 |  PWMDDWStapRooR == 1 | PWMDDWSnfR == 1) if !mi(PWMDDWStapCerR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_Pulses          = (PWMDDWPulseR == 1)  if !mi(PWMDDWPulseR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_NutsSeeds       = (PWMDDWNutsR == 1)   if !mi(PWMDDWNutsR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_Dairies         = (PWMDDWDairyR == 1   | PWMDDWMilkR == 1) if !mi(PWMDDWDairyR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_MeatFish        = (PWMDDWPrMeatOR == 1 | PWMDDWPrMeatFR == 1 | PWMDDWPrMeatProR == 1 | ///
+>                                                         PWMDDWPrMeatWhiteR == 1 |  PWMDDWPrFishR == 1) if !mi(PWMDDWPrMeatOR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_Eggs            = (PWMDDWPrEggR == 1)  if !mi(PWMDDWPrEggR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_LeafGVeg        = (PWMDDWVegGreR == 1) if !mi(PWMDDWVegGreR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_VitA            = (PWMDDWVegOrgR == 1 | PWMDDWFruitOrgR == 1) if !mi(PWMDDWVegOrgR)
+{txt}(159 missing values generated)
+
+{com}.     gen MDDW_OtherVeg    = (PWMDDWVegOthR == 1) if !mi(PWMDDWVegOthR)
+{txt}(159 missing values generated)
+
+{com}.     gen MDDW_OtherFruits = (PWMDDWFruitOthR == 1) if !mi(PWMDDWFruitOthR)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_Index = MDDW_Staples + MDDW_Pulses + MDDW_NutsSeeds + MDDW_Dairies + MDDW_MeatFish + ///
+>                            MDDW_Eggs + MDDW_LeafGVeg + MDDW_VitA + MDDW_OtherVeg + MDDW_OtherFruits if !mi(MDDW_Staples)
+{txt}(159 missing values generated)
+
+{com}.         gen MDDW_Index_5 = (MDDW_Index >= 5) if !mi(MDDW_Index)
+{txt}(159 missing values generated)
+
+{com}.         
+.         gen MDDW_Staples_oth     = (PWMDDWStapCer_oth == 1 |  PWMDDWStapRoo_oth == 1 | PWMDDWSnf_oth == 1) if !mi(PWMDDWStapCer_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_Pulses_oth              = (PWMDDWPulse_oth == 1)  if !mi(PWMDDWPulse_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_NutsSeeds_oth   = (PWMDDWNuts_oth == 1)        if !mi(PWMDDWNuts_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_Dairies_oth     = (PWMDDWDairy_oth == 1        | PWMDDWMilk_oth == 1) if !mi(PWMDDWDairy_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_MeatFish_oth    = (PWMDDWPrMeatO_oth == 1 | PWMDDWPrMeatF_oth == 1 | PWMDDWPrMeatPro_oth == 1 | ///
+>                                                         PWMDDWPrMeatWhite_oth == 1 |  PWMDDWPrFish_oth == 1) if !mi(PWMDDWPrMeatO_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_Eggs_oth                = (PWMDDWPrEgg_oth == 1)  if !mi(PWMDDWPrEgg_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_LeafGVeg_oth= (PWMDDWVegGre_oth == 1) if !mi(PWMDDWVegGre_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_VitA_oth                = (PWMDDWVegOrg_oth == 1 | PWMDDWFruitOrg_oth == 1) if !mi(PWMDDWVegOrg_oth)
+{txt}(179 missing values generated)
+
+{com}.     gen MDDW_OtherVeg_oth        = (PWMDDWVegOth_oth == 1) if !mi(PWMDDWVegOth_oth)
+{txt}(179 missing values generated)
+
+{com}.     gen MDDW_OtherFruits_oth = (PWMDDWFruitOth_oth == 1) if !mi(PWMDDWFruitOth_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_Index_oth = MDDW_Staples_oth + MDDW_Pulses_oth + MDDW_NutsSeeds_oth + MDDW_Dairies_oth + MDDW_MeatFish_oth + ///
+>                            MDDW_Eggs_oth + MDDW_LeafGVeg_oth + MDDW_VitA_oth + MDDW_OtherVeg_oth + MDDW_OtherFruits_oth if !mi(MDDW_Staples_oth)
+{txt}(179 missing values generated)
+
+{com}.         gen MDDW_Index_5_oth = (MDDW_Index_oth >= 5) if !mi(MDDW_Index_oth)
+{txt}(179 missing values generated)
+
+{com}. 
+.         gl out_mdd PWMDDWStapCerR PWMDDWStapRooR PWMDDWPulseR PWMDDWNutsR PWMDDWMilkR   ///
+>                            PWMDDWDairyR PWMDDWPrMeatOR PWMDDWPrMeatFR PWMDDWPrMeatProR                  ///
+>                            PWMDDWPrMeatWhiteR PWMDDWPrFishR PWMDDWPrEggR PWMDDWVegGreR                  ///
+>                            PWMDDWVegOrgR PWMDDWFruitOrgR PWMDDWVegOthR PWMDDWFruitOthR                  ///
+>                            PWMDDWSnfR PWMDDWStapCer_oth PWMDDWStapRoo_oth PWMDDWPulse_oth               ///
+>                            PWMDDWNuts_oth PWMDDWMilk_oth PWMDDWDairy_oth PWMDDWPrMeatO_oth              ///
+>                            PWMDDWPrMeatF_oth PWMDDWPrMeatPro_oth PWMDDWPrMeatWhite_oth                  ///
+>                            PWMDDWPrFish_oth PWMDDWPrEgg_oth PWMDDWVegGre_oth PWMDDWVegOrg_oth     ///
+>                            PWMDDWFruitOrg_oth PWMDDWVegOth_oth PWMDDWFruitOth_oth PWMDDWSnf_oth   ///
+>                            MDDR_Sex MDDWSexR MDDW_Staples MDDW_Pulses MDDW_NutsSeeds MDDW_Dairies ///
+>                            MDDW_MeatFish MDDW_Eggs MDDW_LeafGVeg MDDW_VitA MDDW_OtherVeg          ///
+>                            MDDW_OtherFruits MDDW_Index MDDW_Index_5 MDDW_Staples_oth                      ///
+>                            MDDW_Pulses_oth MDDW_NutsSeeds_oth MDDW_Dairies_oth MDDW_MeatFish_oth  ///
+>                            MDDW_Eggs_oth MDDW_LeafGVeg_oth MDDW_VitA_oth MDDW_OtherVeg_oth        ///
+>                            MDDW_OtherFruits_oth MDDW_Index_oth MDDW_Index_5_oth
+{txt}
+{com}. 
+. * Gender Empowerment Scale 
+.         tab GEN_SexR GENRESPSex_oth
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        80        146 {txt}{c |}{res}       226 
+{txt}      Male {c |}{res}       163         22 {txt}{c |}{res}       185 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       243        168 {txt}{c |}{res}       411 
+{txt}
+{com}.         
+.         
+.         
+.         
+.         
+.         
+.         gl  out_empower Income_No_PermissionR Own_Decisions_MoneyR Own_Decisions_MedicalR         ///
+>                                    Own_Decisions_RelativesR Own_Decisions_FriendsR Own_Bank_AccountR      ///
+>                                    Have_Money_SavedR Own_PropertyR Own_MobileR You_Decide_WorkR                   ///
+>                                    Took_Money_No_PermissionR Permission_Local_EventR Permission_MarketR   ///
+>                                    Most_Time_HouseworkR Housework_Prevented_WorkR                                                 ///
+>                                    Housework_Prevent_EducationR HarmR MarriageR Decide_Prevent_PregnancyR ///
+>                                    Income_No_Permission_oth Own_Decisions_Money_oth                                       ///
+>                                    Own_Decisions_Medical_oth Own_Decisions_Relatives_oth                                  ///
+>                                    Own_Decisions_Friends_oth Own_Bank_Account_oth Have_Money_Saved_oth    ///
+>                                    Own_Property_oth Own_Mobile_oth You_Decide_Work_oth                                    ///
+>                                    Took_Money_No_Permission_oth Permission_Local_Event_oth                                ///
+>                                    Permission_Market_oth Most_Time_Housework_oth                                                  ///
+>                                    Housework_Prevented_Work_oth Housework_Prevent_Education_oth Harm_oth  ///
+>                                    Marriage_oth Decide_Prevent_Pregnancy_oth GEN_SexR GENRESPSex_oth
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Label Variables
+. *******************************************************************************/        
+. 
+.         label def YesNo                 0 "No"   1 "Yes"
+{txt}
+{com}.         label val $var_assets $var_house Lcs_Stress_Coping Lcs_Crisis_Coping ///
+>                           Lcs_Emergency_Coping HH_Vul_CARI YesNo
+{txt}
+{com}.         
+.         label def FCSCat                1 "Poor" 2 "Borderline" 3 "Acceptable"
+{txt}
+{com}.         label val FCSCat28 FCSCat
+{txt}
+{com}.         
+.         label def Status_l              1 "IDP" 2 "Refugee"
+{txt}
+{com}.         label val Status Status_l
+{txt}
+{com}.         
+.         label def FCG_l                 1 "FCS Poor or Boarderline" 2 "FCS Acceptable"
+{txt}
+{com}.         label val FCG FCG_l
+{txt}
+{com}.         
+.         label def CARI_Meals_lbl 1 "Three meals" ///
+>                              2 "Two meals"   ///
+>                              3 "One meal"   ///
+>                              4 "No meals"
+{txt}
+{com}.         label val CARI_Meals CARI_Meals_lbl
+{txt}
+{com}.         
+.         label def CARI_Worry_lbl 1 "Not worried" ///
+>                                                          2 "Worried"     ///
+>                              3 "Worried & skipping meals" ///
+>                              4 "Worried & going day/night without eating"
+{txt}
+{com}.         label val CARI_Worry CARI_Worry_lbl
+{txt}
+{com}.         
+.         label var RESPHHH                               "Head of Household Respondent"
+{txt}
+{com}.         label var RESPAge                               "Respondent Age"
+{txt}
+{com}.         label var RESPFemale                    "Female Respondent"
+{txt}
+{com}.         label var RESPPLW                               "Pregnant or Lactating Respondent"
+{txt}
+{com}.         label var HHDisplaced                   "IDP Household"
+{txt}
+{com}.         label var HHRefugee                             "Refugee Household"
+{txt}
+{com}.         label var HHhostDisp                    "Household currently hosting IDP or Refugee"
+{txt}
+{com}.         label var HHSize                                "Household Size"
+{txt}
+{com}.         label var MDDIHHDisabledNb              "Number of disabled household members"
+{txt}
+{com}.         label var MDDIHHChronIllNb              "Number of household members with chronic disease"      
+{txt}
+{com}.         label var HHAsset_WaterFilter   "Household owns water filter"
+{txt}
+{com}.         label var HHAsset_Carpet                "Household owns carpet/rug"
+{txt}
+{com}.         label var HHAsset_ElecLamp              "Household owns electric lamp"
+{txt}
+{com}.         label var HHAsset_ElecStove     "Household owns electric stoves/tannour"
+{txt}
+{com}.         label var HHAsset_WaterTank             "Household owns water tank"
+{txt}
+{com}.         label var HHAsset_MicroOven             "Household owns oven/microwave"
+{txt}
+{com}.         label var HHAsset_Fridge                "Household owns refrigerator"
+{txt}
+{com}.         label var HHAsset_Blender               "Household owns blender"
+{txt}
+{com}.         label var HHAsset_GasHeater             "Household owns gas heater"
+{txt}
+{com}.         label var HHAsset_ElecFan               "Household owns electric fan"
+{txt}
+{com}.         label var HHAsset_Freezer               "Household owns freezer"
+{txt}
+{com}.         label var HHAsset_AC                    "Household owns air conditioner"
+{txt}
+{com}.         label var HHAsset_ElecGen               "Household owns electric generator"
+{txt}
+{com}.         label var HHAsset_ElecVac               "Household owns electric vacuum"
+{txt}
+{com}.         label var HHAsset_WashMachine   "Household owns automatic washing machine"
+{txt}
+{com}.         label var HHAsset_TickTokCar    "Household owns ticktok car"
+{txt}
+{com}.         label var HHAsset_Taxi                  "Household owns taxi"
+{txt}
+{com}.         label var HHAsset_PriCarTruck   "Household owns private car/truck"
+{txt}
+{com}.         label var HHAsset_Motor                 "Household owns motorcycle/electronic motorcycle"
+{txt}
+{com}.         label var HHAsset_Bicycle               "Household owns bicycle"
+{txt}
+{com}.         
+.         label var HHDwell_House                 "Household Dwell: House"
+{txt}
+{com}.         label var HHDwell_LeatherTent   "Household Dwell: Leather Tent"
+{txt}
+{com}.         label var HHTenure_FreeCon              "Household Tenure: Free to live with contract"
+{txt}
+{com}.         label var HHTenure_FreeNoCon    "Household Tenure: Free to live without contract"
+{txt}
+{com}.         label var HHWall_BakedBrick             "Household Wall: Baked bricks"
+{txt}
+{com}.         label var HHWall_UnbakedBrick   "Household Wall: Unbaked bricks"
+{txt}
+{com}.         label var HHWall_Cement                 "Household Wall: Cement"
+{txt}
+{com}.         label var HHWall_PlasticSheet   "Household Wall: Plastic sheet"
+{txt}
+{com}.         label var HHRoof_Brick                  "Household Roof: Brick"
+{txt}
+{com}.         label var HHRoof_IronSheet              "Household Roof: Iron sheet"
+{txt}
+{com}.         label var HHRoof_Tent                   "Household Roof: Tent"
+{txt}
+{com}.         label var HHFloor_Cement                "Household Floor: Cement"
+{txt}
+{com}.         label var HHFloor_Dirt                  "Household Floor: Dirt"
+{txt}
+{com}.         label var HHFloor_Tiles                 "Household Floor: Tiles"
+{txt}
+{com}.         label var HHToilet_FlushPit             "Household Toilet: Pour-flush to pit"
+{txt}
+{com}.         label var HHToilet_ImprovedPit  "Household Toilet: Improved pit latrine"
+{txt}
+{com}.         label var HHEnerCook_Gas                "Household Cooking Fuel: Gas"
+{txt}
+{com}.         label var HHEnerLight_Elec              "Household Lighting: Electricity"
+{txt}
+{com}.         label var HHEnerLight_Gen               "Household Lighting: Generator"
+{txt}
+{com}.         label var HHWater_Pipe                  "Household Water Source: Piped water"
+{txt}
+{com}.         label var HHWater_Tube                  "Household Water Source: Tube well/borehole (and pump)"
+{txt}
+{com}.         label var HHWater_Tank                  "Household Water Source: Tanker truck"
+{txt}
+{com}.         
+.         label var RESPMeals_3More               "Respondent and family ate 3 or more meals yesterday"
+{txt}
+{com}.         label var RESPFoodWorry                 "Respondent and family worried about no enough food in past 30 days"
+{txt}
+{com}.         label var RESPFS_EnoughFood             "Household had no difficulties eating enough food in past 7 days"
+{txt}
+{com}.         label var RESPFS_LessPrefer             "Household ate less preferred foods in past 7 days"
+{txt}
+{com}.         label var RESPFS_LessMeal               "Household skipped meals or ate less than usual in past 7 days"
+{txt}
+{com}.         label var RESPFS_DayNoEat               "Household went one whole day without eating in past 7 days"
+{txt}
+{com}.         
+.         label var FCSStap                               "Consumption over the past 7 days (cereals and tubers)"
+{txt}
+{com}.         label var FCSVeg                                "Consumption over the past 7 days (vegetables)"
+{txt}
+{com}.         label var FCSFruit                              "Consumption over the past 7 days (fruit)"
+{txt}
+{com}.         label var FCSPr                                 "Consumption over the past 7 days (protein-rich foods)"
+{txt}
+{com}.         label var FCSPulse                              "Consumption over the past 7 days (pulses)"
+{txt}
+{com}.         label var FCSDairy                              "Consumption over the past 7 days (dairy products)"
+{txt}
+{com}.         label var FCSFat                                "Consumption over the past 7 days (oil)"
+{txt}
+{com}.         label var FCSSugar                              "Consumption over the past 7 days (sugar)"
+{txt}
+{com}.         label var FCS                                   "Food Consumption Score"
+{txt}
+{com}.         label var FCSCat28                              "FCS Categories, thresholds 28-42"
+{txt}
+{com}.         label var FCG                                   "FCS Group"
+{txt}
+{com}.         label var FCS_4pt_CARI                  "CARI: Current Status of FCS and rCSI"
+{txt}
+{com}.         
+.         label var rCSILessQlty                  "Relied on less preferred, less expensive food"
+{txt}
+{com}.         label var rCSIBorrow                    "Borrowed food or relied on help from friends or relatives"
+{txt}
+{com}.         label var rCSIMealSize                  "Reduced portion size of meals at meals time"
+{txt}
+{com}.         label var rCSIMealAdult                 "Restricted consumption by adults in order for young-children to eat"
+{txt}
+{com}.         label var rCSIMealNb                    "Reduced the number of meals eaten per day"
+{txt}
+{com}.         label var rCSI                                  "Reduced Consumption Strategies Index (rCSI)"
+{txt}
+{com}.         label var rCSI_oth                              "Reduced Consumption Strategies Index (rCSI) for other respondent"
+{txt}
+{com}.         
+.         label def LCS_l         1 "Not adopting coping strategies"      ///
+>                                                 2 "Stress coping strategies"            ///
+>                                                 3 "Crisis coping strategies"            ///
+>                                                 4 "Emergencies coping strategies" 
+{txt}
+{com}.         label val FES_Cat       LCS_l
+{txt}
+{com}.         
+.         label var Lcs_stress_DomAsset   "Stress coping: Sold household assets/goods"
+{txt}
+{com}.         label var Lcs_stress_CrdtFood   "Stress coping: Purchased food/non-food on credit (incur debts)"
+{txt}
+{com}.         label var Lcs_stress_Saving             "Stress coping: Spent savings"
+{txt}
+{com}.         label var Lcs_stress_BorrowCash "Stress coping: Borrowed money"
+{txt}
+{com}.         label var Lcs_crisis_ProdAssets "Crisis coping: Sold productive assets or means of transport"
+{txt}
+{com}.         label var Lcs_crisis_HealthEdu  "Crisis coping: Reduced expenses on health or education"
+{txt}
+{com}.         label var Lcs_crisis_OutSchool  "Crisis coping: Withdrew children from school"
+{txt}
+{com}.         label var Lcs_em_ChildWork              "Emergency coping: Send children to work for household income"
+{txt}
+{com}.         label var Lcs_em_Begged                 "Emergency coping: Begged and/or scavenged"
+{txt}
+{com}.         label var Lcs_em_IllegalAct             "Emergency coping: Engaged in illegal income activities"
+{txt}
+{com}.         label var Lcs_Stress_Coping     "Household engaged in stress coping strategies" 
+{txt}
+{com}.         label var Lcs_Crisis_Coping     "Household engaged in crisis coping strategies" 
+{txt}
+{com}.         label var Lcs_Emergency_Coping  "Household engaged in emergency coping strategies" 
+{txt}
+{com}.         label var LCS_Cat                               "Livelihood Coping Strategies Cateory"
+{txt}
+{com}.         
+.         label var HHExp_Food_Purch_MN_7D                "Total weekly food expenditure on cash/credit"
+{txt}
+{com}.         label var HHExp_Food_GiftAid_MN_7D              "Total weekly food expenditure from gift aid"
+{txt}
+{com}.         label var HHExp_Food_Own_MN_7D                  "Total weekly food expenditure from own production"
+{txt}
+{com}.         label var HHExpFoodTotal_7D                             "Total weekly food expenditure" 
+{txt}
+{com}.         label var HHExpFoodTotal_1M                             "Total monthly food expenditure (average)"
+{txt}
+{com}.         
+.         label var HHExp_NonFood_Purch_MN_1M             "Total monthly non-food expenditure on cash/credit"
+{txt}
+{com}.         label var HHExp_NonFood_GiftAid_MN_1M   "Total monthly non-food expenditure from gift aid"      
+{txt}
+{com}.         label var HHExp_NonFood_Purch_MN_6M             "Total other non-food expenditure on cash/credit in 6 months"
+{txt}
+{com}.         label var HHExp_NonFood_GiftAid_MN_6M   "Total other non-food expenditure from gift aid in 6 months"    
+{txt}
+{com}.         label var HHExpNFTotal_Purch_MN_1M              "Total monthly non-food exp on cash (average)"
+{txt}
+{com}.         label var HHExpNFTotal_GiftAid_MN_1M    "Total monthly non-food exp from aid (average)"
+{txt}
+{com}.         label var HHExpNFTotal_1M                               "Total monthly non-food expenditure (average)"
+{txt}
+{com}.         
+.         label var HHExpTotal                    "Monthly total household expenditure"
+{txt}
+{com}.         label var PCExpTotal                    "Monthly total household expenditure per capita"
+{txt}
+{com}.         label var FES                                   "Food Expenditure Share"
+{txt}
+{com}.         label var FES_Cat                               "Food Security Category based on FES"
+{txt}
+{com}.         
+.         label def FS_CARI          1 "Food Secure"  2 "Marginally Food Secure"                          ///
+>                                                    3 "Moderately Food Insecure" 4 "Severely Food Insecure"
+{txt}
+{com}.         label val FCS_4pt_CARI CARI_FES_Cat FES_Cat FS_CARI        
+{txt}
+{com}.         
+.         label var CC_FES_Cat                    "Coping Capacity Combined Category using FES"
+{txt}
+{com}.         label var CARI_FES_Raw                  "Raw CARI Category based on FES"
+{txt}
+{com}.         label var CARI_FES_Cat                  "CARI Category using FES"
+{txt}
+{com}.         label var HH_Vul_CARI                   "Household being vulnerable using FES CARI"
+{txt}
+{com}.         label var Group                                 "Study Group A vs. B"
+{txt}
+{com}.         label var Status                                "Household Status IDP vs. Refugee" 
+{txt}
+{com}.         
+.         label def survey_l      1 "Remote first" 2 "Face-to-Face first"
+{txt}
+{com}.         label val Modality  survey_l
+{txt}
+{com}.         label var Modality                              "Survey Modality: Remote first vs. F2F first"
+{txt}
+{com}.         label var PWMDDWStapCerR                "Foods made from grains"
+{txt}
+{com}.         label var PWMDDWStapRooR                "White roots and tubers or plantains"
+{txt}
+{com}.         label var PWMDDWPulseR                  "Pulses (beans, peas and lentils)"
+{txt}
+{com}.         label var PWMDDWNutsR                   "Nuts and seeds"
+{txt}
+{com}.         label var PWMDDWMilkR                   "Milk"
+{txt}
+{com}.         label var PWMDDWDairyR                  "Milk products"
+{txt}
+{com}.         label var PWMDDWPrMeatOR                "Organ meats"
+{txt}
+{com}.         label var PWMDDWPrMeatFR                "Red flesh meat from mammals"
+{txt}
+{com}.         label var PWMDDWPrMeatProR              "Processed meat"
+{txt}
+{com}.         label var PWMDDWPrMeatWhiteR    "Poultry and other white meats"
+{txt}
+{com}.         label var PWMDDWPrFishR                 "Fish and Seafood"
+{txt}
+{com}.         label var PWMDDWPrEggR                  "Eggs from poultry or any other bird"
+{txt}
+{com}.         label var PWMDDWVegGreR                 "Dark green leafy vegetable"
+{txt}
+{com}.         label var PWMDDWVegOrgR                 "Vitamin A-rich vegetables, roots and tubers"
+{txt}
+{com}.         label var PWMDDWFruitOrgR               "Vitamin A-rich fruits"
+{txt}
+{com}.         label var PWMDDWVegOthR                 "Other vegetables"
+{txt}
+{com}.         label var PWMDDWFruitOthR               "Other fruits"
+{txt}
+{com}.         label var PWMDDWSnfR                    "Specialized Nutritious Foods (SNF) for women"
+{txt}
+{com}. 
+.         label var PWMDDWStapCer_oth             "Foods made from grains"
+{txt}
+{com}.         label var PWMDDWStapRoo_oth             "White roots and tubers or plantains"
+{txt}
+{com}.         label var PWMDDWPulse_oth               "Pulses (beans, peas and lentils) "
+{txt}
+{com}.         label var PWMDDWNuts_oth                "Nuts and seeds "
+{txt}
+{com}.         label var PWMDDWMilk_oth                "Milk"
+{txt}
+{com}.         label var PWMDDWDairy_oth               "Milk products"
+{txt}
+{com}.         label var PWMDDWPrMeatO_oth     "Organ meats"
+{txt}
+{com}.         label var PWMDDWPrMeatF_oth     "Red flesh meat from mammals"
+{txt}
+{com}.         label var PWMDDWPrMeatPro_oth   "Processed meat"
+{txt}
+{com}.         label var PWMDDWPrMeatWhite_oth "Poultry and other white meats"
+{txt}
+{com}.         label var PWMDDWPrFish_oth              "Fish and Seafood"
+{txt}
+{com}.         label var PWMDDWPrEgg_oth               "Eggs from poultry or any other bird"
+{txt}
+{com}.         label var PWMDDWVegGre_oth      "Dark green leafy vegetable"
+{txt}
+{com}.         label var PWMDDWVegOrg_oth              "Vitamin A-rich vegetables, roots and tubers"
+{txt}
+{com}.         label var PWMDDWFruitOrg_oth    "Vitamin A-rich fruits"
+{txt}
+{com}.         label var PWMDDWVegOth_oth              "Other vegetables"
+{txt}
+{com}.         label var PWMDDWFruitOth_oth    "Other fruits"
+{txt}
+{com}.         label var PWMDDWSnf_oth                 "Specialized Nutritious Foods (SNF) for women"
+{txt}
+{com}. 
+.         label var Income_No_PermissionR                 "Had Income to Use Without Asking For Permission"
+{txt}
+{com}.         label var Own_Decisions_MoneyR                  "Can Make Own Decisions About What to do With Money"
+{txt}
+{com}.         label var Own_Decisions_MedicalR                "Can Make Own Decisions About Seeking Medical or Healthcare Services"
+{txt}
+{com}.         label var Own_Decisions_RelativesR              "Can Make Own Decisions About Spending Time With Relatives"
+{txt}
+{com}.         label var Own_Decisions_FriendsR                "Can Make Own Decisions About Spending Time With Friends"
+{txt}
+{com}.         label var Own_Bank_AccountR                             "Have Own Account With a Bank or Other Financial Institution"
+{txt}
+{com}.         label var Have_Money_SavedR                             "Have Money Saved To Use if Needed"
+{txt}
+{com}.         label var Own_PropertyR                                 "Own Property Such as Land, Home, or Other Dwelling"
+{txt}
+{com}.         label var Own_MobileR                                   "Own a Mobile Phone"
+{txt}
+{com}.         label var You_Decide_WorkR                              "Who Decides Whether You Can Work For Pay Outside Home"
+{txt}
+{com}.         label var Took_Money_No_PermissionR             "Anyone in Household Took Money Earned, Received, or Saved Without Permission"
+{txt}
+{com}.         label var Permission_Local_EventR               "Have to Get Permission to go to a Local Event Alone"
+{txt}
+{com}.         label var Permission_MarketR                    "Have to Get Permission to go to Market or Shops Alone"
+{txt}
+{com}.         label var Most_Time_HouseworkR                  "Person Who Spends the Most Time Doing Housework"
+{txt}
+{com}.         label var Housework_Prevented_WorkR             "Doing Housework Has Prevented Doing Paid Work"
+{txt}
+{com}.         label var Housework_Prevent_EducationR  "Doing Housework Has Prevented Participating in Education or Training"
+{txt}
+{com}.         label var HarmR                                                 "Anyone in Household Threatened to Harm you or Someone You Care About"
+{txt}
+{com}.         label var MarriageR                                             "Married"
+{txt}
+{com}.         label var Decide_Prevent_PregnancyR             "Able to Decide on Own About Using Methods to Prevent Pregnancy or Sexually-Transmitted Illnesses"
+{txt}note: label truncated to 80 characters
+
+{com}.         
+.         label var Income_No_Permission_oth                      "Had Income to Use Without Asking For Permission"
+{txt}
+{com}.         label var Own_Decisions_Money_oth                       "Can Make Own Decisions About What to do With Money"
+{txt}
+{com}.         label var Own_Decisions_Medical_oth             "Can Make Own Decisions About Seeking Medical or Healthcare Services"
+{txt}
+{com}.         label var Own_Decisions_Relatives_oth           "Can Make Own Decisions About Spending Time With Relatives"
+{txt}
+{com}.         label var Own_Decisions_Friends_oth             "Can Make Own Decisions About Spending Time With Friends"
+{txt}
+{com}.         label var Own_Bank_Account_oth                          "Have Own Account With a Bank or Other Financial Institution"
+{txt}
+{com}.         label var Have_Money_Saved_oth                          "Have Money Saved To Use if Needed"
+{txt}
+{com}.         label var Own_Property_oth                                      "Own Property Such as Land, Home, or Other Dwelling"
+{txt}
+{com}.         label var Own_Mobile_oth                                        "Own a Mobile Phone"
+{txt}
+{com}.         label var You_Decide_Work_oth                           "Who Decides Whether You Can Work For Pay Outside Home"
+{txt}
+{com}.         label var Took_Money_No_Permission_oth          "Anyone in Household Took Money Earned, Received, or Saved Without Permission"
+{txt}
+{com}.         label var Permission_Local_Event_oth            "Have to Get Permission to go to a Local Event Alone"
+{txt}
+{com}.         label var Permission_Market_oth                 "Have to Get Permission to go to Market or Shops Alone"
+{txt}
+{com}.         label var Most_Time_Housework_oth                       "Person Who Spends the Most Time Doing Housework"
+{txt}
+{com}.         label var Housework_Prevented_Work_oth          "Doing Housework Has Prevented Doing Paid Work"
+{txt}
+{com}.         label var Housework_Prevent_Education_oth       "Doing Housework Has Prevented Participating in Education or Training"
+{txt}
+{com}.         label var Harm_oth                                                      "Anyone in Household Threatened to Harm you or Someone You Care About"
+{txt}
+{com}.         label var Marriage_oth                                          "Married"
+{txt}
+{com}.         label var Decide_Prevent_Pregnancy_oth          "Able to Decide on Own About Using Methods to Prevent Pregnancy or Sexually-Transmitted Illnesses"
+{txt}note: label truncated to 80 characters
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 4: Check Balance Dataset
+. *******************************************************************************/
+. 
+.         compress
+  {txt}variable {bf}{res}Group{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Status{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPHHH{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFemale{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPPLW{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisplaced{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRefugee{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_WaterFilter{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Carpet{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_ElecLamp{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_ElecStove{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_WaterTank{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_MicroOven{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Fridge{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Blender{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_GasHeater{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_ElecFan{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Freezer{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_AC{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_ElecGen{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_ElecVac{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_WashMachine{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_TickTokCar{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Taxi{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_PriCarTruck{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Motor{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsset_Bicycle{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPMeals_3More{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFoodWorry{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_EnoughFood{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_LessPrefer{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_LessMeal{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_DayNoEat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Meals{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Worry{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSCat28{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCG{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Stress_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Crisis_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Emergency_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LCS_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExp_Food_Own_MN_7D{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}FCS_4pt_CARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_CARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Staples{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Pulses{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_NutsSeeds{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Dairies{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_MeatFish{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Eggs{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_LeafGVeg{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_VitA{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_OtherVeg{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_OtherFruits{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Index{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Index_5{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Staples_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Pulses_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_NutsSeeds_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Dairies_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_MeatFish_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Eggs_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_LeafGVeg_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_VitA_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_OtherVeg_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_OtherFruits_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Index_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDW_Index_5_oth{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {bf}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (126,972 bytes saved)
+
+{com}.         keep HHID Group Status Modality $var_demo $var_assets $var_house $out_fs ///
+>                  $out_fcs $out_rcsi $out_lcs $out_fes $out_cari $out_mdd $out_empower
+{txt}
+{com}.         save "${c -(}dta{c )-}/Iraq_F2F_Household_Analysis.dta", replace  
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_F2F_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         * Overall Group A vs. Group B Randomization Balance
+.         iebaltab        $var_demo $var_assets $var_house ,              ///
+>                                 grpvar(Group) grplabels(1 Group A @ 2 Group B) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_bal{c )-}/Iraq_F2F_Group_Dempgraphics_Balance.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_F2F_Group_Dempgraphics_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_F2F_Group_Dempgraphics_Balance.xlsx}{p_end}
+{txt}
+{com}.                                                 
+.         * Outcome Balance by Survey Modality
+.         iebaltab        $var_demo $var_assets $var_house $out_fs $out_fcs $out_rcsi $out_lcs $out_fes $out_cari,                ///
+>                                 grpvar(Modality) grplabels(1 Remote first @ 2 F2F first) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_bal{c )-}/Iraq_F2F_Modality_Outcome_Balance.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_F2F_Modality_Outcome_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_F2F_Modality_Outcome_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD09919.000000"
+{txt}
+{com}. *       set up dataset for Gender Empowerment Scale
+.         use "${c -(}dta{c )-}/Iraq_F2F_Household_Analysis.dta", clear
+{txt}
+{com}.         sum  $out_empower
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Income_No_~R {c |}{res}        431    1442.742    3511.843          0       9999
+{txt}Own_Decis~yR {c |}{res}        431    2.610209     42.7498          0        888
+{txt}Own_Decis~lR {c |}{res}        431    2.823666     42.7387          0        888
+{txt}Own_Deci~esR {c |}{res}        431      116.58    1071.884          0       9999
+{txt}Own_Deci~dsR {c |}{res}        431    141.8167    1173.348          0       9999
+{txt}{hline 13}{c +}{hline 57}
+Own_Bank_A~R {c |}{res}        431    904.7912    2871.829          0       9999
+{txt}Have_Money~R {c |}{res}        431     1449.26    3510.075          0       9999
+{txt}Own_Proper~R {c |}{res}        431    123.3875    316.9725          0        999
+{txt}{space 1}Own_MobileR {c |}{res}        431    5.146172    64.25715          0        999
+{txt}You_Decide~R {c |}{res}        431    209.0858    401.9246          1        999
+{txt}{hline 13}{c +}{hline 57}
+Took_Money~R {c |}{res}        431    1196.619    3230.451          0       9999
+{txt}Permissi~ntR {c |}{res}        431    18.24826      129.51          0        999
+{txt}Permissi~etR {c |}{res}        431    13.91183    112.9509          0        999
+{txt}Most_Time_~R {c |}{res}        431    2.867749    48.09616          0        999
+{txt}Housework~kR {c |}{res}        431    69.92343    254.4164          0        999
+{txt}{hline 13}{c +}{hline 57}
+Housework~nR {c |}{res}        431    69.90719    254.4208          0        999
+{txt}{space 7}HarmR {c |}{res}        431     2.12761    42.77094          0        888
+{txt}{space 3}MarriageR {c |}{res}        431    .9025522    .2969112          0          1
+{txt}Decide_Pre~R {c |}{res}        389     543.838    2210.139          0       9999
+{txt}Income_No_~h {c |}{res}        411    1046.363    3064.011          0       9999
+{txt}{hline 13}{c +}{hline 57}
+Own_De~y_oth {c |}{res}        411    9.678832    92.85173          0        999
+{txt}Own_De~l_oth {c |}{res}        411    7.479319    78.90093          0        999
+{txt}Own_D~es_oth {c |}{res}        411    175.1727    1296.172          0       9999
+{txt}Own_D~ds_oth {c |}{res}        411    250.5426    1543.338          0       9999
+{txt}Own_Bank_A~h {c |}{res}        411    732.0219    2603.914          0       9999
+{txt}{hline 13}{c +}{hline 57}
+Have_Money~h {c |}{res}        411    1164.302    3181.522          0       9999
+{txt}Own_Proper~h {c |}{res}        411    183.4015    371.3548          0        999
+{txt}Own_Mobile~h {c |}{res}        411    5.082725    61.81765          0        888
+{txt}You_Decide~h {c |}{res}        411    223.2214    413.4361          1        999
+{txt}Took_Money~h {c |}{res}        411    936.4185    2898.117          0       9999
+{txt}{hline 13}{c +}{hline 57}
+Permi~nt_oth {c |}{res}        411    7.527981    82.06872          0        999
+{txt}Permi~et_oth {c |}{res}        411    12.12409    104.8912          0        999
+{txt}Most_Time_~h {c |}{res}        411    5.184915    65.81089          0        999
+{txt}Housew~k_oth {c |}{res}        411    68.15815    250.9757          0        999
+{txt}Housew~n_oth {c |}{res}        411    67.86375    250.0361          0        999
+{txt}{hline 13}{c +}{hline 57}
+{space 4}Harm_oth {c |}{res}        411    4.396594    61.86481          0        888
+{txt}Marriage_oth {c |}{res}        411    .8686131    .3382347          0          1
+{txt}Decide_Pre~h {c |}{res}        357     323.986    1731.441          0       9999
+{txt}{space 4}GEN_SexR {c |}{res}        431    .4431555    .4973355          0          1
+{txt}GENRESPSex~h {c |}{res}        411    .4087591    .4922038          0          1
+{txt}
+{com}.         drop $out_mdd $out_rcsi
+{txt}
+{com}.         
+. *       gender variables
+.         tab RESPSex  GEN_SexR   // should be of the same respondents
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}       165         21 {txt}{c |}{res}       186 
+{txt}      Male {c |}{res}        75        170 {txt}{c |}{res}       245 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       240        191 {txt}{c |}{res}       431 
+{txt}
+{com}. /*      Sex of the | Sex of the respondent
+>         respondent |    Female       Male |     Total
+>         -----------+----------------------+----------
+>                 Female |       165         21 |       186 
+>                   Male |        75        170 |       245 
+>         -----------+----------------------+----------
+>                  Total |       240        191 |       431       /!\ 96 diff
+> */      
+. 
+.         tab GEN_SexR GENRESPSex_oth     // respondents of diff gender for sections
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        80        146 {txt}{c |}{res}       226 
+{txt}      Male {c |}{res}       163         22 {txt}{c |}{res}       185 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       243        168 {txt}{c |}{res}       411 
+{txt}
+{com}. /*      Sex of the | Sex of the respondent
+>         respondent |    Female       Male |     Total
+>         -----------+----------------------+----------
+>                 Female |        80        146 |       226 
+>                   Male |       163         22 |       185       /!\ 102 same
+>         -----------+----------------------+----------
+>                  Total |       243        168 |       411 
+> */      
+.         tab RESPSex      GENRESPSex_oth
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        11        162 {txt}{c |}{res}       173 
+{txt}      Male {c |}{res}       232          6 {txt}{c |}{res}       238 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       243        168 {txt}{c |}{res}       411 
+{txt}
+{com}. /*      Sex of the | Sex of the respondent
+>         respondent |    Female       Male |     Total
+>         -----------+----------------------+----------
+>                 Female |        11        162 |       173 
+>                   Male |       232          6 |       238 
+>         -----------+----------------------+----------
+>                  Total |       243        168 |       411 
+> */
+.         
+.         ** follow the same method as the MDD sections
+.         drop if RESPSex  != GEN_SexR            // 255 observations deleted
+{txt}(255 observations deleted)
+
+{com}.         drop if GEN_SexR == GENRESPSex_oth      // 14 observations deleted 
+{txt}(14 observations deleted)
+
+{com}. 
+.         // now we have n = 306 who answered both of the empowerment sections
+.         // of different gender while keep the same gender as the main respondent in the first section
+.         
+.         save "${c -(}temp{c )-}/Iraq_Empower_F2F_Raw.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/4_Temp/Iraq_Empower_F2F_Raw.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD09919.000000"
+{txt}
+{com}. * Install packages      
+.         local   packages                        0       
+{txt}
+{com}. if `packages'   {c -(}       
+.         local user_commands ietoolkit iefieldkit sumstats savespss
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-}
+. {c )-}
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         //Set the version number to the oldest version used by anyone in the project team
+.         `r(version)'  
+{txt}
+{com}.         
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Roboto"
+{txt}
+{com}. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global kareem    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global targeting  "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/General - T&P CO Support"
+.         {c )-}
+{txt}
+{com}. 
+. if $kareem {c -(}
+.         global targeting  "C:/Users/Kareem.Sadik/OneDrive - World Food Programme/T&P CO Support/General"
+.         {c )-} 
+{txt}
+{com}.         
+.         * Subfolder globals to data
+.         * -----------------
+.         gl yemen                "${c -(}targeting{c )-}/Yemen/Design/2021 FSLA Analysis"
+{txt}
+{com}.         gl drc                  "${c -(}targeting{c )-}/DRC/03_Output"                            //?
+{txt}
+{com}.         gl ethiopia     "${c -(}targeting{c )-}/Ethiopia/Tigray/03_Output"        //?
+{txt}
+{com}.         gl afghan               "${c -(}targeting{c )-}/Afghanistan/03_Output"            //?
+{txt}
+{com}.         gl haiti                "${c -(}targeting{c )-}/Haiti/03_Output"  
+{txt}
+{com}.         gl colombia     "${c -(}targeting{c )-}/Colombia/03_Output"
+{txt}
+{com}.         gl somalia              "${c -(}targeting{c )-}/Somalia/03_Output"
+{txt}
+{com}.         gl malawi               "${c -(}targeting{c )-}/Malawi/03_Output"
+{txt}
+{com}.         gl turkey               "${c -(}targeting{c )-}/Turkey/03_Output"
+{txt}
+{com}.         
+. *******************************************************************************/
+. *                 PART 2:  ORGANIZE DATASET - APPEND                               *
+. ********************************************************************************        
+.         
+.         use "${c -(}yemen{c )-}/Yemen_FSLA2021_targeting_Processed_27_6_22.dta", clear
+{err}{p 0 4 2}
+file {bf:{err}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/General - T&P CO Support/Yemen/Design/2021 FSLA Analysis/Yemen_FSLA2021_targeting_Processed_27_6_22.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD09919.000000"
+{txt}
+{com}.         * Subfolder globals to data
+.         * -----------------
+.         gl yemen                "${c -(}targeting{c )-}/Yemen/Design/2021 FSLA Analysis/1_Data"
+{txt}
+{com}.         gl drc                  "${c -(}targeting{c )-}/DRC/03_Output"                            //?
+{txt}
+{com}.         gl ethiopia     "${c -(}targeting{c )-}/Ethiopia/Tigray/03_Output"        //?
+{txt}
+{com}.         gl afghan               "${c -(}targeting{c )-}/Afghanistan/03_Output"            //?
+{txt}
+{com}.         gl haiti                "${c -(}targeting{c )-}/Haiti/03_Output"  
+{txt}
+{com}.         gl colombia     "${c -(}targeting{c )-}/Colombia/03_Output"
+{txt}
+{com}.         gl somalia              "${c -(}targeting{c )-}/Somalia/03_Output"
+{txt}
+{com}.         gl malawi               "${c -(}targeting{c )-}/Malawi/03_Output"
+{txt}
+{com}.         gl turkey               "${c -(}targeting{c )-}/Turkey/03_Output"
+{txt}
+{com}.         
+. *******************************************************************************/
+. *                 PART 2:  ORGANIZE DATASET - APPEND                               *
+. ********************************************************************************        
+.         
+.         use "${c -(}yemen{c )-}/Yemen_FSLA2021_targeting_Processed_27_6_22.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}SubmissionDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}end{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyRevDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}DataEntDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_severly_Vulnerable_total{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_severly_Vulnerable{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_highly_Vulnerable{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_displaced_1Year{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Edu_Illiterate{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}crowdindex5{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_tent_hut_gov{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHFemale_eligible{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_moderately_Vulnerable_total{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_moderately_Vulnerable{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_least_Vulnerable{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}eligibility_2{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_severly_Vulnerable_totalS{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_severly_VulnerableS{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_highly_VulnerableS{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}eligibility_1S{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}eligibility_2S{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}SectorID{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}SectionID{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuAreaID{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}BlockID{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHLoc{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}SampleID{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHResp{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}SerialNumber{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHVuln{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHResdCat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisplNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisplSince{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHJoined{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHJoinedRel{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHJoinedNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHHMaritalStatus{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHEdu{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize02M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize02F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize25M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize25F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize514M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize514F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize1517M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize1517F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize1849M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize1849F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize5059M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize5059F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize60aboveM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize60aboveF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotHHSizeM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotHHSizeF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotHHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp514M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp514F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp1517M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp1517F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp1849M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp1849F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp5059M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp5059F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp60aboveM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEmp60aboveF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotEmpM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotEmpF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHMainIncWho{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSingleParentNbF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSingleParentNbHHF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisabledNbF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisabledNbHHF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHChronIllNbF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHChronIllNbHHF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPregLactNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPregLactNHHF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPregLactRegiMAMSAMNbF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPregLactRegiMAMSAMNbHHF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRegiMAMSAM_under5NbF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSingleParentNbM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSingleParentNbHHM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisabledNbM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisabledNbHHM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHChronIllNbM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHChronIllNbHHM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRegiMAMSAM_under5NbM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHOrphanNb_Under18_North{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSick_Dur1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSickMedCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHNoMedCareWhy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttWhyFir_North{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttWhySec_North{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HDwellType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HRoomNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHTenureType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HEnerCookType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HEnerLight_electricity{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HEnerLightSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HEnerLightAltrSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HEnerLightTotHour_Dur30d{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HWaterSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HWaterDistWalk{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HToiletType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HToiletShare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Dur6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirstReg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncSec_Dur6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncSecReg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncTotEstAvr_M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHAssetLand{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetHouse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetMattressSofa{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetRefrig{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetWashMach{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetJewels{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetSaving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetPC_LPTP_TBT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetRadio{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetTV{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetCellphone{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetCooker{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetWaterHeater{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetBicycle{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetMotorbike{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetCarTaxi{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetTruck{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetBoat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetAgriT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetAgriMach{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetSolar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpFCerBrd_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFCerBrd_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFCerBrd_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFCerBrd_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFVegFru_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFVegFru_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFVegFru_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFVegFru_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFPuls_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFPuls_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFPuls_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFPuls_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFDairy_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFDairy_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFDairy_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFDairy_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFAnim_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFAnim_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFAnim_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFAnim_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFEgg_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFEgg_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFEgg_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFEgg_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFish_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFish_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFish_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFish_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFat_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFat_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFat_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFat_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFSgr_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFSgr_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFSgr_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFSgr_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFQat_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFQat_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFQat_EstOwnProd{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFQat_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFOth_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFOth_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFOth_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTobac_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTobac_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFWat_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFWat_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTransp_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTransp_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTransp_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFElec_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFElec_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFPhone_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFPhone_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFFuel_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFFuel_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFRent_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFRent_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFSoc_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFSoc_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFRemit_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFRemit_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEdu_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEdu_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFMed_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFMed_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFCstrc_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFCstrc_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFAgriInp_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFAgriInp_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFCloth_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFCloth_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEnerg_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEnerg_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFDebt_MN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFDebt_CRD{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFMN_Oth{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFCRD_Oth{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHDebt_YN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDebtTot{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}FCSStapCerBrdNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSStapCerBrd_SRF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulseNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulse_SRF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVegNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVeg_SRF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVegOrgNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVegOrgSRF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVegGreNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVegGreSRF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPr_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrMeatFR_FPNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrMeatFR_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrMeatONb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrMeatO_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrFishNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrFish_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrEggNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPrEgg_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairyNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairy_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruitNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruit_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruiOrgNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruitOrg_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFatNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFat_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugarNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugar_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSCondNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSCond_SRf{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHhSNoFood_YN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHhSNoFood_FR{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHhSBedHung_YN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHhSBedHung_FR{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHhSNotEat_YN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHhSNotEat_FR{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHShockTypeFirst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHShockTypeSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHShockTypeThird{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSILessQlty{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIBorrow{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIDomAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSICrdtFood{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSISaving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIBorrowCash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIProdAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIHealth{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIChildWork{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIOutSchool{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIImmAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIFemAnimal{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIEatOut{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIAgriLvstFishCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIMigrationPart{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LhCSIBegged{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsstFood_YN_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsstFoodLast{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsstFoodType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsstFoodSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsstLh_YN_12M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAsstLhLast{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}agri_13_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ISthr_CHwithmalnutr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}NumberofChild{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}group_Nutri_count{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}isValidated{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCS_Ap{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}staple{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}legumes{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}veg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}fruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}meat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}milk{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}oil{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}sugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCG_m_a{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCG_m_a21{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHS_Q1_freq{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHS_Q2_freq{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHS_Q3_freq{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHS{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSgroup{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSStapCer{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSStapRoo{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSPulsePul{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSVeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSFruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSPrEgg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSPrMeat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSPrFish{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSDairy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSFat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSSugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDDSCond{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HDDS{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HDDS_cat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCDomAss{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCSpeSav{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCBorCas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCProAss{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCRedNFo{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCChiWor{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCHouLan{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCLasFem{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCEatOut{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCBeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCOneMig{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCCrdFoo{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCChiSch{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCRedLiv{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}STRESS{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CRISIS{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EMERG{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LHCgroup{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI_IPC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCIS_IPC_HighValues{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HWaterSRCGroup{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HToiletTypeGroup{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Region{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Exp_other_food_total_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_tobacco_total_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_rent_total_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_remittances_total_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_construction_total_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_investments_total_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_solar_panels_total_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Exp_other_total_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFood_MN_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_MN_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_MN_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFood_CRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_CRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_CRD_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFood_EstOwnProd_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_EstOwnProd_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpTot_EstOwnProd_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFFat_Asst{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpFood_Asst_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_Asst_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpTot_Asst_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}Food_Expenditure_Share_CARI{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried_Dur2Y_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried015M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried015F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried1518M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried1518F{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried18aboveM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarried18aboveF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotMarriedM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotMarriedF{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHmarriedWhy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHOrphanNb_Under18F_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHOrphanEmp_Under18F_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHOrphanNb_Under18M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHOrphanEmp_Under18M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttNbM_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttNbF_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttWhyM_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSchoolNoAttWhyF_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HDwellType_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PrimaryEnergy_hours_daily{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}SecondaryEnergy_hours_daily{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRemitt_3M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRemittTot_3M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHRemittChg_CompLastYR_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHUseInternet_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHShockTypeFirst_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHShockTypeSec_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHShockTypeThird_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHMeetCovidPer_6M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_6M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_Fir_6M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_Fir_6M_other_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_Sec_6M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_Sec_6M_other_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_Thi_6M_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChgCovid_Thi_6M_other_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_vulnerable{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_Condiments{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_flesh_meat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_organ_meat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_fish{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_eggs{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_orange_fruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_orange_vegetables{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FC_sub_green_vegetables{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCG_CARI{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}VitA_rich{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Protein_rich{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Haem_iron_rich{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}VitA_Cat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Protein_Cat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Haem_iron_Cat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Max_LH_coping{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Food_Security_Index_CARI{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI_IPC_4pt{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}AgeHHCat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSizeCat_short{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_merge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HEnerCookType_short{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHEduLevel{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Age_W{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dependents{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HWaterDistWalkGroup{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HWaterDistWalk_IPC_YN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Secondary_income_YN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Gov{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHMarginalized_S{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisplaced{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHosting{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHFemale{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHMinor{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSenior{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSeniorFemale{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSingleParent_Fe{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSingleParent_Fe_Indep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSingleParent{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHMaritalStatus_Short{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FemaleMale_ratio_1_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHFemale_HighFe_Ratio{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHSingleParent_HighFe_ratio{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHHFemale_Illitrate{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dep_ratio_Cat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}NCARI{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_unaccompanied_minors_S{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_FS{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dep_ratio_1_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dep_ratio_2_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_FS_North{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_CARI_South{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHCrowdIndex_Gr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HDwellType_short_NRTH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HDwellType_short_south{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HToiletTypeGroup_North{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetLand_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetHouse_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetMattressSofa_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetRefrig_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetWashMach_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetJewels_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetSaving_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetPC_LPTP_TBT_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetRadio_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetTV_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetCellphone_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetCooker_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetWaterHeater_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetBicycle_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetMotorbike_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetCarTaxi_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetTruck_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetBoat_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetAgriT_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetAgriMach_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAssetSolar_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHFemale_teen{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHFemale_teen2More{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_IDP_Hosted{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_PLW_MAM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_U5_MAM{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_IDP_shelters{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Dis{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHH_Dis{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_chronic_ill{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHH_chronic_ill{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_House_Land{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Essential{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Cash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Electronic{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Cooker_Heater{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Livelihood{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Energy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Other{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_House_Land_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Essential_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Cash_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Electronic_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Cooker_Heater_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Livelihood_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Energy_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Assets_Other_dep{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_HHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_FCS_Protien{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Exp_Protien{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}TR_Exp_Has_Protien{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_FCS_Fruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Exp_Fruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}TR_Exp_Has_Fruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FN_Working_Indv{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FN_Dependency_Ratio_175{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FN_Dependency_Ratio_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Income_Ranges{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Income_Ranges_N{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Income_Ranges_S{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_VitaminA{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Protein{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TR_Haem_Iron{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}uuid{sf}{txt} was {bf}{res}str96{sf}{txt} now {bf}{res}str32{sf}
+  {txt}variable {bf}{res}username{sf}{txt} was {bf}{res}str129{sf}{txt} now {bf}{res}str43{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}str135{sf}{txt} now {bf}{res}str45{sf}
+  {txt}variable {bf}{res}VillageCityName{sf}{txt} was {bf}{res}str171{sf}{txt} now {bf}{res}str57{sf}
+  {txt}variable {bf}{res}ADMIN4Name{sf}{txt} was {bf}{res}str141{sf}{txt} now {bf}{res}str43{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}str171{sf}{txt} now {bf}{res}str56{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}str120{sf}{txt} now {bf}{res}str40{sf}
+  {txt}variable {bf}{res}DataEntName{sf}{txt} was {bf}{res}str36{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}HToiletType_Oth{sf}{txt} was {bf}{res}str174{sf}{txt} now {bf}{res}str58{sf}
+  {txt}variable {bf}{res}SETOFhhgroup_nutritigroup_Nutri{sf}{txt} was {bf}{res}str159{sf}{txt} now {bf}{res}str53{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}str123{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}KEY{sf}{txt} was {bf}{res}str123{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}SubmissionDate_south_string{sf}{txt} was {bf}{res}str57{sf}{txt} now {bf}{res}str16{sf}
+  {txt}variable {bf}{res}TeamCode{sf}{txt} was {bf}{res}str27{sf}{txt} now {bf}{res}str9{sf}
+{txt}  (316,621,774 bytes saved)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. isid HHID
+{err}variable {bf:HHID} does not uniquely identify the observations
+{txt}{search r(459), local:r(459);}
+
+{com}. isid uuid
+{err}variable {bf:uuid} does not uniquely identify the observations
+{txt}{search r(459), local:r(459);}
+
+{com}. sum HHExp*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+HHExpFCerB~N {c |}{res}     72,653    14688.38    30285.31          0     980000
+{txt}HHExpFCerB~D {c |}{res}     72,653    16126.01    27232.28          0     950000
+{txt}HHExpFCerB~d {c |}{res}     72,653    611.9389    6510.236          0     600000
+{txt}HHExpFCerB~t {c |}{res}     72,653    8624.035    16346.07          0     800000
+{txt}HHExpFVegF~N {c |}{res}     72,653    4984.983    11330.24          0     780000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFVegF~D {c |}{res}     72,653    1334.614    5445.528          0     450000
+{txt}HHExpFVegF~d {c |}{res}     72,653    79.44494    1564.797          0     200000
+{txt}HHExpFVegF~t {c |}{res}     72,653     217.044    1620.113          0     100000
+{txt}HHExpFPuls~N {c |}{res}     72,653    1671.916    4768.289          0     300000
+{txt}HHExpFPuls~D {c |}{res}     72,653     1135.93    3841.169          0     300000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFPuls~d {c |}{res}     72,653    59.37032    994.3592          0     100000
+{txt}HHExpFPuls~t {c |}{res}     72,653    731.2061    2529.069          0     250000
+{txt}HHExpFDair~N {c |}{res}     72,653     1634.31    7027.784          0     800000
+{txt}HHExpFDair~D {c |}{res}     72,653     1040.88    4626.902          0     500000
+{txt}HHExpFDair~d {c |}{res}     72,653    1228.782    6891.028          0     900000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFDair~t {c |}{res}     72,653    304.2251    1738.472          0     100000
+{txt}HHExpFAnim~N {c |}{res}     72,653    3670.813    9698.988          0     495000
+{txt}HHExpFAnim~D {c |}{res}     72,653    1197.055    5975.684          0     700000
+{txt}HHExpFAnim~d {c |}{res}     72,653    487.0179    6087.434          0     600000
+{txt}HHExpFAnim~t {c |}{res}     72,653    161.6493    2267.844          0     200000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFEgg_MN {c |}{res}     72,653     707.057    2536.128          0     100000
+{txt}HHExpFEgg_~D {c |}{res}     72,653    269.5799    1294.646          0      70000
+{txt}HHExpFEgg_~d {c |}{res}     72,653    131.0031    978.0306          0      60000
+{txt}HHExpFEgg_~t {c |}{res}     72,653    27.21914    530.0084          0      60000
+{txt}HHExpFFish~N {c |}{res}     72,653    3284.522    10304.48          0     750000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFFish~D {c |}{res}     72,653    625.9484    5076.863          0     600000
+{txt}HHExpFFish~d {c |}{res}     72,653    725.9192    7896.047          0     600000
+{txt}HHExpFFish~t {c |}{res}     72,653     221.559    2791.018          0     180000
+{txt}HHExpFFat_MN {c |}{res}     72,653     3841.71    9533.598          0     550000
+{txt}HHExpFFat_~D {c |}{res}     72,653    3956.211    9001.262          0     450000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFFat_~d {c |}{res}     72,653    189.3164     1773.55          0     150000
+{txt}HHExpFat_A~t {c |}{res}     72,653    2255.056    4776.259          0     420000
+{txt}HHExpFSgr_MN {c |}{res}     72,653    4649.442    10833.13          0     600000
+{txt}HHExpFSgr_~D {c |}{res}     72,653    5457.936    11599.21          0     590000
+{txt}HHExpFSgr_~d {c |}{res}     72,653    86.75961    1635.155          0     120000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFSgr_~t {c |}{res}     72,653    872.2151    3228.862          0     150000
+{txt}HHExpNFQat~N {c |}{res}     72,653    3496.225    17472.09          0     999999
+{txt}HHExpNFQat~D {c |}{res}     72,653    1037.232    8634.271          0     900000
+{txt}HHExpNFQat~d {c |}{res}     72,653     905.306    7587.996          0     500000
+{txt}HHExpNFQat~t {c |}{res}     72,653    1172.857    5339.417          0     200000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFOth_MN {c |}{res}     72,653    193.8049    3022.849          0     600000
+{txt}HHExpFOth_~D {c |}{res}     72,653     20.9163    745.6016          0     150000
+{txt}HHExpFOth_~t {c |}{res}     72,653    27.96514    900.6173          0     100000
+{txt}HHExpNFTob~N {c |}{res}     72,653    612.5725    4417.649          0     600001
+{txt}HHExpNFTob~D {c |}{res}     72,653    178.6692    1475.668          0      70000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHyg~N {c |}{res}     72,653    2697.229     5432.99          0     300000
+{txt}HHExpNFHyg~D {c |}{res}     72,653    2044.471    4313.311          0     220000
+{txt}HHExpNFHyg~t {c |}{res}     72,653    173.2458    1378.534          0     100000
+{txt}HHExpNFWat~N {c |}{res}     72,653    2123.801    7169.195          0     520000
+{txt}HHExpNFWat~D {c |}{res}     72,653    1037.822    8898.902          0     800000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFTra~N {c |}{res}     72,653    6432.041    21084.08          0     800001
+{txt}HHExpNFTra~D {c |}{res}     72,653    1272.639    8261.276          0     800000
+{txt}HHExpNFTra~t {c |}{res}     72,653    147.7572    2598.611          0     300000
+{txt}HHExpNFEle~N {c |}{res}     72,653    827.6191    4496.488          0     500000
+{txt}HHExpNFEle~D {c |}{res}     72,653    2052.864    29540.85          0     995000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFPho~N {c |}{res}     72,653    1601.542    4346.729          0     500000
+{txt}HHExpNFPho~D {c |}{res}     72,653    176.9831    1277.092          0     120000
+{txt}HHExpNFFue~N {c |}{res}     72,653    3417.993     7000.37          0     700000
+{txt}HHExpNFFue~D {c |}{res}     72,653    1117.913    5200.148          0     700000
+{txt}HHExpNFRen~N {c |}{res}     72,653    1226.268    7988.602          0     550000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFRen~D {c |}{res}     72,653    1230.244    9408.933          0     990000
+{txt}HHExpNFSoc~N {c |}{res}     72,653    29746.82    248852.1          0   1.80e+07
+{txt}HHExpNFSoc~D {c |}{res}     72,653    25258.45    183624.5          0   1.50e+07
+{txt}HHExpNFRem~N {c |}{res}     72,653    1912.154    48509.71          0    8000000
+{txt}HHExpNFRem~D {c |}{res}     72,653    1118.775    186030.8          0   5.00e+07
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEdu~N {c |}{res}     72,653    11775.72    44281.77          0    7000000
+{txt}HHExpNFEdu~D {c |}{res}     72,653    6378.843    24201.39          0    3000000
+{txt}HHExpNFMed~N {c |}{res}     72,653    26684.86    162972.1          0   1.90e+07
+{txt}HHExpNFMed~D {c |}{res}     72,653     62248.8    242947.2          0   2.00e+07
+{txt}HHExpNFCst~N {c |}{res}     72,653    6607.895    171573.7          0   2.50e+07
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFCst~D {c |}{res}     72,653     7410.11    180549.6          0   2.50e+07
+{txt}HHExpNFAgr~N {c |}{res}     72,653    3832.081    79132.35          0   1.50e+07
+{txt}HHExpNFAgr~D {c |}{res}     72,653    4715.044    93699.59          0   1.50e+07
+{txt}HHExpNFClo~N {c |}{res}     72,653    22737.86     77137.3          0   1.00e+07
+{txt}HHExpNFClo~D {c |}{res}     72,653    12579.45    37830.72          0    1900000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEne~N {c |}{res}     72,653    3673.655    79051.12          0   1.80e+07
+{txt}HHExpNFEne~D {c |}{res}     72,653    3020.219    101266.8          0   2.00e+07
+{txt}HHExpNFDeb~N {c |}{res}     72,653    25934.89    155004.7          0    9000000
+{txt}HHExpNFDeb~D {c |}{res}     72,653    20147.92    207123.7          0   2.00e+07
+{txt}HHExpNFMN_~h {c |}{res}     72,653    2271.306    73087.11          0   1.50e+07
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFCRD~h {c |}{res}     72,653    19699.21    185735.1          0   1.50e+07
+{txt}HHExpFo~N_1M {c |}{res}     43,983    14225.07    15239.09          0     539000
+{txt}HHExpNF_M~1M {c |}{res}     43,983    7355.868    11599.38          0     504000
+{txt}HHExpNF_M~6M {c |}{res}     43,983    49622.71    191735.1          0   1.46e+07
+{txt}HHExpTot_M~M {c |}{res}     43,983    29851.39    44449.01          0    2912000
+{txt}{hline 13}{c +}{hline 57}
+HHEx~p_MN_1M {c |}{res}     43,983    3968.433    6156.811          0   352708.3
+{txt}HHExpFo~D_1M {c |}{res}     43,983     19935.7    20157.53          0     646600
+{txt}HHExpNF_C~1M {c |}{res}     43,983    7396.995    13572.25          0     706000
+{txt}HHExpNF_C~6M {c |}{res}     43,983    189760.4      475017          0   1.61e+07
+{txt}HHExpTot_C~M {c |}{res}     43,983    58959.43    88956.97          0    2705333
+{txt}{hline 13}{c +}{hline 57}
+HHE~p_CRD_1M {c |}{res}     43,983    7491.848    12332.46          0   645833.3
+{txt}HHExpFo~d_1M {c |}{res}     43,983    1238.657    4676.916          0     220000
+{txt}HHExpNF_E~1M {c |}{res}     43,983    866.7531    5454.433          0     300000
+{txt}HHExpTot_E~M {c |}{res}     43,983     2105.41    7474.856          0     300000
+{txt}HHExpTot_P.. {c |}{res}     43,983    256.9647    953.3782          0   42857.14
+{txt}{hline 13}{c +}{hline 57}
+HHExpFFat_~t {c |}{res}     43,983    1795.776     2718.71          0      80000
+{txt}HHExpFo~t_1M {c |}{res}     43,983    10386.12    12630.69          0     705000
+{txt}HHExpTot_P~d {c |}{res}     43,983    1464.506    2117.352          0   78333.33
+{txt}HHExpNF_A~1M {c |}{res}     43,983    1615.512    5193.828          0     200000
+{txt}HHExpTot_A~M {c |}{res}     43,983    12001.64    13787.23          0     705000
+{txt}{hline 13}{c +}{hline 57}
+HH~p_Asst_1M {c |}{res}     43,983    1695.094    2302.129          0   78333.33
+{txt}HHExpTotF_1M {c |}{res}     72,631    79150.65    64589.53          0    1086000
+{txt}HHExpTo~p_1M {c |}{res}     43,983    13412.34    15214.39          0   690183.3
+{txt}{space 1}HHExpTot_1M {c |}{res}     72,631    142678.1    141872.2          0    9099712
+
+{com}. codebook HHExpTot_1M HHExpTot_PerCap_1M
+
+{txt}{hline}
+{res}HHExpTot_1M{right:Total monthly household expenditure'}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}0{txt},{res}9099712{txt}]{col 55}Units: {res}.00001
+{col 10}{txt}Unique values: {res}34,693{col 51}{txt}Missing .: {res}22{txt}/{res}72,653
+
+{txt}{col 19}Mean: {res}{ralign 6:142678}
+{txt}{col 14}Std. dev.: {res}{ralign 6:141872}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 6:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 6:41000}{ralign 10: 63066.7}{ralign 10:  108167}{ralign 10:  181917}{ralign 10:  279099}
+
+{txt}{hline}
+{p 0 39}{res}HHExpTot_PerCap_1M{space 21}Total monthly household expenditure per capita{p_end}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}0{txt},{res}690183.33{txt}]{col 55}Units: {res}1.000e-06
+{col 10}{txt}Unique values: {res}26,405{col 51}{txt}Missing .: {res}28,670{txt}/{res}72,653
+
+{txt}{col 19}Mean: {res}{ralign 7:13412.3}
+{txt}{col 14}Std. dev.: {res}{ralign 7:15214.4}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:4403.7}{ralign 10: 6369.05}{ralign 10:    9825}{ralign 10: 15463.9}{ralign 10: 24666.7}
+
+{com}. HHExpTotFcodebook _1M
+{err}command {bf}HHExpTotFcodebook{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+{com}. codebook HHExpTotF_1M
+
+{txt}{hline}
+{res}HHExpTotF_1M{right:Total Monthly Food Expenditures}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}0{txt},{res}1086000{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}11,118{col 51}{txt}Missing .: {res}22{txt}/{res}72,653
+
+{txt}{col 19}Mean: {res}{ralign 7:79150.7}
+{txt}{col 14}Std. dev.: {res}{ralign 7:64589.5}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:24300}{ralign 10:   35200}{ralign 10:   57000}{ralign 10:  103000}{ralign 10:  166500}
+
+{com}. tab Region
+
+   {txt}North or {c |}
+      South {c |}
+Region Data {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+SBA (North) {c |}{res}     43,983       60.54       60.54
+{txt}IRG (South) {c |}{res}     28,670       39.46      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     72,653      100.00
+
+{com}. tab HH_Vul_CARI_South
+
+{txt}HH_Vul_CARI {c |}
+     _South {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}     12,578       43.87       43.87
+{txt}        Yes {c |}{res}     16,092       56.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     28,670      100.00
+
+{com}. tab Food_Expenditure_Share_CARI
+
+     {txt}Food Expenditure {c |}
+         Share - CARI {c |}
+           categories {c |}      Freq.     Percent        Cum.
+{hline 22}{c +}{hline 35}
+       Low FES (<50%) {c |}{res}     19,855       27.36       27.36
+{txt}  Medium FES (50-65%) {c |}{res}     20,830       28.71       56.07
+{txt}    High FES (65-75%) {c |}{res}     16,558       22.82       78.89
+{txt}Very High FES (>=75%) {c |}{res}     15,317       21.11      100.00
+{txt}{hline 22}{c +}{hline 35}
+                Total {c |}{res}     72,560      100.00
+
+{com}. tab Mean_coping_capacity_CARI
+
+{txt}Mean_coping {c |}
+_capacity_C {c |}
+        ARI {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        502        1.75        1.75
+{txt}        1.5 {c |}{res}      2,385        8.33       10.08
+{txt}          2 {c |}{res}      5,749       20.07       30.15
+{txt}        2.5 {c |}{res}      9,229       32.22       62.36
+{txt}          3 {c |}{res}      6,750       23.56       85.92
+{txt}        3.5 {c |}{res}      3,368       11.76       97.68
+{txt}          4 {c |}{res}        665        2.32      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     28,648      100.00
+
+{com}. tab HH_Vul_CARI_South
+
+{txt}HH_Vul_CARI {c |}
+     _South {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}     12,578       43.87       43.87
+{txt}        Yes {c |}{res}     16,092       56.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     28,670      100.00
+
+{com}. tab NCARI
+
+      {txt}NCARI {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}      1,076        3.77        3.77
+{txt}          2 {c |}{res}     11,502       40.34       44.11
+{txt}          3 {c |}{res}     12,360       43.35       87.46
+{txt}          4 {c |}{res}      3,575       12.54      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     28,513      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD09919.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP DRC In Camp Refugees Targeting                                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Data Append, Cleaning & Proxy Variable Construction        *              
+> *  DATE:                                Dec 15, 2022                                                                               *
+> *  LATEST UPDATE:               Jan 10, 2023                                                                                       *
+> *                 
+> ********************************************************************************
+>         
+>         ** OUTLINE:             PART 1: Prepare globals and define paths
+>                                         PART 2: Set codebook template
+>                                         PART 3: Variable creation
+>                                         PART 4: Label variables
+>                                         PART 5: Save dataset for analysis
+>                                 
+>         ** REQUIRES:    ${c -(}dataset{c )-}/DRC_BUR_noID_cleaned_revtarg.dta
+>                                         ${c -(}dataset{c )-}/DRC_CAR_IC_noID_cleaned_revtarg.dta
+>                                         ${c -(}dataset{c )-}/DRC_SSD_noID_cleaned_revtarg.dta
+>                                         
+>         ** CREATES:             ${c -(}dataset{c )-}/DRC_CAR_Inside_Camp_2021.dta
+>                                         ${c -(}dataset{c )-}/DRC_CAR_Inside_Camp_2021.sav
+>                                         "${c -(}output{c )-}/DRC_CAR_In&Out_Camp_2021.dta"
+>                                         "${c -(}output{c )-}/DRC_CAR_In&Out_Camp_2021.sav"
+>                                         
+>         ** BUR
+>         La méthodologie a consisté à interviewer la totalité des ménages réfugiés 
+>         burundais des camps de Lusenda et Mulongwe (province Sud Kivu) et 
+>         d'approfondir certaines thématiques avec un échantillon de 7 % (560) de la 
+>         population choisi au hasard. Au total 7 873 ménages ont été retenus.
+>         
+>         ** CAR_IC
+>         Au total, 1 450 ménages ont été sélectionnés grâce à un échantillonnage 
+>         aléatoire stratifié et au final 1 328 ont été retenus.
+>         
+>         ** VULNERABILITY FRAMEWORK
+>         No ECMEN data for Burundian (n = 560)
+>         VulnerabilityCat_d_hv is the only full variable (the one we used for Outside camp)
+>         
+> *******************************************************************************/
+. 
+. * Harmonize settings across users
+.     ieboilstart, v(13.0)
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.     `r(version)'
+{txt}
+{com}.         
+. * Set scheme
+.         set scheme plotplainblind
+{txt}
+{com}.         graph set window fontface "Times New Roman"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 1:  Prepare globals and define paths                          *
+. ********************************************************************************
+.         
+. * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.          
+. * set directories
+. * ---------------       
+.         global mac       1
+{txt}
+{com}.         global windows   0
+{txt}
+{com}. 
+. * set the GD Folder
+. if $mac {c -(}
+.         global targeting  "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/General - T&P CO Support"
+. {c )-}
+{txt}
+{com}. 
+. if $windows {c -(}
+.         global targeting  "C:/Users/Kareem.Sadik/OneDrive - World Food Programme/T&P CO Support/General"
+. {c )-} 
+{txt}
+{com}. 
+. * Subfolder globals
+. * -----------------
+.         gl DRC                  "${c -(}targeting{c )-}/DRC"
+{txt}
+{com}.         
+.         gl dataset              "${c -(}DRC{c )-}/01_Data"        
+{txt}
+{com}.         gl dofile               "${c -(}DRC{c )-}/02_Code"
+{txt}
+{com}.         gl output               "${c -(}DRC{c )-}/03_Output"
+{txt}
+{com}.         gl instrument   "${c -(}DRC{c )-}/04_Instrument"
+{txt}
+{com}.         gl codebook             "${c -(}DRC{c )-}/05_Codebook"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 2: Set codebook templates
+. *******************************************************************************/
+. 
+.         cap log close
+{smcl}
+{com}{sf}{ul off}

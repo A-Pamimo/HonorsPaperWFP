@@ -1,0 +1,741 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed00b_roster_correct_20231116.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}16 Nov 2023, 12:09:04
+{txt}
+{com}.         di `cdate'
+{res}20231116
+{txt}
+{com}.         
+.         * load dataset
+.         * ---------------       
+.         use "${c -(}d_raw{c )-}/Ecuador_F2F_Roster_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PSchoolEver{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PschoolLevel{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PschoolGrade{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthBirth{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PHealthDiarr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_888{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}getP{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str39{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str7{sf}
+  {txt}variable {bf}{res}tmp_RESP{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}RESP_position{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str3{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+{txt}  (1,778,552 bytes saved)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         ren ___parent_index      HH_Index
+{res}{txt}
+{com}.         
+.         ** drop PIIs
+.         drop RESPName
+{txt}
+{com}. 
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}getP{col 15}RESP_posit~n{col 29}___tags{col 43}___duration
+{col 1}PHealthDia~t{col 15}___uuid{col 29}___notes{col 43}___submitt~y
+{col 1}tmp_RESP{col 15}___parent_~e{col 29}___version{col 43}___xform_id
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(3,300 real changes made)
+(2,600 real changes made)
+(0 real changes made)
+(3,403 real changes made)
+(0 real changes made)
+(3,403 real changes made)
+(3,403 real changes made)
+(3,403 real changes made)
+(3,403 real changes made)
+(3,403 real changes made)
+(3,403 real changes made)
+
+{com}.         
+. *************************  ADD CORRECTION LINES HERE ***************************
+.         
+.         ** more than one respondent 
+.         replace RESPYN = 0 if HH_Index == 24  & ___index != 89
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 68  & ___index != 295
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 92  & ___index != 405
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 115 & ___index != 506
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 145 & ___index != 633
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 160 & ___index != 678
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 161 & ___index != 684
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 162 & ___index != 696
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 166 & ___index != 721
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 167 & ___index != 724
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 196 & ___index != 834
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 205 & ___index != 869
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 215 & ___index != 891
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 247 & ___index != 1007
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 262 & ___index != 1047
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 263 & ___index != 1051
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 284 & ___index != 1141
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 329 & ___index != 1294
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 351 & ___index != 1422
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 380 & ___index != 1562
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 384 & ___index != 1580
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 387 & ___index != 1594
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 418 & ___index != 1694
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 419 & ___index != 1701
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 422 & ___index != 1714
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 433 & ___index != 1756
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 467 & ___index != 1854
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 475 & ___index != 1882
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 477 & ___index != 1893
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 523 & ___index != 2056
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 555 & ___index != 2202
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 556 & ___index != 2211
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 560 & ___index != 2220        
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 607 & ___index != 2409
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 642 & ___index != 2579
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 650 & ___index != 2616
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 662 & ___index != 2666
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 665 & ___index != 2679
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 666 & ___index != 2683
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 667 & ___index != 2688
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 679 & ___index != 2752
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 683 & ___index != 2771
+{txt}(3 real changes made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 828 & ___index != 3348
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 829 & ___index != 3353
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if HH_Index == 830 & ___index != 3359
+{txt}(1 real change made)
+
+{com}. 
+.         replace RESPYN = 1 if HH_Index == 24  & ___index == 89
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 68  & ___index == 295
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 92  & ___index == 405
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 115 & ___index == 506
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 145 & ___index == 633
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 160 & ___index == 678
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 161 & ___index == 684
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 162 & ___index == 696
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 166 & ___index == 721
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 167 & ___index == 724
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 196 & ___index == 834
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 205 & ___index == 869
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 215 & ___index == 891
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 247 & ___index == 1007
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 262 & ___index == 1047
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 263 & ___index == 1051
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 284 & ___index == 1141
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 329 & ___index == 1294
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 351 & ___index == 1422
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 380 & ___index == 1562
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 384 & ___index == 1580
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 387 & ___index == 1594
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 418 & ___index == 1694
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 419 & ___index == 1701
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 422 & ___index == 1714
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 433 & ___index == 1756
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 467 & ___index == 1854
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 475 & ___index == 1882
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 477 & ___index == 1893
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 523 & ___index == 2056
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 555 & ___index == 2202
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 556 & ___index == 2211
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 560 & ___index == 2220        
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 607 & ___index == 2409
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 642 & ___index == 2579
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 650 & ___index == 2616
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 662 & ___index == 2666
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 665 & ___index == 2679
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 666 & ___index == 2683
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 667 & ___index == 2688
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 679 & ___index == 2752
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 683 & ___index == 2771
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 828 & ___index == 3348
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 829 & ___index == 3353
+{txt}(0 real changes made)
+
+{com}.         replace RESPYN = 1 if HH_Index == 830 & ___index == 3359
+{txt}(0 real changes made)
+
+{com}. 
+.         
+.         ** head of household
+.         
+.         
+.         
+.         save "${c -(}d_temp{c )-}/Ecuador_F2F_Roster_Correct.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Roster_Correct.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab PRelationHHH
+
+ {txt}What is their relationship {c |}
+     to the household head? {c |}      Freq.     Percent        Cum.
+{hline 28}{c +}{hline 35}
+          Head of household {c |}{res}        798       23.45       23.45
+{txt}             Spouse/partner {c |}{res}        508       14.93       38.38
+{txt}               Son/daughter {c |}{res}      1,520       44.67       83.04
+{txt}              Mother/Father {c |}{res}         67        1.97       85.01
+{txt}             Brother/sister {c |}{res}         89        2.62       87.63
+{txt}   Other relatives by blood {c |}{res}        285        8.37       96.00
+{txt}Other relatives by marriage {c |}{res}         91        2.67       98.68
+{txt}        Other non-relatives {c |}{res}         45        1.32      100.00
+{txt}{hline 28}{c +}{hline 35}
+                      Total {c |}{res}      3,403      100.00
+
+{com}. tab PRelationHHH, nol
+
+    {txt}What is {c |}
+      their {c |}
+relationshi {c |}
+   p to the {c |}
+  household {c |}
+      head? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        100 {c |}{res}        798       23.45       23.45
+{txt}        200 {c |}{res}        508       14.93       38.38
+{txt}        300 {c |}{res}      1,520       44.67       83.04
+{txt}        400 {c |}{res}         67        1.97       85.01
+{txt}        500 {c |}{res}         89        2.62       87.63
+{txt}        601 {c |}{res}        285        8.37       96.00
+{txt}        602 {c |}{res}         91        2.67       98.68
+{txt}        700 {c |}{res}         45        1.32      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,403      100.00
+
+{com}. codebook HH_Index
+
+{txt}{hline}
+{res}HH_Index{right:_parent_index}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}int{txt})
+
+{col 18}Range: [{res}1{txt},{res}841{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}774{col 51}{txt}Missing .: {res}0{txt}/{res}3,403
+
+{txt}{col 19}Mean: {res}{ralign 7:421.529}
+{txt}{col 14}Std. dev.: {res}{ralign 7:246.906}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:77}{ralign 10:     200}{ralign 10:     419}{ralign 10:     637}{ralign 10:     762}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD01886.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - All                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 30, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   organize                0       // Organize variables
+{txt}
+{com}.         local   balance                 0  // Produce balance tables
+{txt}
+{com}.         local   attrition               0       // Attrition analysis
+{txt}
+{com}.         local   indicator               0       // Run indicator level analysis
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         
+. * add your directory below
+.         display c(username)     // Get your username
+{res}nicolewu
+{txt}
+{com}.          
+. * set directories
+. * ---------------       
+. if "`c(username)'" == "nicolewu" {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         global audit  "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/Documents/ODK Briefcase Storage/forms"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+.         gl all                          "${c -(}rcari{c )-}/9_Comprehensive"
+{txt}
+{com}.         gl CAR                          "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl CAR_paper            "${c -(}CAR{c )-}/9_Analysis/8_Manuscript"
+{txt}
+{com}.         gl CAR_tex_tab          "${c -(}CAR_paper{c )-}/1_table"
+{txt}
+{com}.         gl CAR_tex_fig          "${c -(}CAR_paper{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl all_dta                      "${c -(}all{c )-}/1_Data"
+{txt}
+{com}.         gl all_dofile           "${c -(}all{c )-}/2_Dofile"
+{txt}
+{com}.         gl all_logs             "${c -(}all{c )-}/3_Log"
+{txt}
+{com}.         gl all_temp             "${c -(}all{c )-}/4_Temp"
+{txt}
+{com}.         gl all_tabs             "${c -(}all{c )-}/5_Tables"
+{txt}
+{com}.         gl all_figs             "${c -(}all{c )-}/6_Figures"
+{txt}
+{com}.         gl all_paper            "${c -(}all{c )-}/8_Manuscript"
+{txt}
+{com}.         gl all_docs                     "${c -(}all{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl all_tex_tab          "${c -(}all_paper{c )-}/1_table"
+{txt}
+{com}.         gl all_tex_fig          "${c -(}all_paper{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl myanmar_f2f          "${c -(}audit{c )-}/CARI Validation Study F2F_v1/instances"
+{txt}
+{com}.         gl myanmar_rm           "${c -(}audit{c )-}/CARI Validation Study Remote_v1/instances"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.1 Organize variables
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}all_dta{c )-}/All_Full_Household_Analysis.dta
+. *                       
+. *       CREATES:        ${c -(}all_dta{c )-}/All_Full_Household_Analysis_rCARI.dta
+. *                               ${c -(}all_dta{c )-}/Complete_Full_Household_Analysis_rCARI.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `organize'           do "${c -(}all_dofile{c )-}/01_Organize.do"
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.2     Outcome Balance
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}all_dta{c )-}/Complete_Full_Household_rCARI_Analysis.dta
+.         
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `balance'            do "${c -(}all_dofile{c )-}/02_Balance.do"
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.2     Attrition Balance
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}all_dta{c )-}/All_Full_Household_rCARI_Analysis.dta
+.         
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `attrition'          do "${c -(}all_dofile{c )-}/03_Attrition.do"
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       Indicator Regrouping Analysis
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}all_dta{c )-}/All_Full_Household_rCARI_Analysis.dta
+.         
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `indicator'          do "${c -(}all_dofile{c )-}/99_Indicator.do"
+{txt}
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD01886.000000"
+{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}all_dta{c )-}/ALL_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         keep if Country == 3
+{txt}(4,037 observations deleted)
+
+{com}.         
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Not Comple~d}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       88}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.230769}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.53892}}}{space 1}{space 1}{ralign 9:{res:{sf: 8.325449}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      747}}}{space 1}{space 1}{ralign 9:{res:{sf: 35.91346}}}{space 1}{space 1}{ralign 9:{res:{sf: 89.46108}}}{space 1}{space 1}{ralign 9:{res:{sf: 73.02053}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      835}}}{space 1}{space 1}{ralign 9:{res:{sf: 40.14423}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 40.14423}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf: 46.58654}}}{space 1}{space 1}{ralign 9:{res:{sf: 77.83133}}}{space 1}{space 1}{ralign 9:{res:{sf: 91.67455}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      276}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.26923}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.16867}}}{space 1}{space 1}{ralign 9:{res:{sf: 26.97947}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1245}}}{space 1}{space 1}{ralign 9:{res:{sf: 59.85577}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 59.85577}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1057}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.81731}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.81731}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1023}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.18269}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.18269}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2080}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}.         esttab using "${c -(}CAR_tex_tab{c )-}/CAR_rCARI_Completion.tex",                                         ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace 
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_rCARI_Completion.tex"'})
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD01886.000000"
+{txt}
+{com}.         dtable i.S_Geo_Admin1 i.S_Geo_Admin2 i.S_Geo_Admin3 i.S_Geo_Admin5              ///
+>                    , by(Completion) export(${c -(}CAR_tex_tab{c )-}/CAR_rCARI_ADMIN_Area.tex, replace) 
+{res}
+{smcl}
+{reset}{...}
+{hline 27}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{space 27} {space 14}Survey Progress{space 13}
+{space 27} Not Completed {space 2}Completed{space 2} {space 5}Total{space 4}
+{hline 27}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+N{space 26} {space 2}{result:835 (40.1%)} {result:1,245 (59.9%)} {result:2,080 (100.0%)}
+ADMIN1{space 21} {space 13} {space 13} {space 14}
+  Amazonia{space 17} {space 2}{result:214 (25.6%)} {space 2}{result:471 (37.8%)} {space 3}{result:685 (32.9%)}
+  Costa{space 20} {space 2}{result:621 (74.4%)} {space 2}{result:774 (62.2%)} {space 1}{result:1,395 (67.1%)}
+Geographic Region: Admin 2{space 1} {space 13} {space 13} {space 14}
+  Bangassou{space 16} {space 2}{result:214 (25.6%)} {space 2}{result:471 (37.8%)} {space 3}{result:685 (32.9%)}
+  Kaga-Bandaro{space 13} {space 2}{result:621 (74.4%)} {space 2}{result:774 (62.2%)} {space 1}{result:1,395 (67.1%)}
+ADMIN3Name{space 17} {space 13} {space 13} {space 14}
+  Arajuno{space 18} {space 2}{result:226 (27.1%)} {space 2}{result:292 (23.5%)} {space 3}{result:518 (24.9%)}
+  Colta{space 20} {space 2}{result:174 (20.8%)} {space 2}{result:200 (16.1%)} {space 3}{result:374 (18.0%)}
+  Cotacachi{space 16} {space 2}{result:221 (26.5%)} {space 2}{result:282 (22.7%)} {space 3}{result:503 (24.2%)}
+  Guamote{space 18} {space 2}{result:214 (25.6%)} {space 2}{result:471 (37.8%)} {space 3}{result:685 (32.9%)}
+ADMIN5Name{space 17} {space 13} {space 13} {space 14}
+  Apuela{space 19} {space 4}{result:28 (3.4%)} {space 4}{result:29 (2.3%)} {space 5}{result:57 (2.7%)}
+  Arajuno{space 18} {space 4}{result:29 (3.5%)} {space 4}{result:35 (2.8%)} {space 5}{result:64 (3.1%)}
+  Cebadas{space 18} {space 4}{result:49 (5.9%)} {space 4}{result:51 (4.1%)} {space 4}{result:100 (4.8%)}
+  Colonche{space 17} {space 4}{result:43 (5.1%)} {space 4}{result:55 (4.4%)} {space 5}{result:98 (4.7%)}
+  Columbe{space 18} {space 4}{result:43 (5.1%)} {space 4}{result:57 (4.6%)} {space 4}{result:100 (4.8%)}
+  El Salitre{space 15} {space 4}{result:34 (4.1%)} {space 4}{result:65 (5.2%)} {space 5}{result:99 (4.8%)}
+  General Vernaza{space 10} {space 4}{result:45 (5.4%)} {space 4}{result:51 (4.1%)} {space 5}{result:96 (4.6%)}
+  Guamote{space 18} {space 4}{result:49 (5.9%)} {space 4}{result:51 (4.1%)} {space 4}{result:100 (4.8%)}
+  Imantag{space 18} {space 4}{result:41 (4.9%)} {space 4}{result:37 (3.0%)} {space 5}{result:78 (3.8%)}
+  Junquillal{space 15} {space 4}{result:39 (4.7%)} {space 4}{result:61 (4.9%)} {space 4}{result:100 (4.8%)}
+  Loreto{space 19} {space 4}{result:40 (4.8%)} {space 4}{result:57 (4.6%)} {space 5}{result:97 (4.7%)}
+  Manglaralto{space 14} {space 4}{result:40 (4.8%)} {space 4}{result:64 (5.1%)} {space 4}{result:104 (5.0%)}
+  Palmira{space 18} {space 4}{result:55 (6.6%)} {space 4}{result:56 (4.5%)} {space 4}{result:111 (5.3%)}
+  PeÑArrera{space 16} {space 4}{result:45 (5.4%)} {space 4}{result:55 (4.4%)} {space 4}{result:100 (4.8%)}
+  Puerto Murialdo{space 10} {space 4}{result:41 (4.9%)} {space 4}{result:50 (4.0%)} {space 5}{result:91 (4.4%)}
+  Quiroga{space 18} {space 4}{result:25 (3.0%)} {space 4}{result:54 (4.3%)} {space 5}{result:79 (3.8%)}
+  San Jose De Dahuano{space 6} {space 4}{result:16 (1.9%)} {space 4}{result:50 (4.0%)} {space 5}{result:66 (3.2%)}
+  San Jose De Quichinche{space 3} {space 4}{result:24 (2.9%)} {space 4}{result:51 (4.1%)} {space 5}{result:75 (3.6%)}
+  San JosÉ De Payamino{space 5} {space 4}{result:28 (3.4%)} {space 4}{result:52 (4.2%)} {space 5}{result:80 (3.8%)}
+  San Juan De Iluman{space 7} {space 4}{result:18 (2.2%)} {space 4}{result:52 (4.2%)} {space 5}{result:70 (3.4%)}
+  San Vicente Huaticocha{space 3} {space 4}{result:13 (1.6%)} {space 4}{result:15 (1.2%)} {space 5}{result:28 (1.3%)}
+  Seis De Julio De Cuellaje {space 4}{result:22 (2.6%)} {space 4}{result:43 (3.5%)} {space 5}{result:65 (3.1%)}
+  SimÓN Bolivar{space 12} {space 4}{result:29 (3.5%)} {space 4}{result:43 (3.5%)} {space 5}{result:72 (3.5%)}
+  24{space 23} {space 4}{result:19 (2.3%)} {space 4}{result:62 (5.0%)} {space 5}{result:81 (3.9%)}
+  25{space 23} {space 4}{result:20 (2.4%)} {space 4}{result:49 (3.9%)} {space 5}{result:69 (3.3%)}
+{hline 27}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{res}{txt}{p 0 1 2}
+(collection {res:DTable} exported to file {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_rCARI_ADMIN_Area.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_rCARI_ADMIN_Area.tex})
+{p_end}
+
+{com}.                    
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD01886.000000"
+{txt}
+{com}.         * Load dataset
+.         use "${c -(}all_dta{c )-}/ALL_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD01886.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

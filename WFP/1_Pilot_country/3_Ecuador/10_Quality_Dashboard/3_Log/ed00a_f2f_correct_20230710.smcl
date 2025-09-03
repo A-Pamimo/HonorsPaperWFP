@@ -1,0 +1,53 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed00a_f2f_correct_20230710.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}10 Jul 2023, 17:22:05
+{txt}
+{com}.         di `cdate'
+{res}20230710
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/Ecuador_F2F_Household_Raw_`cdate'.dta", clear
+{err}{p 0 4 2}
+file {bf:{err}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/1_Raw/Ecuador_F2F_Household_Raw_20230710.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+{search r(601), local:r(601);}
+{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD08565.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check Randomization Balance                                                        *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 30, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

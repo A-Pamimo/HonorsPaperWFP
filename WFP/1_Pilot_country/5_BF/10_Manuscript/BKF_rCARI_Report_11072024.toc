@@ -1,0 +1,30 @@
+\contentsline {section}{\numberline {1}Introduction}{5}{section.1}%
+\contentsline {section}{\numberline {2}Study design \& sample}{7}{section.2}%
+\contentsline {section}{\numberline {3}Descriptive statistics}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Survey completion}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Modality balance check for the completed sample}{9}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Results \& discussions}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}CARI vs. rCARI}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Sensitivity analysis of the Income source \& income change vs. FES classifications}{15}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Sensitivity of the 4-CARI categories based on Income \& FES}{16}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Sensitivity of food secure vs. food insecure grouping to income \& FES}{17}{subsubsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.3}Comparison of the food security indicators across modality}{18}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Food Consumption Score (FCS)}{19}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Reduced Coping Strategies Index (rCSI)}{21}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Livelihood Coping Strategies Index (LCSI)}{21}{subsubsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.4}Food Expenditure Share (FES)}{22}{subsubsection.4.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.5}Income Source and Income Change}{24}{subsubsection.4.3.5}%
+\contentsline {section}{\numberline {5}Regression analysis}{25}{section.5}%
+\contentsline {section}{\numberline {6}Summary \& conclusions}{28}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Recommendations}{29}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Supplementary Analysis}{31}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Study limitations \& implementation challenges}{32}{subsection.7.1}%
+\contentsline {section}{\numberline {8}Next steps \& further analysis...}{33}{section.8}%
+\contentsline {section}{\numberline {9}References}{34}{section.9}%
+\contentsline {section}{\numberline {10}Annexes}{35}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Study areas selected for the pilot}{35}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Randomization balance test}{35}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}F2F Attrition Tables}{39}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Remote Attrition}{40}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Supporting documents}{41}{subsection.10.5}%
+\contentsline {subsubsection}{\numberline {10.5.1}CARI resources}{41}{subsubsection.10.5.1}%

@@ -1,0 +1,130 @@
+event,node,start,end
+form start,,1686640351458,
+question,/data/Technical_module/TechnicalBasic_submodule/SvyDate,1686640351461,1686640352551
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686640352563,1686640355773
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686640355789,1686640358566
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN1Name,1686640358580,1686640367305
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN3Name,1686640367332,1686640372372
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686640372392,1686640376337
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686640376359,1686640378875
+question,/data/Technical_module/TechnicalBasic_submodule/HHID,1686640378891,1686640398620
+question,/data/Technical_module/TechnicalBasic_submodule/generated_note_name_20,1686640398640,1686640399730
+question,/data/Technical_module/TechnicalBasic_submodule/HHPhNmb,1686640399745,1686640415652
+question,/data/Technical_module/TechnicalBasic_submodule/RESPpart,1686640415667,1686640418080
+question,/data/Consent/Consent_note,1686640418093,1686640419098
+question,/data/Consent/RESPAvailable,1686640419112,1686640421726
+question,/data/Consent/Continue/Interview/RESPAge,1686640421742,1686640439256
+question,/data/Consent/Continue/Interview/RESPSex,1686640439267,1686640441304
+question,/data/Consent/Continue/Interview/HHSize,1686640441317,1686640444089
+question,/data/Consent/Continue/Interview/RESPRelationHHH,1686640444101,1686640447017
+question,/data/Consent/Continue/FoodConsumption_module/FCSNote,1686640447029,1686640448256
+question,/data/Consent/Continue/FoodConsumption_module/FCSStap,1686640448269,1686640450677
+question,/data/Consent/Continue/FoodConsumption_module/FCSPulse,1686640450693,1686640459397
+question,/data/Consent/Continue/FoodConsumption_module/FCSDairy,1686640459411,1686640461560
+question,/data/Consent/Continue/FoodConsumption_module/FCSPr,1686640461572,1686640463030
+question,/data/Consent/Continue/FoodConsumption_module/FCSVeg,1686640463043,1686640464949
+question,/data/Consent/Continue/FoodConsumption_module/FCSFruit,1686640464962,1686640466638
+question,/data/Consent/Continue/FoodConsumption_module/FCSFat,1686640466651,1686640468325
+question,/data/Consent/Continue/FoodConsumption_module/FCSSugar,1686640468338,1686640472081
+question,/data/Consent/Continue/FoodConsumption_module/FCSFat,1686640472097,1686640476108
+question,/data/Consent/Continue/FoodConsumption_module/FCSSugar,1686640476121,1686640477642
+question,/data/Consent/Continue/genrCSI_submodule/rCSINote,1686640477654,1686640478844
+question,/data/Consent/Continue/genrCSI_submodule/rCSILessQlty,1686640478858,1686640480934
+question,/data/Consent/Continue/genrCSI_submodule/rCSIBorrow,1686640480951,1686640482570
+question,/data/Consent/Continue/genrCSI_submodule/rCSIMealSize,1686640482582,1686640484376
+question,/data/Consent/Continue/genrCSI_submodule/rCSIMealAdult,1686640484387,1686640485799
+question,/data/Consent/Continue/genrCSI_submodule/rCSIMealNb,1686640485811,1686640488728
+question,/data/Consent/Continue/genrCSI_submodule/rCSIMealAdult,1686640488744,1686640491223
+question,/data/Consent/Continue/genrCSI_submodule/rCSIGenderMealAdult,1686640491236,1686640495364
+question,/data/Consent/Continue/genrCSI_submodule/rCSIMealNb,1686640495377,1686640498121
+question,/data/Consent/Continue/LhCSI_submodule/Lcs,1686640498136,1686640499223
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_stress_DomAsset,1686640499236,1686640502524
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_stress_CrdtFood,1686640502537,1686640507965
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_stress_Saving,1686640507979,1686640511022
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_stress_BorrowCash,1686640511035,1686640519727
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_crisis_ProdAssets,1686640519740,1686640522576
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_crisis_Health,1686640522589,1686640530671
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_crisis_OutSchool,1686640530684,1686640533913
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_ChildWork,1686640533924,1686640537429
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_Begged,1686640537440,1686640543118
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_IllegalAct,1686640543130,1686640546193
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_Begged,1686640546208,1686640547111
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_ChildWork,1686640547123,1686640559039
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_Begged,1686640559053,1686640560589
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_ChildWork,1686640560603,1686640563015
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_Begged,1686640563028,1686640564106
+question,/data/Consent/Continue/LhCSI_submodule/Lcs_em_IllegalAct,1686640564120,1686640566053
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/EXPfood_note_S,1686640566065,1686640567006
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_MNCRD_7D,1686640567019,1686640623889
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_GiftAid_7D,1686640623902,1686640629067
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_Own_7D,1686640629085,1686640631125
+question,/data/Consent/Continue/Expenditures_module_short/NonFood_submodule_remote_S/EXPNF_note_S,1686640631139,1686640632689
+question,/data/Consent/Continue/Expenditures_module_short/NonFood_submodule_remote_S/HHExpNF_MNCRD_1M,1686640632705,1686640634993
+question,/data/Consent/Continue/Expenditures_module_short/NonFood_submodule_remote_S/EXPNF_note_S,1686640635009,1686640636176
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_Own_7D,1686640636190,1686640637348
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_GiftAid_7D,1686640637362,1686640638504
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_MNCRD_7D,1686640638517,1686640639824
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/EXPfood_note_S,1686640639838,1686640640978
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_MNCRD_7D,1686640640991,1686640645770
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_GiftAid_7D,1686640645785,1686640652515
+question,/data/Consent/Continue/Expenditures_module_short/Food_submodule_remote_S/HHExpF_Own_7D,1686640652527,1686640656962
+question,/data/Consent/Continue/Expenditures_module_short/NonFood_submodule_remote_S/EXPNF_note_S,1686640656975,1686640659398
+question,/data/Consent/Continue/Expenditures_module_short/NonFood_submodule_remote_S/HHExpNF_MNCRD_1M,1686640659414,1686640671135
+question,/data/Consent/Continue/Expenditures_module_short/NonFood_submodule_remote_S/HHExpNF_GiftAid_1M,1686640671150,1686640674117
+question,/data/Consent/Continue/Income_submodule_remote/Income_note,1686640674129,1686640675715
+question,/data/Consent/Continue/Income_submodule_remote/HHHOccupation,1686640675729,1686640683593
+question,/data/Consent/Continue/Income_submodule_remote/HHInc_PCT,1686640683606,1686640689671
+question,/data/Consent/Continue/Income_submodule_remote/HHIncNb,1686640689685,1686640692080
+question,/data/Consent/Continue/Income_submodule_remote/HHIncFirst,1686640692092,1686640693278
+question,/data/Consent/Continue/Income_submodule_remote/HHIncFirst_SRi,1686640693292,1686640696081
+question,/data/Consent/Continue/Income_submodule_remote/HHIncChg,1686640696094,1686640699078
+question,/data/Consent/Continue/Closing/note_close1,1686640699092,1686640700232
+question,/data/Consent/Continue/Closing/RESPPhNmbAlt,1686640700245,1686640713451
+question,/data/Consent/Continue/Closing/comments,1686640713466,1686640767175
+question,/data/Consent/Continue/Closing/remarks,1686640767189,1686640769630
+end screen,,1686640769642,1686640806784
+form save,,1686640807075,
+form exit,,1686640807075,
+form finalize,,1686640807075,
+form resume,,1686660722407,
+jump,,1686660722408,1686660726571
+question,/data/Technical_module/TechnicalBasic_submodule/SvyDate,1686660726606,1686660727493
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686660727506,1686660728447
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686660728460,1686660729530
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN1Name,1686660729544,1686660730547
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN3Name,1686660730564,1686660731397
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686660731412,1686660732264
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686660732278,1686660733274
+question,/data/Technical_module/TechnicalBasic_submodule/HHID,1686660733289,1686660747067
+question,/data/Technical_module/TechnicalBasic_submodule/generated_note_name_20,1686660747079,1686660748378
+question,/data/Technical_module/TechnicalBasic_submodule/HHPhNmb,1686660748389,1686660752480
+question,/data/Technical_module/TechnicalBasic_submodule/RESPpart,1686660752489,1686660753828
+question,/data/Consent/Consent_note,1686660753841,1686660754987
+question,/data/Consent/RESPAvailable,1686660755001,1686660756132
+question,/data/Consent/Continue/Interview/RESPAge,1686660756146,1686660757517
+question,/data/Consent/Continue/Interview/RESPSex,1686660757532,1686660758873
+question,/data/Consent/Continue/Interview/HHSize,1686660758887,1686660760060
+question,/data/Consent/Continue/Interview/RESPRelationHHH,1686660760074,1686660761397
+question,/data/Consent/Continue/FoodConsumption_module/FCSNote,1686660761411,1686660762440
+question,/data/Consent/Continue/FoodConsumption_module/FCSStap,1686660762455,1686660763939
+jump,,1686660763939,1686660765267
+end screen,,1686660765321,1686660766462
+question,/data/Consent/Continue/Closing/remarks,1686660766462,1686660768063
+question,/data/Consent/Continue/Closing/comments,1686660768078,1686660769206
+question,/data/Consent/Continue/Closing/RESPPhNmbAlt,1686660769220,1686660770385
+question,/data/Consent/Continue/Closing/note_close1,1686660770401,1686660771661
+question,/data/Consent/Continue/Income_submodule_remote/HHIncChg,1686660771678,1686660772885
+question,/data/Consent/Continue/Closing/note_close1,1686660772900,1686660774100
+question,/data/Consent/Continue/Income_submodule_remote/HHIncChg,1686660774114,1686660796155
+question,/data/Consent/Continue/Closing/note_close1,1686660796171,1686660797134
+question,/data/Consent/Continue/Closing/RESPPhNmbAlt,1686660797149,1686660802275
+question,/data/Consent/Continue/Closing/comments,1686660802290,1686660804817
+question,/data/Consent/Continue/Closing/remarks,1686660804831,1686660806241
+end screen,,1686660806257,1686660807406
+question,/data/Consent/Continue/Closing/remarks,1686660807407,1686660808631
+question,/data/Consent/Continue/Closing/comments,1686660808645,1686660810458
+question,/data/Consent/Continue/Closing/remarks,1686660810473,1686660811695
+end screen,,1686660811710,1686660816619
+form save,,1686660816850,
+form exit,,1686660816850,
+form finalize,,1686660816850,

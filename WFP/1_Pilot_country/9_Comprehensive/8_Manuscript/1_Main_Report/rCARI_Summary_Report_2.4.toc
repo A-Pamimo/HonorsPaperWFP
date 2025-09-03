@@ -1,0 +1,37 @@
+\contentsline {section}{\numberline {1}Introduction}{6}{section.1}%
+\contentsline {section}{\numberline {2}Study design}{9}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Selection of study areas and participants}{10}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Myanmar}{11}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Ecuador}{11}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Central African Republic}{12}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Overall study implementation}{14}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Survey Instrument(s)}{14}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}F2F Questionnaire}{14}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Remote Questionnaire}{15}{subsubsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.7}Survey protocols}{16}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Results and Discussions}{18}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Sample Completion}{18}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}CARI vs. rCARI}{19}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Food Consumption Score (FCS)}{22}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Reduced Coping Strategy Index (rCSI)}{24}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Livelihood Coping Strategy (LCS)}{25}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Food Expenditure Share (FES)}{28}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Income Source and Income Change}{29}{subsection.3.7}%
+\contentsline {section}{\numberline {4}Module Length and Food Security Indicator Reporting}{30}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Standard FCS module vs. Short FCS module}{30}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Standard Expenditure module vs. Short Expenditure module}{30}{subsection.4.2}%
+\contentsline {section}{\numberline {5}LCS for Food Security vs LCS for Essential Needs}{34}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Aggregate LCS-FS/EN (Maximum livelihood coping strategies)}{34}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Specific Coping Strategies Adoption by Country}{35}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Summary and conclusions}{37}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Next Steps...}{38}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Challenges of the study by country}{39}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Myanmar}{39}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Ecuador}{39}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}CAR}{39}{subsection.7.3}%
+\contentsline {section}{\numberline {8}References}{41}{section.8}%
+\contentsline {section}{\numberline {9}Annexes}{42}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Balance tables based on observable characteristics}{42}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Supporting documents}{44}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}CARI resources}{44}{subsubsection.9.2.1}%
+\contentsline {subsubsection}{\numberline {9.2.2}Calling protocol}{44}{subsubsection.9.2.2}%

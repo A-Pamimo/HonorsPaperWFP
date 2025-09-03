@@ -1,0 +1,209 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md03_append_20230608.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 8 Jun 2023, 23:23:34
+{txt}
+{com}.         di `cdate'      
+{res}20230608
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2: Create master dataset for full sample
+. *******************************************************************************/
+.         
+.         tempfile sample
+{txt}
+{com}.         
+.         * merge assignment record back to check implementation
+.         import excel "${c -(}sample{c )-}/Myanmar_Sample_Merge.xlsx", sheet("Sheet1")     ///
+>                                  firstrow clear
+{res}{text}(6 vars, 1,665 obs)
+
+{com}.                                  
+.         encode Modality_Type, gen(Assign_Modality)
+{txt}
+{com}.         encode Length_Type, gen(Assign_Length)
+{txt}
+{com}.         drop   Modality_Type Length_Type
+{txt}
+{com}.         
+.         save `sample'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_27943.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         * load dataset
+.         * ------------
+.         use "${c -(}d_temp{c )-}/Myanmar_F2F_Household_Analysis_`cdate'.dta", clear
+{txt}
+{com}.         
+.         * merge Remote Answers to F2F Answers
+.         append using "${c -(}d_temp{c )-}/Myanmar_RM_Household_Analysis_`cdate'.dta"
+{txt}{p 0 7 2}
+(variable
+{bf:EnuName_Display} was {bf:str14}, now {bf:str16} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_1M} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_SRi} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_oth} was {bf:str1}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExp_Food_GiftAid_MN_7D} was {bf:int}, now {bf:float} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExp_Food_Own_MN_7D} was {bf:int}, now {bf:float} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}sampleYN} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+
+{com}.         compress
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}remarks{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (3,277 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Modality
+
+      {txt}Survey {c |}
+   Modality: {c |}
+     F2F vs. {c |}
+      Remote {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}         39       39.80       39.80
+{txt}      Remote {c |}{res}         59       60.20      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}         98      100.00
+
+{com}. tab R_Err_Resp
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+ respondent {c |}
+  in roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         33       84.62       84.62
+{txt}          1 {c |}{res}          6       15.38      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         39      100.00
+
+{com}. tab R_Err_Head
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+  household {c |}
+    head in {c |}
+     roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         38       97.44       97.44
+{txt}          1 {c |}{res}          1        2.56      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         39      100.00
+
+{com}. tab R_Err_Spouse
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+  spouse in {c |}
+     roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         26       66.67       66.67
+{txt}          1 {c |}{res}         13       33.33      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         39      100.00
+
+{com}. tab R_Err_SpouseAge
+
+ {txt}Error: age {c |}
+     of the {c |}
+ spouse < 9 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         26      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         26      100.00
+
+{com}. tab R_Err_ChildAge
+
+ {txt}Error: age {c |}
+       diff {c |}
+    between {c |}
+   head and {c |}
+     oldest {c |}
+  child < 9 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         19       54.29       54.29
+{txt}          1 {c |}{res}         16       45.71      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         35      100.00
+
+{com}. tab R_Err_ParentAge
+
+ {txt}Error: age {c |}
+       diff {c |}
+    between {c |}
+   head and {c |}
+   youngest {c |}
+ parent < 9 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}          5      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}          5      100.00
+
+{com}. tab R_Err_ParentMinor
+
+ {txt}Error: age {c |}
+of parent < {c |}
+         18 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         34      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         34      100.00
+
+{com}. tab R_Err_SameSex
+
+{txt}Error: head {c |}
+ and spouse {c |}
+of same sex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         39      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         39      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD27943.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

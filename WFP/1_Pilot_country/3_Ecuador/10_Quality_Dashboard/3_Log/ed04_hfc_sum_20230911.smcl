@@ -1,0 +1,682 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed04_hfc_sum_20230911.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 Sep 2023, 14:57:00
+{txt}
+{com}.         di `cdate'      
+{res}20230911
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         tab S_Assign_Modality   Modality
+
+             {txt}{c |} Survey Modality: F2F
+Modality_Typ {c |}      vs. Remote
+           e {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-To-Face {c |}{res}       760          0 {txt}{c |}{res}       760 
+{txt}      Remote {c |}{res}         0        656 {txt}{c |}{res}       656 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       760        656 {txt}{c |}{res}     1,416 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+           {txt}{c |}  Form Type: Long vs.
+Length_Typ {c |}         Short
+         e {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       701          0 {txt}{c |}{res}       701 
+{txt}Short Form {c |}{res}         0        715 {txt}{c |}{res}       715 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       701        715 {txt}{c |}{res}     1,416 
+{txt}
+{com}.         
+. *       replace S_Assign_Modality = Modality if mi(S_Assign_Modality)
+. *       replace S_Assign_Length   = Form         if mi(S_Assign_Length)
+.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         ** 1 Survey Completion  
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Not Comple~d}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      413}}}{space 1}{space 1}{ralign 9:{res:{sf: 17.41147}}}{space 1}{space 1}{ralign 9:{res:{sf: 43.20084}}}{space 1}{space 1}{ralign 9:{res:{sf: 35.20887}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      543}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.89207}}}{space 1}{space 1}{ralign 9:{res:{sf: 56.79916}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.28774}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      956}}}{space 1}{space 1}{ralign 9:{res:{sf: 40.30354}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 40.30354}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf: 32.04047}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.67232}}}{space 1}{space 1}{ralign 9:{res:{sf: 64.79113}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      656}}}{space 1}{space 1}{ralign 9:{res:{sf: 27.65599}}}{space 1}{space 1}{ralign 9:{res:{sf: 46.32768}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.71226}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1416}}}{space 1}{space 1}{ralign 9:{res:{sf: 59.69646}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 59.69646}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1173}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.45194}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.45194}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1199}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.54806}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.54806}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2372}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}.         esttab using "${c -(}d_tex_tab{c )-}/Ecuador_rCARI_Completion.tex",                                       ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace 
+{res}{txt}(output written to {browse  `"C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_rCARI_Completion.tex"'})
+
+{com}. 
+. /*      dtable i.S_Assign_Length i.S_Geo_Admin1 i.S_Geo_Admin3 i.S_Geo_Admin5 ///
+>                    i.S_Gender S_Age i.S_Marital_Status S_HHSize S_Num_Under15     ///
+>                    S_Num_Over60 i.S_Education i.S_HHDisable, by(Completion)                     ///
+>                    title(Myanmar rCARI Validation Study Progress)                                               ///
+>                    export(${c -(}d_tex_tab{c )-}/Myanmar_rCARI_Completion_by_Admin.tex, replace)     
+> */
+.         tabout S_Phase S_Assign_Modality S_Assign_Length S_Geo_Admin1 S_Geo_Admin3 S_Geo_Admin5 ///
+>                    Completion  ///
+>         using "${c -(}d_tex_tab{c )-}/Ecuador_rCARI_Completion_by_Admin.docx", ///
+>         replace c(freq row) clab("Count" "Percent") style(docx) f(0c 1p) font(bold) ///
+>         ptotal(single)
+{res}
+{txt}Table output written to: C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_rCARI_Completion_by_Admin.docx
+
+{res}        Survey Progress                                 
+        Not Completed   Not Completed   Completed       Completed       Total   Total
+        Count   Percent Count   Percent Count   Percent
+Phase                                           
+1       590     39.6%   899     60.4%   1,489   100.0%
+2       366     41.4%   517     58.6%   883     100.0%
+
+Modality_Type                                           
+Face-To-Face    413     35.2%   760     64.8%   1,173   100.0%
+Remote  543     45.3%   656     54.7%   1,199   100.0%
+
+Length_Type                                             
+Long Form       450     39.1%   701     60.9%   1,151   100.0%
+Short Form      506     41.4%   715     58.6%   1,221   100.0%
+
+ADMIN1                                          
+Amazonia        186     32.2%   391     67.8%   577     100.0%
+Costa   258     36.0%   459     64.0%   717     100.0%
+Sierra  512     47.5%   566     52.5%   1,078   100.0%
+
+ADMIN3Name                                              
+Arajuno 31      21.2%   115     78.8%   146     100.0%
+Colta   15      25.4%   44      74.6%   59      100.0%
+Cotacachi       285     51.3%   271     48.7%   556     100.0%
+Guamote 141     46.1%   165     53.9%   306     100.0%
+Loreto  155     36.0%   276     64.0%   431     100.0%
+Otavalo 71      45.2%   86      54.8%   157     100.0%
+Salitre 104     31.6%   225     68.4%   329     100.0%
+Santa Elena     154     39.7%   234     60.3%   388     100.0%
+
+ADMIN5Name                                              
+Apuela  25      34.2%   48      65.8%   73      100.0%
+Arajuno 31      21.2%   115     78.8%   146     100.0%
+Cebadas 34      33.0%   69      67.0%   103     100.0%
+Colonche        22      33.8%   43      66.2%   65      100.0%
+Columbe 15      25.4%   44      74.6%   59      100.0%
+El Salitre      39      35.8%   70      64.2%   109     100.0%
+General Vernaza 35      33.0%   71      67.0%   106     100.0%
+Guamote 68      85.0%   12      15.0%   80      100.0%
+Imantag 84      54.9%   69      45.1%   153     100.0%
+Junquillal      30      26.3%   84      73.7%   114     100.0%
+Loreto  62      39.0%   97      61.0%   159     100.0%
+Manglaralto     41      28.1%   105     71.9%   146     100.0%
+Palmira 39      31.7%   84      68.3%   123     100.0%
+PeÑArrera      26      47.3%   29      52.7%   55      100.0%
+Puerto Murialdo 47      35.1%   87      64.9%   134     100.0%
+Quiroga 106     55.2%   86      44.8%   192     100.0%
+San Jose De Dahuano     15      31.3%   33      68.8%   48      100.0%
+San Jose De Quichinche  39      55.7%   31      44.3%   70      100.0%
+San JosÉ De Payamino   17      47.2%   19      52.8%   36      100.0%
+San Juan De Iluman      32      36.8%   55      63.2%   87      100.0%
+San Vicente Huaticocha  14      25.9%   40      74.1%   54      100.0%
+Seis De Julio De Cuellaje       44      53.0%   39      47.0%   83      100.0%
+SimÓN Bolivar  91      51.4%   86      48.6%   177     100.0%
+
+Total   956     40.3%   1,416   59.7%   2,372   100.0%
+{txt}
+{com}.                 
+.         ** Survey Progress by Date
+.         tostring today, g(Date_Str) format(%tdd_m_CY) force
+{txt}Date_Str generated as {res:str11}
+Date_Str was forced to string; some loss of information
+
+{com}.         replace Date_Str = "" if Date_Str == "."
+{txt}(956 real changes made)
+
+{com}.         encode  Date_Str, gen(Data_Cat)
+{txt}
+{com}.         
+.         catplot Modality, asyvars stack recast(bar)                     ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45))) ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(10)90, nogrid labsize(2))                              ///
+>                         legend(ring(4) pos(6) rows(1) size(3))                  ///
+>                         ytitle("") blabel(bar, pos(center) size(2)      ///
+>                         gap(1)) b1title("") 
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Day.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Day.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** F2F by Date
+.         catplot Modality if Modality == 1, asyvars stack recast(bar)    ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45)))   ///
+>                         by (EnuName_Display)                                                    ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(5)15, nogrid labsize(2))                               ///
+>                         ytitle("") blabel(bar, pos(out) size(2)                 ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Enum_F2F_Date.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Enum_F2F_Date.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         catplot Modality if Modality == 2, asyvars stack recast(bar)    ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45)))   ///
+>                         by (EnuName_Display)                                                    ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(5)15, nogrid labsize(2))                               ///
+>                         ytitle("") blabel(bar, pos(out) size(2)                 ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Enum_RM_Date.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Enum_RM_Date.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+.         ** 2 Survey Duration: Doesn't Work and can be ignored for now   
+. /*      tostring today, g(Date_Str) format(%tdd_m_CY) force
+>         replace Date_Str = "" if Date_Str == "."
+>         
+>         gen NewDate = date(Date_Str, "DMY")
+>         format NewDate %tdCCYYNNDD
+> 
+>         graph box Duration_Min if Modality == 1, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)1500, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Duration_F2F_Date.png", replace
+>          
+>         graph box Duration_Min if Modality == 2, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)2100, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>     graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Duration_RM_Date.png", replace
+> */    
+.         ** 3 Household Size by Enumerator
+.         graph box HHSize, by(Modality) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(3)15, nogrid labsize(3))  ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+{res}{txt}
+{com}.     graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_HHSize_Modality.png", replace
+{txt}{p 0 4 2}
+file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_HHSize_Modality.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** 4 Other specify
+.         keep if Completion == 1
+{txt}(956 observations deleted)
+
+{com}.         
+.         gl otherspecify EnuName HHID HHHOccupation HHHOccupation_S /*HHStatusOth*/                      ///
+>                    HHHealthAcMildWhy_oth HHHealthAcSevereWhy_oth HHHealthChronWhy_oth                   ///
+>                    HHHealthEmergWhy_oth LhCSIEnAccess_stress_oth LhCSIEnAccess_crisis_oth               ///
+>                    LhCSIEnAccess_em_oth HHIncFirst_oth HHIncFirst_oth_S HHDwellType_oth                 ///
+>                    HHTenureType_oth HHWallType_oth HHRoofType_oth HHFloorType_oth                               ///
+>                    HHToiletType_oth HHEnerCookStove_oth HHEnerCookSRC_oth HHEnerLightSRC_oth    ///
+>                    HHWaterSRC_oth Sys_uuid
+{txt}
+{com}.                    
+.         codebook ${c -(}otherspecify{c )-}
+
+{txt}{hline}
+{res}EnuName{right:Name of interviewer (or ID)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}byte{txt})
+{ralign 22:Label}: {res:EnuName}
+
+{col 18}Range: [{res}1{txt},{res}11{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}11{col 51}{txt}Missing .: {res}0{txt}/{res}1,416
+
+{txt}{ralign 23: Examples:}{col 25}{res}2{col 31}{txt}ERICK GUERRA
+{ralign 23: }{col 25}{res}4{col 31}{txt}OMAR ANDRADE
+{ralign 23: }{col 25}{res}5{col 31}{txt}VERÓNICA GUERRERO
+{ralign 23: }{col 25}{res}7{col 31}{txt}ISABEL BURBANO
+
+{txt}{hline}
+{res}HHID{right:Household ID}
+{txt}{hline}
+
+{col 19}Type: String ({res}str10{txt})
+
+{col 10}Unique values: {res}1,416{col 51}{txt}Missing "": {res}0{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}"ECU0144"
+{col 25}"ECU02077"
+{col 25}"ECU03058"
+{col 25}"ECU099032"
+
+{txt}{hline}
+{res}HHHOccupation{right:What is the occupation of the household head?}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}402{col 51}{txt}Missing "": {res}0{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}"Agricultura"
+{col 25}"AgríCola"
+{col 25}"Cosechar"
+{col 25}"Maestro En Construccion"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHOccupation_S{right:What is the occupation of the household head?}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}163{col 51}{txt}Missing "": {res}1,033{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}"Agricultura"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthAcMildWhy_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}33{col 51}{txt}Missing "": {res}1,374{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthAcSevereWhy_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}13{col 51}{txt}Missing "": {res}1,402{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthChronWhy_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}14{col 51}{txt}Missing "": {res}1,400{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthEmergWhy_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}3{col 51}{txt}Missing "": {res}1,413{txt}/{res}1,416
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,413{col 32}""
+{col 20}         1{col 32}"La CirugíA No Realizaba El Ministerio"
+{col 20}         1{col 32}"No Le Atienden"
+{col 20}         1{col 32}"Solo Servicio Privados"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_stress_oth{right:Other (Specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}16{col 51}{txt}Missing "": {res}1,398{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_crisis_oth{right:Other (Specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}7{col 51}{txt}Missing "": {res}1,402{txt}/{res}1,416
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,402{col 32}""
+{col 20}         1{col 32}"No Hubo Necesidad"
+{col 20}         8{col 32}"No Tiene Esa Necesidad"
+{col 20}         1{col 32}"No Tuvo Que Usar Esta OpcióN"
+{col 20}         1{col 32}"Para Vender Alimento"
+{col 20}         1{col 32}"Por Falta De Dinero Para Movilizarse Y
+{col 32}Materiales Escolares."
+{col 20}         1{col 32}"Reducen En Medicinas Por Que No Hay
+{col 32}Acceso"
+{col 20}         1{col 32}"Sobre Un CréDito"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_em_oth{right:Other (Specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}4{col 51}{txt}Missing "": {res}1,412{txt}/{res}1,416
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,412{col 32}""
+{col 20}         1{col 32}"Beneficio Propio"
+{col 20}         1{col 32}"Manda Al NiñO A Trabajar Con Su Padre
+{col 32}Para Recoger MáS Café Para Sacar A
+{col 32}Vender."
+{col 20}         1{col 32}"Pagar Arriendo"
+{col 20}         1{col 32}"Trabajo De Alto Riesgo Es Por Las
+{col 32}Fumigaciones A Las Plantas"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHIncFirst_oth{right:Specify}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}138{col 51}{txt}Missing "": {res}1,159{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHIncFirst_oth_S{right:Specify}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}48{col 51}{txt}Missing "": {res}1,342{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHDwellType_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}11{col 51}{txt}Missing "": {res}1,394{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHTenureType_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}30{col 51}{txt}Missing "": {res}1,376{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHWallType_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}37{col 51}{txt}Missing "": {res}1,309{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHRoofType_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}23{col 51}{txt}Missing "": {res}1,326{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHFloorType_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}13{col 51}{txt}Missing "": {res}1,401{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHToiletType_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}8{col 51}{txt}Missing "": {res}1,408{txt}/{res}1,416
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,408{col 32}""
+{col 20}         1{col 32}"Bota AtráS Del Patio Lo De La
+{col 32}Basenilla"
+{col 20}         1{col 32}"Comoartido"
+{col 20}         1{col 32}"Hay Dos BañOs Uno Con Fosa SéPtica Y
+{col 32}Otro Conectado Al Alcantarillado"
+{col 20}         1{col 32}"No Hay"
+{col 20}         1{col 32}"No Tiene BañO"
+{col 20}         1{col 32}"Piden Prestado El BañO"
+{col 20}         1{col 32}"Sin BañO"
+{col 20}         1{col 32}"Tienen Que Pedir Prestado El BañO Al
+{col 32}Vecino"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHEnerCookStove_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}20{col 51}{txt}Missing "": {res}1,368{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHEnerCookSRC_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str3{txt})
+
+{col 10}Unique values: {res}1{col 51}{txt}Missing "": {res}1,387{txt}/{res}1,416
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,387{col 32}""
+{col 20}        29{col 32}"Gas"
+
+{txt}{hline}
+{res}HHEnerLightSRC_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}13{col 51}{txt}Missing "": {res}1,403{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHWaterSRC_oth{right:Other (specify)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}24{col 51}{txt}Missing "": {res}1,388{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}Sys_uuid{right:_uuid}
+{txt}{hline}
+
+{col 19}Type: String ({res}str36{txt})
+
+{col 10}Unique values: {res}1,416{col 51}{txt}Missing "": {res}0{txt}/{res}1,416
+
+{txt}{col 15}Examples: {res}"33e328b1-d2dc-4b7f-8c27-b0b1172044d7"
+{col 25}"65ebb4b3-17d6-4f11-bf2f-baa775556897"
+{col 25}"9aa20eef-4b11-4290-a472-6e04301fbcd2"
+{col 25}"cdb05d06-eb1d-4f62-a14a-efc53e41dcf6"
+{txt}
+{com}.         export excel ${c -(}otherspecify{c )-} using "${c -(}note{c )-}/Ecuador_other_specify_`cdate'.xlsx",        ///
+>                    firstrow(variables) replace
+{res}{txt}file {bf:C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/5_Field_notes/Ecuador_other_specify_20230911.xlsx} saved
+
+{com}. 
+.         ** scatter between food security outcomes
+.         scatter FCS rCSI, by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{err}option {bf:colorvar()} not allowed
+{txt}{search r(198), local:r(198);}
+
+end of do-file
+{search r(198), local:r(198);}
+{search r(198), local:r(198);}
+
+end of do-file
+
+{search r(198), local:r(198);}
+
+{com}. h colorvar
+
+.  scatter FCS rCSI, by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{err}option {bf:colorvar()} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. h scatter
+
+. findit scatter
+
+. ssc install scatter
+{txt}{err}{bf:ssc install}: "{bf:scatter}" not found at SSC, type {stata search scatter}
+(To find all packages at SSC that start with s, type {stata ssc describe s})
+{txt}{search r(601), local:r(601);}
+
+{com}. findit scatter
+
+.  scatter FCS rCSI, by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{err}option {bf:colorvar()} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}.  scatter FCS rCSI, by(Modality) graphregion(color(white)) bgcolor(white)
+{res}
+{com}. exit, clear

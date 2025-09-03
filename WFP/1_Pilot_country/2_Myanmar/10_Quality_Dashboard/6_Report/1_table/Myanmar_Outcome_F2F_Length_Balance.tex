@@ -1,0 +1,42 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES HH_Vul_Income if Modality == 1, grpvar(Form) nonote total replace format(%12.2fc) grplabels(1 Long @ 2 Short) onerow rowvarlabels savetex("/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_F2F_Length_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lcccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(3)}  & \multicolumn{1}{c}{(2)-(3)} \\
+ & \multicolumn{1}{c}{Total}  & \multicolumn{1}{c}{Long}  & \multicolumn{1}{c}{Short}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+Food Consumption Score   & 44.32    & 44.67    & 43.96    & 0.71   \\
+ & (0.50)  & (0.71)  & (0.70)  &  \\ [1ex]
+Reduced Coping Strategies Index (rCSI)   & 5.43    & 5.70    & 5.16    & 0.54   \\
+ & (0.30)  & (0.43)  & (0.43)  &  \\ [1ex]
+Maximum Livelihood Coping: None   & 0.26    & 0.25    & 0.26    & -0.01   \\
+ & (0.02)  & (0.02)  & (0.03)  &  \\ [1ex]
+Maximum Livelihood Coping: Stress level   & 0.46    & 0.47    & 0.45    & 0.02   \\
+ & (0.02)  & (0.03)  & (0.03)  &  \\ [1ex]
+Maximum Livelihood Coping: Crisis level   & 0.25    & 0.26    & 0.24    & 0.01   \\
+ & (0.02)  & (0.03)  & (0.02)  &  \\ [1ex]
+Maximum Livelihood Coping: Emergency level   & 0.03    & 0.02    & 0.05    & -0.02   \\
+ & (0.01)  & (0.01)  & (0.01)  &  \\ [1ex]
+Total monthly food expenditure (average)   & 277,712.82    & 300,045.50    & 255,380.15    & 44,665.35***   \\
+ & (5,903.00)  & (8,309.95)  & (8,202.09)  &  \\ [1ex]
+Total monthly non-food expenditure (average)   & 157,354.79    & 173,898.33    & 140,811.26    & 33,087.08***   \\
+ & (5,956.20)  & (9,319.11)  & (7,313.85)  &  \\ [1ex]
+Monthly total household expenditure   & 435,067.62    & 473,943.83    & 396,191.41    & 77,752.42***   \\
+ & (9,727.81)  & (14,332.85)  & (12,797.28)  &  \\ [1ex]
+Monthly total household expenditure per capita   & 85,223.46    & 93,346.30    & 77,100.63    & 16,245.67***   \\
+ & (1,888.13)  & (2,940.57)  & (2,280.92)  &  \\ [1ex]
+Food Expenditure Share   & 0.66    & 0.66    & 0.66    & -0.00   \\
+ & (0.01)  & (0.01)  & (0.01)  &  \\ [1ex]
+Household being vulnerable using FES CARI   & 0.47    & 0.44    & 0.50    & -0.06   \\
+ & (0.02)  & (0.03)  & (0.03)  &  \\ [1ex]
+Household being vulnerable using Income rCARI   & 0.41    & 0.41    & 0.41    & -0.01   \\
+ & (0.02)  & (0.03)  & (0.03)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 610   & 305   & 305  & 610  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

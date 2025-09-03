@@ -1,0 +1,32 @@
+\contentsline {section}{\numberline {1}Introduction}{5}{section.1}%
+\contentsline {section}{\numberline {2}Study design \& sample}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Survey implementation}{9}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Phone assignment for remote modality}{10}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Descriptive statistics}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Survey completion}{12}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Group balance check for the completed sample}{13}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Results \& discussions}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}CARI vs. rCARI}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Comparison of the food security indicators across modality}{19}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Food Consumption Score (FCS)}{19}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Reduced Coping Strategies Index (rCSI)}{20}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Livelihood Coping Strategies (LCS)}{20}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Food Expenditure Share (FES)}{21}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Income Source and Income Change}{22}{subsubsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.3}CARI using FES vs CARI Income source \& income change}{23}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Regression analysis}{25}{section.5}%
+\contentsline {section}{\numberline {6}Summary \& conclusions}{27}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Study limitations \& implementation challenges}{28}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Next steps \& further analysis...}{29}{subsection.6.2}%
+\contentsline {section}{\numberline {7}References}{30}{section.7}%
+\contentsline {section}{\numberline {8}Annexes}{31}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Final survey sample size \& and phone access by ADMIN Area}{31}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Randomization balance test}{32}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}F2F Attrition Tables}{34}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Remote Attrition}{35}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Regression table for a typical CATI sample with F2F}{36}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Enumerator Assignment by Admin5}{37}{subsection.8.6}%
+\contentsline {subsection}{\numberline {8.7}Outcome Summary by Admin5}{38}{subsection.8.7}%
+\contentsline {subsection}{\numberline {8.8}Supporting documents}{39}{subsection.8.8}%
+\contentsline {subsubsection}{\numberline {8.8.1}CARI resources}{39}{subsubsection.8.8.1}%
+\contentsline {subsubsection}{\numberline {8.8.2}Listing questionnaire}{39}{subsubsection.8.8.2}%

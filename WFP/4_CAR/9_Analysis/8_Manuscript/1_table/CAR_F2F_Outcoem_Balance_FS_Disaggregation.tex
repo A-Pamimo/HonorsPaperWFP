@@ -1,0 +1,34 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency HHExpTotal PCExpTotal FES if Modality == 1, grpvar(HH_Vul_FES) nonote nototal replace onerow format(%12.2fc) grplabels(0 Food Secure @ 1 Food Insecure) rowvarlabels savetex("C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_F2F_Outcoem_Balance_FS_Disaggregation.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(1)-(2)} \\
+ & \multicolumn{1}{c}{Food Secure}  & \multicolumn{1}{c}{Food Insecure}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+Food Consumption Score   & 51.66    & 25.43    & 26.24***   \\
+ & (1.05)  & (0.46)  &  \\ [1ex]
+Reduced Consumption Strategies Index (rCSI)   & 15.34    & 13.22    & 2.12**   \\
+ & (0.87)  & (0.36)  &  \\ [1ex]
+Maximum Livelihood Coping: None   & 0.36    & 0.33    & 0.03   \\
+ & (0.04)  & (0.02)  &  \\ [1ex]
+Maximum Livelihood Coping: Stress level   & 0.58    & 0.47    & 0.12**   \\
+ & (0.04)  & (0.02)  &  \\ [1ex]
+Maximum Livelihood Coping: Crisis level   & 0.06    & 0.14    & -0.08***   \\
+ & (0.02)  & (0.01)  &  \\ [1ex]
+Maximum Livelihood Coping: Emergency level   & 0.00    & 0.06    & -0.06***   \\
+ & (0.00)  & (0.01)  &  \\ [1ex]
+Monthly total household expenditure   & 71,732.48    & 35,068.30    & 36,664.18***   \\
+ & (3,746.22)  & (982.61)  &  \\ [1ex]
+Monthly total household expenditure per capita   & 12,019.57    & 6,542.27    & 5,477.29***   \\
+ & (1,288.57)  & (199.18)  &  \\ [1ex]
+Food Expenditure Share   & 0.58    & 0.74    & -0.15***   \\
+ & (0.01)  & (0.01)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 139   & 830  & 969  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

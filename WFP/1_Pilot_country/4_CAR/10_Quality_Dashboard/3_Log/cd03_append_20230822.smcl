@@ -1,0 +1,303 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd03_append_20230822.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Aug 2023, 23:39:30
+{txt}
+{com}.         di `cdate'      
+{res}20230822
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2: Create master dataset for full sample
+. *******************************************************************************/
+.         
+.         * load dataset
+.         * ------------
+.         use "${c -(}d_temp{c )-}/CAR_F2F_Household_Analysis_`cdate'.dta", clear
+{txt}
+{com}.         
+.         * append Remote Answers to F2F Answers
+.         append using "${c -(}d_temp{c )-}/CAR_RM_Household_Analysis_`cdate'.dta"
+{txt}{p 0 7 2}
+(variable
+{bf:EnuName_Display} was {bf:str23}, now {bf:str24} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_1M} was {bf:byte}, now {bf:long} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_1M} was {bf:byte}, now {bf:long} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExp_Food_Own_MN_7D} was {bf:int}, now {bf:float} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}HHRoofType} already defined)
+(label {bf:{txt}HHEnerCookSRC} already defined)
+(label {bf:{txt}HHWaterSRC} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}PSchoolEver} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}RESPConNo} already defined)
+(label {bf:{txt}sampleYN} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN2Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}AMIN1_byte} already defined)
+(label {bf:{txt}Admin2Name_byte} already defined)
+(label {bf:{txt}Admin3Name_byte} already defined)
+(label {bf:{txt}Admin5Name_byte} already defined)
+(label {bf:{txt}house_type_byte} already defined)
+(label {bf:{txt}relationship_byte} already defined)
+(label {bf:{txt}hh_status_byte} already defined)
+(label {bf:{txt}roofing_material_house_byte} already defined)
+(label {bf:{txt}floor_material_house_byte} already defined)
+(label {bf:{txt}Modality_Type_byte} already defined)
+(label {bf:{txt}Length_Type_byte} already defined)
+(label {bf:{txt}yesno} already defined)
+(label {bf:{txt}gender_l} already defined)
+
+{com}.         compress
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (13,143 bytes saved)
+
+{com}.         drop S_*
+{txt}
+{com}.         
+.         * merge sample list 
+.         mmerge HHID using "${c -(}sample{c )-}/CAR_Sample_Merge.dta", type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_F2F_Household_Analysis_20230822.dta
+{txt}{ralign 20:obs} {c |} {res}   716
+{txt}{ralign 20:vars} {c |} {res}   714
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta
+{txt}{ralign 20:obs} {c |} {res}  2287{txt}
+{txt}{ralign 20:vars} {c |} {res}    23{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+(label {bf:{txt}AMIN1_byte} already defined)
+(label {bf:{txt}Admin2Name_byte} already defined)
+(label {bf:{txt}Admin3Name_byte} already defined)
+(label {bf:{txt}Admin5Name_byte} already defined)
+(label {bf:{txt}house_type_byte} already defined)
+(label {bf:{txt}relationship_byte} already defined)
+(label {bf:{txt}hh_status_byte} already defined)
+(label {bf:{txt}roofing_material_house_byte} already defined)
+(label {bf:{txt}floor_material_house_byte} already defined)
+(label {bf:{txt}Modality_Type_byte} already defined)
+(label {bf:{txt}Length_Type_byte} already defined)
+(label {bf:{txt}yesno} already defined)
+(label {bf:{txt}gender_l} already defined)
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_F2F_Household_Analysis_20230822.dta
+{txt}{ralign 20:obs} {c |} {res}  2287
+{txt}{ralign 20:vars} {c |} {res}   738{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   1571{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    716{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         gen Completion = (Attrition == 0)
+{txt}
+{com}.         
+.         label def com_list 1 "Completed" 0 "Not Completed"
+{txt}
+{com}.         label val Completion com_list
+{txt}
+{com}.         label var Completion "Survey Progress"
+{txt}
+{com}.         
+. *       drop if mi(HHID)
+.         drop _merge
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Organize Dataset and Labels
+. *******************************************************************************/
+. 
+. *       missings dropvars, force        // remove extra vars
+. *       missings dropobs , force        // remove empty observations
+. 
+. ** Define and Format Strings
+. gl other_specify EnuName_Display HHHealthAcMildWhy_oth HHHealthAcSevereWhy_oth  ///
+>    HHHealthChronWhy_oth HHHealthEmergWhy_oth LhCSIEnAccess_stress_oth               ///
+>    LhCSIEnAccess_crisis_oth LhCSIEnAccess_em_oth HHHOccupation HHIncFirst_oth   ///
+>    HHDwellType_oth HHTenureType_oth HHWallType_oth HHRoofType_oth HHFloorType_oth ///
+>    HHToiletType_oth HHEnerCookStove_oth HHEnerCookSRC_oth HHEnerLightSRC_oth    ///
+>    HHWaterSRC_oth comments remarks
+{txt}
+{com}.         
+.         ** remove unnecessary blanks in string and adjust the proper cases
+. foreach var of global other_specify {c -(}
+{txt}  2{com}.     replace `var' = strproper(strtrim(`var'))
+{txt}  3{com}.     {c )-}
+{txt}(716 real changes made)
+(10 real changes made)
+(15 real changes made)
+(8 real changes made)
+(1 real change made)
+(3 real changes made)
+(0 real changes made)
+(0 real changes made)
+(233 real changes made)
+(24 real changes made)
+(0 real changes made)
+(1 real change made)
+(0 real changes made)
+(1 real change made)
+(1 real change made)
+(23 real changes made)
+(1 real change made)
+(0 real changes made)
+(22 real changes made)
+(0 real changes made)
+(485 real changes made)
+(92 real changes made)
+
+{com}. 
+.         export excel HHID ${c -(}other_specify{c )-}                                                      ///
+>                    using "${c -(}note{c )-}/CAR_other_specify_raw_`cdate'.xlsx",          ///
+>                    firstrow(variables) replace
+{res}{txt}file {bf:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/5_Field_notes/CAR_other_specify_raw_20230822.xlsx} saved
+
+{com}.         
+.         ** check duplicated labels
+.         labeldup
+
+{txt}18 sets of duplicate value labels found:
+
+{p 0 11}{txt}Dupset {space 1}1: {res:{ul:ADMIN2Name}  Admin2Name_byte}{p_end}
+{p 0 11}{txt}Dupset {space 1}2: {res:{ul:EnuSex}  HHSex PSex RESPSex gender_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}3: {res:{ul:ADMIN1Name}  AMIN1_byte}{p_end}
+{p 0 11}{txt}Dupset {space 1}4: {res:{ul:Length_Type_byte}  length_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}5: {res:{ul:ConsentYN}  HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN HHExpFAnimFish_GiftAid_7D HHExpFAnimFish_Own_7D HHExpFAnimFish_Purch_7D HHExpFAnimMeat_GiftAid_7D HHExpFAnimMeat_Own_7D HHExpFAnimMeat_Purch_7D HHExpFBev_GiftAid_7D HHExpFBev_GiftAid_7D_S HHExpFBev_Own_7D HHExpFBev_Own_7D_S HHExpFBev_Purch_7D HHExpFBev_Purch_7D_S HHExpFCer_GiftAid_7D HHExpFCer_GiftAid_7D_S HHExpFCer_Own_7D HHExpFCer_Own_7D_S HHExpFCer_Purch_7D HHExpFCer_Purch_7D_S HHExpFCond_GiftAid_7D HHExpFCond_Own_7D HHExpFCond_Purch_7D HHExpFDairy_GiftAid_7D HHExpFDairy_Own_7D HHExpFDairy_Purch_7D HHExpFEgg_GiftAid_7D HHExpFEgg_Own_7D HHExpFEgg_Purch_7D HHExpFFatsDairy_GiftAid_7D_S HHExpFFatsDairy_Own_7D_S HHExpFFatsDairy_Purch_7D_S HHExpFFats_GiftAid_7D HHExpFFats_Own_7D HHExpFFats_Purch_7D HHExpFFrt_GiftAid_7D HHExpFFrt_Own_7D HHExpFFrt_Purch_7D HHExpFOut_GiftAid_7D HHExpFOut_GiftAid_7D_S HHExpFOut_Own_7D HHExpFOut_Own_7D_S HHExpFOut_Purch_7D HHExpFOut_Purch_7D_S HHExpFPro_GiftAid_7D HHExpFPro_Own_7D_S HHExpFPro_Purch_7D_S HHExpFPuls_GiftAid_7D HHExpFPuls_GiftAid_7D_S HHExpFPuls_Own_7D HHExpFPuls_Own_7D_S HHExpFPuls_Purch_7D HHExpFPuls_Purch_7D_S HHExpFSgrCond_GiftAid_7D_S HHExpFSgrCond_Own_7D_S HHExpFSgrCond_Purch_7D_S HHExpFSgr_GiftAid_7D HHExpFSgr_Own_7D HHExpFSgr_Purch_7D HHExpFTub_GiftAid_7D HHExpFTub_GiftAid_7D_S HHExpFTub_Own_7D HHExpFTub_Own_7D_S HHExpFTub_Purch_7D HHExpFTub_Purch_7D_S HHExpFVegFrt_GiftAid_7D_S HHExpFVegFrt_Own_7D_S HHExpFVegFrt_Purch_7D_S HHExpFVeg_GiftAid_7D HHExpFVeg_Own_7D HHExpFVeg_Purch_7D HHExpNFAlcTobac_GiftAid_1M HHExpNFAlcTobac_GiftAid_1M_S HHExpNFAlcTobac_Purch_1M HHExpNFAlcTobac_Purch_1M_S HHExpNFCloth_GiftAid_6M HHExpNFCloth_GiftAid_6M_S HHExpNFCloth_Purch_6M HHExpNFCloth_Purch_6M_S HHExpNFDwelSer_GiftAid_1M HHExpNFDwelSer_GiftAid_1M_S HHExpNFDwelSer_Purch_1M HHExpNFDwelSer_Purch_1M_S HHExpNFEduFeeGood_Purch_6M_S HHExpNFEduFee_GiftAid_6M HHExpNFEduFee_Purch_6M HHExpNFEduGood_GiftAid_6M HHExpNFEduGood_Purch_6M HHExpNFEdu_GiftAid_6M_S HHExpNFElec_GiftAid_1M HHExpNFElec_Purch_1M HHExpNFEnerg_GiftAid_1M HHExpNFEnerg_GiftAid_1M_S HHExpNFEnerg_Purch_1M HHExpNFEnerg_Purch_1M_S HHExpNFFuel_GiftAid_1M HHExpNFFuel_Purch_1M HHExpNFHHMaint_GiftAid_6M HHExpNFHHMaint_Purch_6M HHExpNFHHSoftMaint_Purch_6M_S HHExpNFHHSoft_GiftAid_6M HHExpNFHHSoft_GiftAid_6M_S HHExpNFHHSoft_Purch_6M HHExpNFHyg_GiftAid_1M HHExpNFHyg_GiftAid_1M_S HHExpNFHyg_Purch_1M HHExpNFHyg_Purch_1M_S HHExpNFMedGood_GiftAid_6M HHExpNFMedGood_Purch_6M HHExpNFMedServGood_Purch_6M_S HHExpNFMedServ_GiftAid_6M HHExpNFMedServ_Purch_6M HHExpNFMed_GiftAid_6M_S HHExpNFPhone_GiftAid_1M HHExpNFPhone_GiftAid_1M_S HHExpNFPhone_Purch_1M HHExpNFPhone_Purch_1M_S HHExpNFRecr_GiftAid_1M HHExpNFRecr_GiftAid_1M_S HHExpNFRecr_Purch_1M HHExpNFRecr_Purch_1M_S HHExpNFRent_GiftAid_6M HHExpNFRent_GiftAid_6M_S HHExpNFRent_Purch_6M HHExpNFRent_Purch_6M_S HHExpNFTrans_GiftAid_1M_S HHExpNFTranspFuel_Purch_1M_S HHExpNFTransp_GiftAid_1M HHExpNFTransp_Purch_1M HHExpNFWat_GiftAid_1M HHExpNFWat_GiftAid_1M_S HHExpNFWat_Purch_1M HHExpNFWat_Purch_1M_S HHExpNF_GiftAid_YN1M HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M MMDIHHHealthFac PSchoolEver PWMDDWDairy PWMDDWFruitOrg PWMDDWFruitOth PWMDDWMilk PWMDDWNuts PWMDDWPrEgg PWMDDWPrFish PWMDDWPrMeatF PWMDDWPrMeatO PWMDDWPrMeatPro PWMDDWPrMeatWhite PWMDDWPulse PWMDDWSnf PWMDDWStapCer PWMDDWStapRoo PWMDDWVegGre PWMDDWVegOrg PWMDDWVegOth RESPFoodWorry_YN YesNo sampleYN yesno}{p_end}
+{p 0 11}{txt}Dupset {space 1}6: {res:{ul:RESPConNo}  RESPREF}{p_end}
+{p 0 11}{txt}Dupset {space 1}7: {res:{ul:HHSBedHung_FR}  HHSBedHung_FR_S HHSNoFood_FR HHSNoFood_FR_S HHSNotEat_FR HHSNotEat_FR_S}{p_end}
+{p 0 11}{txt}Dupset {space 1}8: {res:{ul:Lcs_em_Begged}  Lcs_em_IllegalAct Lcs_stress_HealthEdu}{p_end}
+{p 0 11}{txt}Dupset {space 1}9: {res:{ul:LcsEN_em_Begged}  LcsEN_em_IllegalAct LcsEN_stress_HealthEdu}{p_end}
+{p 0 11}{txt}Dupset 10: {res:{ul:HHHealthAcMildTreat}  HHHealthAcSevereTreat HHHealthChronTreat HHHealthEmergTreat}{p_end}
+{p 0 11}{txt}Dupset 11: {res:{ul:FIESHHAteLess}  FIESHHAteLess_S FIESHHFewFoods FIESHHFewFoods_S FIESHHHealthy FIESHHHealthy_S FIESHHHungry FIESHHHungry_S FIESHHRanOut FIESHHRanOut_S FIESHHSkipped FIESHHSkipped_S FIESHHWholeDay FIESHHWholeDay_S FIESHHWorried FIESHHWorried_S HHHealthAcMildNeed HHHealthAcSevereNeed HHHealthChronNeed HHHealthEmergNeed}{p_end}
+{p 0 11}{txt}Dupset 12: {res:{ul:LcsEN_em_ResAsset}  Lcs_em_ResAsset}{p_end}
+{p 0 11}{txt}Dupset 13: {res:{ul:LcsEN_crisis_DomMigration}  Lcs_crisis_DomMigration}{p_end}
+{p 0 11}{txt}Dupset 14: {res:{ul:HHHealthAcMildWhy}  HHHealthAcSevereWhy HHHealthChronWhy HHHealthEmergWhy}{p_end}
+{p 0 11}{txt}Dupset 15: {res:{ul:HHIncChg}  HHIncChg_S}{p_end}
+{p 0 11}{txt}Dupset 16: {res:{ul:RESPMStatus}  RESPStatus RESPStatusHHH}{p_end}
+{p 0 11}{txt}Dupset 17: {res:{ul:PRelationHHH}  RESPRelationHHH}{p_end}
+{p 0 11}{txt}Dupset 18: {res:{ul:HHIncFirst_SRi}  HHIncFirst_SRi_S HHIncSec_SRi HHIncThird_SRi}{p_end}
+
+Specify option {cmd:select} to compress value labels using underlined labels
+Specify option {cmd:names()} to select other value names to be retained
+
+{com}.         
+.         * rename value labels
+.         labelrename EnuSex gender_label
+
+{txt}Value label {res:EnuSex} renamed to {res:gender_label}
+{p 0 8 2}{txt}value label {res:EnuSex} was attached to variables {res}EnuSex{p_end}
+{txt}
+{com}.         
+.         * add value labels
+.         label values RESPSex R_Resp_Sex gender_label
+{txt}
+{com}.         label values ConsentYN HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN ///
+>                                  HHExp*_Purch_7D* HHExp*_GiftAid_7D* HHExp*_Own_7D*                        ///  
+>                                  HHExp*_Purch_1M* HHExp*_GiftAid_1M*                                                       ///
+>                                  HHExp*_Purch_6M* HHExp*_GiftAid_6M*                                                       ///
+>                                  HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp                     ///
+>                                  MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M    ///
+>                                  MMDIHHHealthFac PWMDDW* RESPFoodWorry_YN sampleYN RESPFemale      ///
+>                                  RESPHHH YesNo
+{txt}
+{com}. 
+.         * adjust start and end time
+.         
+.         * save dataset
+.         compress
+  {txt}variable {bf}{res}Completion{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {bf}HHHealthAcSevereWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHEnerLightSRC_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}remarks{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (62,146 bytes saved)
+
+{com}. *       iecodebook export using "${c -(}d_out{c )-}/CAR_Full_Codebook.xlsx", replace
+.         
+.         save     "${c -(}d_dta{c )-}/CAR_Full_Household_Analysis_`cdate'.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/4_Data/CAR_Full_Household_Analysis_20230822.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         // not date specific for tableau import consistency
+.         savespss "${c -(}d_dta{c )-}/CAR_Full_Household_Analysis.sav", replace
+{res} {break}{text}Saving {result:2287} observations of {result:737} variables into {result:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/4_Data/CAR_Full_Household_Analysis.sav}{break}{result}Warning: variable Attrition has undefined value labels attached: SampleYN, which will be omitted.{break}{text} {break}{text}Export of Stata's volatile string variables will be using the following SPSS types:{break}{text}{hline}{break}{text}Variable name {col 34}Content length{col 56}Export{col 67}{text}Variable label{break}{text}{col 34}Stata{col 45}SPSS{col 56}notes{break}{hline}{break}{text}HHHealthAcMildWhy_oth{result}{col 34}132{col 45}132{col 67}{text}Other (specify){break}{text}HHHealthAcSevereWhy_oth{result}{col 34}100{col 45}100{col 67}{text}Other (specify){break}{text}HHHealthChronWhy_oth{result}{col 34}94{col 45}94{col 67}{text}Other (specify){break}{text}HHHealthEmergWhy_oth{result}{col 34}144{col 45}144{col 67}{text}Other (specify){break}{text}LhCSIEnAccess_stress_oth{result}{col 34}34{col 45}34{col 67}{text}Other (Specify){break}{text}HHHOccupation{result}{col 34}91{col 45}91{col 67}{text}What is the occupation of the household head?{break}{text}HHIncFirst_oth{result}{col 34}96{col 45}96{col 67}{text}Specify{break}{text}HHHOccupation_S{result}{col 34}61{col 45}61{col 67}{text}What is the occupation of the household head?{break}{text}HHTenureType_oth{result}{col 34}57{col 45}57{col 67}{text}Other (specify){break}{text}HHFloorType_oth{result}{col 34}47{col 45}47{col 67}{text}Other (specify){break}{text}HHEnerLightSRC_oth{result}{col 34}49{col 45}49{col 67}{text}Other (specify){break}{text}comments{result}{col 34}194{col 45}194{col 67}{text}Do you have any comments?{break}{text}remarks{result}{col 34}78{col 45}78{col 67}{text}Enumerator's remarks.{break}{text}{hline}{break}{browse "http://www.radyakin.org/transfer/savespss/kb/kb_00004.htm":What is this table?}{break}{text} {break} {break}{text}Saved {result:2287} observations of {result:737} variables into {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/4_Data/CAR_Full_Household_Analysis.sav":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/4_Data/CAR_Full_Household_Analysis.sav}{break}
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.4     Run high-frequency checks
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_out{c )-}/CAR_Full_Household_Analysis_`cdate'.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `hfc_sum'            do "${c -(}d_dofile{c )-}/cd04_hfc_sum.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create HFC and Summary Stats                                               *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun  20, 2023                                                                              *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}d_dta{c )-}/CAR_Full_Household_Analysis_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+.         
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

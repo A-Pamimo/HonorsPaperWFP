@@ -1,0 +1,391 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed01_setup_roster_20231004.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Oct 2023, 20:32:47
+{txt}
+{com}.         di `cdate'
+{res}20231004
+{txt}
+{com}.         
+. * load dataset
+. * ------------
+.         use "${c -(}d_temp{c )-}/Ecuador_F2F_Roster_Correct.dta", clear 
+{txt}
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}.         
+.         * create unique ID for each individual 
+.         makeid HH_Index ___index, gen(Ind_Index) project(Ecuador)
+{txt}(data now sorted by {bf:HH_Index ___index})
+(data now sorted by {bf:Ind_Index})
+
+{com}.         
+. ********************************************************************************
+. *                                       PART 2: Create Household Level Variables
+. *******************************************************************************/
+.         
+.         ** Create household level tag variable to filter
+.         egen HH_Tag = tag(HH_Index)
+{txt}
+{com}.         
+.         ** [Quality Outcome] check if respondent is in the roster
+.         bysort  HH_Index: egen Num_Resp = total(RESPYN == 1)
+{txt}
+{com}.         tab             Num_Resp if HH_Tag == 1         // should be 1
+
+   {txt}Num_Resp {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         14        1.81        1.81
+{txt}          1 {c |}{res}        729       94.19       95.99
+{txt}          2 {c |}{res}         22        2.84       98.84
+{txt}          3 {c |}{res}          7        0.90       99.74
+{txt}          4 {c |}{res}          1        0.13       99.87
+{txt}          5 {c |}{res}          1        0.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        774      100.00
+{txt}
+{com}.         gen             Err_Resp = (Num_Resp != 1)      
+{txt}
+{com}. 
+.         ** [Quality Outcome] check total number of hh member marked as head
+.         bysort  HH_Index: egen Num_hhh = total(PRelationHHH == 100)
+{txt}
+{com}.         tab     Num_hhh if  HH_Tag == 1         // should be 1
+
+    {txt}Num_hhh {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         18        2.33        2.33
+{txt}          1 {c |}{res}        714       92.25       94.57
+{txt}          2 {c |}{res}         42        5.43      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        774      100.00
+{txt}
+{com}.         gen             Err_Head = (Num_hhh != 1)
+{txt}
+{com}.         
+.         ** [Quality Outcome] check total number of hh member marked as spouse
+.         bysort  HH_Index: egen Num_Spouse = total(PRelationHHH == 200)
+{txt}
+{com}.         tab     Num_Spouse if  HH_Tag == 1              // should be 0 or 1
+
+ {txt}Num_Spouse {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        278       35.92       35.92
+{txt}          1 {c |}{res}        484       62.53       98.45
+{txt}          2 {c |}{res}         12        1.55      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        774      100.00
+{txt}
+{com}.         gen             Err_Spouse = (Num_Spouse > 1 & !mi(Num_Spouse))
+{txt}
+{com}.         
+.         ** [Quality Outcome] check respondent age and sex
+.         bysort HH_Index: egen Resp_Sex  = min(cond(RESPYN == 1, PSex, .))
+{txt}(43 missing values generated)
+
+{com}.         bysort HH_Index: egen Resp_Age  = min(cond(RESPYN == 1, PAge, .))
+{txt}(43 missing values generated)
+
+{com}. 
+.         ** [Quality Outcome] check household size
+.         bysort HH_Index: gen Num_Ind = _n
+{txt}
+{com}.         bysort HH_Index: egen Num_Household = max(Num_Ind)
+{txt}
+{com}. *       bysort HH_Index: egen Num_Household_check = max(getP)
+. 
+.                                 ********* Roster Error Flag - post HHID *********
+.                                 
+.         **      The age of the spouse is less than 9
+.         bysort HH_Index: egen Age_Spouse = min(cond(PRelationHHH == 200, PAge, .))
+{txt}(989 missing values generated)
+
+{com}.         gen        Err_SpouseAge = (Age_Spouse < 9) if !mi(Age_Spouse)
+{txt}(989 missing values generated)
+
+{com}.         
+.         **      The age difference between parent and head is less than 9.
+.         bysort HH_Index: egen Age_Head     = max(cond(PRelationHHH == 100, PAge, .))
+{txt}(82 missing values generated)
+
+{com}.         bysort HH_Index: egen Age_Parent = min(cond(PRelationHHH == 400, PAge, .))
+{txt}(3,128 missing values generated)
+
+{com}.         gen        Err_ParentAge = (Age_Parent - Age_Head < 9) if !mi(Age_Parent) & !mi(Age_Head)
+{txt}(3,140 missing values generated)
+
+{com}.         
+.         **      The age of parent is less than 18
+.         gen     Err_ParentMinor = (Age_Parent < 18) if mi(Age_Parent)
+{txt}(275 missing values generated)
+
+{com}.         
+.         **      The hoh and his/her spouse have the same sex
+.         bysort HH_Index: gen Err_SameSex = (PRelationHHH == 200 & PSex == PSex[1] ///
+>                                                                             & PRelationHHH[1] == 100)
+{txt}
+{com}.         
+.                                 ********* Roster Household-Level Outcomes  *********
+.         
+.         ** [Respondent] Relationship to head of household
+.         bysort HH_Index: egen RESPRelationHHH = min(cond(RESPYN == 1, PRelationHHH, .))
+{txt}(43 missing values generated)
+
+{com}.         
+.         ** [Demo] Head of Household Sex
+.         bysort HH_Index: egen HHH_Sex  = min(cond(PRelationHHH == 100, PSex, .))
+{txt}(82 missing values generated)
+
+{com}.         ** [Demo] Head of Household Age
+.         bysort HH_Index: egen HHH_Age  = min(cond(PRelationHHH == 100, PAge, .))
+{txt}(82 missing values generated)
+
+{com}.         ** [Demo] Head of Household Education
+.         bysort HH_Index: egen HHH_Literate  = min(cond(PRelationHHH == 100, PSchoolEver, .))
+{txt}(82 missing values generated)
+
+{com}.         bysort HH_Index: egen HHH_Education = min(cond(PRelationHHH == 100, PschoolLevel, .))
+{txt}(477 missing values generated)
+
+{com}.         
+.         ** [Demo] Total Male & Female
+.         bysort  HH_Index: egen Num_Male   = total(PSex == 1)
+{txt}
+{com}.         bysort  HH_Index: egen Num_Female = total(PSex == 0)
+{txt}
+{com}.         
+.         ** [Demo] Total number of children by sex
+.         bysort  HH_Index: egen Num_Child = total(PAge < 18)
+{txt}
+{com}.         bysort  HH_Index: egen Num_Boy   = total(PSex == 1 & PAge < 18)
+{txt}
+{com}.         bysort  HH_Index: egen Num_Girl  = total(PSex == 0 & PAge < 18)
+{txt}
+{com}.         
+.         ** [Demo] Total number of Senior
+.         bysort  HH_Index: egen Num_Senior = total(PAge >= 60)
+{txt}
+{com}.         
+.         ** [Demo] Total number of Adults
+.         bysort  HH_Index: egen Num_Adult = total(PAge >= 18 & PAge < 60)
+{txt}
+{com}.                    
+. ********************************************************************************
+. *                                                       PART 3: Label new variables
+. *******************************************************************************/
+.         
+.         order Err_*, a(HH_Index)
+{txt}
+{com}.         
+.         label val RESPRelationHHH       PRelationHHH
+{txt}
+{com}.         label val HHH_Sex Resp_Sex      PSex
+{txt}
+{com}.         label val HHH_Literate          PSchoolEver
+{txt}
+{com}.         label val HHH_Education         PschoolLevel
+{txt}
+{com}.         
+.         label var HH_Index                      "Household Index: Identifier"
+{txt}
+{com}.         label var Num_Ind                       "Individual Index: Household Size"
+{txt}
+{com}.         label var Err_Resp                      "Error: no or more than 1 respondent in roster"
+{txt}
+{com}.         label var Err_Head                      "Error: no or more than 1 household head in roster"
+{txt}
+{com}.         label var Err_Spouse            "Error: no or more than 1 spouse in roster"
+{txt}
+{com}.         label var Err_SpouseAge         "Error: age of the spouse < 9"
+{txt}
+{com}.         label var Err_ParentAge         "Error: age diff between head and youngest parent < 9"
+{txt}
+{com}.         label var Err_ParentMinor       "Error: age of parent < 18"
+{txt}
+{com}.         label var Err_SameSex           "Error: head and spouse of same sex"
+{txt}
+{com}.         label var Num_Resp                      "Total number of respondent in roster"
+{txt}
+{com}.         label var Num_hhh                       "Total number of household head in roster"
+{txt}
+{com}.         label var Num_Spouse            "Total number of spouse"
+{txt}
+{com}.         label var Num_Household         "Total number of household member"
+{txt}
+{com}.         label var Num_Male                      "Total number of male household member"
+{txt}
+{com}.         label var Num_Female            "Total number of female household member"
+{txt}
+{com}.         label var Num_Boy                       "Total number of boys (male under 18)"
+{txt}
+{com}.         label var Num_Girl                      "Total number of girls (female under 18)"
+{txt}
+{com}.         label var Num_Senior            "Total number of senior"
+{txt}
+{com}.         label var Num_Adult                     "Total number of adults"
+{txt}
+{com}.         label var Num_Child                     "Total number of children"
+{txt}
+{com}.         
+.         label var Age_Spouse            "Age of spouse (min if more than one)"
+{txt}
+{com}.         label var Age_Head                      "Age of household head"
+{txt}
+{com}.         label var Age_Parent            "Age of parent (min if more than one)"
+{txt}
+{com}.         
+.         label var Resp_Sex                      "Respondent Sex"
+{txt}
+{com}.         label var Resp_Age                      "Respondent Age"
+{txt}
+{com}.         label var RESPRelationHHH       "Respondent relationship to head of household"
+{txt}
+{com}.         
+.         label var HHH_Sex                       "Head of Household Sex"
+{txt}
+{com}.         label var HHH_Age                       "Head of Household Age"
+{txt}
+{com}.         label var HHH_Literate          "Household head has attended school"
+{txt}
+{com}.         label var HHH_Education         "Education level of household head"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 4: Organize dataset for merge
+. *******************************************************************************/
+.         
+.         save "${c -(}d_temp{c )-}/Ecuador_Roster_Prep_`cdate'.dta", replace
+{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_Roster_Prep_20231004.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_Roster_Prep_20231004.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         ** Only keep household level aggregate variables
+.         keep HH_Index HH_Tag Err_Resp Err_Head Num_Spouse Err_Spouse Err_SpouseAge        ///
+>                  Err_ParentAge Err_ParentMinor Err_SameSex Num_Resp Num_Household                 ///
+>                  Num_Spouse Resp_Sex Resp_Age RESPRelationHHH HHH_Sex HHH_Age                     ///
+>                  HHH_Literate HHH_Education Num_Male Num_Female Num_Child Num_Boy                 ///
+>                  Num_Girl Num_Senior Num_Adult
+{txt}
+{com}.                  
+.         keep if HH_Tag == 1 
+{txt}(2,629 observations deleted)
+
+{com}.         drop    HH_Tag
+{txt}
+{com}.         
+.         save "${c -(}d_temp{c )-}/Ecuador_Roster_Household_Prep.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_Roster_Household_Prep.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 5: Merge to Household F2F dataset
+. *******************************************************************************/
+. 
+.         use "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Correct.dta", clear
+{txt}
+{com}.         
+.         mmerge HH_Index using "${c -(}d_temp{c )-}/Ecuador_Roster_Household_Prep.dta", ///
+>                    type(1:1) uname(R_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Correct.dta
+{txt}{ralign 20:obs} {c |} {res}   760
+{txt}{ralign 20:vars} {c |} {res}   589
+{txt}{ralign 20:match vars} {c |} {res}HH_Index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_Roster_Household_Prep.dta
+{txt}{ralign 20:obs} {c |} {res}   774{txt}
+{txt}{ralign 20:vars} {c |} {res}    25{txt}
+{txt}{ralign 20:match vars} {c |} {res}HH_Index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Correct.dta
+{txt}{ralign 20:obs} {c |} {res}   774
+{txt}{ralign 20:vars} {c |} {res}   615{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}     14{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    760{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.                    
+.         drop if _merge == 2 // out of sample drop 
+{txt}(14 observations deleted)
+
+{com}.         drop _merge 
+{txt}
+{com}.         
+.         compress
+{txt}  (0 bytes saved)
+
+{com}.         save "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Prep.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Prep.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.2 Organize variables
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Prep_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta
+. *                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `organize'           do "${c -(}d_dofile{c )-}/ed02a_f2f_organize.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Ecuador                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create clean variables for Dashboard                               *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *                                                                                                                                                          *
+> *  DATE:                                Jun 18, 2023                                                                               *
+> *  LATEST UPDATE:               Jun 19, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:            ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Prep_`cdate'.dta
+>                                         
+>         ** CREATES:                     ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis_`cdate'.dta
+>                                                                 
+>         ** NOTES:                       _`cdate' on Jul 20 when data collection finished
+>                                         
+> ********************************************************************************
+> *                                               PART 1: Set up Log and Load Data
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

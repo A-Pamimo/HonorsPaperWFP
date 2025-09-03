@@ -1,0 +1,3190 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd00_sample_prep_20230926.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Sep 2023, 08:42:14
+{txt}
+{com}.         di `cdate'
+{res}20230926
+{txt}
+{com}.         
+.         import delimited "${c -(}sample{c )-}/Full_sample_Uid.csv", case(preserve) clear
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{res}{text}(45 vars, 2,287 obs)
+
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}. 
+.         * Alirah to add
+. if $alirah {c -(}
+.         global rcari  "C:\Users\alirah.weyori\World Food Programme\RAMN-N~1\018309~1.FOO\1ADA2~1.3RE\2_CARI~1\1_RCAR~1\1_PILO~1"
+.         {c )-} 
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl car                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}car{c )-}/3_Sampling"
+{txt}
+{com}.         gl bal                  "${c -(}sample{c )-}/Balance"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}car{c )-}/9_Analysis"     
+{txt}
+{com}.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         
+.         * Load sample
+.         *------------
+.         use "${c -(}sample{c )-}/Listed HHs for CAR_20230731.dta", clear           
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Admin1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}confirm_location{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_number{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_type{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentRsn{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}gender_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}relationship{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_status{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_sex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_marital{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_educ{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_size{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_lessthan15{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_greaterthan60{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_disability{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}area_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}phone_ownership{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}second_phone{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}roofing_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}floor_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}contact_time_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_6{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_structure{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mobile_coverage{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}starttime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}endtime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}subscriberid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}simid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}devicephonenum{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str28{sf}
+  {txt}variable {bf}{res}village_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}HHCoord{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}respondent_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}hhhead_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str33{sf}
+  {txt}variable {bf}{res}phone_number_1{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_3{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}contact_time{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str7{sf}
+  {txt}variable {bf}{res}hh_landmark_photo{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}hh_landmark_photo2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,537,294 bytes saved)
+
+{com}.         
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         * Set the environment to make randomization replicable
+.     isid ___index, sort
+{txt}(data now sorted by {bf:___index})
+
+{com}.     set  seed 208976  // bit.ly/stata-random set the random seed for replication 
+{txt}
+{com}.         
+.         ********* Sample selection
+.         ** check consent
+.         keep if consentYN == 1  // 2 observations dropped
+{txt}(2 observations deleted)
+
+{com}.         // ignore attrition on 2 rejecation out of 2513 total observations
+.         keep if !mi(Admin5Name)
+{txt}(11 observations deleted)
+
+{com}.         
+.         tab phone_ownership, nol
+
+   {txt}Does the {c |}
+  household {c |}
+have access {c |}
+  to mobile {c |}
+     phone? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,872       74.88       74.88
+{txt}          1 {c |}{res}        628       25.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         use "${c -(}sample{c )-}/Listed HHs for CAR_20230731.dta", clear           
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Admin1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}confirm_location{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_number{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_type{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentRsn{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}gender_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}relationship{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_status{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_sex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_marital{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_educ{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_size{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_lessthan15{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_greaterthan60{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_disability{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}area_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}phone_ownership{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}second_phone{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}roofing_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}floor_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}contact_time_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_6{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_structure{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mobile_coverage{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}starttime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}endtime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}subscriberid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}simid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}devicephonenum{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str28{sf}
+  {txt}variable {bf}{res}village_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}HHCoord{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}respondent_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}hhhead_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str33{sf}
+  {txt}variable {bf}{res}phone_number_1{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_3{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}contact_time{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str7{sf}
+  {txt}variable {bf}{res}hh_landmark_photo{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}hh_landmark_photo2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,537,294 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         * Set the environment to make randomization replicable
+.     isid ___index, sort
+{txt}(data now sorted by {bf:___index})
+
+{com}.     set  seed 208976  // bit.ly/stata-random set the random seed for replication 
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         keep if consentYN == 1  // 2 observations dropped
+{txt}(2 observations deleted)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         keep if !mi(Admin5Name)
+{txt}(11 observations deleted)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         tab phone_ownership, nol
+
+   {txt}Does the {c |}
+  household {c |}
+have access {c |}
+  to mobile {c |}
+     phone? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,872       74.88       74.88
+{txt}          1 {c |}{res}        628       25.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab phone_ownership mobile_coverage
+
+  {txt}Does the {c |}   ENUMERATOR: Check
+ household {c |}    with your phone
+      have {c |}   whether there is
+ access to {c |} coverage in the house
+    mobile {c |}        locatio
+    phone? {c |}        No        Yes {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+        No {c |}{res}       420      1,452 {txt}{c |}{res}     1,872 
+{txt}       Yes {c |}{res}       130        498 {txt}{c |}{res}       628 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       550      1,950 {txt}{c |}{res}     2,500 
+
+{com}. tab phone_ownership, raw
+{err}option {bf:raw} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. tab phone_ownership, row
+{err}option {bf:row} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. tab phone_ownership, rol
+{err}option {bf:rol} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. tab phone_ownership, d
+{err}option {bf:d} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. tab phone_ownership, r
+{err}option {bf:r} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. help sum
+
+. help tab 
+
+. tab  mobile_coverage if phone_ownership  == 0
+
+{txt}ENUMERATOR: {c |}
+ Check with {c |}
+ your phone {c |}
+    whether {c |}
+   there is {c |}
+coverage in {c |}
+  the house {c |}
+    locatio {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}        420       22.44       22.44
+{txt}        Yes {c |}{res}      1,452       77.56      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,872      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_20230802.xlsx", ///
+>                    firstrow(variables) replace
+{err}option {bf:firstrow()} incorrectly specified
+{txt}{search r(198), local:r(198);}
+
+end of do-file
+
+{search r(198), local:r(198);}
+
+{com}. 
+. import excel "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results_20230802.xlsx", sheet("Sheet1") firstrow clear
+{res}{text}(92 vars, 2,500 obs)
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_20230802.xlsx", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(92 vars, 2,500 obs)
+
+{com}.                    
+. 
+{txt}end of do-file
+
+{com}. tab Modality_Type if phone_ownership == 1
+{err}type mismatch
+{txt}{search r(109), local:r(109);}
+
+{com}. tab Modality_Type if phone_ownership == "Yes"
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        320       50.96       50.96
+{txt}      Remote {c |}{res}        308       49.04      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}        628      100.00
+
+{com}. tab Modality_Type if phone_ownership == "No" & mobile_coverage == "Yes"
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        737       50.76       50.76
+{txt}      Remote {c |}{res}        715       49.24      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      1,452      100.00
+
+{com}. tab Modality_Type if phone_ownership == "No" & mobile_coverage == "No"
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        207      100.00      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}        207      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.                   
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         keep  ___index STATUS
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_20230802.xlsx", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(92 vars, 2,500 obs)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         keep  ___index STATUS
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         import excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_20230802.xlsx", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(92 vars, 2,500 obs)
+
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}<data in memory not named>
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    92
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}<data in memory not named>
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    95{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Phone_STATUS
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        300      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        300      100.00
+
+{com}. tab Modality_Type Phone_STATUS
+
+{txt}Modality_Typ {c |}   STATUS
+           e {c |}         1 {c |}     Total
+{hline 13}{c +}{hline 11}{c +}{hline 10}
+      Remote {c |}{res}       300 {txt}{c |}{res}       300 
+{txt}{hline 13}{c +}{hline 11}{c +}{hline 10}
+       Total {c |}{res}       300 {txt}{c |}{res}       300 
+
+{com}. tab phone_ownership Phone_STATUS
+
+{txt}phone_owne {c |}   STATUS
+     rship {c |}         1 {c |}     Total
+{hline 11}{c +}{hline 11}{c +}{hline 10}
+        No {c |}{res}       300 {txt}{c |}{res}       300 
+{txt}{hline 11}{c +}{hline 11}{c +}{hline 10}
+     Total {c |}{res}       300 {txt}{c |}{res}       300 
+
+{com}.  tab co mobile_coverage Phone_STATUS
+{err}variable {bf}co{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}.  tab mobile_coverage Phone_STATUS
+
+{txt}mobile_cov {c |}   STATUS
+     erage {c |}         1 {c |}     Total
+{hline 11}{c +}{hline 11}{c +}{hline 10}
+       Yes {c |}{res}       300 {txt}{c |}{res}       300 
+{txt}{hline 11}{c +}{hline 11}{c +}{hline 10}
+     Total {c |}{res}       300 {txt}{c |}{res}       300 
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.           
+.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index STATUS
+{err}variable {bf}STATUS{sf} not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         import excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_20230802.xlsx", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(92 vars, 2,500 obs)
+
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}<data in memory not named>
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    92
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}<data in memory not named>
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    95{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         replace Phone_Assignment = 0 if mi(Phone_Assignment)
+{txt}(2,200 real changes made)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         drop _merge
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab Modality_Type if phone_ownership == "No" & mobile_coverage == "Yes"
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        737       50.76       50.76
+{txt}      Remote {c |}{res}        715       49.24      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      1,452      100.00
+
+{com}. tab Phone_Assignment if phone_ownership == "No" & mobile_coverage == "Yes"
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,152       79.34       79.34
+{txt}          1 {c |}{res}        300       20.66      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,452      100.00
+
+{com}. tab Phone_Assignment if phone_ownership == "No" & mobile_coverage == "Yes" & Modality_Type == "Remote"
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        415       58.04       58.04
+{txt}          1 {c |}{res}        300       41.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        715      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         replace Phone_Assignment = . if phone_ownership == "Yes" | mobile_coverage == "No" & Modality_Type == "Face-to-Face"
+{txt}(835 real changes made, 835 to missing)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Phone_Assignment
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,365       81.98       81.98
+{txt}          1 {c |}{res}        300       18.02      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,665      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         replace Phone_Assignment = . if phone_ownership == "Yes" | mobile_coverage == "No" | Modality_Type == "Face-to-Face"
+{txt}(950 real changes made, 950 to missing)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Phone_Assignment
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        415       58.04       58.04
+{txt}          1 {c |}{res}        300       41.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        715      100.00
+
+{com}. tab Phone_Assignment
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        415       58.04       58.04
+{txt}          1 {c |}{res}        300       41.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        715      100.00
+
+{com}. tab Modality_Type
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}      1,264       55.27       55.27
+{txt}      Remote {c |}{res}      1,023       44.73      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      2,287      100.00
+
+{com}. tab FLAG_Remote_NoPhone_NoCoverage
+
+{txt}FLAG_Remote {c |}
+_NoPhone_No {c |}
+   Coverage {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      2,287       91.48       91.48
+{txt}          1 {c |}{res}        213        8.52      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. tab Modality_Type if  FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}no observations
+
+{com}. tab Modality_Type if  FLAG_Remote_NoPhone_NoCoverage == 0
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}      1,264       55.27       55.27
+{txt}      Remote {c |}{res}      1,023       44.73      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      2,287      100.00
+
+{com}. tab Modality_Type if phone_ownership == "No" & mobile_coverage == "No"
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        207      100.00      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}        207      100.00
+
+{com}. tab area_house
+
+ {txt}area_house {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         74        2.96        2.96
+{txt}          1 {c |}{res}        715       28.60       31.56
+{txt}          2 {c |}{res}        726       29.04       60.60
+{txt}          3 {c |}{res}        622       24.88       85.48
+{txt}          4 {c |}{res}        259       10.36       95.84
+{txt}          5 {c |}{res}         72        2.88       98.72
+{txt}          6 {c |}{res}         22        0.88       99.60
+{txt}          7 {c |}{res}          6        0.24       99.84
+{txt}          8 {c |}{res}          1        0.04       99.88
+{txt}          9 {c |}{res}          2        0.08       99.96
+{txt}         10 {c |}{res}          1        0.04      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. tab hh_head_sex
+
+{txt}hh_head_sex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}        689       27.56       27.56
+{txt}       Male {c |}{res}      1,811       72.44      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. tab hh_head_educ
+
+{txt}hh_head_edu {c |}
+          c {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        637       25.48       25.48
+{txt}          1 {c |}{res}         90        3.60       29.08
+{txt}          2 {c |}{res}        164        6.56       35.64
+{txt}          3 {c |}{res}        215        8.60       44.24
+{txt}          4 {c |}{res}        206        8.24       52.48
+{txt}          5 {c |}{res}        172        6.88       59.36
+{txt}          6 {c |}{res}        323       12.92       72.28
+{txt}          7 {c |}{res}        174        6.96       79.24
+{txt}          8 {c |}{res}        112        4.48       83.72
+{txt}          9 {c |}{res}         96        3.84       87.56
+{txt}         10 {c |}{res}        106        4.24       91.80
+{txt}         11 {c |}{res}         28        1.12       92.92
+{txt}         12 {c |}{res}         48        1.92       94.84
+{txt}         13 {c |}{res}         65        2.60       97.44
+{txt}         14 {c |}{res}         22        0.88       98.32
+{txt}         15 {c |}{res}         13        0.52       98.84
+{txt}         16 {c |}{res}         14        0.56       99.40
+{txt}         17 {c |}{res}          5        0.20       99.60
+{txt}         18 {c |}{res}          6        0.24       99.84
+{txt}         19 {c |}{res}          2        0.08       99.92
+{txt}         20 {c |}{res}          2        0.08      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. tab roofing_material_house
+
+{txt}roofing_material {c |}
+          _house {c |}      Freq.     Percent        Cum.
+{hline 17}{c +}{hline 35}
+          Cement {c |}{res}          8        0.32        0.32
+{txt}   Ceramic tiles {c |}{res}          1        0.04        0.36
+{txt}      Don't know {c |}{res}          1        0.04        0.40
+{txt}       Metal/tin {c |}{res}        402       16.08       16.48
+{txt}         No roof {c |}{res}          9        0.36       16.84
+{txt} Other (specify) {c |}{res}         59        2.36       19.20
+{txt}     Palm/bamboo {c |}{res}      1,636       65.44       84.64
+{txt}Roofing shingles {c |}{res}          3        0.12       84.76
+{txt}      Rustic mat {c |}{res}          3        0.12       84.88
+{txt}Thatch/Palm leaf {c |}{res}        306       12.24       97.12
+{txt}     Wood planks {c |}{res}         72        2.88      100.00
+{txt}{hline 17}{c +}{hline 35}
+           Total {c |}{res}      2,500      100.00
+
+{com}. tab hh_structure
+
+{txt}hh_structur {c |}
+          e {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}         36        1.44        1.44
+{txt}        Yes {c |}{res}      2,464       98.56      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. tab Modality_Type
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}      1,264       55.27       55.27
+{txt}      Remote {c |}{res}      1,023       44.73      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      2,287      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Randomization of Sample                                                            *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *                                               Alirah Weyori (alirah.weyori@wfp.org)                              *
+> *  DATE:                                Jul 31, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    "${c -(}sample{c )-}/Listed HHs for CAR_20230731.xlsx"
+>                                         
+>         ** CREATES:             "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.xlsx"
+>                                         
+>         ** NOTES:               1. Full sample randomization since we already randomly selected
+>                                            them in the listing and only 2 rejections
+>                                         2. Separate randomization based on phone ownership: 25% have phones
+>                                         3. Filter out those 1) assigned with remote
+>                                                                                 2) without phones
+>                                                                                 3) has coverage 
+>                                            to give phones
+> 
+> ********************************************************************************
+> *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+> *******************************************************************************/
+. 
+. local user_commands ietoolkit iefieldkit 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} 
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(17.0)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}. 
+.         * Alirah to add
+. if $alirah {c -(}
+.         global rcari  "C:\Users\alirah.weyori\World Food Programme\RAMN-N~1\018309~1.FOO\1ADA2~1.3RE\2_CARI~1\1_RCAR~1\1_PILO~1"
+.         {c )-} 
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl car                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}car{c )-}/3_Sampling"
+{txt}
+{com}.         gl bal                  "${c -(}sample{c )-}/Balance"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}car{c )-}/9_Analysis"     
+{txt}
+{com}.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         
+.         * Load sample
+.         *------------
+.         use "${c -(}sample{c )-}/Listed HHs for CAR_20230731.dta", clear           
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Admin1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}confirm_location{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_number{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_type{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentRsn{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}gender_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}relationship{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_status{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_sex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_marital{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_educ{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_size{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_lessthan15{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_greaterthan60{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_disability{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}area_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}phone_ownership{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}second_phone{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}roofing_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}floor_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}contact_time_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_6{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_structure{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mobile_coverage{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}starttime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}endtime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}subscriberid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}simid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}devicephonenum{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str28{sf}
+  {txt}variable {bf}{res}village_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}HHCoord{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}respondent_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}hhhead_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str33{sf}
+  {txt}variable {bf}{res}phone_number_1{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_3{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}contact_time{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str7{sf}
+  {txt}variable {bf}{res}hh_landmark_photo{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}hh_landmark_photo2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,537,294 bytes saved)
+
+{com}.         
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         * Set the environment to make randomization replicable
+.     isid ___index, sort
+{txt}(data now sorted by {bf:___index})
+
+{com}.     set  seed 208976  // bit.ly/stata-random set the random seed for replication 
+{txt}
+{com}.         
+.         ********* Sample selection
+.         ** check consent
+.         keep if consentYN == 1  // 2 observations dropped
+{txt}(2 observations deleted)
+
+{com}.         // ignore attrition on 2 rejecation out of 2513 total observations
+.         keep if !mi(Admin5Name)
+{txt}(11 observations deleted)
+
+{com}.         
+.         tab phone_ownership, nol
+
+   {txt}Does the {c |}
+  household {c |}
+have access {c |}
+  to mobile {c |}
+     phone? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,872       74.88       74.88
+{txt}          1 {c |}{res}        628       25.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+{txt}
+{com}. /*      dtable i.Admin1Name i.Admin2Name i.Admin3Name i.Admin5Name,                     ///
+>                    by(phone_ownership) title(CAR rCARI Validation Study - Summary of Listed Sample ADMIN Distribution)  ///
+>                    export(${c -(}sample{c )-}/CAR_rCARI_Listed_Sample_ADMIN.docx, replace)
+> */        
+. 
+. ********************************************************************************
+. *                                               PART 3:  RUN RANDOMIZATION - Own Phone                         *
+. ********************************************************************************        
+.         
+.         * keep if phone_ownership == 1
+.         
+.     * Assign sampled household with phone to F2F and Remote 
+.         sort Admin5Name, stable
+{txt}
+{com}.         by Admin5Name: gen  Modality_RandomNum_P = uniform()                      ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name: egen Modality_Order_P = rank(Modality_RandomNum_P) ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name: egen TotSample_P  = max(Modality_Order_P)                  ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.     gen    Modality_Type_P = (Modality_Order_P <= TotSample_P/2)                  ///
+>                    if phone_ownership == 1 
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         ********* Form Length
+.         sort Admin5Name Modality_Type_P, stable
+{txt}
+{com}.         by Admin5Name Modality_Type_P: gen  Length_RandomNum_P = uniform() ///
+>                                                                    if !mi(Modality_Type_P)
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_P: egen Length_Order_P = rank(Length_RandomNum_P) ///
+>                                                                    if !mi(Modality_Type_P)
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_P: egen TotModality_P  = max(Length_Order_P) ///
+>                                                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         gen    Length_Type_P = (Length_Order_P <= TotModality_P/2)                         ///
+>                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         ** check in Own Phone group, assigned to Remote but without coverage
+.         count if Modality_Type_P == 1 & mobile_coverage == 0 // 68
+  {res}68
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 4:  RUN RANDOMIZATION - No Phone                          *
+. ********************************************************************************        
+.         
+.         * keep if phone_ownership == 0
+.         sort Admin5Name, stable
+{txt}
+{com}.     * Assign sampled household with phone to F2F and Remote 
+.         by Admin5Name: gen  Modality_RandomNum_NP = uniform()                           ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name: egen Modality_Order_NP = rank(Modality_RandomNum_NP) ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name: egen TotSample_NP  = max(Modality_Order_NP)                      ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.     gen    Modality_Type_NP = (Modality_Order_NP <= TotSample_NP/2)         ///
+>                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         ********* Form Length 
+.         sort Admin5Name Modality_Type_NP, stable
+{txt}
+{com}.         by Admin5Name Modality_Type_NP: gen  Length_RandomNum_NP = uniform()    ///
+>                                                                         if !mi(Modality_Type_NP)
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_NP: egen Length_Order_NP = rank(Length_RandomNum_NP) ///
+>                                                                         if !mi(Modality_Type_NP)
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_NP: egen TotModality_NP  = max(Length_Order_NP) ///
+>                                                                         if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         gen    Length_Type_NP = (Length_Order_NP <= TotModality_NP/2)                      ///
+>                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         ** check in Own Phone group, assigned to Remote but without coverage
+.         count if Modality_Type_NP == 1 & mobile_coverage == 0 // 213
+  {res}213
+{txt}
+{com}.         gen   FLAG_Remote_NoPhone_NoCoverage = (Modality_Type_NP == 1 & mobile_coverage == 0)
+{txt}
+{com}.         
+.         count if Modality_Type_NP == 1 & mobile_coverage == 1 // 715
+  {res}715
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 5:  Label Variables                                           *
+. ********************************************************************************        
+.         
+.         gen               Modality_Type = Modality_Type_P  if  phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         replace   Modality_Type = Modality_Type_NP if  phone_ownership == 0
+{txt}(1,872 real changes made)
+
+{com}.         
+.         replace   Modality_Type = . if FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}(213 real changes made, 213 to missing)
+
+{com}.         
+.         gen       Length_Type   = Length_Type_P    if  phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         replace   Length_Type   = Length_Type_NP   if  phone_ownership == 0
+{txt}(1,872 real changes made)
+
+{com}.         replace   Length_Type   = . if FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}(213 real changes made, 213 to missing)
+
+{com}.         
+.         label var Modality_Type                 "Modality Assignment: Type"
+{txt}
+{com}.         label var Length_Type                   "Form Length Assignment: Type"
+{txt}
+{com}.                 
+.         label def Modality_L                    1 "Remote"        0 "Face-to-Face"
+{txt}
+{com}.         label val Modality_Type                 Modality_L
+{txt}
+{com}.         
+.         label def Length_L                              1 "Long Form" 0 "Short Form"
+{txt}
+{com}.         label val Length_Type                   Length_L
+{txt}
+{com}.         
+.         sort Modality_Type Length_Type, stable
+{txt}
+{com}.         
+.         save "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", replace
+{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. *       export excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_${c -(}today{c )-}.xlsx", ///
+>                    firstrow(variables) replace
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         count if Modality_Type_NP == 1 & mobile_coverage == 1 // 715
+  {res}715
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         count if Modality_Type_NP == 1 & mobile_coverage == 0 // 213
+  {res}213
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         count if Modality_Type_P == 1 & mobile_coverage == 0 // 68
+  {res}68
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.           
+.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    92
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    95{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         replace Phone_Assignment = 0 if mi(Phone_Assignment)
+{txt}(2,200 real changes made)
+
+{com}.         drop _merge
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab Modality_Type
+
+    {txt}Modality {c |}
+ Assignment: {c |}
+        Type {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}      1,264       55.27       55.27
+{txt}      Remote {c |}{res}      1,023       44.73      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      2,287      100.00
+
+{com}. tab Modality_Type, nol
+
+   {txt}Modality {c |}
+Assignment: {c |}
+       Type {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,264       55.27       55.27
+{txt}          1 {c |}{res}      1,023       44.73      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,287      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         replace Phone_Assignment = . if phone_ownership == 1 | mobile_coverage == 0 | Modality_Type == 0
+{txt}(1,785 real changes made, 1,785 to missing)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Phone_Assignment
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        415       58.04       58.04
+{txt}          1 {c |}{res}        300       41.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        715      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         gen HHHResp                     = (relationship == 1)
+{txt}
+{com}.         gen HHHRespSpouse       = (relationship == 2)
+{txt}
+{com}.         gen HHDisplaced         = (hh_status    == 2)
+{txt}
+{com}.         gen HHHFemale           = (hh_head_sex  == 0)
+{txt}
+{com}.         gen HHHMarried          = (hh_head_marital == 1)
+{txt}
+{com}.         
+.         gen     HHCrowding      = hh_size/area_house
+{txt}(74 missing values generated)
+
+{com}.         sum     HHCrowding
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}HHCrowding {c |}{res}      2,426    3.298289    1.779506        .25         15
+{txt}
+{com}.         replace HHCrowding  = `r(max)' if mi(HHCrowding)
+{txt}(74 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         gl list_var age HHHResp HHHRespSpouse HHDisplaced HHHFemale HHHMarried          ///
+>                                 hh_head_educ hh_size mem_lessthan15 mem_greaterthan60                   ///
+>                                 mem_disability area_house HHCrowding
+{txt}
+{com}.         
+. ***************************** Balance for Randomization ************************
+.         
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 1, grpvar(Modality_Type) ///
+>                          nonote onerow nototal replace  ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}sample{c )-}/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 0, grpvar(Modality_Type) ///
+>                          nonote onerow nototal replace  ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}sample{c )-}/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 0, grpvar(Modality_Type) ///
+>                          nonote onerow nototal replace  ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         
+.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 0 & mobile_coverage == 1     ///
+>                                                  & Phone_Assignment != 0,                                                       ///
+>                          grpvar(Modality_Type) nonote onerow nototal replace                    ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels           ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}list_var{c )-}, grpvar(Phone_Assignment)                                                  ///
+>                          nonote onerow nototal replace                                                                  ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels           ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. count if phone_ownership == 0 & mobile_coverage == 1 & Modality_Type == 0
+  {res}737
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         sort ___index, stable
+{txt}
+{com}.         gen  Modality_RandomNum_P = uniform() if phone_ownership == 0 & ///
+>                                                                                          mobile_coverage == 1 & ///
+>                                                                                          Modality_Type == 0
+{err}variable {bf}Modality_RandomNum_P{sf} already defined
+{txt}{search r(110), local:r(110);}
+
+end of do-file
+
+{search r(110), local:r(110);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         sort ___index, stable
+{txt}
+{com}.         gen  Select_RandomNum = uniform() if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.                                                                                          
+. 
+{txt}end of do-file
+
+{com}. sum Select_RandomNum
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Select_Ran~m {c |}{res}        737    .4873604    .2852418   .0021406    .995062
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         egen Select_Order         = rank(Select_RandomNum)                              ///
+>                                                                           if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0                                                                              
+{txt}(1,763 missing values generated)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Select_Order
+
+    {txt}rank of {c |}
+(Select_Ran {c |}
+  domNum)   {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}          1        0.14        0.14
+{txt}          2 {c |}{res}          1        0.14        0.27
+{txt}          3 {c |}{res}          1        0.14        0.41
+{txt}          4 {c |}{res}          1        0.14        0.54
+{txt}          5 {c |}{res}          1        0.14        0.68
+{txt}          6 {c |}{res}          1        0.14        0.81
+{txt}          7 {c |}{res}          1        0.14        0.95
+{txt}          8 {c |}{res}          1        0.14        1.09
+{txt}          9 {c |}{res}          1        0.14        1.22
+{txt}         10 {c |}{res}          1        0.14        1.36
+{txt}         11 {c |}{res}          1        0.14        1.49
+{txt}         12 {c |}{res}          1        0.14        1.63
+{txt}         13 {c |}{res}          1        0.14        1.76
+{txt}         14 {c |}{res}          1        0.14        1.90
+{txt}         15 {c |}{res}          1        0.14        2.04
+{txt}         16 {c |}{res}          1        0.14        2.17
+{txt}         17 {c |}{res}          1        0.14        2.31
+{txt}         18 {c |}{res}          1        0.14        2.44
+{txt}         19 {c |}{res}          1        0.14        2.58
+{txt}         20 {c |}{res}          1        0.14        2.71
+{txt}         21 {c |}{res}          1        0.14        2.85
+{txt}         22 {c |}{res}          1        0.14        2.99
+{txt}         23 {c |}{res}          1        0.14        3.12
+{txt}         24 {c |}{res}          1        0.14        3.26
+{txt}         25 {c |}{res}          1        0.14        3.39
+{txt}         26 {c |}{res}          1        0.14        3.53
+{txt}         27 {c |}{res}          1        0.14        3.66
+{txt}         28 {c |}{res}          1        0.14        3.80
+{txt}         29 {c |}{res}          1        0.14        3.93
+{txt}         30 {c |}{res}          1        0.14        4.07
+{txt}         31 {c |}{res}          1        0.14        4.21
+{txt}         32 {c |}{res}          1        0.14        4.34
+{txt}         33 {c |}{res}          1        0.14        4.48
+{txt}         34 {c |}{res}          1        0.14        4.61
+{txt}         35 {c |}{res}          1        0.14        4.75
+{txt}         36 {c |}{res}          1        0.14        4.88
+{txt}         37 {c |}{res}          1        0.14        5.02
+{txt}         38 {c |}{res}          1        0.14        5.16
+{txt}         39 {c |}{res}          1        0.14        5.29
+{txt}         40 {c |}{res}          1        0.14        5.43
+{txt}         41 {c |}{res}          1        0.14        5.56
+{txt}         42 {c |}{res}          1        0.14        5.70
+{txt}         43 {c |}{res}          1        0.14        5.83
+{txt}         44 {c |}{res}          1        0.14        5.97
+{txt}         45 {c |}{res}          1        0.14        6.11
+{txt}         46 {c |}{res}          1        0.14        6.24
+{txt}         47 {c |}{res}          1        0.14        6.38
+{txt}         48 {c |}{res}          1        0.14        6.51
+{txt}         49 {c |}{res}          1        0.14        6.65
+{txt}         50 {c |}{res}          1        0.14        6.78
+{txt}         51 {c |}{res}          1        0.14        6.92
+{txt}         52 {c |}{res}          1        0.14        7.06
+{txt}         53 {c |}{res}          1        0.14        7.19
+{txt}         54 {c |}{res}          1        0.14        7.33
+{txt}         55 {c |}{res}          1        0.14        7.46
+{txt}         56 {c |}{res}          1        0.14        7.60
+{txt}         57 {c |}{res}          1        0.14        7.73
+{txt}         58 {c |}{res}          1        0.14        7.87
+{txt}         59 {c |}{res}          1        0.14        8.01
+{txt}         60 {c |}{res}          1        0.14        8.14
+{txt}         61 {c |}{res}          1        0.14        8.28
+{txt}         62 {c |}{res}          1        0.14        8.41
+{txt}         63 {c |}{res}          1        0.14        8.55
+{txt}         64 {c |}{res}          1        0.14        8.68
+{txt}         65 {c |}{res}          1        0.14        8.82
+{txt}         66 {c |}{res}          1        0.14        8.96
+{txt}         67 {c |}{res}          1        0.14        9.09
+{txt}         68 {c |}{res}          1        0.14        9.23
+{txt}         69 {c |}{res}          1        0.14        9.36
+{txt}         70 {c |}{res}          1        0.14        9.50
+{txt}         71 {c |}{res}          1        0.14        9.63
+{txt}         72 {c |}{res}          1        0.14        9.77
+{txt}         73 {c |}{res}          1        0.14        9.91
+{txt}         74 {c |}{res}          1        0.14       10.04
+{txt}         75 {c |}{res}          1        0.14       10.18
+{txt}         76 {c |}{res}          1        0.14       10.31
+{txt}         77 {c |}{res}          1        0.14       10.45
+{txt}         78 {c |}{res}          1        0.14       10.58
+{txt}         79 {c |}{res}          1        0.14       10.72
+{txt}         80 {c |}{res}          1        0.14       10.85
+{txt}         81 {c |}{res}          1        0.14       10.99
+{txt}         82 {c |}{res}          1        0.14       11.13
+{txt}         83 {c |}{res}          1        0.14       11.26
+{txt}         84 {c |}{res}          1        0.14       11.40
+{txt}         85 {c |}{res}          1        0.14       11.53
+{txt}         86 {c |}{res}          1        0.14       11.67
+{txt}         87 {c |}{res}          1        0.14       11.80
+{txt}         88 {c |}{res}          1        0.14       11.94
+{txt}         89 {c |}{res}          1        0.14       12.08
+{txt}         90 {c |}{res}          1        0.14       12.21
+{txt}         91 {c |}{res}          1        0.14       12.35
+{txt}         92 {c |}{res}          1        0.14       12.48
+{txt}         93 {c |}{res}          1        0.14       12.62
+{txt}         94 {c |}{res}          1        0.14       12.75
+{txt}         95 {c |}{res}          1        0.14       12.89
+{txt}         96 {c |}{res}          1        0.14       13.03
+{txt}         97 {c |}{res}          1        0.14       13.16
+{txt}         98 {c |}{res}          1        0.14       13.30
+{txt}         99 {c |}{res}          1        0.14       13.43
+{txt}        100 {c |}{res}          1        0.14       13.57
+{txt}        101 {c |}{res}          1        0.14       13.70
+{txt}        102 {c |}{res}          1        0.14       13.84
+{txt}        103 {c |}{res}          1        0.14       13.98
+{txt}        104 {c |}{res}          1        0.14       14.11
+{txt}        105 {c |}{res}          1        0.14       14.25
+{txt}        106 {c |}{res}          1        0.14       14.38
+{txt}        107 {c |}{res}          1        0.14       14.52
+{txt}        108 {c |}{res}          1        0.14       14.65
+{txt}        109 {c |}{res}          1        0.14       14.79
+{txt}        110 {c |}{res}          1        0.14       14.93
+{txt}        111 {c |}{res}          1        0.14       15.06
+{txt}        112 {c |}{res}          1        0.14       15.20
+{txt}        113 {c |}{res}          1        0.14       15.33
+{txt}        114 {c |}{res}          1        0.14       15.47
+{txt}        115 {c |}{res}          1        0.14       15.60
+{txt}        116 {c |}{res}          1        0.14       15.74
+{txt}        117 {c |}{res}          1        0.14       15.88
+{txt}        118 {c |}{res}          1        0.14       16.01
+{txt}        119 {c |}{res}          1        0.14       16.15
+{txt}        120 {c |}{res}          1        0.14       16.28
+{txt}        121 {c |}{res}          1        0.14       16.42
+{txt}        122 {c |}{res}          1        0.14       16.55
+{txt}        123 {c |}{res}          1        0.14       16.69
+{txt}        124 {c |}{res}          1        0.14       16.82
+{txt}        125 {c |}{res}          1        0.14       16.96
+{txt}        126 {c |}{res}          1        0.14       17.10
+{txt}        127 {c |}{res}          1        0.14       17.23
+{txt}        128 {c |}{res}          1        0.14       17.37
+{txt}        129 {c |}{res}          1        0.14       17.50
+{txt}        130 {c |}{res}          1        0.14       17.64
+{txt}        131 {c |}{res}          1        0.14       17.77
+{txt}        132 {c |}{res}          1        0.14       17.91
+{txt}        133 {c |}{res}          1        0.14       18.05
+{txt}        134 {c |}{res}          1        0.14       18.18
+{txt}        135 {c |}{res}          1        0.14       18.32
+{txt}        136 {c |}{res}          1        0.14       18.45
+{txt}        137 {c |}{res}          1        0.14       18.59
+{txt}        138 {c |}{res}          1        0.14       18.72
+{txt}        139 {c |}{res}          1        0.14       18.86
+{txt}        140 {c |}{res}          1        0.14       19.00
+{txt}        141 {c |}{res}          1        0.14       19.13
+{txt}        142 {c |}{res}          1        0.14       19.27
+{txt}        143 {c |}{res}          1        0.14       19.40
+{txt}        144 {c |}{res}          1        0.14       19.54
+{txt}        145 {c |}{res}          1        0.14       19.67
+{txt}        146 {c |}{res}          1        0.14       19.81
+{txt}        147 {c |}{res}          1        0.14       19.95
+{txt}        148 {c |}{res}          1        0.14       20.08
+{txt}        149 {c |}{res}          1        0.14       20.22
+{txt}        150 {c |}{res}          1        0.14       20.35
+{txt}        151 {c |}{res}          1        0.14       20.49
+{txt}        152 {c |}{res}          1        0.14       20.62
+{txt}        153 {c |}{res}          1        0.14       20.76
+{txt}        154 {c |}{res}          1        0.14       20.90
+{txt}        155 {c |}{res}          1        0.14       21.03
+{txt}        156 {c |}{res}          1        0.14       21.17
+{txt}        157 {c |}{res}          1        0.14       21.30
+{txt}        158 {c |}{res}          1        0.14       21.44
+{txt}        159 {c |}{res}          1        0.14       21.57
+{txt}        160 {c |}{res}          1        0.14       21.71
+{txt}        161 {c |}{res}          1        0.14       21.85
+{txt}        162 {c |}{res}          1        0.14       21.98
+{txt}        163 {c |}{res}          1        0.14       22.12
+{txt}        164 {c |}{res}          1        0.14       22.25
+{txt}        165 {c |}{res}          1        0.14       22.39
+{txt}        166 {c |}{res}          1        0.14       22.52
+{txt}        167 {c |}{res}          1        0.14       22.66
+{txt}        168 {c |}{res}          1        0.14       22.80
+{txt}        169 {c |}{res}          1        0.14       22.93
+{txt}        170 {c |}{res}          1        0.14       23.07
+{txt}        171 {c |}{res}          1        0.14       23.20
+{txt}        172 {c |}{res}          1        0.14       23.34
+{txt}        173 {c |}{res}          1        0.14       23.47
+{txt}        174 {c |}{res}          1        0.14       23.61
+{txt}        175 {c |}{res}          1        0.14       23.74
+{txt}        176 {c |}{res}          1        0.14       23.88
+{txt}        177 {c |}{res}          1        0.14       24.02
+{txt}        178 {c |}{res}          1        0.14       24.15
+{txt}        179 {c |}{res}          1        0.14       24.29
+{txt}        180 {c |}{res}          1        0.14       24.42
+{txt}        181 {c |}{res}          1        0.14       24.56
+{txt}        182 {c |}{res}          1        0.14       24.69
+{txt}        183 {c |}{res}          1        0.14       24.83
+{txt}        184 {c |}{res}          1        0.14       24.97
+{txt}        185 {c |}{res}          1        0.14       25.10
+{txt}        186 {c |}{res}          1        0.14       25.24
+{txt}        187 {c |}{res}          1        0.14       25.37
+{txt}        188 {c |}{res}          1        0.14       25.51
+{txt}        189 {c |}{res}          1        0.14       25.64
+{txt}        190 {c |}{res}          1        0.14       25.78
+{txt}        191 {c |}{res}          1        0.14       25.92
+{txt}        192 {c |}{res}          1        0.14       26.05
+{txt}        193 {c |}{res}          1        0.14       26.19
+{txt}        194 {c |}{res}          1        0.14       26.32
+{txt}        195 {c |}{res}          1        0.14       26.46
+{txt}        196 {c |}{res}          1        0.14       26.59
+{txt}        197 {c |}{res}          1        0.14       26.73
+{txt}        198 {c |}{res}          1        0.14       26.87
+{txt}        199 {c |}{res}          1        0.14       27.00
+{txt}        200 {c |}{res}          1        0.14       27.14
+{txt}        201 {c |}{res}          1        0.14       27.27
+{txt}        202 {c |}{res}          1        0.14       27.41
+{txt}        203 {c |}{res}          1        0.14       27.54
+{txt}        204 {c |}{res}          1        0.14       27.68
+{txt}        205 {c |}{res}          1        0.14       27.82
+{txt}        206 {c |}{res}          1        0.14       27.95
+{txt}        207 {c |}{res}          1        0.14       28.09
+{txt}        208 {c |}{res}          1        0.14       28.22
+{txt}        209 {c |}{res}          1        0.14       28.36
+{txt}        210 {c |}{res}          1        0.14       28.49
+{txt}        211 {c |}{res}          1        0.14       28.63
+{txt}        212 {c |}{res}          1        0.14       28.77
+{txt}        213 {c |}{res}          1        0.14       28.90
+{txt}        214 {c |}{res}          1        0.14       29.04
+{txt}        215 {c |}{res}          1        0.14       29.17
+{txt}        216 {c |}{res}          1        0.14       29.31
+{txt}        217 {c |}{res}          1        0.14       29.44
+{txt}        218 {c |}{res}          1        0.14       29.58
+{txt}        219 {c |}{res}          1        0.14       29.72
+{txt}        220 {c |}{res}          1        0.14       29.85
+{txt}        221 {c |}{res}          1        0.14       29.99
+{txt}        222 {c |}{res}          1        0.14       30.12
+{txt}        223 {c |}{res}          1        0.14       30.26
+{txt}        224 {c |}{res}          1        0.14       30.39
+{txt}        225 {c |}{res}          1        0.14       30.53
+{txt}        226 {c |}{res}          1        0.14       30.66
+{txt}        227 {c |}{res}          1        0.14       30.80
+{txt}        228 {c |}{res}          1        0.14       30.94
+{txt}        229 {c |}{res}          1        0.14       31.07
+{txt}        230 {c |}{res}          1        0.14       31.21
+{txt}        231 {c |}{res}          1        0.14       31.34
+{txt}        232 {c |}{res}          1        0.14       31.48
+{txt}        233 {c |}{res}          1        0.14       31.61
+{txt}        234 {c |}{res}          1        0.14       31.75
+{txt}        235 {c |}{res}          1        0.14       31.89
+{txt}        236 {c |}{res}          1        0.14       32.02
+{txt}        237 {c |}{res}          1        0.14       32.16
+{txt}        238 {c |}{res}          1        0.14       32.29
+{txt}        239 {c |}{res}          1        0.14       32.43
+{txt}        240 {c |}{res}          1        0.14       32.56
+{txt}        241 {c |}{res}          1        0.14       32.70
+{txt}        242 {c |}{res}          1        0.14       32.84
+{txt}        243 {c |}{res}          1        0.14       32.97
+{txt}        244 {c |}{res}          1        0.14       33.11
+{txt}        245 {c |}{res}          1        0.14       33.24
+{txt}        246 {c |}{res}          1        0.14       33.38
+{txt}        247 {c |}{res}          1        0.14       33.51
+{txt}        248 {c |}{res}          1        0.14       33.65
+{txt}        249 {c |}{res}          1        0.14       33.79
+{txt}        250 {c |}{res}          1        0.14       33.92
+{txt}        251 {c |}{res}          1        0.14       34.06
+{txt}        252 {c |}{res}          1        0.14       34.19
+{txt}        253 {c |}{res}          1        0.14       34.33
+{txt}        254 {c |}{res}          1        0.14       34.46
+{txt}        255 {c |}{res}          1        0.14       34.60
+{txt}        256 {c |}{res}          1        0.14       34.74
+{txt}        257 {c |}{res}          1        0.14       34.87
+{txt}        258 {c |}{res}          1        0.14       35.01
+{txt}        259 {c |}{res}          1        0.14       35.14
+{txt}        260 {c |}{res}          1        0.14       35.28
+{txt}        261 {c |}{res}          1        0.14       35.41
+{txt}        262 {c |}{res}          1        0.14       35.55
+{txt}        263 {c |}{res}          1        0.14       35.69
+{txt}        264 {c |}{res}          1        0.14       35.82
+{txt}        265 {c |}{res}          1        0.14       35.96
+{txt}        266 {c |}{res}          1        0.14       36.09
+{txt}        267 {c |}{res}          1        0.14       36.23
+{txt}        268 {c |}{res}          1        0.14       36.36
+{txt}        269 {c |}{res}          1        0.14       36.50
+{txt}        270 {c |}{res}          1        0.14       36.64
+{txt}        271 {c |}{res}          1        0.14       36.77
+{txt}        272 {c |}{res}          1        0.14       36.91
+{txt}        273 {c |}{res}          1        0.14       37.04
+{txt}        274 {c |}{res}          1        0.14       37.18
+{txt}        275 {c |}{res}          1        0.14       37.31
+{txt}        276 {c |}{res}          1        0.14       37.45
+{txt}        277 {c |}{res}          1        0.14       37.58
+{txt}        278 {c |}{res}          1        0.14       37.72
+{txt}        279 {c |}{res}          1        0.14       37.86
+{txt}        280 {c |}{res}          1        0.14       37.99
+{txt}        281 {c |}{res}          1        0.14       38.13
+{txt}        282 {c |}{res}          1        0.14       38.26
+{txt}        283 {c |}{res}          1        0.14       38.40
+{txt}        284 {c |}{res}          1        0.14       38.53
+{txt}        285 {c |}{res}          1        0.14       38.67
+{txt}        286 {c |}{res}          1        0.14       38.81
+{txt}        287 {c |}{res}          1        0.14       38.94
+{txt}        288 {c |}{res}          1        0.14       39.08
+{txt}        289 {c |}{res}          1        0.14       39.21
+{txt}        290 {c |}{res}          1        0.14       39.35
+{txt}        291 {c |}{res}          1        0.14       39.48
+{txt}        292 {c |}{res}          1        0.14       39.62
+{txt}        293 {c |}{res}          1        0.14       39.76
+{txt}        294 {c |}{res}          1        0.14       39.89
+{txt}        295 {c |}{res}          1        0.14       40.03
+{txt}        296 {c |}{res}          1        0.14       40.16
+{txt}        297 {c |}{res}          1        0.14       40.30
+{txt}        298 {c |}{res}          1        0.14       40.43
+{txt}        299 {c |}{res}          1        0.14       40.57
+{txt}        300 {c |}{res}          1        0.14       40.71
+{txt}        301 {c |}{res}          1        0.14       40.84
+{txt}        302 {c |}{res}          1        0.14       40.98
+{txt}        303 {c |}{res}          1        0.14       41.11
+{txt}        304 {c |}{res}          1        0.14       41.25
+{txt}        305 {c |}{res}          1        0.14       41.38
+{txt}        306 {c |}{res}          1        0.14       41.52
+{txt}        307 {c |}{res}          1        0.14       41.66
+{txt}        308 {c |}{res}          1        0.14       41.79
+{txt}        309 {c |}{res}          1        0.14       41.93
+{txt}        310 {c |}{res}          1        0.14       42.06
+{txt}        311 {c |}{res}          1        0.14       42.20
+{txt}        312 {c |}{res}          1        0.14       42.33
+{txt}        313 {c |}{res}          1        0.14       42.47
+{txt}        314 {c |}{res}          1        0.14       42.61
+{txt}        315 {c |}{res}          1        0.14       42.74
+{txt}        316 {c |}{res}          1        0.14       42.88
+{txt}        317 {c |}{res}          1        0.14       43.01
+{txt}        318 {c |}{res}          1        0.14       43.15
+{txt}        319 {c |}{res}          1        0.14       43.28
+{txt}        320 {c |}{res}          1        0.14       43.42
+{txt}        321 {c |}{res}          1        0.14       43.55
+{txt}        322 {c |}{res}          1        0.14       43.69
+{txt}        323 {c |}{res}          1        0.14       43.83
+{txt}        324 {c |}{res}          1        0.14       43.96
+{txt}        325 {c |}{res}          1        0.14       44.10
+{txt}        326 {c |}{res}          1        0.14       44.23
+{txt}        327 {c |}{res}          1        0.14       44.37
+{txt}        328 {c |}{res}          1        0.14       44.50
+{txt}        329 {c |}{res}          1        0.14       44.64
+{txt}        330 {c |}{res}          1        0.14       44.78
+{txt}        331 {c |}{res}          1        0.14       44.91
+{txt}        332 {c |}{res}          1        0.14       45.05
+{txt}        333 {c |}{res}          1        0.14       45.18
+{txt}        334 {c |}{res}          1        0.14       45.32
+{txt}        335 {c |}{res}          1        0.14       45.45
+{txt}        336 {c |}{res}          1        0.14       45.59
+{txt}        337 {c |}{res}          1        0.14       45.73
+{txt}        338 {c |}{res}          1        0.14       45.86
+{txt}        339 {c |}{res}          1        0.14       46.00
+{txt}        340 {c |}{res}          1        0.14       46.13
+{txt}        341 {c |}{res}          1        0.14       46.27
+{txt}        342 {c |}{res}          1        0.14       46.40
+{txt}        343 {c |}{res}          1        0.14       46.54
+{txt}        344 {c |}{res}          1        0.14       46.68
+{txt}        345 {c |}{res}          1        0.14       46.81
+{txt}        346 {c |}{res}          1        0.14       46.95
+{txt}        347 {c |}{res}          1        0.14       47.08
+{txt}        348 {c |}{res}          1        0.14       47.22
+{txt}        349 {c |}{res}          1        0.14       47.35
+{txt}        350 {c |}{res}          1        0.14       47.49
+{txt}        351 {c |}{res}          1        0.14       47.63
+{txt}        352 {c |}{res}          1        0.14       47.76
+{txt}        353 {c |}{res}          1        0.14       47.90
+{txt}        354 {c |}{res}          1        0.14       48.03
+{txt}        355 {c |}{res}          1        0.14       48.17
+{txt}        356 {c |}{res}          1        0.14       48.30
+{txt}        357 {c |}{res}          1        0.14       48.44
+{txt}        358 {c |}{res}          1        0.14       48.58
+{txt}        359 {c |}{res}          1        0.14       48.71
+{txt}        360 {c |}{res}          1        0.14       48.85
+{txt}        361 {c |}{res}          1        0.14       48.98
+{txt}        362 {c |}{res}          1        0.14       49.12
+{txt}        363 {c |}{res}          1        0.14       49.25
+{txt}        364 {c |}{res}          1        0.14       49.39
+{txt}        365 {c |}{res}          1        0.14       49.53
+{txt}        366 {c |}{res}          1        0.14       49.66
+{txt}        367 {c |}{res}          1        0.14       49.80
+{txt}        368 {c |}{res}          1        0.14       49.93
+{txt}        369 {c |}{res}          1        0.14       50.07
+{txt}        370 {c |}{res}          1        0.14       50.20
+{txt}        371 {c |}{res}          1        0.14       50.34
+{txt}        372 {c |}{res}          1        0.14       50.47
+{txt}        373 {c |}{res}          1        0.14       50.61
+{txt}        374 {c |}{res}          1        0.14       50.75
+{txt}        375 {c |}{res}          1        0.14       50.88
+{txt}        376 {c |}{res}          1        0.14       51.02
+{txt}        377 {c |}{res}          1        0.14       51.15
+{txt}        378 {c |}{res}          1        0.14       51.29
+{txt}        379 {c |}{res}          1        0.14       51.42
+{txt}        380 {c |}{res}          1        0.14       51.56
+{txt}        381 {c |}{res}          1        0.14       51.70
+{txt}        382 {c |}{res}          1        0.14       51.83
+{txt}        383 {c |}{res}          1        0.14       51.97
+{txt}        384 {c |}{res}          1        0.14       52.10
+{txt}        385 {c |}{res}          1        0.14       52.24
+{txt}        386 {c |}{res}          1        0.14       52.37
+{txt}        387 {c |}{res}          1        0.14       52.51
+{txt}        388 {c |}{res}          1        0.14       52.65
+{txt}        389 {c |}{res}          1        0.14       52.78
+{txt}        390 {c |}{res}          1        0.14       52.92
+{txt}        391 {c |}{res}          1        0.14       53.05
+{txt}        392 {c |}{res}          1        0.14       53.19
+{txt}        393 {c |}{res}          1        0.14       53.32
+{txt}        394 {c |}{res}          1        0.14       53.46
+{txt}        395 {c |}{res}          1        0.14       53.60
+{txt}        396 {c |}{res}          1        0.14       53.73
+{txt}        397 {c |}{res}          1        0.14       53.87
+{txt}        398 {c |}{res}          1        0.14       54.00
+{txt}        399 {c |}{res}          1        0.14       54.14
+{txt}        400 {c |}{res}          1        0.14       54.27
+{txt}        401 {c |}{res}          1        0.14       54.41
+{txt}        402 {c |}{res}          1        0.14       54.55
+{txt}        403 {c |}{res}          1        0.14       54.68
+{txt}        404 {c |}{res}          1        0.14       54.82
+{txt}        405 {c |}{res}          1        0.14       54.95
+{txt}        406 {c |}{res}          1        0.14       55.09
+{txt}        407 {c |}{res}          1        0.14       55.22
+{txt}        408 {c |}{res}          1        0.14       55.36
+{txt}        409 {c |}{res}          1        0.14       55.50
+{txt}        410 {c |}{res}          1        0.14       55.63
+{txt}        411 {c |}{res}          1        0.14       55.77
+{txt}        412 {c |}{res}          1        0.14       55.90
+{txt}        413 {c |}{res}          1        0.14       56.04
+{txt}        414 {c |}{res}          1        0.14       56.17
+{txt}        415 {c |}{res}          1        0.14       56.31
+{txt}        416 {c |}{res}          1        0.14       56.45
+{txt}        417 {c |}{res}          1        0.14       56.58
+{txt}        418 {c |}{res}          1        0.14       56.72
+{txt}        419 {c |}{res}          1        0.14       56.85
+{txt}        420 {c |}{res}          1        0.14       56.99
+{txt}        421 {c |}{res}          1        0.14       57.12
+{txt}        422 {c |}{res}          1        0.14       57.26
+{txt}        423 {c |}{res}          1        0.14       57.39
+{txt}        424 {c |}{res}          1        0.14       57.53
+{txt}        425 {c |}{res}          1        0.14       57.67
+{txt}        426 {c |}{res}          1        0.14       57.80
+{txt}        427 {c |}{res}          1        0.14       57.94
+{txt}        428 {c |}{res}          1        0.14       58.07
+{txt}        429 {c |}{res}          1        0.14       58.21
+{txt}        430 {c |}{res}          1        0.14       58.34
+{txt}        431 {c |}{res}          1        0.14       58.48
+{txt}        432 {c |}{res}          1        0.14       58.62
+{txt}        433 {c |}{res}          1        0.14       58.75
+{txt}        434 {c |}{res}          1        0.14       58.89
+{txt}        435 {c |}{res}          1        0.14       59.02
+{txt}        436 {c |}{res}          1        0.14       59.16
+{txt}        437 {c |}{res}          1        0.14       59.29
+{txt}        438 {c |}{res}          1        0.14       59.43
+{txt}        439 {c |}{res}          1        0.14       59.57
+{txt}        440 {c |}{res}          1        0.14       59.70
+{txt}        441 {c |}{res}          1        0.14       59.84
+{txt}        442 {c |}{res}          1        0.14       59.97
+{txt}        443 {c |}{res}          1        0.14       60.11
+{txt}        444 {c |}{res}          1        0.14       60.24
+{txt}        445 {c |}{res}          1        0.14       60.38
+{txt}        446 {c |}{res}          1        0.14       60.52
+{txt}        447 {c |}{res}          1        0.14       60.65
+{txt}        448 {c |}{res}          1        0.14       60.79
+{txt}        449 {c |}{res}          1        0.14       60.92
+{txt}        450 {c |}{res}          1        0.14       61.06
+{txt}        451 {c |}{res}          1        0.14       61.19
+{txt}        452 {c |}{res}          1        0.14       61.33
+{txt}        453 {c |}{res}          1        0.14       61.47
+{txt}        454 {c |}{res}          1        0.14       61.60
+{txt}        455 {c |}{res}          1        0.14       61.74
+{txt}        456 {c |}{res}          1        0.14       61.87
+{txt}        457 {c |}{res}          1        0.14       62.01
+{txt}        458 {c |}{res}          1        0.14       62.14
+{txt}        459 {c |}{res}          1        0.14       62.28
+{txt}        460 {c |}{res}          1        0.14       62.42
+{txt}        461 {c |}{res}          1        0.14       62.55
+{txt}        462 {c |}{res}          1        0.14       62.69
+{txt}        463 {c |}{res}          1        0.14       62.82
+{txt}        464 {c |}{res}          1        0.14       62.96
+{txt}        465 {c |}{res}          1        0.14       63.09
+{txt}        466 {c |}{res}          1        0.14       63.23
+{txt}        467 {c |}{res}          1        0.14       63.36
+{txt}        468 {c |}{res}          1        0.14       63.50
+{txt}        469 {c |}{res}          1        0.14       63.64
+{txt}        470 {c |}{res}          1        0.14       63.77
+{txt}        471 {c |}{res}          1        0.14       63.91
+{txt}        472 {c |}{res}          1        0.14       64.04
+{txt}        473 {c |}{res}          1        0.14       64.18
+{txt}        474 {c |}{res}          1        0.14       64.31
+{txt}        475 {c |}{res}          1        0.14       64.45
+{txt}        476 {c |}{res}          1        0.14       64.59
+{txt}        477 {c |}{res}          1        0.14       64.72
+{txt}        478 {c |}{res}          1        0.14       64.86
+{txt}        479 {c |}{res}          1        0.14       64.99
+{txt}        480 {c |}{res}          1        0.14       65.13
+{txt}        481 {c |}{res}          1        0.14       65.26
+{txt}        482 {c |}{res}          1        0.14       65.40
+{txt}        483 {c |}{res}          1        0.14       65.54
+{txt}        484 {c |}{res}          1        0.14       65.67
+{txt}        485 {c |}{res}          1        0.14       65.81
+{txt}        486 {c |}{res}          1        0.14       65.94
+{txt}        487 {c |}{res}          1        0.14       66.08
+{txt}        488 {c |}{res}          1        0.14       66.21
+{txt}        489 {c |}{res}          1        0.14       66.35
+{txt}        490 {c |}{res}          1        0.14       66.49
+{txt}        491 {c |}{res}          1        0.14       66.62
+{txt}        492 {c |}{res}          1        0.14       66.76
+{txt}        493 {c |}{res}          1        0.14       66.89
+{txt}        494 {c |}{res}          1        0.14       67.03
+{txt}        495 {c |}{res}          1        0.14       67.16
+{txt}        496 {c |}{res}          1        0.14       67.30
+{txt}        497 {c |}{res}          1        0.14       67.44
+{txt}        498 {c |}{res}          1        0.14       67.57
+{txt}        499 {c |}{res}          1        0.14       67.71
+{txt}        500 {c |}{res}          1        0.14       67.84
+{txt}        501 {c |}{res}          1        0.14       67.98
+{txt}        502 {c |}{res}          1        0.14       68.11
+{txt}        503 {c |}{res}          1        0.14       68.25
+{txt}        504 {c |}{res}          1        0.14       68.39
+{txt}        505 {c |}{res}          1        0.14       68.52
+{txt}        506 {c |}{res}          1        0.14       68.66
+{txt}        507 {c |}{res}          1        0.14       68.79
+{txt}        508 {c |}{res}          1        0.14       68.93
+{txt}        509 {c |}{res}          1        0.14       69.06
+{txt}        510 {c |}{res}          1        0.14       69.20
+{txt}        511 {c |}{res}          1        0.14       69.34
+{txt}        512 {c |}{res}          1        0.14       69.47
+{txt}        513 {c |}{res}          1        0.14       69.61
+{txt}        514 {c |}{res}          1        0.14       69.74
+{txt}        515 {c |}{res}          1        0.14       69.88
+{txt}        516 {c |}{res}          1        0.14       70.01
+{txt}        517 {c |}{res}          1        0.14       70.15
+{txt}        518 {c |}{res}          1        0.14       70.28
+{txt}        519 {c |}{res}          1        0.14       70.42
+{txt}        520 {c |}{res}          1        0.14       70.56
+{txt}        521 {c |}{res}          1        0.14       70.69
+{txt}        522 {c |}{res}          1        0.14       70.83
+{txt}        523 {c |}{res}          1        0.14       70.96
+{txt}        524 {c |}{res}          1        0.14       71.10
+{txt}        525 {c |}{res}          1        0.14       71.23
+{txt}        526 {c |}{res}          1        0.14       71.37
+{txt}        527 {c |}{res}          1        0.14       71.51
+{txt}        528 {c |}{res}          1        0.14       71.64
+{txt}        529 {c |}{res}          1        0.14       71.78
+{txt}        530 {c |}{res}          1        0.14       71.91
+{txt}        531 {c |}{res}          1        0.14       72.05
+{txt}        532 {c |}{res}          1        0.14       72.18
+{txt}        533 {c |}{res}          1        0.14       72.32
+{txt}        534 {c |}{res}          1        0.14       72.46
+{txt}        535 {c |}{res}          1        0.14       72.59
+{txt}        536 {c |}{res}          1        0.14       72.73
+{txt}        537 {c |}{res}          1        0.14       72.86
+{txt}        538 {c |}{res}          1        0.14       73.00
+{txt}        539 {c |}{res}          1        0.14       73.13
+{txt}        540 {c |}{res}          1        0.14       73.27
+{txt}        541 {c |}{res}          1        0.14       73.41
+{txt}        542 {c |}{res}          1        0.14       73.54
+{txt}        543 {c |}{res}          1        0.14       73.68
+{txt}        544 {c |}{res}          1        0.14       73.81
+{txt}        545 {c |}{res}          1        0.14       73.95
+{txt}        546 {c |}{res}          1        0.14       74.08
+{txt}        547 {c |}{res}          1        0.14       74.22
+{txt}        548 {c |}{res}          1        0.14       74.36
+{txt}        549 {c |}{res}          1        0.14       74.49
+{txt}        550 {c |}{res}          1        0.14       74.63
+{txt}        551 {c |}{res}          1        0.14       74.76
+{txt}        552 {c |}{res}          1        0.14       74.90
+{txt}        553 {c |}{res}          1        0.14       75.03
+{txt}        554 {c |}{res}          1        0.14       75.17
+{txt}        555 {c |}{res}          1        0.14       75.31
+{txt}        556 {c |}{res}          1        0.14       75.44
+{txt}        557 {c |}{res}          1        0.14       75.58
+{txt}        558 {c |}{res}          1        0.14       75.71
+{txt}        559 {c |}{res}          1        0.14       75.85
+{txt}        560 {c |}{res}          1        0.14       75.98
+{txt}        561 {c |}{res}          1        0.14       76.12
+{txt}        562 {c |}{res}          1        0.14       76.26
+{txt}        563 {c |}{res}          1        0.14       76.39
+{txt}        564 {c |}{res}          1        0.14       76.53
+{txt}        565 {c |}{res}          1        0.14       76.66
+{txt}        566 {c |}{res}          1        0.14       76.80
+{txt}        567 {c |}{res}          1        0.14       76.93
+{txt}        568 {c |}{res}          1        0.14       77.07
+{txt}        569 {c |}{res}          1        0.14       77.20
+{txt}        570 {c |}{res}          1        0.14       77.34
+{txt}        571 {c |}{res}          1        0.14       77.48
+{txt}        572 {c |}{res}          1        0.14       77.61
+{txt}        573 {c |}{res}          1        0.14       77.75
+{txt}        574 {c |}{res}          1        0.14       77.88
+{txt}        575 {c |}{res}          1        0.14       78.02
+{txt}        576 {c |}{res}          1        0.14       78.15
+{txt}        577 {c |}{res}          1        0.14       78.29
+{txt}        578 {c |}{res}          1        0.14       78.43
+{txt}        579 {c |}{res}          1        0.14       78.56
+{txt}        580 {c |}{res}          1        0.14       78.70
+{txt}        581 {c |}{res}          1        0.14       78.83
+{txt}        582 {c |}{res}          1        0.14       78.97
+{txt}        583 {c |}{res}          1        0.14       79.10
+{txt}        584 {c |}{res}          1        0.14       79.24
+{txt}        585 {c |}{res}          1        0.14       79.38
+{txt}        586 {c |}{res}          1        0.14       79.51
+{txt}        587 {c |}{res}          1        0.14       79.65
+{txt}        588 {c |}{res}          1        0.14       79.78
+{txt}        589 {c |}{res}          1        0.14       79.92
+{txt}        590 {c |}{res}          1        0.14       80.05
+{txt}        591 {c |}{res}          1        0.14       80.19
+{txt}        592 {c |}{res}          1        0.14       80.33
+{txt}        593 {c |}{res}          1        0.14       80.46
+{txt}        594 {c |}{res}          1        0.14       80.60
+{txt}        595 {c |}{res}          1        0.14       80.73
+{txt}        596 {c |}{res}          1        0.14       80.87
+{txt}        597 {c |}{res}          1        0.14       81.00
+{txt}        598 {c |}{res}          1        0.14       81.14
+{txt}        599 {c |}{res}          1        0.14       81.28
+{txt}        600 {c |}{res}          1        0.14       81.41
+{txt}        601 {c |}{res}          1        0.14       81.55
+{txt}        602 {c |}{res}          1        0.14       81.68
+{txt}        603 {c |}{res}          1        0.14       81.82
+{txt}        604 {c |}{res}          1        0.14       81.95
+{txt}        605 {c |}{res}          1        0.14       82.09
+{txt}        606 {c |}{res}          1        0.14       82.23
+{txt}        607 {c |}{res}          1        0.14       82.36
+{txt}        608 {c |}{res}          1        0.14       82.50
+{txt}        609 {c |}{res}          1        0.14       82.63
+{txt}        610 {c |}{res}          1        0.14       82.77
+{txt}        611 {c |}{res}          1        0.14       82.90
+{txt}        612 {c |}{res}          1        0.14       83.04
+{txt}        613 {c |}{res}          1        0.14       83.18
+{txt}        614 {c |}{res}          1        0.14       83.31
+{txt}        615 {c |}{res}          1        0.14       83.45
+{txt}        616 {c |}{res}          1        0.14       83.58
+{txt}        617 {c |}{res}          1        0.14       83.72
+{txt}        618 {c |}{res}          1        0.14       83.85
+{txt}        619 {c |}{res}          1        0.14       83.99
+{txt}        620 {c |}{res}          1        0.14       84.12
+{txt}        621 {c |}{res}          1        0.14       84.26
+{txt}        622 {c |}{res}          1        0.14       84.40
+{txt}        623 {c |}{res}          1        0.14       84.53
+{txt}        624 {c |}{res}          1        0.14       84.67
+{txt}        625 {c |}{res}          1        0.14       84.80
+{txt}        626 {c |}{res}          1        0.14       84.94
+{txt}        627 {c |}{res}          1        0.14       85.07
+{txt}        628 {c |}{res}          1        0.14       85.21
+{txt}        629 {c |}{res}          1        0.14       85.35
+{txt}        630 {c |}{res}          1        0.14       85.48
+{txt}        631 {c |}{res}          1        0.14       85.62
+{txt}        632 {c |}{res}          1        0.14       85.75
+{txt}        633 {c |}{res}          1        0.14       85.89
+{txt}        634 {c |}{res}          1        0.14       86.02
+{txt}        635 {c |}{res}          1        0.14       86.16
+{txt}        636 {c |}{res}          1        0.14       86.30
+{txt}        637 {c |}{res}          1        0.14       86.43
+{txt}        638 {c |}{res}          1        0.14       86.57
+{txt}        639 {c |}{res}          1        0.14       86.70
+{txt}        640 {c |}{res}          1        0.14       86.84
+{txt}        641 {c |}{res}          1        0.14       86.97
+{txt}        642 {c |}{res}          1        0.14       87.11
+{txt}        643 {c |}{res}          1        0.14       87.25
+{txt}        644 {c |}{res}          1        0.14       87.38
+{txt}        645 {c |}{res}          1        0.14       87.52
+{txt}        646 {c |}{res}          1        0.14       87.65
+{txt}        647 {c |}{res}          1        0.14       87.79
+{txt}        648 {c |}{res}          1        0.14       87.92
+{txt}        649 {c |}{res}          1        0.14       88.06
+{txt}        650 {c |}{res}          1        0.14       88.20
+{txt}        651 {c |}{res}          1        0.14       88.33
+{txt}        652 {c |}{res}          1        0.14       88.47
+{txt}        653 {c |}{res}          1        0.14       88.60
+{txt}        654 {c |}{res}          1        0.14       88.74
+{txt}        655 {c |}{res}          1        0.14       88.87
+{txt}        656 {c |}{res}          1        0.14       89.01
+{txt}        657 {c |}{res}          1        0.14       89.15
+{txt}        658 {c |}{res}          1        0.14       89.28
+{txt}        659 {c |}{res}          1        0.14       89.42
+{txt}        660 {c |}{res}          1        0.14       89.55
+{txt}        661 {c |}{res}          1        0.14       89.69
+{txt}        662 {c |}{res}          1        0.14       89.82
+{txt}        663 {c |}{res}          1        0.14       89.96
+{txt}        664 {c |}{res}          1        0.14       90.09
+{txt}        665 {c |}{res}          1        0.14       90.23
+{txt}        666 {c |}{res}          1        0.14       90.37
+{txt}        667 {c |}{res}          1        0.14       90.50
+{txt}        668 {c |}{res}          1        0.14       90.64
+{txt}        669 {c |}{res}          1        0.14       90.77
+{txt}        670 {c |}{res}          1        0.14       90.91
+{txt}        671 {c |}{res}          1        0.14       91.04
+{txt}        672 {c |}{res}          1        0.14       91.18
+{txt}        673 {c |}{res}          1        0.14       91.32
+{txt}        674 {c |}{res}          1        0.14       91.45
+{txt}        675 {c |}{res}          1        0.14       91.59
+{txt}        676 {c |}{res}          1        0.14       91.72
+{txt}        677 {c |}{res}          1        0.14       91.86
+{txt}        678 {c |}{res}          1        0.14       91.99
+{txt}        679 {c |}{res}          1        0.14       92.13
+{txt}        680 {c |}{res}          1        0.14       92.27
+{txt}        681 {c |}{res}          1        0.14       92.40
+{txt}        682 {c |}{res}          1        0.14       92.54
+{txt}        683 {c |}{res}          1        0.14       92.67
+{txt}        684 {c |}{res}          1        0.14       92.81
+{txt}        685 {c |}{res}          1        0.14       92.94
+{txt}        686 {c |}{res}          1        0.14       93.08
+{txt}        687 {c |}{res}          1        0.14       93.22
+{txt}        688 {c |}{res}          1        0.14       93.35
+{txt}        689 {c |}{res}          1        0.14       93.49
+{txt}        690 {c |}{res}          1        0.14       93.62
+{txt}        691 {c |}{res}          1        0.14       93.76
+{txt}        692 {c |}{res}          1        0.14       93.89
+{txt}        693 {c |}{res}          1        0.14       94.03
+{txt}        694 {c |}{res}          1        0.14       94.17
+{txt}        695 {c |}{res}          1        0.14       94.30
+{txt}        696 {c |}{res}          1        0.14       94.44
+{txt}        697 {c |}{res}          1        0.14       94.57
+{txt}        698 {c |}{res}          1        0.14       94.71
+{txt}        699 {c |}{res}          1        0.14       94.84
+{txt}        700 {c |}{res}          1        0.14       94.98
+{txt}        701 {c |}{res}          1        0.14       95.12
+{txt}        702 {c |}{res}          1        0.14       95.25
+{txt}        703 {c |}{res}          1        0.14       95.39
+{txt}        704 {c |}{res}          1        0.14       95.52
+{txt}        705 {c |}{res}          1        0.14       95.66
+{txt}        706 {c |}{res}          1        0.14       95.79
+{txt}        707 {c |}{res}          1        0.14       95.93
+{txt}        708 {c |}{res}          1        0.14       96.07
+{txt}        709 {c |}{res}          1        0.14       96.20
+{txt}        710 {c |}{res}          1        0.14       96.34
+{txt}        711 {c |}{res}          1        0.14       96.47
+{txt}        712 {c |}{res}          1        0.14       96.61
+{txt}        713 {c |}{res}          1        0.14       96.74
+{txt}        714 {c |}{res}          1        0.14       96.88
+{txt}        715 {c |}{res}          1        0.14       97.01
+{txt}        716 {c |}{res}          1        0.14       97.15
+{txt}        717 {c |}{res}          1        0.14       97.29
+{txt}        718 {c |}{res}          1        0.14       97.42
+{txt}        719 {c |}{res}          1        0.14       97.56
+{txt}        720 {c |}{res}          1        0.14       97.69
+{txt}        721 {c |}{res}          1        0.14       97.83
+{txt}        722 {c |}{res}          1        0.14       97.96
+{txt}        723 {c |}{res}          1        0.14       98.10
+{txt}        724 {c |}{res}          1        0.14       98.24
+{txt}        725 {c |}{res}          1        0.14       98.37
+{txt}        726 {c |}{res}          1        0.14       98.51
+{txt}        727 {c |}{res}          1        0.14       98.64
+{txt}        728 {c |}{res}          1        0.14       98.78
+{txt}        729 {c |}{res}          1        0.14       98.91
+{txt}        730 {c |}{res}          1        0.14       99.05
+{txt}        731 {c |}{res}          1        0.14       99.19
+{txt}        732 {c |}{res}          1        0.14       99.32
+{txt}        733 {c |}{res}          1        0.14       99.46
+{txt}        734 {c |}{res}          1        0.14       99.59
+{txt}        735 {c |}{res}          1        0.14       99.73
+{txt}        736 {c |}{res}          1        0.14       99.86
+{txt}        737 {c |}{res}          1        0.14      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        737      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         gen  Select_Yes           = (Select_Order <= 300) if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Select_Yes
+
+ {txt}Select_Yes {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        437       59.29       59.29
+{txt}          1 {c |}{res}        300       40.71      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        737      100.00
+
+{com}. tab Phone_Assignment
+
+     {txt}STATUS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        415       58.04       58.04
+{txt}          1 {c |}{res}        300       41.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        715      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         gen     Random_Comparison = (Select_Yes == 1) if !mi(Select_Yes)
+{txt}(1,763 missing values generated)
+
+{com}.         replace Random_Comparison = (Phone_Assignment == 1) 
+{txt}(2,063 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Random_Comparison
+
+{txt}Random_Comp {c |}
+     arison {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      2,200       88.00       88.00
+{txt}          1 {c |}{res}        300       12.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.           
+.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    92
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    95{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         replace Phone_Assignment = 0 if mi(Phone_Assignment)
+{txt}(2,200 real changes made)
+
+{com}.         drop _merge
+{txt}
+{com}.         
+.         replace Phone_Assignment = . if phone_ownership == 1 | mobile_coverage == 0 | Modality_Type == 0
+{txt}(1,785 real changes made, 1,785 to missing)
+
+{com}.         
+. ** Initial Balance Test on Listing Charateristics
+.         
+.         gen HHHResp                     = (relationship == 1)
+{txt}
+{com}.         gen HHHRespSpouse       = (relationship == 2)
+{txt}
+{com}.         gen HHDisplaced         = (hh_status    == 2)
+{txt}
+{com}.         gen HHHFemale           = (hh_head_sex  == 0)
+{txt}
+{com}.         gen HHHMarried          = (hh_head_marital == 1)
+{txt}
+{com}.         
+.         gen     HHCrowding      = hh_size/area_house
+{txt}(74 missing values generated)
+
+{com}.         sum     HHCrowding
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}HHCrowding {c |}{res}      2,426    3.298289    1.779506        .25         15
+{txt}
+{com}.         replace HHCrowding  = `r(max)' if mi(HHCrowding)
+{txt}(74 real changes made)
+
+{com}.         
+. ** Randomly select 300 from the 737 non phone owner
+.         sort ___index, stable
+{txt}
+{com}.         gen  Select_RandomNum = uniform() if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         egen Select_Order         = rank(Select_RandomNum)                              ///
+>                                                                           if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.                                                                                  
+.         gen  Select_Yes           = (Select_Order <= 300) if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         
+.         gen     Random_Comparison = (Select_Yes == 1) if !mi(Select_Yes)
+{txt}(1,763 missing values generated)
+
+{com}.         replace Random_Comparison = 1 if Phone_Assignment == 1
+{txt}(300 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Random_Comparison
+
+{txt}Random_Comp {c |}
+     arison {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        437       42.14       42.14
+{txt}          1 {c |}{res}        600       57.86      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,037      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.           
+.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    92
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    95{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         replace Phone_Assignment = 0 if mi(Phone_Assignment)
+{txt}(2,200 real changes made)
+
+{com}.         drop _merge
+{txt}
+{com}.         
+.         replace Phone_Assignment = . if phone_ownership == 1 | mobile_coverage == 0 | Modality_Type == 0
+{txt}(1,785 real changes made, 1,785 to missing)
+
+{com}.         
+. ** Initial Balance Test on Listing Charateristics
+.         
+.         gen HHHResp                     = (relationship == 1)
+{txt}
+{com}.         gen HHHRespSpouse       = (relationship == 2)
+{txt}
+{com}.         gen HHDisplaced         = (hh_status    == 2)
+{txt}
+{com}.         gen HHHFemale           = (hh_head_sex  == 0)
+{txt}
+{com}.         gen HHHMarried          = (hh_head_marital == 1)
+{txt}
+{com}.         
+.         gen     HHCrowding      = hh_size/area_house
+{txt}(74 missing values generated)
+
+{com}.         sum     HHCrowding
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}HHCrowding {c |}{res}      2,426    3.298289    1.779506        .25         15
+{txt}
+{com}.         replace HHCrowding  = `r(max)' if mi(HHCrowding)
+{txt}(74 real changes made)
+
+{com}.         
+. ** Randomly select 300 from the 737 non phone owner
+.         sort ___index, stable
+{txt}
+{com}.         gen  Select_RandomNum = uniform() if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         egen Select_Order         = rank(Select_RandomNum)                              ///
+>                                                                           if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.                                                                                  
+.         gen  Select_Yes           = (Select_Order <= 300) if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         
+.         gen     Random_Comparison = 1 if Select_Yes == 1
+{txt}(2,200 missing values generated)
+
+{com}.         replace Random_Comparison = 0 if Phone_Assignment == 1
+{txt}(300 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Random_Comparison
+
+{txt}Random_Comp {c |}
+     arison {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        300       50.00       50.00
+{txt}          1 {c |}{res}        300       50.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        600      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}list_var{c )-}, grpvar(Random_Comparison)                                                         ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels                     ///
+>              grplabels(0 F2F Random Partial Sample @ 1 Remote Gave Phone)       ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         ** Quality of Randomization in Phone Owners
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 1, grpvar(Modality_Type) ///
+>                          nonote onerow nototal replace                                                          ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization of Non Phone Owners
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 0 & mobile_coverage == 1     ///
+>                                                  & Phone_Assignment != 0,                                                       ///
+>                          grpvar(Modality_Type) nonote onerow nototal replace                    ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels           ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization of Non Phone Owners - Assigning Phone
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Random_Comparison)                                                         ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels                     ///
+>              grplabels(0 F2F Random Partial Sample @ 1 Remote Gave Phone)       ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization for Phone Assignment
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Phone_Assignment)                                                  ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels             ///
+>              grplabels(0 Not Assigned Phone @ 1 Assigned Phone)                         ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. use "/Users/nicolewu/Desktop/World Bank DEC/4_Scoring/09_Market_Competition/01_Data/br_innovation_1.dta", clear
+
+. sum
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+interview_~y {c |}{res}          0
+{txt}interview_~d {c |}{res}          0
+{txt}{space 4}pi_fname {c |}{res}          0
+{txt}{space 4}pi_lname {c |}{res}          0
+{txt}{space 5}pi_firm {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 1}pi_position {c |}{res}          0
+{txt}{space 4}firm_web {c |}{res}          0
+{txt}firm_address {c |}{res}          0
+{txt}{space 4}pi_phone {c |}{res}          0
+{txt}{space 4}pi_email {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 2}pi_country {c |}{res}        215    91.59535    51.24058          4        189
+{txt}{space 2}exp_sector {c |}{res}        215    837.4047    192.1573        111        888
+{txt}{space 6}crm_id {c |}{res}          0
+{txt}{space 7}mci_1 {c |}{res}        214    1.252336    .4353717          1          2
+{txt}{space 4}mci_1_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 7}mci_2 {c |}{res}        214    1.542056    .4993963          1          2
+{txt}{space 4}mci_2_LB {c |}{res}          0
+{txt}{space 7}mci_3 {c |}{res}        214    1.742991    .4380092          1          2
+{txt}{space 4}mci_3_LB {c |}{res}          0
+{txt}{space 7}mci_4 {c |}{res}        214    1.724299    .4479145          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 4}mci_4_LB {c |}{res}          0
+{txt}{space 7}mci_5 {c |}{res}        214    1.654206    .4767418          1          2
+{txt}{space 4}mci_5_LK {c |}{res}          0
+{txt}{space 5}mci_5_c {c |}{res}          0
+{txt}{space 7}mci_6 {c |}{res}        214    1.028037    .1654667          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 4}mci_6_LB {c |}{res}          0
+{txt}{space 7}mci_7 {c |}{res}        213    1.187793    .3914671          1          2
+{txt}{space 4}mci_7_LB {c |}{res}          0
+{txt}{space 4}mci_8__1 {c |}{res}        214    .8878505    .3162902          0          1
+{txt}{space 4}mci_8__2 {c |}{res}        213    .7558685     .430583          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 4}mci_8__3 {c |}{res}        213     .915493     .278802          0          1
+{txt}{space 4}mci_8_LB {c |}{res}          0
+{txt}{space 7}mci_9 {c |}{res}        214    1.313084    .4648356          1          2
+{txt}{space 4}mci_9_LB {c |}{res}          0
+{txt}{space 6}mci_10 {c |}{res}        214    1.196262       .3981          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_10_LB {c |}{res}          0
+{txt}{space 4}mci_10_c {c |}{res}          0
+{txt}{space 6}mci_11 {c |}{res}        214    1.065421    .2478462          1          2
+{txt}{space 3}mci_11_LB {c |}{res}          0
+{txt}{space 6}mci_12 {c |}{res}        214    18.83645    4.463349          0         50
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_12_LB {c |}{res}          0
+{txt}{space 6}mci_13 {c |}{res}        213    1.230047    .4218541          1          2
+{txt}{space 3}mci_13_LB {c |}{res}          0
+{txt}{space 6}mci_14 {c |}{res}        214    1.350467     .478235          1          2
+{txt}{space 3}mci_14_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_15__1 {c |}{res}        213    .6150235     .487736          0          1
+{txt}{space 3}mci_15__2 {c |}{res}        213    .6760563    .4690812          0          1
+{txt}{space 3}mci_15_LB {c |}{res}          0
+{txt}{space 6}mci_16 {c |}{res}        213    1.680751    .4672838          1          2
+{txt}{space 3}mci_16_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_17 {c |}{res}        213    1.690141    .4635247          1          2
+{txt}{space 3}mci_17_LK {c |}{res}          0
+{txt}{space 3}mci_18__1 {c |}{res}        213    .8826291    .3226199          0          1
+{txt}{space 3}mci_18__2 {c |}{res}        210    .7190476    .4505383          0          1
+{txt}{space 3}mci_18__3 {c |}{res}        213    .7699531    .4218541          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_18_LB {c |}{res}          0
+{txt}{space 6}mci_19 {c |}{res}        214    1.434579    .4968639          1          2
+{txt}{space 3}mci_19_LB {c |}{res}          0
+{txt}{space 6}mci_20 {c |}{res}        214    1.158879    .3664199          1          2
+{txt}{space 3}mci_20_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_21 {c |}{res}        180    1.827778    .3786267          1          2
+{txt}{space 3}mci_21_LB {c |}{res}          0
+{txt}{space 6}mci_22 {c |}{res}        214    1.149533    .3574489          1          2
+{txt}{space 3}mci_22_LB {c |}{res}          0
+{txt}{space 6}mci_23 {c |}{res}        214    1.331776    .4719549          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_23_LB {c |}{res}          0
+{txt}{space 6}mci_24 {c |}{res}        214    1.523364     .859586          1          3
+{txt}{space 3}mci_24_LB {c |}{res}          0
+{txt}{space 6}mci_25 {c |}{res}        214    1.397196    .4904646          1          2
+{txt}{space 3}mci_25_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 4}mci_25_c {c |}{res}          0
+{txt}{space 6}mci_26 {c |}{res}        214     4719636    6.84e+07          0   1.00e+09
+{txt}{space 3}mci_26_LB {c |}{res}          0
+{txt}{space 6}mci_27 {c |}{res}        213    1.314554    .4654318          1          2
+{txt}{space 3}mci_27_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_28 {c |}{res}        146    1.349315    .4783948          1          2
+{txt}{space 3}mci_28_LB {c |}{res}          0
+{txt}{space 3}mci_29__1 {c |}{res}        213    .8591549    .3486811          0          1
+{txt}{space 3}mci_29__2 {c |}{res}        210    .6571429    .4757984          0          1
+{txt}{space 3}mci_29_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_30 {c |}{res}        214    1.126168    .3328174          1          2
+{txt}{space 3}mci_30_LB {c |}{res}          0
+{txt}{space 3}mci_31__1 {c |}{res}        214    .9018692     .298189          0          1
+{txt}{space 3}mci_31__2 {c |}{res}        213    .7323944    .4437537          0          1
+{txt}{space 3}mci_31__3 {c |}{res}        213    .8591549    .3486811          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_31_LB {c |}{res}          0
+{txt}{space 6}mci_32 {c |}{res}        214    1.392523    .4894571          1          2
+{txt}{space 3}mci_32_LB {c |}{res}          0
+{txt}{space 6}mci_33 {c |}{res}        214    1.182243    .3869498          1          2
+{txt}{space 3}mci_33_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_34 {c |}{res}        214    1.439252    .4974597          1          2
+{txt}{space 3}mci_34_LB {c |}{res}          0
+{txt}{space 4}mci_34_c {c |}{res}          0
+{txt}{space 6}mci_35 {c |}{res}        214    1.808411    .3944739          1          2
+{txt}{space 3}mci_35_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_36 {c |}{res}        214    1.728972    .4455327          1          2
+{txt}{space 3}mci_36_LB {c |}{res}          0
+{txt}{space 6}mci_37 {c |}{res}        214    1.607477    .4894571          1          2
+{txt}{space 3}mci_37_LB {c |}{res}          0
+{txt}{space 6}mci_38 {c |}{res}        214    1.859813    .3479949          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_38_LB {c |}{res}          0
+{txt}{space 6}mci_39 {c |}{res}        214    1.836449    .3707352          1          2
+{txt}{space 3}mci_39_LB {c |}{res}          0
+{txt}{space 6}mci_40 {c |}{res}        212    1.825472    .3804615          1          2
+{txt}{space 3}mci_40_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 4}mci_40_c {c |}{res}          0
+{txt}{space 6}mci_41 {c |}{res}        214    1.742991    .4380092          1          2
+{txt}{space 3}mci_41_LB {c |}{res}          0
+{txt}{space 6}mci_42 {c |}{res}        214     1.85514    .3527847          1          2
+{txt}{space 3}mci_42_LB {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_43 {c |}{res}        214    1.696262    .4609493          1          2
+{txt}{space 3}mci_43_LB {c |}{res}          0
+{txt}{space 4}mci_43_c {c |}{res}          0
+{txt}{space 6}mci_44 {c |}{res}        214    1.836449    .3707352          1          2
+{txt}{space 3}mci_44_LK {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_45 {c |}{res}        214    1.878505     .327468          1          2
+{txt}{space 3}mci_45_LK {c |}{res}          0
+{txt}{space 6}mci_46 {c |}{res}        214    1.392523    .4894571          1          2
+{txt}{space 3}mci_46_LK {c |}{res}          0
+{txt}{space 6}mci_47 {c |}{res}        214    1.588785    .4932078          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_48__1 {c |}{res}         88    .9545455    .2094926          0          1
+{txt}{space 3}mci_48__2 {c |}{res}         87    .6896552    .4653167          0          1
+{txt}{space 3}mci_48__3 {c |}{res}         88    .8977273    .3047431          0          1
+{txt}{space 3}mci_48__4 {c |}{res}         88    .8068182    .3970568          0          1
+{txt}{space 3}mci_48__5 {c |}{res}         88    .8636364    .3451409          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_48__6 {c |}{res}         87    .7011494    .4604079          0          1
+{txt}{space 3}mci_48_LK {c |}{res}          0
+{txt}{space 6}mci_49 {c |}{res}        214    1.616822    .4873009          1          2
+{txt}{space 3}mci_49_LK {c |}{res}          0
+{txt}{space 4}mci_49_c {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_50 {c |}{res}        215    1.367442    .4832333          1          2
+{txt}{space 3}mci_50_LK {c |}{res}          0
+{txt}{space 6}mci_51 {c |}{res}        215    1.511628    .5010313          1          2
+{txt}{space 4}mci_51_C {c |}{res}          0
+{txt}{space 6}mci_52 {c |}{res}        215    1.581395    .4944816          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_52_LK {c |}{res}          0
+{txt}{space 3}mci_53__1 {c |}{res}        205    .4390244    .4974829          0          1
+{txt}{space 3}mci_53__2 {c |}{res}        202    .2821782    .4511778          0          1
+{txt}{space 3}mci_53__3 {c |}{res}        205    .3365854    .4736985          0          1
+{txt}{space 6}mci_54 {c |}{res}        215     1.24186    .4292095          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_54_LK {c |}{res}          0
+{txt}{space 6}mci_55 {c |}{res}        215    1.330233    .4713943          1          2
+{txt}{space 3}mci_55_LK {c |}{res}          0
+{txt}{space 6}mci_56 {c |}{res}        214    1.471963    .5003838          1          2
+{txt}{space 3}mci_56_LK {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}mci_57 {c |}{res}        215    1.590698    .4928526          1          2
+{txt}{space 3}mci_57_LK {c |}{res}          0
+{txt}{space 6}mci_58 {c |}{res}        215    1.511628    .5010313          1          2
+{txt}{space 3}mci_58_LK {c |}{res}          0
+{txt}{space 6}mci_59 {c |}{res}        215    1.418605    .4944816          1          2
+{txt}{hline 13}{c +}{hline 57}
+{space 3}mci_59_LK {c |}{res}          0
+{txt}{space 6}mci_60 {c |}{res}        215    1.530233    .5002499          1          2
+{txt}{space 3}mci_60_LK {c |}{res}          0
+{txt}{space 4}mci_60_c {c |}{res}          0
+{txt}{space 2}sssys_irnd {c |}{res}        215    .5115016    .2761152   .0083771   .9978563
+{txt}{hline 13}{c +}{hline 57}
+{space 1}has__errors {c |}{res}        215    .0046512    .0681994          0          1
+{txt}interview_~s {c |}{res}        215    122.2791    9.192453         65        130
+{txt}assignment~d {c |}{res}        215    4977.005    385.0304       4561       5708
+
+{com}. order *_LB *_LK, last
+
+. drop *_LB *_LK
+
+. help anymatch
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         gl nicole       1
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+.         gl Ecuador              "${c -(}rcari{c )-}/3_Ecuador"
+{txt}
+{com}.         gl analysis     "${c -(}Ecuador{c )-}/9_Analysis"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl tex_tab              "${c -(}paper{c )-}/1_table"
+{txt}
+{com}.         gl tex_fig              "${c -(}paper{c )-}/2_figure"
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         * Load dataset
+.         use "${c -(}dta{c )-}/Ecuador_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab S_Phase
+
+      {txt}Phase {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        899       63.49       63.49
+{txt}          2 {c |}{res}        517       36.51      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,416      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}bal_all{c )-}, grpvar(S_Phase) nonote nototal replace             ///
+>              format(%12.2fc) grplabels(1 Phase 1 @ 2 Phase 2)           ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Demo_Phase_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_Phase_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_Phase_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}out_all{c )-}, grpvar(S_Phase) nonote              ///
+>                          nototal replace format(%12.2fc) grplabels(1 Phase 1 @ 2 Phase 2) onerow        ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Phase_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Phase_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Phase_Balance.xlsx}{p_end}
+{txt}
+{com}.                          
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         gl out_all  FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency               ///
+>                                 HHExpTotal PCExpTotal FES                                                                       ///
+>                                 CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4                                     ///
+>                                 HH_Vul_FES HH_Vul_Income CARI_rCARI
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}out_all{c )-}, grpvar(S_Phase) nonote              ///
+>                          nototal replace format(%12.2fc) grplabels(1 Phase 1 @ 2 Phase 2) onerow        ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Phase_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Phase_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Phase_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - CAR                                     * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Aug 11, 2023                                                                               *
+> *  LATEST UPDATE:               Aug 13, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/CAR_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/CAR_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/CAR_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   sample_prep             1       // Prepare sample list
+{txt}
+{com}.         local   correct                 1       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   1       // Set up datasets
+{txt}
+{com}.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   append                  1       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 1       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today:       display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+. if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl CAR                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}CAR{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}CAR{c )-}/5_Field_notes"
+{txt}
+{com}.         gl analysis     "${c -(}CAR{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}CAR{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+. 
+.         if `sample_prep'        do "${c -(}d_dofile{c )-}/cd00_sample_prep.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Prepare overall sample list                                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Aug 12, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}sample{c )-}/CAR_Sample_Merge.xlsx
+>                                         
+>         ** CREATES:             ${c -(}sample{c )-}/CAR_Sample_Merge.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                       PART 1: Prepare Sample List
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

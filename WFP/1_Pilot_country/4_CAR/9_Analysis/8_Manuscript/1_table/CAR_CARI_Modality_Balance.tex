@@ -1,0 +1,36 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab CARI_FES_Cat1 CARI_FES_Cat2 CARI_FES_Cat3 CARI_FES_Cat4 CARI_FES_Bad rCARI_Inc_Cat1 rCARI_Inc_Cat2 rCARI_Inc_Cat3 rCARI_Inc_Cat4 rCARI_Inc_Bad, grpvar(Modality) nonote onerow nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) rowvarlabels savetex("C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_CARI_Modality_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(1)-(2)} \\
+ & \multicolumn{1}{c}{F2F}  & \multicolumn{1}{c}{Remote}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+CARI: Food Secure   & 0.00    & 0.01    & -0.01   \\
+ & (0.00)  & (0.01)  &  \\ [1ex]
+CARI: Marginally Food Secure   & 0.14    & 0.23    & -0.09***   \\
+ & (0.01)  & (0.03)  &  \\ [1ex]
+CARI: Moderately Food Insecure   & 0.70    & 0.57    & 0.12***   \\
+ & (0.01)  & (0.03)  &  \\ [1ex]
+CARI: Severely Food Insecure   & 0.16    & 0.18    & -0.02   \\
+ & (0.01)  & (0.02)  &  \\ [1ex]
+CARI: Food Insecure   & 0.86    & 0.76    & 0.10***   \\
+ & (0.01)  & (0.03)  &  \\ [1ex]
+rCARI: Food Secure   & 0.01    & 0.01    & -0.00   \\
+ & (0.00)  & (0.01)  &  \\ [1ex]
+rCARI: Marginally Food Secure   & 0.32    & 0.36    & -0.04   \\
+ & (0.02)  & (0.03)  &  \\ [1ex]
+rCARI: Moderately Food Insecure   & 0.64    & 0.56    & 0.08**   \\
+ & (0.02)  & (0.03)  &  \\ [1ex]
+rCARI: Severely Food Insecure   & 0.03    & 0.07    & -0.04***   \\
+ & (0.01)  & (0.02)  &  \\ [1ex]
+rCARI: Food Insecure   & 0.67    & 0.63    & 0.04   \\
+ & (0.02)  & (0.03)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 969   & 277  & 1246  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

@@ -1,0 +1,162 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed04_hfc_sum_20230816.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}16 Aug 2023, 09:51:20
+{txt}
+{com}.         di `cdate'      
+{res}20230816
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         tab S_Assign_Modality   Modality
+
+             {txt}{c |} Survey Modality: F2F
+Modality_Typ {c |}      vs. Remote
+           e {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-To-Face {c |}{res}       760          0 {txt}{c |}{res}       760 
+{txt}      Remote {c |}{res}         0        656 {txt}{c |}{res}       656 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       760        656 {txt}{c |}{res}     1,416 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+           {txt}{c |}  Form Type: Long vs.
+Length_Typ {c |}         Short
+         e {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       701          0 {txt}{c |}{res}       701 
+{txt}Short Form {c |}{res}         0        715 {txt}{c |}{res}       715 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       701        715 {txt}{c |}{res}     1,416 
+{txt}
+{com}.         
+. *       replace S_Assign_Modality = Modality if mi(S_Assign_Modality)
+. *       replace S_Assign_Length   = Form         if mi(S_Assign_Length)
+.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         ** 1 Survey Completion  
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Not Comple~d}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      413}}}{space 1}{space 1}{ralign 9:{res:{sf: 17.41147}}}{space 1}{space 1}{ralign 9:{res:{sf: 43.20084}}}{space 1}{space 1}{ralign 9:{res:{sf: 35.20887}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      543}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.89207}}}{space 1}{space 1}{ralign 9:{res:{sf: 56.79916}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.28774}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      956}}}{space 1}{space 1}{ralign 9:{res:{sf: 40.30354}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 40.30354}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf: 32.04047}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.67232}}}{space 1}{space 1}{ralign 9:{res:{sf: 64.79113}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      656}}}{space 1}{space 1}{ralign 9:{res:{sf: 27.65599}}}{space 1}{space 1}{ralign 9:{res:{sf: 46.32768}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.71226}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1416}}}{space 1}{space 1}{ralign 9:{res:{sf: 59.69646}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 59.69646}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1173}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.45194}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.45194}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1199}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.54806}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.54806}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2372}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}.         esttab using "${c -(}d_tex_tab{c )-}/Ecuador_rCARI_Completion.tex",                                       ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace 
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_rCARI_Completion.tex"'})
+
+{com}. 
+. /*      dtable i.S_Assign_Modality i.S_Assign_Length i.S_ADMIN1 i.S_ADMIN3Name          ///
+>                    i.S_ADMIN5Name, by(Completion)                                                                               ///
+>                    title(Myanmar rCARI Validation Study Progress)                                               ///
+>                    export(${c -(}d_tex_tab{c )-}/Myanmar_rCARI_Completion_by_Admin.tex, replace)     
+> */
+.         tabout S_Assign_Modality S_Assign_Length S_ADMIN1 S_ADMIN3Name S_ADMIN5Name ///
+>                    Completion  ///
+>         using "${c -(}d_tex_tab{c )-}/Ecuador_rCARI_Completion_by_Admin.docx", ///
+>         replace c(freq row) clab("Count" "Percent") style(docx) f(0c 1p) font(bold) ///
+>         ptotal(single)
+{err}variable {bf}S_ADMIN1{sf} not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+{search r(111), local:r(111);}
+{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/4_Data/CAR_Full_Household_Analysis_20230816.dta"
+
+. tab Modality
+
+      {txt}Survey {c |}
+   Modality: {c |}
+     F2F vs. {c |}
+      Remote {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        113       43.80       43.80
+{txt}      Remote {c |}{res}        145       56.20      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}        258      100.00
+
+{com}. tab R_Err_Resp
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+ respondent {c |}
+  in roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         99       87.61       87.61
+{txt}          1 {c |}{res}         14       12.39      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        113      100.00
+
+{com}. codebook HHID 
+
+{txt}{hline}
+{res}HHID{right:Household ID}
+{txt}{hline}
+
+{col 19}Type: String ({res}str10{txt})
+
+{col 10}Unique values: {res}2,287{col 51}{txt}Missing "": {res}0{txt}/{res}2,287
+
+{txt}{col 15}Examples: {res}"CAR110310"
+{col 25}"CAR2101079"
+{col 25}"CAR210260"
+{col 25}"CAR22252"
+
+{com}. tab R_Resp_Sex
+{txt}no observations
+
+{com}. tab R_Resp_Age
+{txt}no observations
+
+{com}. tab R_HHH_Literate
+
+  {txt}Household {c |}
+   head has {c |}
+   attended {c |}
+     school {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}          6       20.00       20.00
+{txt}        Yes {c |}{res}         24       80.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         30      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD37794.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

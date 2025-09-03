@@ -1,0 +1,594 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[table,xcdraw]{xcolor}
+
+\author{Nicole Wu \& Alirah Weyori}
+\date{\today}
+\title{Validation and Calibration of the Remote Consolidated Approach of Reporting on Food Security (rCARI) Methodology 
+	\\ {\normalsize Preliminary results from Central African Republic} 
+	\\{\normalsize{Version 1.0}} }
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+	\tableofcontents
+	\pagebreak
+	
+% -------
+	
+\section{Executive Summary}
+
+
+\pagebreak
+
+% ------- 
+\section{Introduction}
+	
+The overall goal of this study was to assess the validity of the rCARI module(s) against conventional CARI modules for measuring food security within the same population. The study compares indicators collected through phone surveys with conventional face-to-face survey, considering the latter as the standard standard methodology/gold standard. The following food security indicators were compared: Food Consumption Score (FCS), reduced Coping Strategy Index (rCSI), Livelihood Coping Strategy (LCS), Food Expenditure Share (FES), and income sources and income change. The Economic Capacity to Meet Essetial Needs (ECMEN) indicator which is sometimes used to aggregate CARI will not be tested in this study, as it requires a standard long expenditure module which cannot be collected over the phone. In addition, ECMEN calculation requires having an updated value of the minimum expenditure basket (MEB) of the study population, which is not available for the study areas. In its stead, a shortened version of the standard expenditure module will be used to test the possibility of collecting FES data over the phone.
+	
+Studying the validity of using the phone to collect food security indicators is a key step in judging the appropriateness of the rCARI methodology to report food insecurity prevalence. However, Testing the comparability of these indicators through different modalities of data collection (Face-to-Face (F2F) vs. Phone) should be read within the wider consideration around phone survey modality of data collection. For example, other factors aside the modules should be considered while reading results of any remote survey.
+	
+	\begin{itemize}[label=--, left=1.5em]
+		\item[1]	First, mobile phone ownership (mobile phone penetration rate in the study area) could likely exclude the most vulnerable population from the sample. 
+		
+		\item[2]	Second, mobile phone network coverage; Even in countries with high penetration rates, network coverage could be a problem, especially when electricity cuts are frequent and local infrastructure, such as communication masts, are not evenly distributed (World Bank, 2020).
+		
+		\item[3]	Third, response rate: It is well documented that the response rate in phone surveys is usually lower than in face-to-face surveys (L’Engle et al., 2018; World Bank, 2020). Response rate is usually lower among the well-off population which could contribute to sample skewness.
+	\end{itemize}
+	
+These factors may lead to skewed sample from phone surveys especially if the goal to report national representative results/outcomes. Nevertheless, there are several statistical weighting techniques that can adjust the results of phone surveys based baseline variables like using demographics characteristics of the most recent face-to-face surveys (Nagpal et al. 2021; Glazerman et al. 2020; Valliant et al. 2013; Elkasabi, 2015). This allows the final results of such exercises to be aggregated and extrapolated to reflect some level of representativeness. However, this current study remains insulated from these confounding issues since the main idea is not to report results at the national level but rather to compare how the two methods perform within the same population with similar characteristics. For this reason, the study does not focus on weighting techniques to adjust for sampling skewness and response rate. Nonetheless, the study design adopted in Central African Republic (CAR), could allow for testing of sample skewness due to mobile phone ownership and coverage (see CAR sample design in Annex III). CAR has one of the lowest mobile phone penetration rates globally (approximately 70\% of the population do not own/use mobile phones).
+	
+\pagebreak
+	
+% -------
+
+\section{Study Design}
+	
+The study was implemented in a randomized controlled setup following and adhering to all standards and requirements of a Randomized Control Trial (RCT). However, for the current study, the methodology shall referred to as a randomized control study not confuse readers with the standard RCT as used in the medical literature. 
+	
+ 
+	
+	
+Data collection was implemented from July 2023 to August 2023.
+
+\subsection{Study area and sampling frame}
+	
+Selection of study areas and participating households/respondents followed a stratified random sampling approach (stratified by the different Admin Areas-biggest to smallest) based on 3-point criteria developed and agreed together with the WFP country office in Bangui. 
+	
+	\begin{itemize} [label=--, left=1.5em]
+	\item[1.] Mobile phone coverage.
+	\item[2.] Food security situation.
+	\item[3.] Accessibility (considering the security situation on the ground).
+	\end{itemize}
+	
+	Two Administration 1 (ADMIN1) Areas (Prefecture) were selected based on the afore mentioned criteria. 
+	\begin{itemize}[label=--, left=1.5em]
+	\item[1.] Nana- Gribizi - Western part of the country and,
+	\item[2.] Mbomou - Eastern part of the country.
+	\end{itemize}
+
+Selection of Admin2, 3 and 5 were randomly done based on a compiled list of areas that had mobile phone connectivity - a full list of areas with phone network was compiled through Orange/Moove/Telecel. The biggest mobile phone operators in the country with most phone coverage. Only Admin 3 \& 5 areas with phone coverage were then included in the sampling frame at this stage to ensure that sampled households could be interviewed remotely when assigned to the remote module. 
+	
+In total, 2 Admin2 areas (sub-prefecture) one each from Admin1 area and a total of 4 Admin3 areas selected randomly from the two Admin2 areas. The final list of Admin Areas selected for the study are:
+	
+	\begin{itemize} [label=--, left=1.5em]
+		\item Admin2 Areas (Sub-Prefecture) selected
+			\item[1.] Bangassou
+			\item[2.] Kanga-Bandaro
+	\end{itemize}
+	
+	\begin{itemize}[label=--, left=1.5em]
+		\item Admin3 Areas selected
+			\item[1.] Bangassou
+			\item[2.] Nana
+			\item[3.] Botto
+			\item[4.] Kanga-Bandaro 
+	\end{itemize}
+	
+A total of 25 Admin5 areas were selected randomly from the final compiled list of communities that meet the criteria as set. Food security has always been shown to vary not only across Admin level but also between rural and urban population. To factor this into the study design, the selection of Admin5 (villages) was made deliberately to include 15 urban and 10 Rural Areas (see Table 1 for the full list of Admin areas selected, number of households listed and the phone ownership).
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Listed Sample: ADMIN Area Selection and Distribution of Phone Ownership}
+				\scriptsize
+				\input{1_table/CAR_rCARI_ADMIN_Area} 
+				\label{tab:}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\subsection{Sampling frame and survey implementation}
+		
+The household sampling frame was all households in the 25 Admin5 areas that have been randomly selected as study areas. Sampling of respondents was then done through listing. Households/respondents were listed through a random walk in each Admin5 sampling every third house in that sequence. Approximately 100 households per Admin5 were listed (after receiving their informed consent) and included in the sample. A number of baseline demographic and household level characteristics (such as age, gender education status of the household head, household size, and ownership of common assets etc.) were collected during listing phase. 
+	
+A total of 2500 households/respondents were listed to participate in the study.
+	
+Training of enumerators was conducted by in-person RAM facilitators from WPF-HQ with support from the VAM CAR country office team. The training was conducted in French over a in 4-day period with one additional day used for field testing, adjusting and adapting the final questionnaires (F2F \& Remote) before deployment for data collection. 
+	
+Interviews (both F2F \& Remote) were conducted in local languages of each locality. Enumerator were sent to localities where they could speak the local dialects.
+	
+	
+\subsection{Phone assignment for Remote Modality}
+	
+In CAR, as discussed earlier, not only is the phone connectivity an issue, also phone ownership remains critically low (only 27\% own phones from the national statistics). This implies that, a larger proportion of the population i.e., a little over 70\% of households (usually the lower income earners and likely to be more vulnerable to food insecurity) are excluded in standard mVAM exercises. 
+	
+The situation in CAR thus presented a unique opportunity to investigate deeper to understand the type of households/respondents are usually excluded in such exercises, their food security situation and how they cope with shocks or stress associated with food insecurity. 
+
+In this regards, a budget line was created to provide small hand-held phones to a sub-sample of the listed households (households with network coverage, do not own a mobile phone but randomly assigned to the remote group). The budget was for 300 phones, however since the final sample without phones was more than budgeted, 300 households/respondents were randomly selected and given pre-connected phones with SIM cards (refer to Figure 1 for the different levels of randomization that was implemented). 
+	
+All distributed phones were fully charged before distribution to factor access to electricity in rural areas. Also, there was coordination between the field team distributing the phones and the team conducting the phone interviews in Bangui to ensure that households/respondents were called with a short time frame after receiving the phone.
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=.3]{2_figure/CAR_Sample_Composition.png}
+		\end{center}
+		\caption{Sample Composition and Completion in CAR}
+		\label{fig:CAR_Sample_Composition}
+	\end{figure}
+	
+	
+A full presentation on the sample completion with percentages follows in the next section.
+	
+	
+\section{Descriptive statistics}
+	
+In this section, the core descriptive statistics of the study sample is presented. Given the rather elaborate design that has been implemented, a number of statistics in the form of interview completion, balance tables and attrition statistics across the different level of implementation are presented.
+
+\subsection{Survey Completion}
+	
+Table 2 shows the interview completion rate between F2F and Remote modalities. In total, the survey was able to complete 60\% (1,245 interviews) of the original sample with the overall completion rate higher in the F2F (92\%) compared to the Remote modality (27\%).
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Sample Completion: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/CAR_rCARI_Completion} 
+				\label{tab:CAR_rCARI_Completion}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+
+ 
+The study sample was sub-categorized into phone-owners and non-phone-owners based on the study design to capture phone and network coverage. 
+
+
+\pagebreak
+	
+% ------- 
+	
+\subsection{Randomization Quality Check}
+	
+To assess the balance of the treatment (Remote) and control (F2F) groups, we examined various respondent and household characteristics, including basic demographics, income sources, and changes over time. This allowed us to evaluate whether the two groups were similar in terms of these factors, ensuring a fair comparison between the treatment and control conditions.
+	
+\subsection{Modality Randomization}
+
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table on Randomized Survey Modality Assignment: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/CAR_Listing_Demo_Balance_Modality} 
+				\label{tab:CAR_Listing_Demo_Balance_Modality}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	% ------
+	
+	
+\subsection{Questionnaire Length Randomization-F2F}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Questionnaire Length Assignment in F2F Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/CAR_Listing_Demo_Balance_F2F_Length} 
+				\label{tab:CAR_Listing_Demo_Balance_F2F_Length}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+\pagebreak
+	
+% ------
+	
+\subsection{Questionnaire Length Randomization-Remote}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Questionnaire Length Assignment in Remote Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/CAR_Listing_Demo_Balance_RM_Length} 
+				\label{tab:CAR_Listing_Demo_Balance_RM_Length}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+\pagebreak
+	
+	
+\section{Primary Results: Impact of Survey Modality}
+	
+In this section, the main results of the study aggregated by the food security indicator are analysed and presented. Here, the objective is to compare the different versions of CARI calculated using remote or face-to-face modules with the standard CARI.
+	
+\subsection{CARI vs. rCARI}
+
+Conventional/standard CARI:  CARI-FES: Standard CARI using FES from F2F surveys.
+	
+Other ways of aggregating CARI (that are tested)
+
+	\begin{itemize}[label=--, left=1.5em]
+		\item rCARI-FES: Standard CARI using FES in but coming from remote surveys.
+		\item CARI-Inc: CARI using income variable coming from F2F surveys.
+		\item rCARI-Inc: Standard rCARI using income and income change variable coming from remote surveys (this is the CARI version used during the COVID 19 Pandemic).
+	\end{itemize}
+
+Table 6 shows the different methods of calculating CARI to against the standard/conventional CARI.
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Lists the different aggregation methods and indicators used for each methodology}
+			\scriptsize
+			\input{1_table/Aggregation_Table} 
+			\label{tab:Aggregation_Table}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+For more information on the calculation of each of the food security indicators included in each methodology refer to Annex. 
+
+
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: Standard CARI-FES vs. Standard rCARI-Inc}
+				\scriptsize
+				\input{1_table/CARI_rCARI_Modality_CAR} 
+				\label{tab:CARI_rCARI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: CARI-FES vs. rCARI-FES}
+				\scriptsize
+				\input{1_table/CARI_FES_rCARI_Modality_CAR} 
+				\label{tab:CARI_FES_rCARI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+		
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: CARI-Inc vs. rCARI-Inc}
+				\scriptsize
+				\input{1_table/Inc_CARI_rCARI_Modality_CAR} 
+				\label{tab:Inc_CARI_rCARI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	
+	% --------
+	
+	
+	\subsection{Food Consumption Score (FCS)}
+	
+	The Food Consumption Score (FCS) is a composite score based on households’ dietary diversity, food frequency, and relative nutritional importance of different food groups and is FCS is calculated by inspecting how often households consume food items from the different food groups during a 7-day reference period. The responses are aggregated, and weights applied to obtain an index which is then used to categorize the household into one three categories of food consumption-food secure, borderline, and poor.
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Food Consumption Score and Groups}
+				\scriptsize
+				\input{1_table/FCS_Modality_CAR} 
+				\label{tab:FCS_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak	
+	
+	% --------
+	
+	
+
+	\subsection{rCSI}
+	
+	The reduced Coping Strategies indicator is used to compare the hardship/stress of households because of food shortage. It measures the frequency and severity of the food consumption behaviours households had to engage in in the last 7days due to food shortage. The indicator comprises of 5 standard strategies, that allows for the comparison of household behaviour over time and between groups.
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Reduced Coping Strategy Index Classification}
+				\scriptsize
+				\input{1_table/rCSI_Modality_CAR} 
+				\label{tab:rCSI_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+
+	\pagebreak
+	
+	% ---------
+	
+	\subsection{LCS}
+
+	The livelihood coping strategy indicator is a household-level indicator that measures the household's capacity to deal with the insufficient food consumption as a result of shortages or the lack of money in the medium- to long-term bases (30days to 12months) to meet their dietary requirements. Broadly, the strategies are categorized into 3 broad groups; stress, crisis and emergency level. For the purposes of targeting and assistance, the LCS crisis and emergency categories are of relevance.
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Livelihood Coping Strategy Index}
+				\scriptsize
+				\input{1_table/LCS_Modality_CAR} 
+				\label{tab:LCS_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+
+
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{CAR: Each Coping Strategy Used}
+				\scriptsize
+				\input{1_table/LCS_Ind_Modality_CAR} 
+				\label{tab:LCS_Ind_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\pagebreak
+	
+	% -------
+	
+	
+	
+	\subsection{FES}
+	
+	The food expenditure share (FES) is a proxy food security indicator that is used to measure the economic vulnerability of a household. It is given as the share of household's total consumption expenditure spent on food. The higher the share of food expenditure of a household, the more vulnerable/food insecure the household.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Expenditure and Food Expenditure Share}
+				\scriptsize
+				\input{1_table/FES_Modality_CAR} 
+				\label{tab:FES_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\pagebreak
+	
+	% --------
+	
+	\subsection{Income}
+	
+	The income indicator captures the respondent/household income source and income change experienced in the last 12 months prior to the interview. This indicator is a recent addition to the CARI console to reflect the economic situation of the respondent/household in the absence of the FES. This was especially important during the COVID-19 outbreak when exigencies of the time did not allow for the collection of expenditure to calculate FES. The type of income generating activity and how economic situation at the time impacted on income flow either positive or negative was considered a good proxy for vulnerable the household could be. Based on the type of income (regular/irregular) and the change to income (change/no change) to the income stream, the respondent/household is classified into one of 4 CARI categories (see Table 15 for the categories). The irregular \& reduced, and no income sources groups corresponding to FES 65-75\% and >=75\% categories respectively.
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Income}
+				\scriptsize
+				\input{1_table/INC_Modality_CAR} 
+				\label{tab:INC_Modality_CAR}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+
+
+	\pagebreak
+
+	% ------- 
+	
+	\section{Summary and conclusions}
+	
+	Disclaimer: the following conclusions are preliminary and thus, should be interpreted with the following caveats. First, the final remote sample is small. Although there is no statistical difference between the respondents who received phones from the project and phone owners, their response may be influenced by receipt of the mobile phones. Third, the results have not been weighted to adjust for the different response rates.  
+	
+	The following are initial findings from the preliminary analysis of the pilot data:
+	\begin{itemize}[label=--, left=1.5em]
+		\item The low phone ownership (25\%) and mobile coverage influenced greatly the study implementation, sampling and the number of households that was reached in the remote arm of the study. Similar to remote surveys, the response rate was generally low.
+		\item 
+	\end{itemize}
+	 
+	
+	
+	
+	In terms of the outcome indicators, remote CARI using income source and income change significantly underestimated the level of vulnerability of the sampled households compared to the standard CARI.
+	
+	The LCS variable significantly drives the difference between rCARI and CARI (remote households seem to be adopting less stress and emergency strategies compared to their counterparts in the F2F)
+	
+	
+	
+	
+	\pagebreak
+	
+	% ------- 
+
+	\section{Challenges of the study in CAR}
+
+	\begin{itemize}[label=--, left=1.5em]
+		\item[1.] Restricted access to the field because of deteriorating security situation
+		\item[2.] Bad phone network/infrastructure 
+			\item[a.]	Most parts of the country do not have phone network coverage.
+			\item[b.]	In places where there is coverage, poor infrastructure and constant electricity cuts affected call quality.
+			\item[c.]	Access to electricity for charging phones particularly in rural areas.
+		\item[3.] Low phone ownership in the population
+			\item[a.] 	Only 25\% of households had phones (similarly to the national statistic)
+		\item[4] Logistical challenges (Enumerator deployment)
+			\item[a.]	Depended on the UNHAS (United Nations Humanitarian Air Service) to deploy enumerators this affected timely deployment could be done (flights to study areas twice a week)
+			\item[b.]	Acquisition and distribution of phones/SIM cards-Challenges with moving them to the field for distribution.
+		\item[5.] Low response rate in the remote arm (High Attrition)
+		\item[6.] Lack of an established data collection platform to collect phone survey-ICASEES 
+		\item[7.] Weather disruptions/rainy season
+	\end{itemize}
+
+
+\pagebreak
+
+% ------- 
+
+
+\section{Annexes}
+% -------
+
+\section{Attrition Analysis}
+
+\subsection{F2F Attrition}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table for Randomized Questionnaire Length Assignment in F2F Survey: Completed vs. Attrition}
+			\scriptsize
+			\input{1_table/CAR_Listing_Demo_Attrition_F2F} 
+			\label{tab:CAR_Listing_Demo_Attrition_F2F}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+% --------
+
+\subsection{Remote Attrition}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table for Randomized Questionnaire Length Assignment in Remote Survey: Completed vs. Attrition}
+			\scriptsize
+			\input{1_table/CAR_Listing_Demo_Attrition_Remote} 
+			\label{tab:CAR_Listing_Demo_Attrition_Remote}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\pagebreak
+
+% ------- 
+
+
+
+
+
+
+
+
+
+
+		
+\end{document}
+

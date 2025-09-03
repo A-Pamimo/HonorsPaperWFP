@@ -1,0 +1,889 @@
+{\rtf1\ansi\deff0 {\fonttbl{\f0\fnil Garamond;}}
+{\info {\author .}{\company .}{\title .}}
+\deflang1033\plain\fs20
+{\footer\pard\qc\plain\f0\fs20\chpgn\par}
+{
+{\fs20\b\qc\line Linear regression }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx1600
+\fs20\pard\intbl\ql { {afi_FES}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx2800
+\fs20\pard\intbl\qr { {Coef.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4000
+\fs20\pard\intbl\qr { {St.Err.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4850
+\fs20\pard\intbl\qr { {t-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx5750
+\fs20\pard\intbl\qr { {p-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx6950
+\fs20\pard\intbl\qr { {[95% Conf}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8150
+\fs20\pard\intbl\qr { {Interval]}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8750
+\fs20\pard\intbl\qr { {Sig}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Modality}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.023}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.045}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{0.51}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.607}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.066}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.112}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_phone_ownership}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.248}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.029}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-8.60}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{0}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.305}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{-.192}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Constant}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.909}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.046}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{19.57}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{0}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{.817}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{1}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrb\brdrw10\brdrs\cellx8750\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Mean dependent var}\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.836}\cell
+\cellx6350
+\fs20\pard\intbl\ql {SD dependent var }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.371}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {R-squared }\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.101}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Number of obs  }\cell
+\cellx8100
+\fs20\pard\intbl\qr {1126}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {F-test  }\cell
+\cellx4050
+\fs20\pard\intbl\qr {50.774}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Prob > F }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.000}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Akaike crit. (AIC)}\cell
+\cellx4050
+\fs20\pard\intbl\qr {845.660}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Bayesian crit. (BIC)}\cell
+\cellx8100
+\fs20\pard\intbl\qr {860.740}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw15\brdrs\cellx8750
+\fs20\pard\intbl\ql {\i *** p<.01, ** p<.05, * p<.1}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx8750
+\fs20\pard\intbl\ql {}\cell
+\row}
+
+
+{\fs20\b\qc\line Linear regression }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx1600
+\fs20\pard\intbl\ql { {afi_FES}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx2800
+\fs20\pard\intbl\qr { {Coef.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4000
+\fs20\pard\intbl\qr { {St.Err.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4850
+\fs20\pard\intbl\qr { {t-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx5750
+\fs20\pard\intbl\qr { {p-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx6950
+\fs20\pard\intbl\qr { {[95% Conf}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8150
+\fs20\pard\intbl\qr { {Interval]}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8750
+\fs20\pard\intbl\qr { {Sig}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Modality}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.031}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.045}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{0.69}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.491}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.058}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.12}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_phone_ownership}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.184}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.031}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-5.89}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{0}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.245}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{-.123}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_size}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.001}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.006}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-0.13}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.898}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.013}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.011}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_head_educ}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.008}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.003}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-2.74}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.006}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.014}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{-.002}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_head_marital}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.024}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.032}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-0.74}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.462}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.087}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.039}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_head_sex}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.006}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.022}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-0.27}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.79}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.049}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.037}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_mem_disability}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.11}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.033}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-3.31}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.001}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.175}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{-.045}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_mem_lessthan15}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.013}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.009}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-1.47}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.141}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.03}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.004}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_mem_greaterthan60}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.025}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.024}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{1.04}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.297}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.022}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.072}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Constant}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.993}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.052}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{19.12}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{0}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{.892}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{1.095}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrb\brdrw10\brdrs\cellx8750\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Mean dependent var}\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.836}\cell
+\cellx6350
+\fs20\pard\intbl\ql {SD dependent var }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.371}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {R-squared }\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.132}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Number of obs  }\cell
+\cellx8100
+\fs20\pard\intbl\qr {1126}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {F-test  }\cell
+\cellx4050
+\fs20\pard\intbl\qr {15.599}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Prob > F }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.000}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Akaike crit. (AIC)}\cell
+\cellx4050
+\fs20\pard\intbl\qr {820.027}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Bayesian crit. (BIC)}\cell
+\cellx8100
+\fs20\pard\intbl\qr {870.292}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw15\brdrs\cellx8750
+\fs20\pard\intbl\ql {\i *** p<.01, ** p<.05, * p<.1}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx8750
+\fs20\pard\intbl\ql {}\cell
+\row}
+
+
+{\fs20\b\qc\line Linear regression }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx1600
+\fs20\pard\intbl\ql { {afi_inc}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx2800
+\fs20\pard\intbl\qr { {Coef.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4000
+\fs20\pard\intbl\qr { {St.Err.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4850
+\fs20\pard\intbl\qr { {t-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx5750
+\fs20\pard\intbl\qr { {p-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx6950
+\fs20\pard\intbl\qr { {[95% Conf}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8150
+\fs20\pard\intbl\qr { {Interval]}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8750
+\fs20\pard\intbl\qr { {Sig}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Modality}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.113}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.039}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{2.86}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.004}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{.035}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.19}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_phone_ownership}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.029}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.023}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{1.25}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.211}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.016}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.073}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Constant}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.012}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.041}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-0.29}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.77}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.093}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.069}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrb\brdrw10\brdrs\cellx8750\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Mean dependent var}\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.128}\cell
+\cellx6350
+\fs20\pard\intbl\ql {SD dependent var }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.334}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {R-squared }\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.020}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Number of obs  }\cell
+\cellx8100
+\fs20\pard\intbl\qr {1126}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {F-test  }\cell
+\cellx4050
+\fs20\pard\intbl\qr {7.835}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Prob > F }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.000}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Akaike crit. (AIC)}\cell
+\cellx4050
+\fs20\pard\intbl\qr {708.584}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Bayesian crit. (BIC)}\cell
+\cellx8100
+\fs20\pard\intbl\qr {723.664}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw15\brdrs\cellx8750
+\fs20\pard\intbl\ql {\i *** p<.01, ** p<.05, * p<.1}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx8750
+\fs20\pard\intbl\ql {}\cell
+\row}
+
+
+{\fs20\b\qc\line Linear regression }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx1600
+\fs20\pard\intbl\ql { {afi_inc}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx2800
+\fs20\pard\intbl\qr { {Coef.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4000
+\fs20\pard\intbl\qr { {St.Err.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4850
+\fs20\pard\intbl\qr { {t-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx5750
+\fs20\pard\intbl\qr { {p-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx6950
+\fs20\pard\intbl\qr { {[95% Conf}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8150
+\fs20\pard\intbl\qr { {Interval]}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8750
+\fs20\pard\intbl\qr { {Sig}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Modality}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.112}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.039}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{2.86}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.004}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{.035}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.19}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_phone_ownership}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.029}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.026}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{1.12}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.262}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.022}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.079}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_size}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.008}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.005}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-1.64}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.102}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.019}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.002}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_head_educ}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.004}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.003}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{1.41}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.16}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.002}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.01}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_head_marital}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.005}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.026}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-0.20}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.844}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.056}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.046}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_hh_head_sex}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.057}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.024}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-2.35}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.019}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.105}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{-.01}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{**}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_mem_disability}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-.006}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.028}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-0.23}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.816}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.061}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.048}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_mem_lessthan15}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.004}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.008}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{0.48}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.631}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.011}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.018}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_mem_greaterthan60}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.029}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.026}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{1.14}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.256}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.021}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.08}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Constant}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.051}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.049}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{1.02}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.306}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.046}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.148}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrb\brdrw10\brdrs\cellx8750\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Mean dependent var}\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.128}\cell
+\cellx6350
+\fs20\pard\intbl\ql {SD dependent var }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.334}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {R-squared }\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.032}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Number of obs  }\cell
+\cellx8100
+\fs20\pard\intbl\qr {1126}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {F-test  }\cell
+\cellx4050
+\fs20\pard\intbl\qr {3.257}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Prob > F }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.001}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Akaike crit. (AIC)}\cell
+\cellx4050
+\fs20\pard\intbl\qr {708.976}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Bayesian crit. (BIC)}\cell
+\cellx8100
+\fs20\pard\intbl\qr {759.241}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw15\brdrs\cellx8750
+\fs20\pard\intbl\ql {\i *** p<.01, ** p<.05, * p<.1}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx8750
+\fs20\pard\intbl\ql {}\cell
+\row}
+
+
+{\fs20\b\qc\line Logistic regression }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx1600
+\fs20\pard\intbl\ql { {afi_FES}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx2800
+\fs20\pard\intbl\qr { {Coef.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4000
+\fs20\pard\intbl\qr { {St.Err.}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx4850
+\fs20\pard\intbl\qr { {t-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx5750
+\fs20\pard\intbl\qr { {p-value}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx6950
+\fs20\pard\intbl\qr { {[95% Conf}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8150
+\fs20\pard\intbl\qr { {Interval]}}\cell
+\clbrdrt\brdrw10\brdrs\clbrdrb\brdrw20\brdrs\cellx8750
+\fs20\pard\intbl\qr { {Sig}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Modality}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{.11}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.216}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{0.51}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{.609}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-.313}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{.533}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{S_phone_ownership}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{-1.845}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.198}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{-9.33}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{0}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{-2.232}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{-1.457}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx1600
+\fs20\pard\intbl\ql {{Constant}}\cell
+\cellx2800
+\fs20\pard\intbl\qr {{2.505}}\cell
+\cellx4000
+\fs20\pard\intbl\qr {{.264}}\cell
+\cellx4850
+\fs20\pard\intbl\qr {{9.48}}\cell
+\cellx5750
+\fs20\pard\intbl\qr {{0}}\cell
+\cellx6950
+\fs20\pard\intbl\qr {{1.987}}\cell
+\cellx8150
+\fs20\pard\intbl\qr {{3.023}}\cell
+\cellx8750
+\fs20\pard\intbl\qr {{***}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrb\brdrw10\brdrs\cellx8750\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Mean dependent var}\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.836}\cell
+\cellx6350
+\fs20\pard\intbl\ql {SD dependent var }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.371}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Pseudo r-squared }\cell
+\cellx4050
+\fs20\pard\intbl\qr {0.113}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Number of obs  }\cell
+\cellx8100
+\fs20\pard\intbl\qr {1126}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Chi-square  }\cell
+\cellx4050
+\fs20\pard\intbl\qr {97.021}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Prob > chi2 }\cell
+\cellx8100
+\fs20\pard\intbl\qr {0.000}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2300
+\fs20\pard\intbl\ql {Akaike crit. (AIC)}\cell
+\cellx4050
+\fs20\pard\intbl\qr {898.773}\cell
+\cellx6350
+\fs20\pard\intbl\ql {Bayesian crit. (BIC)}\cell
+\cellx8100
+\fs20\pard\intbl\qr {913.853}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw15\brdrs\cellx8750
+\fs20\pard\intbl\ql {\i *** p<.01, ** p<.05, * p<.1}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx8750
+\fs20\pard\intbl\ql {}\cell
+\row}
+
+
+\writepositionforappend
+}}

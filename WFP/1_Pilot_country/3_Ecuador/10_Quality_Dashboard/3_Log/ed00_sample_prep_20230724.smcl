@@ -1,0 +1,177 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed00_sample_prep_20230724.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}24 Jul 2023, 22:41:54
+{txt}
+{com}.         di `cdate'
+{res}20230724
+{txt}
+{com}.         
+.         import excel "${c -(}sample{c )-}/Ecuador_Sample_Merge.xlsx", sheet("Sheet1")     ///
+>                                  firstrow clear
+{res}{text}(15 vars, 2,372 obs)
+
+{com}.         
+. local sample_var ADMIN1 ADMIN3Name ADMIN5Name Modality_Type Length_Type ///
+>                                  Gender Marital_Status Education HHDisable
+{txt}
+{com}.                                  
+. foreach var of local sample_var {c -(}
+{txt}  2{com}.         replace `var' = strproper(strtrim(`var'))               // format proper cases
+{txt}  3{com}.     encode  `var', gen(`var'_byte)
+{txt}  4{com}.         drop    `var'
+{txt}  5{com}.         ren             `var'_byte `var'
+{txt}  6{com}.     {c )-}
+{txt}(2,372 real changes made)
+{res}{txt}(2,254 real changes made)
+{res}{txt}(2,372 real changes made)
+{res}{txt}(1,173 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}(135 real changes made)
+{res}{txt}(80 real changes made)
+{res}{txt}(0 real changes made)
+{res}{txt}
+{com}. 
+.         ********************************************************************************
+. *                                                       PART 2: Organize Sample Variables
+. *******************************************************************************/
+. 
+.         ren Modality_Type       Assign_Modality
+{res}{txt}
+{com}.         ren Length_Type         Assign_Length
+{res}{txt}
+{com}.         ren ADMIN1                      Geo_Admin1
+{res}{txt}
+{com}.         ren ADMIN3Name          Geo_Admin3
+{res}{txt}
+{com}.         ren ADMIN5Name          Geo_Admin5
+{res}{txt}
+{com}. 
+.         ren        uid HHID
+{res}{txt}
+{com}.         order  Phase, a(HHID)
+{txt}
+{com}.         order  Assign_Modality Assign_Length Geo_Admin*, a(Phase)
+{txt}
+{com}.         order  Gender, b(Age)
+{txt}
+{com}.         
+.         ** CORRECT VALUES - TO DISCUSS WITH ALIRAH // MISSING VALUES? WHY
+.         replace Age = . if Age > 100
+{txt}(1 real change made, 1 to missing)
+
+{com}.         
+.         ** recode marital status
+.         recode  Marital_Status (1 = 2) (2 = 4) (3 = 6) (4 = 1) (5 = 3) (6 = 5), gen(Marital)
+{txt}(740 differences between {bf:Marital_Status} and {bf:Marital})
+
+{com}.         drop    Marital_Status
+{txt}
+{com}.         ren             Marital         Marital_Status
+{res}{txt}
+{com}.         order   Marital_Status, a(Age)
+{txt}
+{com}.         
+.         gen Index = _n
+{txt}
+{com}.         
+.         duplicates tag HHID, generate(Dup)
+
+{p 0 4}{txt}Duplicates in terms of {res} HHID{p_end}
+{txt}
+{com}.         
+. /*      ieduplicates HHID using "${c -(}note{c )-}/Ecuador_Sample_DuplicateID_New_`cdate'.xlsx",          ///
+>         keepvar(Phase Assign_Modality Assign_Length Geo_Admin1 Geo_Admin3 Geo_Admin5) ///
+>                                           uniquevars(Index) nodaily force 
+> */
+.         drop if Dup == 1
+{txt}(250 observations deleted)
+
+{com}.         
+. ********************************************************************************
+. *                                                       PART 3: Label Sample Variables
+. *******************************************************************************/
+.         label def gender_l  1 "Female" 2 "Male" 3 "Other"
+{txt}
+{com}.         label val Gender        gender_l
+{txt}
+{com}.         
+.         label def marital_l 1 "Single" 2 "Married" 3 "Free Union" ///
+>                                                 4 "Divorced" 5 "Widower" 6 "Other" 
+{txt}
+{com}.         label val Marital_Status        marital_l
+{txt}
+{com}. 
+.         label def edu_l         1 "Nsnc" 2 "Primary" 3 "Secondary" 4 "Advanced"
+{txt}
+{com}.         label val Education edu_l
+{txt}
+{com}.         
+.         compress
+  {txt}variable {bf}{res}Assign_Modality{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Assign_Length{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin1{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin3{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Geo_Admin5{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Gender{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Age{sf}{txt} was {bf}{res}int{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Marital_Status{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Education{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisable{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Index{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}int{sf}
+{txt}  (63,660 bytes saved)
+
+{com}.         save  "${c -(}sample{c )-}/Ecuador_Sample_Merge.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/3_Sampling/Ecuador_Sample_Merge.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Dup
+
+        {txt}Dup {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      2,122      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,122      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD13767.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Ecuador                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for Remote sample                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 18, 2023                                                                               *
+> *  LATEST UPDATE:               Jun 19, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta
+>                         
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+>                                         
+>                                         Attempt level dataset -> Household level
+>                                         1. Best survey outcome per household
+>                                         2. Keep only the best obs for each household
+>                                         3. Drop duplicates when answered the last survey question
+>                                         4. Attrition analysis (adding listing information? or do it 
+>                                            later)
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

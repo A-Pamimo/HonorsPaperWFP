@@ -1,0 +1,175 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+
+\author{Nicole Wu}
+\date{\today}
+\title{Myanmar rCARI Validation Study Primary Results}
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+
+
+% ------- 
+\section{Survey Progress}
+
+The data for this study was collected from June 7 to June 24, 2023, encompassing 21 camps located in the Kachin and Shan regions. To ensure a representative sample, a pre-collected household list was utilized, from which 1665 households were randomly selected. These selected households were then assigned to two distinct survey modalities: Face-to-Face (F2F) and Remote. Additionally, two different form lengths, namely Short and Long, were randomly assigned to the households. Overall, we completed a total of 1093 completed surveys for the analysis.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Sample Completion: Face-to-Face vs. Remote}
+			\scriptsize
+			\input{1_table/Myanmar_rCARI_Completion} 
+			\label{tab:Myanmar_rCARI_Completion}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+Table 1 provides an overview of the sample completion rates for the F2F and Remote survey modalities. For F2F survey, a total of 833 households were included in the sample. Out of these, 610 households successfully completed the survey, accounting for 73.23\% of the F2F sample. On the other hand, 223 households did not complete the survey, representing 26.77\% of the sample. For Remote, 832 households were included in the sample. Of these, 483 households completed the survey, which corresponds to a completion rate of 58.05\% for the Remote sample. The remaining 349 households (41.95\% of the Remote sample) did not complete the survey due to non-response and availability.
+
+\begin{figure}[H]
+	\caption{Data Collection Progress by Date and Modality}
+		\label{fig:Myanmar_rCARI_Progress_Day}
+			\begin{center}
+				\includegraphics[scale=.3]{2_figure/Myanmar_rCARI_Progress_Day.png}
+			\end{center}
+\end{figure}
+
+	\pagebreak
+	
+% ------- 
+\section{Randomization Quality}
+
+To assess the balance of the treatment (Remote) and control (F2F) groups, we examined various respondent and household characteristics, including basic demographics, income sources, and changes over time. This allowed us to evaluate whether the two groups were similar in terms of these factors, ensuring a fair comparison between the treatment and control conditions.
+
+\subsection{Modality Randomization}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table on Randomized Survey Modality Assignment: Face-to-Face vs. Remote}
+			\scriptsize
+			\input{1_table/Myanmar_Demo_Modality_Balance} 
+			\label{tab:Myanmar_Demo_Modality_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+	\pagebreak
+	
+\subsection{F2F Length Randomization}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table on Randomized Survey Length Assignment in F2F Survey: Long vs. Short}
+			\scriptsize
+			\input{1_table/Myanmar_Demo_F2F_Length_Balance} 
+			\label{tab:Myanmar_Demo_F2F_Length_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+	\pagebreak
+	
+\subsection{Remote Length Randomization}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Balance Table on Randomized Survey Length Assignment in Remote Survey: Long vs. Short}
+			\scriptsize
+			\input{1_table/Myanmar_Demo_RM_Length_Balance} 
+			\label{tab:Myanmar_Demo_RM_Length_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+% ------- 
+\section{Primary Results}
+\subsection{Impact of Survey Modality on Key Food Security Outcomes}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: Face-to-Face vs. Remote}
+			\scriptsize
+			\input{1_table/Myanmar_Outcome_Modality_Balance} 
+			\label{tab:Myanmar_Outcome_Modality_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Length in F2F Survey: Long vs. Short}
+			\scriptsize
+			\input{1_table/Myanmar_Outcome_F2F_Length_Balance} 
+			\label{tab:Myanmar_Outcome_F2F_Length_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Length in Remote Survey: Long vs. Short}
+			\scriptsize
+			\input{1_table/Myanmar_Outcome_RM_Length_Balance} 
+			\label{tab:Myanmar_Outcome_RM_Length_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.10, ** p$<$0.05, *** p$<$0.01. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+	\pagebreak
+	
+
+\end{document}
+

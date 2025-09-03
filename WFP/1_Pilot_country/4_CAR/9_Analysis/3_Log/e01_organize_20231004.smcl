@@ -1,0 +1,125 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/3_Log/e01_organize_20231004.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Oct 2023, 12:37:56
+{txt}
+{com}.         di `cdate'      
+{res}20231004
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl bal_all      RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb 
+{txt}
+{com}.         
+. /*      HHInc_None       ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+> */      
+.         gl bal_f2f      RESPAge RESPFemale RESPHHH RESPSingle RESPMarried                                ///
+>                                 HHDisplaced HHDisable MDDIHHDisabledNb R_HHH_Sex R_HHH_Age               ///
+>                                 R_HHH_Literate HHSize R_Num_Male R_Num_Female R_Num_Child                ///
+>                                 R_Num_Senior R_Num_Adult R_Num_Dependent                                                 ///
+>                                 FemaleMale_Ratio Dependency_Ratio HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_rm       RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}. 
+.         gl bal_incfes   CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4 FES_Cat_1 FES_Cat_2 FES_Cat_3 FES_Cat_4
+{txt}
+{com}. 
+.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+. 
+.         * Randomization Balance
+.         iebaltab ${c -(}bal_all{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_Demo_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_Modality_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_Modality_Balance.tex}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}bal_incfes{c )-}, grpvar(Modality) nonote nototal replace         ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow                 ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_IncFes_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_IncFes_Modality_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_IncFes_Modality_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}bal_f2f{c )-} if Modality == 1, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_Demo_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_F2F_Length_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}bal_rm{c )-}  if Modality == 2, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_Demo_RM_Length_Balance.tex")
+
+{txt}{phang}Warning: The R2 was not possible to calculate in the regression for the pair-wise test of variable [HHInc_None] for observations with values [1] and [2] in the groupvar [Form].{p_end}.
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_RM_Length_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.3     Main Results CARI vs. rCARI
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `cari'                       do "${c -(}dofile{c )-}/c03_CARI.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check CARI related Outcome Balance                                         *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Sep 20, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,3144 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/3_Log/01_organize_20240606.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 6 Jun 2024, 14:34:24
+{txt}
+{com}.         di `cdate'      
+{res}20240606
+{txt}
+{com}. 
+.         tempfile smallholder
+{txt}
+{com}.         import excel "${c -(}all_docs{c )-}/rCARI_Income_Source_Other.xls", ///
+>         sheet("Sheet1") firstrow clear
+{res}{text}(4 vars, 365 obs)
+
+{com}.         keep HHID HHIncFirst_SmallAg
+{txt}
+{com}.         replace HHIncFirst_SmallAg = 0 if mi(HHIncFirst_SmallAg)
+{txt}(307 real changes made)
+
+{com}.         save `smallholder'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_30381.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}. 
+.         use              "${c -(}all_dta{c )-}/Myanmar_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         gen Country = 1 
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}Country{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (4,995 bytes saved)
+
+{com}.         
+.         * Fix the additional illegal activities category in Myanmar
+.         // 9 High-risk activities & 10 Begging, scavenging should be the same
+.         // in total there should be 15 categories + other
+.         
+.         label def Income_l  0 "No income source"                                                                ///
+>                                                 1 "Wage Labor - Professional"                                           ///
+>                                                 2 "Wage Labor - Skilled"                                                        ///
+>                                                 3 "Wage Labor - Unskilled/Casual/Agriculture"           ///
+>                                                 4 "Wage Labor - Unskilled/Casual/non-agriculture"       ///
+>                                                 5 "Pension"                                                                                     ///
+>                                                 6 "Remittances"                                                                         ///
+>                                                 7 "Aid/gifts"                                                                           ///
+>                                                 8 "Borrowing money/Living off debt"                                     ///
+>                                                 9 "High risk activity (e.g. begging, scavenging)"       ///
+>                                                 10 "Saving/selling assets"                                                      ///
+>                                                 11 "Petty trade/selling on streets"                                     ///
+>                                                 12 "Small trade (own business)"                                         ///
+>                                                 13 "Medium/large trade (own business)"                          ///
+>                                                 14 "Small Agriculture production including livestock (own land/livestock)" ///
+>                                                 15 "Medium/large agriculture production including livestock (own land/livestock)" ///
+>                                                 999     "Other (specify)"                               
+{txt}
+{com}.                                                 
+. foreach var in HHIncFirst_SRi HHIncSec_SRi HHIncThird_SRi {c -(}
+{txt}  2{com}.         * fix the additional illegal activities category
+.         replace  `var' = `var' - 1 if `var' >= 10 & `var' != 999
+{txt}  3{com}.         label val `var' Income_l        
+{txt}  4{com}. {c )-}
+{txt}(224 real changes made)
+(20 real changes made)
+(4 real changes made)
+
+{com}.         * create a category for no income sources in main source // partial clean of other specify
+.         replace  HHIncFirst_SRi = 0 if HHIncNb == 0 & Completion == 1
+{txt}(80 real changes made)
+
+{com}.         
+.         ren ADMIN* ADMIN*_m
+{res}{txt}
+{com}.         
+.         append using "${c -(}all_dta{c )-}/Ecuador_Full_Household_Analysis.dta", force
+{txt}{p 0 7 2}
+(variable
+{bf:calc_ID} was {bf:str35}, now {bf:str59} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:MMDIHHHealthFac_dist} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthAcMildWhy_oth} was {bf:str57}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthAcSevereWhy_oth} was {bf:str61}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthChronNeed} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthChronWhy_oth} was {bf:str68}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthEmergWhy_oth} was {bf:str59}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_stress} was {bf:str5}, now {bf:str7} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_stress_oth} was {bf:str27}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_crisis_oth} was {bf:str2}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_em} was {bf:str3}, now {bf:str7} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LhCSIEnAccess_em_oth} was {bf:str53}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_GiftAid_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Own_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVeg_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVeg_GiftAid_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVeg_Own_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFrt_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFrt_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFrt_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeat_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeat_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeat_Own_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimFish_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimFish_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimFish_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFats_Purch_MN_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFats_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFats_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFDairy_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFDairy_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFDairy_Own_MN_7D} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFEgg_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFEgg_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFEgg_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgr_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgr_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgr_Own_MN_7D} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCond_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCond_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCond_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Own_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Purch_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_GiftAid_MN_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTransp_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFFuel_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFFuel_GiftAid_MN_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_Purch_MN_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_GiftAid_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFPhone_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_Purch_MN_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_MN_1M} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedServ_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedGood_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedGood_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduFee_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduGood_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHSoft_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHMaint_Purch_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Purch_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_GiftAid_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFCer_Own_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFTub_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFPuls_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVegFrt_Purch_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVegFrt_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFVegFrt_Own_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeatFishEgg_Purch_MN_7} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeatFishEgg_GiftAid_MN} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFAnimMeatFishEgg_Own_MN_7D_} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFatsDairy_Purch_MN_7D_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFatsDairy_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFFatsDairy_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgrCond_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgrCond_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFSgrCond_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFBev_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Purch_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_GiftAid_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Own_MN_7D_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspFuel_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspFuel_GiftAid_MN_1M_} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEnerg_GiftAid_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_Purch_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFWat_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFDwelSer_GiftAid_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFPhone_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFPhone_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFRecr_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_Purch_MN_1M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_MN_1M_S} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedServGood_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFMedServGood_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFCloth_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduFeeGood_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFRent_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHSoftMaint_Purch_MN_6M_S} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHHSoftMaint_GiftAid_MN_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHAsstOthCBTRecTot} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHOccupation} was {bf:str76}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_oth} was {bf:str71}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_PCT} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHOccupation_S} was {bf:str38}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHIncFirst_oth_S} was {bf:str54}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHFewFoods} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHSkipped} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHAteLess} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHungry} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHWorried_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHealthy_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHSkipped_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHAteLess_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHungry_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHWholeDay_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHDwellType_oth} was {bf:str32}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHTenureType_oth} was {bf:str47}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHWallType_oth} was {bf:str32}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHRoofType_oth} was {bf:str32}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHFloorType_oth} was {bf:str117}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHToiletType_oth} was {bf:str75}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookStove} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookStove_oth} was {bf:str1}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookSRC} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerCookSRC_oth} was {bf:str1}, now {bf:str3} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHEnerLightSRC_oth} was {bf:str48}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHWaterSRC_oth} was {bf:str138}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:WealthBasicElecItems} was {bf:str7}, now {bf:str9} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:comments} was {bf:str164}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpStap_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpStap_GiftAid_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpStap_Own_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpPro_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpPro_GiftAid_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpPro_Own_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFruVeg_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFruVeg_GiftAid_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFruVeg_Own_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOther_MNCRD_7D} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOther_GiftAid_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOther_Own_7D} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFHyg_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspPh_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFTranspPh_GiftAid_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFUtilities_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFUtilities_GiftAid_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_MNCRD_1M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpNFEduMedCloth_MNCRD_6M} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}com_list} already defined)
+(label {bf:{txt}length_l} already defined)
+(label {bf:{txt}survey_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}CARI_Worry_lbl} already defined)
+(label {bf:{txt}CARI_Meals_lbl} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}HHWaterLoc} already defined)
+(label {bf:{txt}HHWaterSRC} already defined)
+(label {bf:{txt}HHEnerLightSRC} already defined)
+(label {bf:{txt}HHEnerCookSRC} already defined)
+(label {bf:{txt}HHEnerCookStove} already defined)
+(label {bf:{txt}HHToiletType} already defined)
+(label {bf:{txt}HHFloorType} already defined)
+(label {bf:{txt}HHRoofType} already defined)
+(label {bf:{txt}HHWallType} already defined)
+(label {bf:{txt}HHTenureRisk} already defined)
+(label {bf:{txt}HHTenureType} already defined)
+(label {bf:{txt}HHDwellType} already defined)
+(label {bf:{txt}FIESHHWholeDay_S} already defined)
+(label {bf:{txt}FIESHHHungry_S} already defined)
+(label {bf:{txt}FIESHHRanOut_S} already defined)
+(label {bf:{txt}FIESHHAteLess_S} already defined)
+(label {bf:{txt}FIESHHSkipped_S} already defined)
+(label {bf:{txt}FIESHHFewFoods_S} already defined)
+(label {bf:{txt}FIESHHHealthy_S} already defined)
+(label {bf:{txt}FIESHHWorried_S} already defined)
+(label {bf:{txt}HHSNotEat_FR} already defined)
+(label {bf:{txt}FIESHHWholeDay} already defined)
+(label {bf:{txt}HHSBedHung_FR} already defined)
+(label {bf:{txt}FIESHHHungry} already defined)
+(label {bf:{txt}HHSNoFood_FR} already defined)
+(label {bf:{txt}FIESHHRanOut} already defined)
+(label {bf:{txt}FIESHHAteLess} already defined)
+(label {bf:{txt}FIESHHSkipped} already defined)
+(label {bf:{txt}FIESHHFewFoods} already defined)
+(label {bf:{txt}FIESHHHealthy} already defined)
+(label {bf:{txt}FIESHHWorried} already defined)
+(label {bf:{txt}HHIncChg_S} already defined)
+(label {bf:{txt}HHIncFirst_SRi_S} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncThird_SRi} already defined)
+(label {bf:{txt}HHIncSec_SRi} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}LcsEN_em_IllegalAct} already defined)
+(label {bf:{txt}LcsEN_em_Begged} already defined)
+(label {bf:{txt}LcsEN_em_ChildWork} already defined)
+(label {bf:{txt}LcsEN_crisis_OutSchool} already defined)
+(label {bf:{txt}LcsEN_crisis_ProdAssets} already defined)
+(label {bf:{txt}LcsEN_stress_BorrowCash} already defined)
+(label {bf:{txt}LcsEN_stress_Saving} already defined)
+(label {bf:{txt}LcsEN_stress_CrdtFood} already defined)
+(label {bf:{txt}LcsEN_stress_DomAsset} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}HHSNotEat_FR_S} already defined)
+(label {bf:{txt}HHSBedHung_FR_S} already defined)
+(label {bf:{txt}HHSNoFood_FR_S} already defined)
+(label {bf:{txt}RESPMeals} already defined)
+(label {bf:{txt}HHHealthEmergWhy} already defined)
+(label {bf:{txt}HHHealthEmergTreat} already defined)
+(label {bf:{txt}HHHealthEmergNeed} already defined)
+(label {bf:{txt}HHHealthChronWhy} already defined)
+(label {bf:{txt}HHHealthChronTreat} already defined)
+(label {bf:{txt}HHHealthChronNeed} already defined)
+(label {bf:{txt}HHHealthAcSevereWhy} already defined)
+(label {bf:{txt}HHHealthAcSevereTreat} already defined)
+(label {bf:{txt}HHHealthAcSevereNeed} already defined)
+(label {bf:{txt}HHHealthAcMildWhy} already defined)
+(label {bf:{txt}HHHealthAcMildTreat} already defined)
+(label {bf:{txt}HHHealthAcMildNeed} already defined)
+(label {bf:{txt}MDDIHHIdDoc} already defined)
+(label {bf:{txt}HHStatus} already defined)
+(label {bf:{txt}RESPStatus} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}PschoolLevel} already defined)
+(label {bf:{txt}PSchoolEver} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}HHExpNF_GiftAid_YN1M} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPAvailable} already defined)
+(label {bf:{txt}RESPpart} already defined)
+(label {bf:{txt}gender_label} already defined)
+
+{com}.         replace Country = 2 if mi(Country)
+{txt}(2,372 real changes made)
+
+{com}.         compress 
+  {bf}{res}HHHealthAcSevereWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHWallType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHRoofType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHFloorType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHEnerLightSRC_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}remarks{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (152,164 bytes saved)
+
+{com}.         
+.         * create a category for no income sources // partial clean of other specify
+.         replace HHIncFirst_SRi = 0 if HHIncNb == 0 & Completion == 1 & Country == 2
+{txt}(38 real changes made)
+
+{com}. 
+.         ren ADMIN1Name ADMIN1Name_e
+{res}{txt}
+{com}.         ren ADMIN3Name ADMIN3Name_e
+{res}{txt}
+{com}.         ren ADMIN5Name ADMIN5Name_e
+{res}{txt}
+{com}.         
+.         ren S_Geo_Admin* S_Geo_Admin*_e
+{res}{txt}
+{com}.         
+.         append using "${c -(}all_dta{c )-}/CAR_Full_Household_Analysis.dta", force
+{txt}{p 0 7 2}
+(variable
+{bf:EnuName_Display} was {bf:str21}, now {bf:str26} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHStatus} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHStatusOth} was {bf:str1}, now {bf:strL} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthAcSevereNeed} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHHealthEmergNeed} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:HHExpFOut_Own_MN_7D} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHWorried} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHHealthy} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHRanOut} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:FIESHHRanOut_S} was {bf:byte}, now {bf:int} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}gender_label} already defined)
+(label {bf:{txt}RESPpart} already defined)
+(label {bf:{txt}RESPAvailable} already defined)
+(label {bf:{txt}RESPcallback} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}HHExpNF_GiftAid_YN1M} already defined)
+(label {bf:{txt}Outcome_L} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSchoolEver} already defined)
+(label {bf:{txt}PschoolLevel} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}HHUrbRur} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}RESPStatus} already defined)
+(label {bf:{txt}ConsentYN} already defined)
+(label {bf:{txt}HHStatus} already defined)
+(label {bf:{txt}MDDIHHIdDoc} already defined)
+(label {bf:{txt}HHHealthAcMildNeed} already defined)
+(label {bf:{txt}HHHealthAcMildTreat} already defined)
+(label {bf:{txt}HHHealthAcMildWhy} already defined)
+(label {bf:{txt}HHHealthAcSevereNeed} already defined)
+(label {bf:{txt}HHHealthAcSevereTreat} already defined)
+(label {bf:{txt}HHHealthAcSevereWhy} already defined)
+(label {bf:{txt}HHHealthChronNeed} already defined)
+(label {bf:{txt}HHHealthChronTreat} already defined)
+(label {bf:{txt}HHHealthChronWhy} already defined)
+(label {bf:{txt}HHHealthEmergNeed} already defined)
+(label {bf:{txt}HHHealthEmergTreat} already defined)
+(label {bf:{txt}HHHealthEmergWhy} already defined)
+(label {bf:{txt}RESPMeals} already defined)
+(label {bf:{txt}HHSNoFood_FR_S} already defined)
+(label {bf:{txt}HHSBedHung_FR_S} already defined)
+(label {bf:{txt}HHSNotEat_FR_S} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}LcsEN_stress_DomAsset} already defined)
+(label {bf:{txt}LcsEN_stress_Saving} already defined)
+(label {bf:{txt}LcsEN_stress_BorrowCash} already defined)
+(label {bf:{txt}LcsEN_crisis_ProdAssets} already defined)
+(label {bf:{txt}LcsEN_crisis_OutSchool} already defined)
+(label {bf:{txt}LcsEN_em_Begged} already defined)
+(label {bf:{txt}LcsEN_em_IllegalAct} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}HHIncSec_SRi} already defined)
+(label {bf:{txt}HHIncThird_SRi} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi_S} already defined)
+(label {bf:{txt}HHIncChg_S} already defined)
+(label {bf:{txt}FIESHHWorried} already defined)
+(label {bf:{txt}FIESHHHealthy} already defined)
+(label {bf:{txt}FIESHHFewFoods} already defined)
+(label {bf:{txt}FIESHHSkipped} already defined)
+(label {bf:{txt}FIESHHAteLess} already defined)
+(label {bf:{txt}FIESHHRanOut} already defined)
+(label {bf:{txt}HHSNoFood_FR} already defined)
+(label {bf:{txt}FIESHHHungry} already defined)
+(label {bf:{txt}HHSBedHung_FR} already defined)
+(label {bf:{txt}FIESHHWholeDay} already defined)
+(label {bf:{txt}HHSNotEat_FR} already defined)
+(label {bf:{txt}FIESHHWorried_S} already defined)
+(label {bf:{txt}FIESHHHealthy_S} already defined)
+(label {bf:{txt}FIESHHFewFoods_S} already defined)
+(label {bf:{txt}FIESHHSkipped_S} already defined)
+(label {bf:{txt}FIESHHAteLess_S} already defined)
+(label {bf:{txt}FIESHHRanOut_S} already defined)
+(label {bf:{txt}FIESHHHungry_S} already defined)
+(label {bf:{txt}FIESHHWholeDay_S} already defined)
+(label {bf:{txt}HHDwellType} already defined)
+(label {bf:{txt}HHTenureType} already defined)
+(label {bf:{txt}HHTenureRisk} already defined)
+(label {bf:{txt}HHWallType} already defined)
+(label {bf:{txt}HHRoofType} already defined)
+(label {bf:{txt}HHFloorType} already defined)
+(label {bf:{txt}HHToiletType} already defined)
+(label {bf:{txt}HHEnerCookStove} already defined)
+(label {bf:{txt}HHEnerCookSRC} already defined)
+(label {bf:{txt}HHEnerLightSRC} already defined)
+(label {bf:{txt}HHWaterSRC} already defined)
+(label {bf:{txt}HHWaterLoc} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}CARI_Meals_lbl} already defined)
+(label {bf:{txt}CARI_Worry_lbl} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}length_l} already defined)
+(label {bf:{txt}com_list} already defined)
+(label {bf:{txt}survey_l} already defined)
+
+{com}.         replace Country = 3 if mi(Country)
+{txt}(2,080 real changes made)
+
+{com}.         compress 
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHDwellType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHRoofType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHToiletType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}comments{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (10,306 bytes saved)
+
+{com}. 
+.  foreach var in HHIncFirst_SRi HHIncSec_SRi HHIncThird_SRi {c -(}
+{txt}  2{com}.         * fix the additional illegal activities category
+.         replace  `var' = `var' - 1 if `var' >= 10 & `var' != 999 & Country == 3
+{txt}  3{com}.         label val `var' Income_l        
+{txt}  4{com}. {c )-}
+{txt}(870 real changes made)
+(134 real changes made)
+(10 real changes made)
+
+{com}. 
+.         * create a category for no income sources
+.         replace HHIncFirst_SRi = 0 if HHIncNb == 0 & Completion == 1 & Country == 3
+{txt}(8 real changes made)
+
+{com}.         
+.         ren ADMIN1Name ADMIN1Name_c
+{res}{txt}
+{com}.         ren ADMIN2Name ADMIN2Name_c
+{res}{txt}
+{com}.         ren ADMIN3Name ADMIN3Name_c
+{res}{txt}
+{com}.         ren ADMIN5Name ADMIN5Name_c
+{res}{txt}
+{com}.         
+.         ren S_Geo_Admin1 S_Geo_Admin1_c
+{res}{txt}
+{com}.         ren S_Geo_Admin2 S_Geo_Admin2_c
+{res}{txt}
+{com}.         ren S_Geo_Admin3 S_Geo_Admin3_c
+{res}{txt}
+{com}.         ren S_Geo_Admin5 S_Geo_Admin5_c
+{res}{txt}
+{com}.         
+.         label def country 1 "Myanmar" 2 "Ecuador" 3 "CAR"
+{txt}
+{com}.         label val Country country
+{txt}
+{com}.         label var Modality "Survey Modality"
+{txt}
+{com}.         
+.         ** 1 Survey Completion  
+.         dtable i.Completion i.Modality, by(Country)                                              ///
+>                    title(rCARI Validation Survey Completion)                             ///
+>                    export(${c -(}all_tabs{c )-}/rCARI_Overall_Completion.docx, replace) 
+{res}
+{smcl}
+{reset}{...}
+{p}rCARI Validation Survey Completion{p_end}
+{hline 15}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{space 15} {space 25}Country{space 24}
+{space 15} {space 3}Myanmar{space 3} {space 3}Ecuador{space 3} {space 5}CAR{space 5} {space 5}Total{space 4}
+{hline 15}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+N{space 14} {result:1,665 (27.2%)} {result:2,372 (38.8%)} {result:2,080 (34.0%)} {result:6,117 (100.0%)}
+Survey Progress {space 13} {space 13} {space 13} {space 14}
+  Not Completed {space 2}{result:572 (34.4%)} {space 2}{result:956 (40.3%)} {space 2}{result:835 (40.1%)} {space 1}{result:2,363 (38.6%)}
+  Completed{space 4} {result:1,093 (65.6%)} {result:1,416 (59.7%)} {result:1,245 (59.9%)} {space 1}{result:3,754 (61.4%)}
+Survey Modality {space 13} {space 13} {space 13} {space 14}
+  Face-to-Face{space 1} {space 2}{result:610 (55.8%)} {space 2}{result:760 (53.7%)} {space 2}{result:969 (77.8%)} {space 1}{result:2,339 (62.3%)}
+  Remote{space 7} {space 2}{result:483 (44.2%)} {space 2}{result:656 (46.3%)} {space 2}{result:276 (22.2%)} {space 1}{result:1,415 (37.7%)}
+{hline 15}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{res}{txt}{p 0 1 2}
+(collection {res:DTable} exported to file {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/rCARI_Overall_Completion.docx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/rCARI_Overall_Completion.docx})
+{p_end}
+
+{com}.         
+.         dtable i.Completion i.Modality, by(Country) ///
+>                    title(Survey Completion by Country)           ///
+>                    export(${c -(}all_tex_tab{c )-}/rCARI_Overall_Completion.tex,           ///
+>                    tableonly replace)
+{res}
+{smcl}
+{reset}{...}
+{p}Survey Completion by Country{p_end}
+{hline 15}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{space 15} {space 25}Country{space 24}
+{space 15} {space 3}Myanmar{space 3} {space 3}Ecuador{space 3} {space 5}CAR{space 5} {space 5}Total{space 4}
+{hline 15}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+N{space 14} {result:1,665 (27.2%)} {result:2,372 (38.8%)} {result:2,080 (34.0%)} {result:6,117 (100.0%)}
+Survey Progress {space 13} {space 13} {space 13} {space 14}
+  Not Completed {space 2}{result:572 (34.4%)} {space 2}{result:956 (40.3%)} {space 2}{result:835 (40.1%)} {space 1}{result:2,363 (38.6%)}
+  Completed{space 4} {result:1,093 (65.6%)} {result:1,416 (59.7%)} {result:1,245 (59.9%)} {space 1}{result:3,754 (61.4%)}
+Survey Modality {space 13} {space 13} {space 13} {space 14}
+  Face-to-Face{space 1} {space 2}{result:610 (55.8%)} {space 2}{result:760 (53.7%)} {space 2}{result:969 (77.8%)} {space 1}{result:2,339 (62.3%)}
+  Remote{space 7} {space 2}{result:483 (44.2%)} {space 2}{result:656 (46.3%)} {space 2}{result:276 (22.2%)} {space 1}{result:1,415 (37.7%)}
+{hline 15}{c -}{hline 13}{c -}{hline 13}{c -}{hline 13}{c -}{hline 14}
+{res}{txt}{p 0 1 2}
+(collection {res:DTable} exported to file {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/8_Manuscript/1_Main_Report/1_table/rCARI_Overall_Completion.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/8_Manuscript/1_Main_Report/1_table/rCARI_Overall_Completion.tex})
+{p_end}
+
+{com}.                 
+. ********************************************************************************
+. *                                               PART 2: Create variables
+. *******************************************************************************/
+.         
+.         *********************** OUTCOME VARIABLES ************************
+.         * FCS
+.         tab FCSCat28, gen(FCG_)
+
+        {txt}FCS {c |}
+Categories, {c |}
+ thresholds {c |}
+      28-42 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+       Poor {c |}{res}        942       25.09       25.09
+{txt} Borderline {c |}{res}      1,148       30.58       55.67
+{txt} Acceptable {c |}{res}      1,664       44.33      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         ren FCG_1       FCG_Poor
+{res}{txt}
+{com}.         ren FCG_2       FCG_Borderline
+{res}{txt}
+{com}.         ren FCG_3       FCG_Acceptable
+{res}{txt}
+{com}.         
+.         * Correct FC Groups
+.         gen     FCG_Country = cond(FCS <= 24.5, 1, cond(FCS <= 38.5, 2, 3)) if Country == 1 
+{txt}(4,452 missing values generated)
+
+{com}.         replace FCG_Country = cond(FCS <= 28, 1, cond(FCS <= 42, 2, 3)) if Country == 2
+{txt}(2,372 real changes made)
+
+{com}.         replace FCG_Country = cond(FCS <= 21, 1, cond(FCS <= 35, 2, 3)) if Country == 3
+{txt}(2,080 real changes made)
+
+{com}.         label val FCG_Country FCSCat
+{txt}
+{com}.         
+.         * rCSI
+.         gen rCSI_Group = cond(rCSI <= 3, 1, cond(rCSI <= 18, 2, 3)) if Completion == 1
+{txt}(2,363 missing values generated)
+
+{com}.         tab rCSI_Group, gen(rCSI_Phase)
+
+ {txt}rCSI_Group {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        776       20.67       20.67
+{txt}          2 {c |}{res}      1,861       49.57       70.25
+{txt}          3 {c |}{res}      1,117       29.75      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         ren rCSI_Phase3 rCSI_Phase3_5
+{res}{txt}
+{com}.         
+.         * FCS + rCSI - Current Status
+.         tab FCS_4pt_CARI, gen(FCS_rCSI_4pt_)
+
+ {txt}CARI: Current Status of {c |}
+            FCS and rCSI {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        419       11.16       11.16
+{txt}  Marginally Food Secure {c |}{res}      1,245       33.16       44.33
+{txt}Moderately Food Insecure {c |}{res}      1,148       30.58       74.91
+{txt}  Severely Food Insecure {c |}{res}        942       25.09      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         
+.         gen     HHIncFirst_Accept_Re = inlist(HHIncFirst_SRi, 1, 2, 5, 12, 13, 15)                      
+{txt}
+{com}.         gen             HHIncFirst_Border_Re = inlist(HHIncFirst_SRi, 3, 4, 6, 11, 14)
+{txt}
+{com}.         gen     HHIncFirst_Poor_Re   = inlist(HHIncFirst_SRi, 0, 7, 8, 9, 10)
+{txt}
+{com}.         
+. /*      export excel HHID HHIncFirst_oth ///
+>         using "/Users/nicolewu/Desktop/rCARI_Income_Source_Other_Raw.xls", ///
+>         firstrow(variables) replace
+> */
+.         merge 1:1 HHID using `smallholder'
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           5,752
+{txt}{col 9}from master{col 30}{res}           5,752{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             365{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}.         drop _merge
+{txt}
+{com}.         
+.         replace HHIncFirst_Accept_Re = HHIncFirst_Accept if HHIncFirst_SRi == 999 & HHIncFirst_SmallAg != 1
+{txt}(96 real changes made)
+
+{com}.         replace HHIncFirst_Border_Re = HHIncFirst_Border if HHIncFirst_SRi == 999 & HHIncFirst_SmallAg != 1
+{txt}(128 real changes made)
+
+{com}.         replace HHIncFirst_Poor_Re   = HHIncFirst_Poor   if HHIncFirst_SRi == 999 & HHIncFirst_SmallAg != 1
+{txt}(86 real changes made)
+
+{com}.         
+.         replace HHIncFirst_Border_Re = 1 if HHIncFirst_SmallAg == 1 & HHIncFirst_SRi == 999
+{txt}(58 real changes made)
+
+{com}.         
+.         gen CARI_Inc_Re = .      
+{txt}(6,117 missing values generated)
+
+{com}.         replace CARI_Inc_Re = 1 if HHIncFirst_Accept_Re == 1 & inlist(HHIncChg, 0, 1)
+{txt}(640 real changes made)
+
+{com}.         replace CARI_Inc_Re = 2 if HHIncFirst_Accept_Re == 1 & inlist(HHIncChg, 2, 3, 4)
+{txt}(410 real changes made)
+
+{com}.         replace CARI_Inc_Re = 2 if HHIncFirst_Border_Re == 1 & inlist(HHIncChg, 0, 1)
+{txt}(1,193 real changes made)
+
+{com}.         replace CARI_Inc_Re = 3 if HHIncFirst_Border_Re == 1 & inlist(HHIncChg, 2, 3, 4)
+{txt}(1,124 real changes made)
+
+{com}.         replace CARI_Inc_Re = 4 if HHIncFirst_Poor_Re   == 1
+{txt}(387 real changes made)
+
+{com}.         tab CARI_Inc_Re, gen(CARI_Inc_Re_)
+
+{txt}CARI_Inc_Re {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        640       17.05       17.05
+{txt}          2 {c |}{res}      1,603       42.70       59.75
+{txt}          3 {c |}{res}      1,124       29.94       89.69
+{txt}          4 {c |}{res}        387       10.31      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         
+.         gen CARI_Inc_Num = CARI_Inc
+{txt}(2,363 missing values generated)
+
+{com}.         clonevar CARI_Inc_Re_Num = CARI_Inc_Re
+{txt}(2,363 missing values generated)
+
+{com}.         
+.         drop HHInc_Change_None HHInc_Increase HHInc_Reduce25    ///
+>                  HHInc_Reduce50 HHInc_Reduce50More
+{txt}
+{com}.         
+.         tab HHIncChg, gen(HHInc_)
+
+  {txt}12. Was there a change in income over {c |}
+the last year? (Please do not take into {c |}
+                                     ac {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                              No change {c |}{res}      1,784       47.52       47.52
+{txt}                              Increased {c |}{res}        293        7.81       55.33
+{txt}               Reduced by less than 25% {c |}{res}        659       17.55       72.88
+{txt}Reduced by more than 25% and less than  {c |}{res}        590       15.72       88.60
+{txt}               Reduced by more than 50% {c |}{res}        428       11.40      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         ren HHInc_1     HHInc_Change_None
+{res}{txt}
+{com}.         ren HHInc_2     HHInc_Increase
+{res}{txt}
+{com}.         ren HHInc_3     HHInc_Reduce25
+{res}{txt}
+{com}.         ren HHInc_4     HHInc_Reduce50
+{res}{txt}
+{com}.         ren HHInc_5     HHInc_Reduce50More
+{res}{txt}
+{com}.         
+.         gen     HHIncome_3pt = 1 if HHIncFirst_Accept == 1
+{txt}(4,363 missing values generated)
+
+{com}.         replace HHIncome_3pt = 2 if HHIncFirst_Border == 1
+{txt}(1,687 real changes made)
+
+{com}.         replace HHIncome_3pt = 3 if HHIncFirst_Poor   == 1 | HHIncNb == 0
+{txt}(313 real changes made)
+
+{com}.         label def Income_3pt 1 "Regular employment/income" ///
+>                                                  2 "Irregular employment/income" ///
+>                                                  3 "No income"
+{txt}
+{com}.         label val HHIncome_3pt Income_3pt
+{txt}
+{com}.         
+.         gen     HHIncome_3pt_Re = 1 if HHIncFirst_Accept_Re == 1
+{txt}(5,067 missing values generated)
+
+{com}.         replace HHIncome_3pt_Re = 2 if HHIncFirst_Border_Re == 1
+{txt}(2,317 real changes made)
+
+{com}.         replace HHIncome_3pt_Re = 3 if HHIncFirst_Poor_Re   == 1
+{txt}(387 real changes made)
+
+{com}.         label val HHIncome_3pt_Re Income_3pt
+{txt}
+{com}.         
+.         gen     HHIncChg_3pt = 1 if HHIncChg == 1
+{txt}(5,824 missing values generated)
+
+{com}.         replace HHIncChg_3pt = 2 if HHIncChg == 0
+{txt}(1,784 real changes made)
+
+{com}.         replace HHIncChg_3pt = 3 if inlist(HHIncChg, 2,3,4)
+{txt}(1,677 real changes made)
+
+{com}.         
+.         label def Change_3pt 1 "Increased income" 2 "No change" ///
+>                                                  3 "Reduced income"
+{txt}
+{com}.         label val HHIncChg_3pt Change_3pt
+{txt}
+{com}.         
+.         * LCS used different strategies by countries 
+.         // Myanmar
+.         local lcs_var Lcs_stress_DomAsset Lcs_stress_CrdtFood Lcs_stress_Saving ///
+>                   Lcs_stress_BorrowCash Lcs_crisis_ProdAssets Lcs_crisis_Health         ///
+>                   Lcs_crisis_OutSchool Lcs_em_ChildWork Lcs_em_Begged                           ///
+>                   Lcs_em_IllegalAct             ///
+>                   Lcs_crisis_HealthEdu  ///
+>                   Lcs_stress_HealthEdu  Lcs_crisis_DomMigration Lcs_em_ResAsset
+{txt}
+{com}.         
+. foreach var of local lcs_var {c -(}
+{txt}  2{com}.         gen `var'_yn = (`var' == 20 | `var' == 30) if !mi(`var')
+{txt}  3{com}.         label var `var'_yn "Used `: var label `var''"
+{txt}  4{com}. {c )-}
+{txt}(2,365 missing values generated)
+(3,610 missing values generated)
+(2,365 missing values generated)
+(2,365 missing values generated)
+(2,365 missing values generated)
+(5,026 missing values generated)
+(2,365 missing values generated)
+(3,610 missing values generated)
+(2,365 missing values generated)
+(2,365 missing values generated)
+(4,701 missing values generated)
+(4,872 missing values generated)
+(4,872 missing values generated)
+(4,872 missing values generated)
+
+{com}.         
+.         // Ecuador: Lcs_crisis_HealthEdu instead of Lcs_crisis_Health
+.         // CAR: Lcs_stress_HealthEdu instead of Lcs_crisis_Health
+.         //              Lcs_crisis_DomMigration Lcs_em_ResAsset
+.         
+.         * FES
+.         * Error flag for translation error in Myanmar
+.         replace Err_ExpNF = 0 if mi(Err_ExpNF)
+{txt}(5,634 real changes made)
+
+{com}.         tab FES_Cat, gen(FES_Cat_)
+
+  {txt}Food Expenditure Share {c |}
+                  Groups {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        491       13.08       13.08
+{txt}  Marginally Food Secure {c |}{res}        754       20.09       33.16
+{txt}Moderately Food Insecure {c |}{res}        703       18.73       51.89
+{txt}  Severely Food Insecure {c |}{res}      1,806       48.11      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}. 
+.         ** CARI rCARI
+.         gen     CARI_rCARI = HH_Vul_FES         if Modality == 1 
+{txt}(3,778 missing values generated)
+
+{com}.         replace CARI_rCARI = HH_Vul_Income      if Modality == 2
+{txt}(1,415 real changes made)
+
+{com}.         
+.         tab CARI_FES_Cat, gen(CARI_FES_Cat)
+
+ {txt}CARI Category using FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}         85        2.26        2.26
+{txt}  Marginally Food Secure {c |}{res}        869       23.15       25.41
+{txt}Moderately Food Insecure {c |}{res}      2,270       60.47       85.88
+{txt}  Severely Food Insecure {c |}{res}        530       14.12      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         tab CARI_Inc_Cat, gen(rCARI_Inc_Cat)
+
+     {txt}CARI Category using {c |}
+                  Income {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        165        4.40        4.40
+{txt}  Marginally Food Secure {c |}{res}      1,289       34.34       38.73
+{txt}Moderately Food Insecure {c |}{res}      2,067       55.06       93.79
+{txt}  Severely Food Insecure {c |}{res}        233        6.21      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      3,754      100.00
+{txt}
+{com}.         
+.         * real CARI vs. real rCARI
+. forval i = 1/4 {c -(}
+{txt}  2{com}.         gen     CARI_rCARI_`i' = CARI_FES_Cat`i'  if Modality == 1
+{txt}  3{com}.         replace CARI_rCARI_`i' = rCARI_Inc_Cat`i' if Modality == 2
+{txt}  4{com}. {c )-}
+{txt}(3,778 missing values generated)
+(1,415 real changes made)
+(3,778 missing values generated)
+(1,415 real changes made)
+(3,778 missing values generated)
+(1,415 real changes made)
+(3,778 missing values generated)
+(1,415 real changes made)
+
+{com}.         
+.         gen CARI_FES_Bad  = (CARI_FES_Cat3  == 1 | CARI_FES_Cat4  == 1) if Completion == 1
+{txt}(2,363 missing values generated)
+
+{com}.         gen rCARI_Inc_Bad = (rCARI_Inc_Cat3 == 1 | rCARI_Inc_Cat4 == 1) if Completion == 1
+{txt}(2,363 missing values generated)
+
+{com}. 
+.         gen CARI_FES_Good  = (CARI_FES_Cat1  == 1 | CARI_FES_Cat2  == 1) if Completion == 1
+{txt}(2,363 missing values generated)
+
+{com}.         gen rCARI_Inc_Good = (rCARI_Inc_Cat1 == 1 | rCARI_Inc_Cat2 == 1) if Completion == 1
+{txt}(2,363 missing values generated)
+
+{com}.         
+.         gen FES_pctile = .
+{txt}(6,117 missing values generated)
+
+{com}.         levelsof Country, local(countries)
+{res}{txt}1 2 3
+
+{com}. 
+. forval country = 1/3 {c -(}
+{txt}  2{com}.     xtile temp_FES_pctile = FES if Country == `country' & Modality == 1 & Form == 1, n(4)
+{txt}  3{com}.     replace FES_pctile = temp_FES_pctile if Country == `country' & Modality == 1 & Form == 1
+{txt}  4{com}.     drop temp_FES_pctile
+{txt}  5{com}. {c )-}
+{txt}(305 real changes made)
+(377 real changes made)
+(466 real changes made)
+
+{com}. 
+. list Country FES FES_pctile if Modality == 1 & Form == 1
+{txt}
+      {c TLC}{hline 9}{c -}{hline 10}{c -}{hline 10}{c TRC}
+      {c |} {res}Country        FES   FES_pc~e {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+   1. {c |} {res}Myanmar   .7357054          3 {txt}{c |}
+   2. {c |} {res}Myanmar    .934639          4 {txt}{c |}
+   3. {c |} {res}Myanmar   .4954775          1 {txt}{c |}
+   4. {c |} {res}Myanmar   .5108268          1 {txt}{c |}
+   5. {c |} {res}Myanmar   .7347195          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+   6. {c |} {res}Myanmar   .3723442          1 {txt}{c |}
+   8. {c |} {res}Myanmar    .565625          2 {txt}{c |}
+   9. {c |} {res}Myanmar   .6501311          2 {txt}{c |}
+  10. {c |} {res}Myanmar   .8583815          4 {txt}{c |}
+  15. {c |} {res}Myanmar   .7941177          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  20. {c |} {res}Myanmar   .5338031          1 {txt}{c |}
+  23. {c |} {res}Myanmar   .2927363          1 {txt}{c |}
+  24. {c |} {res}Myanmar   .5903451          2 {txt}{c |}
+  25. {c |} {res}Myanmar   .9082862          4 {txt}{c |}
+  26. {c |} {res}Myanmar   .7606608          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  29. {c |} {res}Myanmar   .6615152          2 {txt}{c |}
+  32. {c |} {res}Myanmar   .7336586          3 {txt}{c |}
+  34. {c |} {res}Myanmar    .733719          3 {txt}{c |}
+  35. {c |} {res}Myanmar   .8556569          4 {txt}{c |}
+  38. {c |} {res}Myanmar   .6706399          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  39. {c |} {res}Myanmar   .7281553          3 {txt}{c |}
+  40. {c |} {res}Myanmar   .6571571          2 {txt}{c |}
+  43. {c |} {res}Myanmar   .4354839          1 {txt}{c |}
+  44. {c |} {res}Myanmar     .66053          2 {txt}{c |}
+  46. {c |} {res}Myanmar   .8769191          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  47. {c |} {res}Myanmar   .6108509          2 {txt}{c |}
+  48. {c |} {res}Myanmar   .9632823          4 {txt}{c |}
+  49. {c |} {res}Myanmar   .4279261          1 {txt}{c |}
+  52. {c |} {res}Myanmar   .7211551          3 {txt}{c |}
+  53. {c |} {res}Myanmar   .6788593          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  56. {c |} {res}Myanmar   .7001314          3 {txt}{c |}
+  57. {c |} {res}Myanmar   .8641728          4 {txt}{c |}
+  58. {c |} {res}Myanmar   .8357136          4 {txt}{c |}
+  59. {c |} {res}Myanmar    .851456          4 {txt}{c |}
+  60. {c |} {res}Myanmar   .6497814          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  61. {c |} {res}Myanmar   .5847458          2 {txt}{c |}
+  62. {c |} {res}Myanmar   .8760238          4 {txt}{c |}
+  63. {c |} {res}Myanmar   .7415128          3 {txt}{c |}
+  64. {c |} {res}Myanmar   .7152599          3 {txt}{c |}
+  65. {c |} {res}Myanmar   .6277245          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  66. {c |} {res}Myanmar   .6715384          2 {txt}{c |}
+  69. {c |} {res}Myanmar   .5870747          2 {txt}{c |}
+  70. {c |} {res}Myanmar   .6737925          3 {txt}{c |}
+  71. {c |} {res}Myanmar   .6169666          2 {txt}{c |}
+  73. {c |} {res}Myanmar   .6205117          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  78. {c |} {res}Myanmar   .7615104          3 {txt}{c |}
+  81. {c |} {res}Myanmar   .6858801          3 {txt}{c |}
+  82. {c |} {res}Myanmar   .7666079          3 {txt}{c |}
+  86. {c |} {res}Myanmar   .0786831          1 {txt}{c |}
+  87. {c |} {res}Myanmar   .8521333          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  88. {c |} {res}Myanmar   .8235439          4 {txt}{c |}
+  89. {c |} {res}Myanmar   .6391752          2 {txt}{c |}
+  90. {c |} {res}Myanmar   .7590887          3 {txt}{c |}
+  92. {c |} {res}Myanmar   .7697691          4 {txt}{c |}
+  94. {c |} {res}Myanmar      .8002          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+  95. {c |} {res}Myanmar   .6835974          3 {txt}{c |}
+  97. {c |} {res}Myanmar   .7032624          3 {txt}{c |}
+  98. {c |} {res}Myanmar   .4357227          1 {txt}{c |}
+  99. {c |} {res}Myanmar   .4873576          1 {txt}{c |}
+ 100. {c |} {res}Myanmar   .5561343          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 102. {c |} {res}Myanmar   .9344956          4 {txt}{c |}
+ 103. {c |} {res}Myanmar    .163242          1 {txt}{c |}
+ 104. {c |} {res}Myanmar   .7328463          3 {txt}{c |}
+ 106. {c |} {res}Myanmar    .787212          4 {txt}{c |}
+ 107. {c |} {res}Myanmar   .5303384          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 108. {c |} {res}Myanmar   .7864078          4 {txt}{c |}
+ 109. {c |} {res}Myanmar   .8153006          4 {txt}{c |}
+ 111. {c |} {res}Myanmar   .4569456          1 {txt}{c |}
+ 112. {c |} {res}Myanmar   .4562518          1 {txt}{c |}
+ 115. {c |} {res}Myanmar   .4687319          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 118. {c |} {res}Myanmar   .5575554          1 {txt}{c |}
+ 119. {c |} {res}Myanmar    .572708          2 {txt}{c |}
+ 120. {c |} {res}Myanmar   .6907626          3 {txt}{c |}
+ 122. {c |} {res}Myanmar   .5557746          1 {txt}{c |}
+ 123. {c |} {res}Myanmar   .3303299          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 124. {c |} {res}Myanmar   .3002502          1 {txt}{c |}
+ 126. {c |} {res}Myanmar   .8432493          4 {txt}{c |}
+ 127. {c |} {res}Myanmar   .4571206          1 {txt}{c |}
+ 130. {c |} {res}Myanmar   .5185795          1 {txt}{c |}
+ 131. {c |} {res}Myanmar   .5304917          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 134. {c |} {res}Myanmar   .3506256          1 {txt}{c |}
+ 135. {c |} {res}Myanmar   .7110707          3 {txt}{c |}
+ 143. {c |} {res}Myanmar   .7848753          4 {txt}{c |}
+ 144. {c |} {res}Myanmar   .6586506          2 {txt}{c |}
+ 145. {c |} {res}Myanmar   .4744592          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 146. {c |} {res}Myanmar   .6873279          3 {txt}{c |}
+ 147. {c |} {res}Myanmar   .7352157          3 {txt}{c |}
+ 148. {c |} {res}Myanmar   .6515883          2 {txt}{c |}
+ 151. {c |} {res}Myanmar   .3255731          1 {txt}{c |}
+ 152. {c |} {res}Myanmar   .2672168          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 155. {c |} {res}Myanmar    .555656          1 {txt}{c |}
+ 156. {c |} {res}Myanmar   .6405247          2 {txt}{c |}
+ 162. {c |} {res}Myanmar   .9144114          4 {txt}{c |}
+ 163. {c |} {res}Myanmar   .5679667          2 {txt}{c |}
+ 164. {c |} {res}Myanmar   .5451853          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 165. {c |} {res}Myanmar   .7675277          3 {txt}{c |}
+ 167. {c |} {res}Myanmar   .8858812          4 {txt}{c |}
+ 168. {c |} {res}Myanmar   .7168944          3 {txt}{c |}
+ 169. {c |} {res}Myanmar    .865806          4 {txt}{c |}
+ 170. {c |} {res}Myanmar   .5736665          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 171. {c |} {res}Myanmar   .4872369          1 {txt}{c |}
+ 175. {c |} {res}Myanmar    .662772          2 {txt}{c |}
+ 177. {c |} {res}Myanmar   .7776366          4 {txt}{c |}
+ 179. {c |} {res}Myanmar    .695088          3 {txt}{c |}
+ 180. {c |} {res}Myanmar   .7282895          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 181. {c |} {res}Myanmar   .5956458          2 {txt}{c |}
+ 182. {c |} {res}Myanmar     .82319          4 {txt}{c |}
+ 183. {c |} {res}Myanmar   .5638747          1 {txt}{c |}
+ 187. {c |} {res}Myanmar   .7358751          3 {txt}{c |}
+ 188. {c |} {res}Myanmar   .6888561          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 189. {c |} {res}Myanmar   .4445314          1 {txt}{c |}
+ 192. {c |} {res}Myanmar   .4859354          1 {txt}{c |}
+ 194. {c |} {res}Myanmar   .5337095          1 {txt}{c |}
+ 195. {c |} {res}Myanmar   .6616746          2 {txt}{c |}
+ 196. {c |} {res}Myanmar   .6480042          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 197. {c |} {res}Myanmar   .5301331          1 {txt}{c |}
+ 198. {c |} {res}Myanmar   .8059701          4 {txt}{c |}
+ 199. {c |} {res}Myanmar   .5846316          2 {txt}{c |}
+ 200. {c |} {res}Myanmar     .90479          4 {txt}{c |}
+ 201. {c |} {res}Myanmar   .6990008          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 202. {c |} {res}Myanmar   .7550969          3 {txt}{c |}
+ 203. {c |} {res}Myanmar   .7473651          3 {txt}{c |}
+ 204. {c |} {res}Myanmar   .7501982          3 {txt}{c |}
+ 205. {c |} {res}Myanmar   .5903481          2 {txt}{c |}
+ 206. {c |} {res}Myanmar   .6002967          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 209. {c |} {res}Myanmar   .6074767          2 {txt}{c |}
+ 210. {c |} {res}Myanmar   .7081039          3 {txt}{c |}
+ 212. {c |} {res}Myanmar   .7517383          3 {txt}{c |}
+ 213. {c |} {res}Myanmar     .93871          4 {txt}{c |}
+ 215. {c |} {res}Myanmar   .6547589          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 219. {c |} {res}Myanmar    .702836          3 {txt}{c |}
+ 220. {c |} {res}Myanmar   .5788243          2 {txt}{c |}
+ 221. {c |} {res}Myanmar   .5465078          1 {txt}{c |}
+ 222. {c |} {res}Myanmar   .6478452          2 {txt}{c |}
+ 225. {c |} {res}Myanmar   .5423419          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 229. {c |} {res}Myanmar    .879223          4 {txt}{c |}
+ 231. {c |} {res}Myanmar   .4935646          1 {txt}{c |}
+ 232. {c |} {res}Myanmar   .4979204          1 {txt}{c |}
+ 233. {c |} {res}Myanmar   .8132765          4 {txt}{c |}
+ 234. {c |} {res}Myanmar   .5635772          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 235. {c |} {res}Myanmar   .8724101          4 {txt}{c |}
+ 237. {c |} {res}Myanmar   .7730526          4 {txt}{c |}
+ 238. {c |} {res}Myanmar    .682968          3 {txt}{c |}
+ 239. {c |} {res}Myanmar   .8643883          4 {txt}{c |}
+ 240. {c |} {res}Myanmar   .6110047          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 242. {c |} {res}Myanmar   .4987238          1 {txt}{c |}
+ 243. {c |} {res}Myanmar   .8573061          4 {txt}{c |}
+ 246. {c |} {res}Myanmar   .4952216          1 {txt}{c |}
+ 247. {c |} {res}Myanmar    .667497          2 {txt}{c |}
+ 249. {c |} {res}Myanmar   .7088311          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 251. {c |} {res}Myanmar   .2454862          1 {txt}{c |}
+ 256. {c |} {res}Myanmar    .764508          3 {txt}{c |}
+ 260. {c |} {res}Myanmar   .5967871          2 {txt}{c |}
+ 261. {c |} {res}Myanmar   .8465926          4 {txt}{c |}
+ 263. {c |} {res}Myanmar   .6929825          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 264. {c |} {res}Myanmar   .6208004          2 {txt}{c |}
+ 265. {c |} {res}Myanmar   .3156743          1 {txt}{c |}
+ 269. {c |} {res}Myanmar   .3971114          1 {txt}{c |}
+ 270. {c |} {res}Myanmar   .7956465          4 {txt}{c |}
+ 271. {c |} {res}Myanmar    .485609          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 272. {c |} {res}Myanmar   .5382385          1 {txt}{c |}
+ 273. {c |} {res}Myanmar   .7502936          3 {txt}{c |}
+ 277. {c |} {res}Myanmar   .8921102          4 {txt}{c |}
+ 280. {c |} {res}Myanmar   .5972056          2 {txt}{c |}
+ 281. {c |} {res}Myanmar   .7537689          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 282. {c |} {res}Myanmar   .8486392          4 {txt}{c |}
+ 283. {c |} {res}Myanmar   .8883827          4 {txt}{c |}
+ 285. {c |} {res}Myanmar   .7484408          3 {txt}{c |}
+ 286. {c |} {res}Myanmar   .5457468          1 {txt}{c |}
+ 288. {c |} {res}Myanmar   .2906179          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 289. {c |} {res}Myanmar   .4480562          1 {txt}{c |}
+ 290. {c |} {res}Myanmar   .7056308          3 {txt}{c |}
+ 291. {c |} {res}Myanmar   .4072149          1 {txt}{c |}
+ 293. {c |} {res}Myanmar   .5650328          2 {txt}{c |}
+ 296. {c |} {res}Myanmar     .58154          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 298. {c |} {res}Myanmar   .7311129          3 {txt}{c |}
+ 299. {c |} {res}Myanmar   .4424486          1 {txt}{c |}
+ 301. {c |} {res}Myanmar   .8035714          4 {txt}{c |}
+ 303. {c |} {res}Myanmar    .238178          1 {txt}{c |}
+ 306. {c |} {res}Myanmar   .9129311          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 308. {c |} {res}Myanmar   .6426619          2 {txt}{c |}
+ 309. {c |} {res}Myanmar   .8285995          4 {txt}{c |}
+ 310. {c |} {res}Myanmar    .709658          3 {txt}{c |}
+ 312. {c |} {res}Myanmar   .7843812          4 {txt}{c |}
+ 314. {c |} {res}Myanmar   .6606931          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 315. {c |} {res}Myanmar    .770309          4 {txt}{c |}
+ 317. {c |} {res}Myanmar   .6486699          2 {txt}{c |}
+ 318. {c |} {res}Myanmar   .7058824          3 {txt}{c |}
+ 319. {c |} {res}Myanmar   .7450331          3 {txt}{c |}
+ 320. {c |} {res}Myanmar   .6565446          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 323. {c |} {res}Myanmar    .610676          2 {txt}{c |}
+ 328. {c |} {res}Myanmar   .9129683          4 {txt}{c |}
+ 329. {c |} {res}Myanmar   .7554553          3 {txt}{c |}
+ 330. {c |} {res}Myanmar   .6185622          2 {txt}{c |}
+ 331. {c |} {res}Myanmar   .5404528          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 332. {c |} {res}Myanmar   .6117228          2 {txt}{c |}
+ 334. {c |} {res}Myanmar    .542475          1 {txt}{c |}
+ 336. {c |} {res}Myanmar   .8014232          4 {txt}{c |}
+ 339. {c |} {res}Myanmar   .5920008          2 {txt}{c |}
+ 341. {c |} {res}Myanmar   .8398902          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 343. {c |} {res}Myanmar   .4842489          1 {txt}{c |}
+ 344. {c |} {res}Myanmar   .5605764          1 {txt}{c |}
+ 346. {c |} {res}Myanmar   .7018051          3 {txt}{c |}
+ 347. {c |} {res}Myanmar   .7281423          3 {txt}{c |}
+ 350. {c |} {res}Myanmar     .53206          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 351. {c |} {res}Myanmar   .4852758          1 {txt}{c |}
+ 353. {c |} {res}Myanmar   .6996008          3 {txt}{c |}
+ 354. {c |} {res}Myanmar    .446281          1 {txt}{c |}
+ 355. {c |} {res}Myanmar   .9146342          4 {txt}{c |}
+ 356. {c |} {res}Myanmar    .699499          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 358. {c |} {res}Myanmar   .7334836          3 {txt}{c |}
+ 360. {c |} {res}Myanmar   .3939689          1 {txt}{c |}
+ 365. {c |} {res}Myanmar   .7915513          4 {txt}{c |}
+ 368. {c |} {res}Myanmar   .6739726          3 {txt}{c |}
+ 371. {c |} {res}Myanmar   .7409861          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 372. {c |} {res}Myanmar   .7907115          4 {txt}{c |}
+ 374. {c |} {res}Myanmar   .6460476          2 {txt}{c |}
+ 376. {c |} {res}Myanmar   .6427007          2 {txt}{c |}
+ 377. {c |} {res}Myanmar   .6457812          2 {txt}{c |}
+ 378. {c |} {res}Myanmar   .5959271          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 379. {c |} {res}Myanmar   .6538464          2 {txt}{c |}
+ 380. {c |} {res}Myanmar   .5827733          2 {txt}{c |}
+ 383. {c |} {res}Myanmar   .5734415          2 {txt}{c |}
+ 384. {c |} {res}Myanmar   .6623423          2 {txt}{c |}
+ 385. {c |} {res}Myanmar    .861244          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 386. {c |} {res}Myanmar   .5814055          2 {txt}{c |}
+ 387. {c |} {res}Myanmar   .4966613          1 {txt}{c |}
+ 388. {c |} {res}Myanmar   .8282959          4 {txt}{c |}
+ 390. {c |} {res}Myanmar   .4909091          1 {txt}{c |}
+ 391. {c |} {res}Myanmar   .4885517          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 393. {c |} {res}Myanmar    .910816          4 {txt}{c |}
+ 395. {c |} {res}Myanmar   .7382275          3 {txt}{c |}
+ 397. {c |} {res}Myanmar   .6384729          2 {txt}{c |}
+ 398. {c |} {res}Myanmar   .5269321          1 {txt}{c |}
+ 399. {c |} {res}Myanmar   .7402284          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 400. {c |} {res}Myanmar   .6756539          3 {txt}{c |}
+ 401. {c |} {res}Myanmar   .6250964          2 {txt}{c |}
+ 402. {c |} {res}Myanmar    .649218          2 {txt}{c |}
+ 403. {c |} {res}Myanmar   .5681561          2 {txt}{c |}
+ 409. {c |} {res}Myanmar   .6709097          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 410. {c |} {res}Myanmar   .8931298          4 {txt}{c |}
+ 411. {c |} {res}Myanmar   .7436811          3 {txt}{c |}
+ 412. {c |} {res}Myanmar   .6866631          3 {txt}{c |}
+ 413. {c |} {res}Myanmar    .756918          3 {txt}{c |}
+ 415. {c |} {res}Myanmar    .850162          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 419. {c |} {res}Myanmar   .6651173          2 {txt}{c |}
+ 420. {c |} {res}Myanmar   .7359813          3 {txt}{c |}
+ 421. {c |} {res}Myanmar   .6466098          2 {txt}{c |}
+ 422. {c |} {res}Myanmar   .8939052          4 {txt}{c |}
+ 423. {c |} {res}Myanmar   .5411804          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 424. {c |} {res}Myanmar   .6053507          2 {txt}{c |}
+ 425. {c |} {res}Myanmar   .7444169          3 {txt}{c |}
+ 426. {c |} {res}Myanmar   .5663064          2 {txt}{c |}
+ 427. {c |} {res}Myanmar   .5928664          2 {txt}{c |}
+ 428. {c |} {res}Myanmar   .9475228          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 429. {c |} {res}Myanmar   .5247571          1 {txt}{c |}
+ 430. {c |} {res}Myanmar   .6194828          2 {txt}{c |}
+ 431. {c |} {res}Myanmar    .747239          3 {txt}{c |}
+ 432. {c |} {res}Myanmar   .8362907          4 {txt}{c |}
+ 433. {c |} {res}Myanmar   .7017138          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 436. {c |} {res}Myanmar   .5862774          2 {txt}{c |}
+ 439. {c |} {res}Myanmar   .7690644          4 {txt}{c |}
+ 442. {c |} {res}Myanmar    .797379          4 {txt}{c |}
+ 443. {c |} {res}Myanmar   .5505845          1 {txt}{c |}
+ 445. {c |} {res}Myanmar   .9651892          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 447. {c |} {res}Myanmar   .6732737          3 {txt}{c |}
+ 448. {c |} {res}Myanmar   .5876089          2 {txt}{c |}
+ 450. {c |} {res}Myanmar   .6666421          2 {txt}{c |}
+ 451. {c |} {res}Myanmar   .8114066          4 {txt}{c |}
+ 452. {c |} {res}Myanmar   .6834496          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 453. {c |} {res}Myanmar   .5707529          2 {txt}{c |}
+ 454. {c |} {res}Myanmar   .8108108          4 {txt}{c |}
+ 456. {c |} {res}Myanmar   .9606262          4 {txt}{c |}
+ 457. {c |} {res}Myanmar   .7072914          3 {txt}{c |}
+ 458. {c |} {res}Myanmar   .4935134          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 459. {c |} {res}Myanmar   .5554715          1 {txt}{c |}
+ 460. {c |} {res}Myanmar   .7690145          3 {txt}{c |}
+ 462. {c |} {res}Myanmar   .7839906          4 {txt}{c |}
+ 463. {c |} {res}Myanmar   .8633808          4 {txt}{c |}
+ 464. {c |} {res}Myanmar   .6118749          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 465. {c |} {res}Myanmar   .7928789          4 {txt}{c |}
+ 468. {c |} {res}Myanmar   .7507568          3 {txt}{c |}
+ 469. {c |} {res}Myanmar   .8321918          4 {txt}{c |}
+ 470. {c |} {res}Myanmar   .5673819          2 {txt}{c |}
+ 471. {c |} {res}Myanmar   .5386134          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 472. {c |} {res}Myanmar   .7570978          3 {txt}{c |}
+ 473. {c |} {res}Myanmar   .7074677          3 {txt}{c |}
+ 474. {c |} {res}Myanmar   .8204148          4 {txt}{c |}
+ 478. {c |} {res}Myanmar   .7133545          3 {txt}{c |}
+ 480. {c |} {res}Myanmar   .6618049          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 481. {c |} {res}Myanmar   .7575827          3 {txt}{c |}
+ 483. {c |} {res}Myanmar    .778098          4 {txt}{c |}
+ 484. {c |} {res}Myanmar   .8040625          4 {txt}{c |}
+ 485. {c |} {res}Myanmar   .5647382          1 {txt}{c |}
+ 486. {c |} {res}Myanmar    .551413          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 488. {c |} {res}Myanmar   .7834299          4 {txt}{c |}
+ 489. {c |} {res}Myanmar   .5274405          1 {txt}{c |}
+ 490. {c |} {res}Myanmar    .421128          1 {txt}{c |}
+ 491. {c |} {res}Myanmar   .6019158          2 {txt}{c |}
+ 493. {c |} {res}Myanmar    .682781          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 495. {c |} {res}Myanmar   .4856333          1 {txt}{c |}
+ 498. {c |} {res}Myanmar   .4380871          1 {txt}{c |}
+ 500. {c |} {res}Myanmar    .853779          4 {txt}{c |}
+ 502. {c |} {res}Myanmar   .7802964          4 {txt}{c |}
+ 503. {c |} {res}Myanmar   .8384441          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1662. {c |} {res}    CAR   .9450246          4 {txt}{c |}
+1663. {c |} {res}    CAR   .9048808          4 {txt}{c |}
+1664. {c |} {res}    CAR   .6496097          2 {txt}{c |}
+1665. {c |} {res}    CAR   .6228374          2 {txt}{c |}
+1667. {c |} {res}    CAR   .8846819          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1668. {c |} {res}    CAR   .5555161          1 {txt}{c |}
+1669. {c |} {res}    CAR   .6614993          2 {txt}{c |}
+1670. {c |} {res}    CAR    .874595          4 {txt}{c |}
+1671. {c |} {res}    CAR   .8090005          3 {txt}{c |}
+1672. {c |} {res}    CAR   .9404618          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1673. {c |} {res}    CAR   .8266906          3 {txt}{c |}
+1674. {c |} {res}    CAR   .7072243          2 {txt}{c |}
+1676. {c |} {res}    CAR   .9026715          4 {txt}{c |}
+1677. {c |} {res}    CAR   .6343284          2 {txt}{c |}
+1678. {c |} {res}    CAR   .6570606          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1679. {c |} {res}    CAR   .9436134          4 {txt}{c |}
+1680. {c |} {res}    CAR   .5813845          1 {txt}{c |}
+1681. {c |} {res}    CAR   .4539417          1 {txt}{c |}
+1682. {c |} {res}    CAR   .5157593          1 {txt}{c |}
+1683. {c |} {res}    CAR    .796387          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1684. {c |} {res}    CAR   .9363128          4 {txt}{c |}
+1685. {c |} {res}    CAR   .8675676          4 {txt}{c |}
+1686. {c |} {res}    CAR   .6299782          2 {txt}{c |}
+1687. {c |} {res}    CAR   .8454674          4 {txt}{c |}
+1688. {c |} {res}    CAR   .7785524          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1689. {c |} {res}    CAR   .3273719          1 {txt}{c |}
+1690. {c |} {res}    CAR   .6504176          2 {txt}{c |}
+1691. {c |} {res}    CAR   .6545064          2 {txt}{c |}
+1692. {c |} {res}    CAR   .9209858          4 {txt}{c |}
+1693. {c |} {res}    CAR   .8383592          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1694. {c |} {res}    CAR   .8272671          3 {txt}{c |}
+1695. {c |} {res}    CAR   .4575325          1 {txt}{c |}
+1696. {c |} {res}    CAR   .9214053          4 {txt}{c |}
+1697. {c |} {res}    CAR   .9458039          4 {txt}{c |}
+1698. {c |} {res}    CAR   .9202021          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1699. {c |} {res}    CAR   .7394595          2 {txt}{c |}
+1700. {c |} {res}    CAR   .7656904          3 {txt}{c |}
+1701. {c |} {res}    CAR   .8263531          3 {txt}{c |}
+1702. {c |} {res}    CAR   .2767313          1 {txt}{c |}
+1703. {c |} {res}    CAR   .3594417          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1704. {c |} {res}    CAR   .6542868          2 {txt}{c |}
+1705. {c |} {res}    CAR   .6444339          2 {txt}{c |}
+1706. {c |} {res}    CAR   .5295888          1 {txt}{c |}
+1707. {c |} {res}    CAR    .836604          3 {txt}{c |}
+1708. {c |} {res}    CAR   .7109994          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1709. {c |} {res}    CAR   .6531752          2 {txt}{c |}
+1710. {c |} {res}    CAR   .9209085          4 {txt}{c |}
+1711. {c |} {res}    CAR   .3210853          1 {txt}{c |}
+1712. {c |} {res}    CAR   .7843594          3 {txt}{c |}
+1713. {c |} {res}    CAR   .6077332          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1714. {c |} {res}    CAR   .7335448          2 {txt}{c |}
+1715. {c |} {res}    CAR    .824272          3 {txt}{c |}
+1716. {c |} {res}    CAR   .3016117          1 {txt}{c |}
+1717. {c |} {res}    CAR   .6573331          2 {txt}{c |}
+1718. {c |} {res}    CAR    .819802          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1719. {c |} {res}    CAR   .9468471          4 {txt}{c |}
+1720. {c |} {res}    CAR   .3312699          1 {txt}{c |}
+1721. {c |} {res}    CAR   .5264497          1 {txt}{c |}
+1722. {c |} {res}    CAR   .9324002          4 {txt}{c |}
+1723. {c |} {res}    CAR   .8824524          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1724. {c |} {res}    CAR    .489239          1 {txt}{c |}
+1726. {c |} {res}    CAR   .5334418          1 {txt}{c |}
+1727. {c |} {res}    CAR   .3803828          1 {txt}{c |}
+1728. {c |} {res}    CAR   .7835485          3 {txt}{c |}
+1729. {c |} {res}    CAR   .4058099          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1730. {c |} {res}    CAR    .822749          3 {txt}{c |}
+1731. {c |} {res}    CAR   .8541667          4 {txt}{c |}
+1732. {c |} {res}    CAR   .8576874          4 {txt}{c |}
+1733. {c |} {res}    CAR   .9040338          4 {txt}{c |}
+1734. {c |} {res}    CAR   .8389621          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1735. {c |} {res}    CAR   .8205262          3 {txt}{c |}
+1738. {c |} {res}    CAR   .8812193          4 {txt}{c |}
+1739. {c |} {res}    CAR   .5871608          1 {txt}{c |}
+1740. {c |} {res}    CAR   .7284483          2 {txt}{c |}
+1741. {c |} {res}    CAR   .8325624          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1743. {c |} {res}    CAR   .8349866          3 {txt}{c |}
+1744. {c |} {res}    CAR   .3575686          1 {txt}{c |}
+1745. {c |} {res}    CAR   .7338192          2 {txt}{c |}
+1746. {c |} {res}    CAR   .3049677          1 {txt}{c |}
+1747. {c |} {res}    CAR   .5417439          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1748. {c |} {res}    CAR   .7135135          2 {txt}{c |}
+1749. {c |} {res}    CAR   .5352641          1 {txt}{c |}
+1750. {c |} {res}    CAR   .6568177          2 {txt}{c |}
+1751. {c |} {res}    CAR   .6613594          2 {txt}{c |}
+1752. {c |} {res}    CAR   .6716174          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1754. {c |} {res}    CAR   .2743434          1 {txt}{c |}
+1755. {c |} {res}    CAR   .6209897          2 {txt}{c |}
+1760. {c |} {res}    CAR    .693651          2 {txt}{c |}
+1761. {c |} {res}    CAR   .7846154          3 {txt}{c |}
+1762. {c |} {res}    CAR    .904112          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1763. {c |} {res}    CAR   .9197789          4 {txt}{c |}
+1764. {c |} {res}    CAR   .8660322          4 {txt}{c |}
+1766. {c |} {res}    CAR   .8554297          4 {txt}{c |}
+1767. {c |} {res}    CAR   .9689677          4 {txt}{c |}
+1768. {c |} {res}    CAR    .792276          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1770. {c |} {res}    CAR   .8135878          3 {txt}{c |}
+1771. {c |} {res}    CAR   .8060904          3 {txt}{c |}
+1772. {c |} {res}    CAR    .778098          3 {txt}{c |}
+1773. {c |} {res}    CAR   .8853745          4 {txt}{c |}
+1774. {c |} {res}    CAR   .4495549          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1775. {c |} {res}    CAR   .8531469          4 {txt}{c |}
+1776. {c |} {res}    CAR   .9248818          4 {txt}{c |}
+1777. {c |} {res}    CAR   .7265624          2 {txt}{c |}
+1779. {c |} {res}    CAR   .9101622          4 {txt}{c |}
+1780. {c |} {res}    CAR   .8298785          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1781. {c |} {res}    CAR   .5872995          1 {txt}{c |}
+1782. {c |} {res}    CAR   .8841944          4 {txt}{c |}
+1785. {c |} {res}    CAR   .8447099          4 {txt}{c |}
+1787. {c |} {res}    CAR   .8645461          4 {txt}{c |}
+1788. {c |} {res}    CAR   .8433108          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1789. {c |} {res}    CAR   .9544345          4 {txt}{c |}
+1790. {c |} {res}    CAR   .7769262          3 {txt}{c |}
+1791. {c |} {res}    CAR   .8900933          4 {txt}{c |}
+1792. {c |} {res}    CAR   .8475221          4 {txt}{c |}
+1793. {c |} {res}    CAR   .8655924          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1795. {c |} {res}    CAR   .7926239          3 {txt}{c |}
+1796. {c |} {res}    CAR   .8708566          4 {txt}{c |}
+1797. {c |} {res}    CAR   .4348249          1 {txt}{c |}
+1798. {c |} {res}    CAR   .4348958          1 {txt}{c |}
+1799. {c |} {res}    CAR   .5317116          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1800. {c |} {res}    CAR   .7368382          2 {txt}{c |}
+1801. {c |} {res}    CAR   .8118955          3 {txt}{c |}
+1802. {c |} {res}    CAR   .7972637          3 {txt}{c |}
+1803. {c |} {res}    CAR   .4223532          1 {txt}{c |}
+1804. {c |} {res}    CAR   .5462894          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1806. {c |} {res}    CAR   .7133065          2 {txt}{c |}
+1807. {c |} {res}    CAR   .8514314          4 {txt}{c |}
+1808. {c |} {res}    CAR   .7957328          3 {txt}{c |}
+1809. {c |} {res}    CAR   .7395572          2 {txt}{c |}
+1810. {c |} {res}    CAR   .7556018          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1812. {c |} {res}    CAR   .2325709          1 {txt}{c |}
+1813. {c |} {res}    CAR   .8339302          3 {txt}{c |}
+1814. {c |} {res}    CAR   .5012705          1 {txt}{c |}
+1815. {c |} {res}    CAR   .8839594          4 {txt}{c |}
+1816. {c |} {res}    CAR   .7508752          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1818. {c |} {res}    CAR   .7445256          2 {txt}{c |}
+1819. {c |} {res}    CAR   .3949101          1 {txt}{c |}
+1820. {c |} {res}    CAR    .647482          2 {txt}{c |}
+1823. {c |} {res}    CAR   .2725041          1 {txt}{c |}
+1824. {c |} {res}    CAR   .9246474          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1825. {c |} {res}    CAR   .6346819          2 {txt}{c |}
+1826. {c |} {res}    CAR   .8392333          3 {txt}{c |}
+1827. {c |} {res}    CAR   .9257591          4 {txt}{c |}
+1828. {c |} {res}    CAR    .900581          4 {txt}{c |}
+1829. {c |} {res}    CAR   .6955724          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1830. {c |} {res}    CAR   .8108108          3 {txt}{c |}
+1832. {c |} {res}    CAR   .9391304          4 {txt}{c |}
+1833. {c |} {res}    CAR   .7048889          2 {txt}{c |}
+1834. {c |} {res}    CAR   .5371312          1 {txt}{c |}
+1837. {c |} {res}    CAR   .7687697          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1839. {c |} {res}    CAR   .9229673          4 {txt}{c |}
+1840. {c |} {res}    CAR   .6029077          2 {txt}{c |}
+1841. {c |} {res}    CAR   .8986858          4 {txt}{c |}
+1842. {c |} {res}    CAR   .8298689          3 {txt}{c |}
+1843. {c |} {res}    CAR   .8328707          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+1844. {c |} {res}    CAR   .5005025          1 {txt}{c |}
+1845. {c |} {res}    CAR   .7929304          3 {txt}{c |}
+1846. {c |} {res}    CAR   .7565518          3 {txt}{c |}
+2347. {c |} {res}    CAR   .8498514          4 {txt}{c |}
+2348. {c |} {res}    CAR   .7311992          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2350. {c |} {res}    CAR   .7071429          2 {txt}{c |}
+2351. {c |} {res}    CAR    .844381          4 {txt}{c |}
+2353. {c |} {res}    CAR   .4632012          1 {txt}{c |}
+2354. {c |} {res}    CAR   .6615235          2 {txt}{c |}
+2355. {c |} {res}    CAR   .7034142          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2356. {c |} {res}    CAR   .5620418          1 {txt}{c |}
+2357. {c |} {res}    CAR   .6685973          2 {txt}{c |}
+2358. {c |} {res}    CAR   .5611029          1 {txt}{c |}
+2359. {c |} {res}    CAR   .6297592          2 {txt}{c |}
+2360. {c |} {res}    CAR   .7885635          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2362. {c |} {res}    CAR   .7093135          2 {txt}{c |}
+2363. {c |} {res}    CAR   .8024691          3 {txt}{c |}
+2364. {c |} {res}    CAR   .7661098          3 {txt}{c |}
+2365. {c |} {res}    CAR   .8233439          3 {txt}{c |}
+2366. {c |} {res}    CAR   .8085278          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2367. {c |} {res}    CAR   .8403569          3 {txt}{c |}
+2368. {c |} {res}    CAR    .853945          4 {txt}{c |}
+2370. {c |} {res}    CAR   .8858268          4 {txt}{c |}
+2371. {c |} {res}    CAR   .5617507          1 {txt}{c |}
+2372. {c |} {res}    CAR   .5799353          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2373. {c |} {res}    CAR   .5701245          1 {txt}{c |}
+2375. {c |} {res}    CAR   .8477561          4 {txt}{c |}
+2376. {c |} {res}    CAR   .7303779          2 {txt}{c |}
+2377. {c |} {res}    CAR   .8323193          3 {txt}{c |}
+2378. {c |} {res}    CAR   .7784431          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2379. {c |} {res}    CAR   .6842372          2 {txt}{c |}
+2380. {c |} {res}    CAR   .8782685          4 {txt}{c |}
+2381. {c |} {res}    CAR   .4808476          1 {txt}{c |}
+2383. {c |} {res}    CAR   .6226415          2 {txt}{c |}
+2384. {c |} {res}    CAR      .5625          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2385. {c |} {res}    CAR   .7972828          3 {txt}{c |}
+2386. {c |} {res}    CAR     .66171          2 {txt}{c |}
+2387. {c |} {res}    CAR   .7285714          2 {txt}{c |}
+2388. {c |} {res}    CAR   .3713107          1 {txt}{c |}
+2389. {c |} {res}    CAR   .4648761          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2390. {c |} {res}    CAR   .6384568          2 {txt}{c |}
+2391. {c |} {res}    CAR   .6240409          2 {txt}{c |}
+2392. {c |} {res}    CAR    .788161          3 {txt}{c |}
+2394. {c |} {res}    CAR    .724508          2 {txt}{c |}
+2395. {c |} {res}    CAR   .8447099          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2396. {c |} {res}    CAR   .7127616          2 {txt}{c |}
+2398. {c |} {res}    CAR   .5937442          1 {txt}{c |}
+2399. {c |} {res}    CAR   .5111282          1 {txt}{c |}
+2400. {c |} {res}    CAR   .5910521          1 {txt}{c |}
+2401. {c |} {res}    CAR   .7654639          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2402. {c |} {res}    CAR   .6114483          2 {txt}{c |}
+2403. {c |} {res}    CAR   .7654026          3 {txt}{c |}
+2404. {c |} {res}    CAR   .7383774          2 {txt}{c |}
+2405. {c |} {res}    CAR   .7707809          3 {txt}{c |}
+2406. {c |} {res}    CAR    .499556          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2407. {c |} {res}    CAR    .833115          3 {txt}{c |}
+2408. {c |} {res}    CAR   .8515211          4 {txt}{c |}
+2410. {c |} {res}    CAR   .5608871          1 {txt}{c |}
+2411. {c |} {res}    CAR   .7801634          3 {txt}{c |}
+2412. {c |} {res}    CAR   .6492842          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2413. {c |} {res}    CAR   .8094312          3 {txt}{c |}
+2414. {c |} {res}    CAR   .9253618          4 {txt}{c |}
+2415. {c |} {res}    CAR   .6240544          2 {txt}{c |}
+2416. {c |} {res}    CAR    .834478          3 {txt}{c |}
+2417. {c |} {res}    CAR   .7637416          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2418. {c |} {res}    CAR   .8339576          3 {txt}{c |}
+2419. {c |} {res}    CAR   .8303986          3 {txt}{c |}
+2420. {c |} {res}    CAR    .775862          3 {txt}{c |}
+2421. {c |} {res}    CAR   .9767197          4 {txt}{c |}
+2422. {c |} {res}    CAR   .6358449          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2423. {c |} {res}    CAR   .7385246          2 {txt}{c |}
+2424. {c |} {res}    CAR   .7796427          3 {txt}{c |}
+2425. {c |} {res}    CAR   .7030783          2 {txt}{c |}
+2426. {c |} {res}    CAR   .8051207          3 {txt}{c |}
+2427. {c |} {res}    CAR   .7247522          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2428. {c |} {res}    CAR   .6295297          2 {txt}{c |}
+2429. {c |} {res}    CAR   .8996294          4 {txt}{c |}
+2430. {c |} {res}    CAR   .7933061          3 {txt}{c |}
+2431. {c |} {res}    CAR   .8991869          4 {txt}{c |}
+2432. {c |} {res}    CAR   .6217688          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2433. {c |} {res}    CAR   .5874313          1 {txt}{c |}
+2434. {c |} {res}    CAR   .8885942          4 {txt}{c |}
+2435. {c |} {res}    CAR   .7704465          3 {txt}{c |}
+2436. {c |} {res}    CAR   .6972756          2 {txt}{c |}
+2437. {c |} {res}    CAR   .8108108          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2438. {c |} {res}    CAR   .9460154          4 {txt}{c |}
+2440. {c |} {res}    CAR   .6028157          2 {txt}{c |}
+2441. {c |} {res}    CAR    .820612          3 {txt}{c |}
+2442. {c |} {res}    CAR   .3816254          1 {txt}{c |}
+2443. {c |} {res}    CAR   .4342581          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2444. {c |} {res}    CAR   .6132718          2 {txt}{c |}
+2446. {c |} {res}    CAR   .2274642          1 {txt}{c |}
+2447. {c |} {res}    CAR   .5138525          1 {txt}{c |}
+2449. {c |} {res}    CAR   .6223404          2 {txt}{c |}
+2450. {c |} {res}    CAR   .5997759          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2451. {c |} {res}    CAR   .6124471          2 {txt}{c |}
+2453. {c |} {res}    CAR   .5984104          1 {txt}{c |}
+2454. {c |} {res}    CAR   .4169738          1 {txt}{c |}
+2455. {c |} {res}    CAR   .3008357          1 {txt}{c |}
+2456. {c |} {res}    CAR   .4204822          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2459. {c |} {res}    CAR   .7105679          2 {txt}{c |}
+2460. {c |} {res}    CAR   .4395157          1 {txt}{c |}
+2461. {c |} {res}    CAR   .3485322          1 {txt}{c |}
+2462. {c |} {res}    CAR   .6943998          2 {txt}{c |}
+2464. {c |} {res}    CAR   .6106972          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2465. {c |} {res}    CAR   .6000328          2 {txt}{c |}
+2466. {c |} {res}    CAR   .8420473          4 {txt}{c |}
+2467. {c |} {res}    CAR    .801358          3 {txt}{c |}
+2468. {c |} {res}    CAR   .6023347          2 {txt}{c |}
+2469. {c |} {res}    CAR   .7556146          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2470. {c |} {res}    CAR   .7102771          2 {txt}{c |}
+2471. {c |} {res}    CAR   .4373955          1 {txt}{c |}
+2472. {c |} {res}    CAR   .2852704          1 {txt}{c |}
+2473. {c |} {res}    CAR   .4681589          1 {txt}{c |}
+2475. {c |} {res}    CAR   .8729662          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2476. {c |} {res}    CAR   .6092181          2 {txt}{c |}
+2477. {c |} {res}    CAR   .7521765          3 {txt}{c |}
+2479. {c |} {res}    CAR   .7851102          3 {txt}{c |}
+2480. {c |} {res}    CAR   .7447012          2 {txt}{c |}
+2481. {c |} {res}    CAR   .6812624          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2482. {c |} {res}    CAR   .5978898          1 {txt}{c |}
+2483. {c |} {res}    CAR   .8065173          3 {txt}{c |}
+2484. {c |} {res}    CAR   .8339183          3 {txt}{c |}
+2486. {c |} {res}    CAR   .6312184          2 {txt}{c |}
+2487. {c |} {res}    CAR   .8359269          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2488. {c |} {res}    CAR   .8010704          3 {txt}{c |}
+2489. {c |} {res}    CAR   .7548752          3 {txt}{c |}
+2490. {c |} {res}    CAR   .7844276          3 {txt}{c |}
+2491. {c |} {res}    CAR   .8484076          4 {txt}{c |}
+2492. {c |} {res}    CAR   .5799056          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2493. {c |} {res}    CAR   .4953455          1 {txt}{c |}
+2494. {c |} {res}    CAR   .6886442          2 {txt}{c |}
+2495. {c |} {res}    CAR   .9876106          4 {txt}{c |}
+2497. {c |} {res}    CAR    .764526          3 {txt}{c |}
+2498. {c |} {res}    CAR   .9430716          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2499. {c |} {res}    CAR   .6786734          2 {txt}{c |}
+2500. {c |} {res}    CAR   .9502262          4 {txt}{c |}
+2501. {c |} {res}    CAR    .845953          4 {txt}{c |}
+2502. {c |} {res}    CAR          1          4 {txt}{c |}
+2503. {c |} {res}    CAR   .9183673          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2504. {c |} {res}    CAR   .9527027          4 {txt}{c |}
+2505. {c |} {res}    CAR   .9438878          4 {txt}{c |}
+2511. {c |} {res}    CAR   .8495839          4 {txt}{c |}
+2512. {c |} {res}    CAR   .9102178          4 {txt}{c |}
+2513. {c |} {res}    CAR    .611772          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2514. {c |} {res}    CAR   .5596747          1 {txt}{c |}
+2515. {c |} {res}    CAR   .7282952          2 {txt}{c |}
+2516. {c |} {res}    CAR    .952983          4 {txt}{c |}
+2518. {c |} {res}    CAR   .5998462          2 {txt}{c |}
+2520. {c |} {res}    CAR   .9231805          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2522. {c |} {res}    CAR   .8469582          4 {txt}{c |}
+2524. {c |} {res}    CAR   .7986536          3 {txt}{c |}
+2525. {c |} {res}    CAR   .8485109          4 {txt}{c |}
+2526. {c |} {res}    CAR    .737705          2 {txt}{c |}
+2527. {c |} {res}    CAR   .9371172          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2528. {c |} {res}    CAR   .7941176          3 {txt}{c |}
+2529. {c |} {res}    CAR   .2425373          1 {txt}{c |}
+2530. {c |} {res}    CAR   .5542976          1 {txt}{c |}
+2531. {c |} {res}    CAR   .7970663          3 {txt}{c |}
+2532. {c |} {res}    CAR   .7003891          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2533. {c |} {res}    CAR   .5643994          1 {txt}{c |}
+2537. {c |} {res}    CAR   .7830951          3 {txt}{c |}
+2539. {c |} {res}    CAR   .5164573          1 {txt}{c |}
+2540. {c |} {res}    CAR   .7726427          3 {txt}{c |}
+2541. {c |} {res}    CAR   .4511278          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2542. {c |} {res}    CAR   .8222933          3 {txt}{c |}
+2543. {c |} {res}    CAR   .9462056          4 {txt}{c |}
+2544. {c |} {res}    CAR   .5753425          1 {txt}{c |}
+2545. {c |} {res}    CAR   .6714166          2 {txt}{c |}
+2547. {c |} {res}    CAR   .6470417          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2548. {c |} {res}    CAR   .9564541          4 {txt}{c |}
+2550. {c |} {res}    CAR   .9083101          4 {txt}{c |}
+2551. {c |} {res}    CAR   .6974094          2 {txt}{c |}
+2552. {c |} {res}    CAR   .6915984          2 {txt}{c |}
+2553. {c |} {res}    CAR   .8411215          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2554. {c |} {res}    CAR   .7925569          3 {txt}{c |}
+2555. {c |} {res}    CAR    .555066          1 {txt}{c |}
+2556. {c |} {res}    CAR   .8355705          3 {txt}{c |}
+2557. {c |} {res}    CAR   .9850507          4 {txt}{c |}
+2560. {c |} {res}    CAR   .8606876          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2561. {c |} {res}    CAR   .8832188          4 {txt}{c |}
+2562. {c |} {res}    CAR   .9393243          4 {txt}{c |}
+2564. {c |} {res}    CAR   .9414226          4 {txt}{c |}
+2565. {c |} {res}    CAR   .8632184          4 {txt}{c |}
+2566. {c |} {res}    CAR   .5382301          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2567. {c |} {res}    CAR   .8523619          4 {txt}{c |}
+2568. {c |} {res}    CAR    .147072          1 {txt}{c |}
+2570. {c |} {res}    CAR   .8386683          3 {txt}{c |}
+2571. {c |} {res}    CAR    .897938          4 {txt}{c |}
+2572. {c |} {res}    CAR   .9280437          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2573. {c |} {res}    CAR   .5351834          1 {txt}{c |}
+2574. {c |} {res}    CAR   .9283625          4 {txt}{c |}
+2575. {c |} {res}    CAR   .7336957          2 {txt}{c |}
+2576. {c |} {res}    CAR    .761144          3 {txt}{c |}
+2577. {c |} {res}    CAR   .7569902          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2578. {c |} {res}    CAR   .5050662          1 {txt}{c |}
+2581. {c |} {res}    CAR   .7130318          2 {txt}{c |}
+2582. {c |} {res}    CAR   .5008533          1 {txt}{c |}
+2583. {c |} {res}    CAR   .3111943          1 {txt}{c |}
+2584. {c |} {res}    CAR   .7778705          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2586. {c |} {res}    CAR   .3400429          1 {txt}{c |}
+2587. {c |} {res}    CAR    .730174          2 {txt}{c |}
+2588. {c |} {res}    CAR   .4710996          1 {txt}{c |}
+2589. {c |} {res}    CAR   .6116459          2 {txt}{c |}
+2591. {c |} {res}    CAR   .6718561          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2592. {c |} {res}    CAR   .3884485          1 {txt}{c |}
+2593. {c |} {res}    CAR   .3022439          1 {txt}{c |}
+2594. {c |} {res}    CAR   .4611194          1 {txt}{c |}
+2595. {c |} {res}    CAR   .6524049          2 {txt}{c |}
+2596. {c |} {res}    CAR   .7488104          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2597. {c |} {res}    CAR   .8374375          3 {txt}{c |}
+2600. {c |} {res}    CAR   .7215847          2 {txt}{c |}
+2602. {c |} {res}    CAR   .6306542          2 {txt}{c |}
+2604. {c |} {res}    CAR   .4740401          1 {txt}{c |}
+2605. {c |} {res}    CAR    .579074          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2606. {c |} {res}    CAR   .7412491          2 {txt}{c |}
+2607. {c |} {res}    CAR   .5456612          1 {txt}{c |}
+2609. {c |} {res}    CAR   .8135734          3 {txt}{c |}
+2610. {c |} {res}    CAR   .7170582          2 {txt}{c |}
+2611. {c |} {res}    CAR   .6948587          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2613. {c |} {res}    CAR    .538071          1 {txt}{c |}
+2614. {c |} {res}    CAR   .6800534          2 {txt}{c |}
+2615. {c |} {res}    CAR   .9537784          4 {txt}{c |}
+2616. {c |} {res}    CAR   .9038737          4 {txt}{c |}
+2617. {c |} {res}    CAR   .8469804          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2618. {c |} {res}    CAR   .6940874          2 {txt}{c |}
+2619. {c |} {res}    CAR   .5478526          1 {txt}{c |}
+2620. {c |} {res}    CAR   .5680224          1 {txt}{c |}
+2621. {c |} {res}    CAR   .8286119          3 {txt}{c |}
+2622. {c |} {res}    CAR   .7296521          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2624. {c |} {res}    CAR   .7662082          3 {txt}{c |}
+2625. {c |} {res}    CAR   .5454679          1 {txt}{c |}
+2626. {c |} {res}    CAR   .5991388          1 {txt}{c |}
+2627. {c |} {res}    CAR   .4405029          1 {txt}{c |}
+2628. {c |} {res}    CAR   .9374434          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2629. {c |} {res}    CAR   .2360466          1 {txt}{c |}
+2630. {c |} {res}    CAR   .5588044          1 {txt}{c |}
+2631. {c |} {res}    CAR   .5506608          1 {txt}{c |}
+2632. {c |} {res}    CAR   .9692152          4 {txt}{c |}
+2633. {c |} {res}    CAR   .8507509          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2634. {c |} {res}    CAR   .6522165          2 {txt}{c |}
+2635. {c |} {res}    CAR   .8301497          3 {txt}{c |}
+2636. {c |} {res}    CAR   .7479225          2 {txt}{c |}
+2637. {c |} {res}    CAR   .8450214          4 {txt}{c |}
+2638. {c |} {res}    CAR   .7719415          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2639. {c |} {res}    CAR   .5209397          1 {txt}{c |}
+2640. {c |} {res}    CAR   .5403835          1 {txt}{c |}
+2641. {c |} {res}    CAR   .6193354          2 {txt}{c |}
+2642. {c |} {res}    CAR   .8523804          4 {txt}{c |}
+2643. {c |} {res}    CAR   .2934169          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2644. {c |} {res}    CAR   .6738769          2 {txt}{c |}
+2645. {c |} {res}    CAR   .6996832          2 {txt}{c |}
+2646. {c |} {res}    CAR   .2963497          1 {txt}{c |}
+2647. {c |} {res}    CAR   .2892549          1 {txt}{c |}
+2648. {c |} {res}    CAR   .8042895          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2649. {c |} {res}    CAR   .7797834          3 {txt}{c |}
+2650. {c |} {res}    CAR   .8108107          3 {txt}{c |}
+2651. {c |} {res}    CAR   .8158302          3 {txt}{c |}
+2653. {c |} {res}    CAR    .908551          4 {txt}{c |}
+2654. {c |} {res}    CAR   .8133333          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2655. {c |} {res}    CAR   .8732212          4 {txt}{c |}
+2656. {c |} {res}    CAR   .8693451          4 {txt}{c |}
+2657. {c |} {res}    CAR   .7607325          3 {txt}{c |}
+2658. {c |} {res}    CAR   .7873464          3 {txt}{c |}
+2659. {c |} {res}    CAR   .7530011          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2660. {c |} {res}    CAR   .6585366          2 {txt}{c |}
+2661. {c |} {res}    CAR   .9225985          4 {txt}{c |}
+2662. {c |} {res}    CAR    .688196          2 {txt}{c |}
+2663. {c |} {res}    CAR          1          4 {txt}{c |}
+2664. {c |} {res}    CAR   .7564018          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2665. {c |} {res}    CAR   .9429154          4 {txt}{c |}
+2666. {c |} {res}    CAR   .6826227          2 {txt}{c |}
+2667. {c |} {res}    CAR   .8300647          3 {txt}{c |}
+2668. {c |} {res}    CAR   .4871601          1 {txt}{c |}
+2669. {c |} {res}    CAR   .8424994          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2670. {c |} {res}    CAR   .8051167          3 {txt}{c |}
+2671. {c |} {res}    CAR   .2016581          1 {txt}{c |}
+2672. {c |} {res}    CAR   .5288242          1 {txt}{c |}
+2673. {c |} {res}    CAR   .6670354          2 {txt}{c |}
+2675. {c |} {res}    CAR   .6954046          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2676. {c |} {res}    CAR   .6053373          2 {txt}{c |}
+2677. {c |} {res}    CAR   .7420467          2 {txt}{c |}
+2678. {c |} {res}    CAR    .826367          3 {txt}{c |}
+2679. {c |} {res}    CAR   .8012393          3 {txt}{c |}
+2680. {c |} {res}    CAR   .8353961          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2682. {c |} {res}    CAR   .8184698          3 {txt}{c |}
+2683. {c |} {res}    CAR   .9242491          4 {txt}{c |}
+2684. {c |} {res}    CAR   .5829711          1 {txt}{c |}
+2686. {c |} {res}    CAR    .529066          1 {txt}{c |}
+2687. {c |} {res}    CAR    .909486          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2688. {c |} {res}    CAR   .7860262          3 {txt}{c |}
+2689. {c |} {res}    CAR   .7310216          2 {txt}{c |}
+2690. {c |} {res}    CAR   .8565153          4 {txt}{c |}
+2691. {c |} {res}    CAR   .4272968          1 {txt}{c |}
+2692. {c |} {res}    CAR   .4666076          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2693. {c |} {res}    CAR    .667823          2 {txt}{c |}
+2695. {c |} {res}    CAR   .7443861          2 {txt}{c |}
+2697. {c |} {res}    CAR   .7909129          3 {txt}{c |}
+2698. {c |} {res}    CAR   .5989652          1 {txt}{c |}
+2699. {c |} {res}    CAR   .8692001          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2700. {c |} {res}    CAR     .81472          3 {txt}{c |}
+2701. {c |} {res}    CAR   .8758048          4 {txt}{c |}
+2703. {c |} {res}    CAR   .8709148          4 {txt}{c |}
+2704. {c |} {res}    CAR   .8754448          4 {txt}{c |}
+2705. {c |} {res}    CAR   .8733553          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2706. {c |} {res}    CAR   .7896211          3 {txt}{c |}
+2708. {c |} {res}    CAR   .2541974          1 {txt}{c |}
+2709. {c |} {res}    CAR   .7755947          3 {txt}{c |}
+2710. {c |} {res}    CAR   .3339015          1 {txt}{c |}
+2711. {c |} {res}    CAR   .5688542          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+2712. {c |} {res}    CAR   .5103057          1 {txt}{c |}
+4090. {c |} {res}Ecuador   .7753897          3 {txt}{c |}
+4091. {c |} {res}Ecuador    .650634          2 {txt}{c |}
+4092. {c |} {res}Ecuador   .5965753          1 {txt}{c |}
+4093. {c |} {res}Ecuador   .6209243          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4094. {c |} {res}Ecuador   .8791122          4 {txt}{c |}
+4095. {c |} {res}Ecuador   .9275222          4 {txt}{c |}
+4096. {c |} {res}Ecuador   .8285078          3 {txt}{c |}
+4097. {c |} {res}Ecuador    .718115          2 {txt}{c |}
+4098. {c |} {res}Ecuador   .7893671          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4099. {c |} {res}Ecuador   .9512707          4 {txt}{c |}
+4100. {c |} {res}Ecuador   .7407407          2 {txt}{c |}
+4101. {c |} {res}Ecuador   .3385277          1 {txt}{c |}
+4102. {c |} {res}Ecuador   .5124644          1 {txt}{c |}
+4103. {c |} {res}Ecuador    .423005          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4104. {c |} {res}Ecuador   .7454208          2 {txt}{c |}
+4106. {c |} {res}Ecuador   .3174761          1 {txt}{c |}
+4107. {c |} {res}Ecuador   .8827578          4 {txt}{c |}
+4108. {c |} {res}Ecuador   .8237257          3 {txt}{c |}
+4109. {c |} {res}Ecuador   .6434579          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4110. {c |} {res}Ecuador   .9545795          4 {txt}{c |}
+4111. {c |} {res}Ecuador    .483368          1 {txt}{c |}
+4112. {c |} {res}Ecuador   .6660175          2 {txt}{c |}
+4113. {c |} {res}Ecuador   .8163266          3 {txt}{c |}
+4114. {c |} {res}Ecuador   .6597222          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4118. {c |} {res}Ecuador   .3054668          1 {txt}{c |}
+4125. {c |} {res}Ecuador   .7229337          2 {txt}{c |}
+4126. {c |} {res}Ecuador   .9419974          4 {txt}{c |}
+4127. {c |} {res}Ecuador   .5905002          1 {txt}{c |}
+4128. {c |} {res}Ecuador   .1912918          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4130. {c |} {res}Ecuador    .638735          2 {txt}{c |}
+4132. {c |} {res}Ecuador   .9374422          4 {txt}{c |}
+4133. {c |} {res}Ecuador   .8679245          4 {txt}{c |}
+4134. {c |} {res}Ecuador   .8996815          4 {txt}{c |}
+4135. {c |} {res}Ecuador    .632107          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4137. {c |} {res}Ecuador   .6911519          2 {txt}{c |}
+4138. {c |} {res}Ecuador   .6133576          1 {txt}{c |}
+4141. {c |} {res}Ecuador   .5377662          1 {txt}{c |}
+4142. {c |} {res}Ecuador   .9025069          4 {txt}{c |}
+4143. {c |} {res}Ecuador   .6675342          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4144. {c |} {res}Ecuador   .6955203          2 {txt}{c |}
+4145. {c |} {res}Ecuador   .7865853          3 {txt}{c |}
+4147. {c |} {res}Ecuador   .9590164          4 {txt}{c |}
+4148. {c |} {res}Ecuador   .9181287          4 {txt}{c |}
+4149. {c |} {res}Ecuador   .9530534          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4151. {c |} {res}Ecuador   .9765438          4 {txt}{c |}
+4152. {c |} {res}Ecuador   .9254498          4 {txt}{c |}
+4154. {c |} {res}Ecuador   .8191882          3 {txt}{c |}
+4155. {c |} {res}Ecuador   .9140049          4 {txt}{c |}
+4156. {c |} {res}Ecuador   .5157116          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4157. {c |} {res}Ecuador    .849005          3 {txt}{c |}
+4159. {c |} {res}Ecuador   .9595735          4 {txt}{c |}
+4160. {c |} {res}Ecuador   .3406813          1 {txt}{c |}
+4162. {c |} {res}Ecuador   .9935603          4 {txt}{c |}
+4163. {c |} {res}Ecuador   .8133333          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4165. {c |} {res}Ecuador   .2121305          1 {txt}{c |}
+4166. {c |} {res}Ecuador   .6148008          2 {txt}{c |}
+4167. {c |} {res}Ecuador   .7174888          2 {txt}{c |}
+4170. {c |} {res}Ecuador   .8384225          3 {txt}{c |}
+4171. {c |} {res}Ecuador   .4435252          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4175. {c |} {res}Ecuador   .8955224          4 {txt}{c |}
+4176. {c |} {res}Ecuador   .9453055          4 {txt}{c |}
+4177. {c |} {res}Ecuador   .9920182          4 {txt}{c |}
+4178. {c |} {res}Ecuador   .4068989          1 {txt}{c |}
+4180. {c |} {res}Ecuador   .8222554          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4181. {c |} {res}Ecuador   .7412923          2 {txt}{c |}
+4182. {c |} {res}Ecuador   .9367825          4 {txt}{c |}
+4183. {c |} {res}Ecuador   .8721491          4 {txt}{c |}
+4184. {c |} {res}Ecuador   .7756531          3 {txt}{c |}
+4186. {c |} {res}Ecuador   .9666349          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4187. {c |} {res}Ecuador   .9652187          4 {txt}{c |}
+4188. {c |} {res}Ecuador   .7800951          3 {txt}{c |}
+4190. {c |} {res}Ecuador   .3826531          1 {txt}{c |}
+4191. {c |} {res}Ecuador   .3135048          1 {txt}{c |}
+4192. {c |} {res}Ecuador   .9045849          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4193. {c |} {res}Ecuador   .9593023          4 {txt}{c |}
+4376. {c |} {res}Ecuador   .5772314          1 {txt}{c |}
+4377. {c |} {res}Ecuador   .8563783          3 {txt}{c |}
+4378. {c |} {res}Ecuador   .9067811          4 {txt}{c |}
+4379. {c |} {res}Ecuador   .8645679          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4380. {c |} {res}Ecuador   .8307692          3 {txt}{c |}
+4381. {c |} {res}Ecuador   .8591051          3 {txt}{c |}
+4382. {c |} {res}Ecuador   .8662141          3 {txt}{c |}
+4383. {c |} {res}Ecuador   .9272116          4 {txt}{c |}
+4384. {c |} {res}Ecuador   .9505963          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4385. {c |} {res}Ecuador   .8493771          3 {txt}{c |}
+4387. {c |} {res}Ecuador   .4874029          1 {txt}{c |}
+4388. {c |} {res}Ecuador   .8745928          4 {txt}{c |}
+4389. {c |} {res}Ecuador   .8932087          4 {txt}{c |}
+4390. {c |} {res}Ecuador       .888          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4406. {c |} {res}Ecuador   .3747234          1 {txt}{c |}
+4407. {c |} {res}Ecuador         .5          1 {txt}{c |}
+4408. {c |} {res}Ecuador   .8413181          3 {txt}{c |}
+4410. {c |} {res}Ecuador     .72557          2 {txt}{c |}
+4411. {c |} {res}Ecuador    .539014          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4412. {c |} {res}Ecuador   .5808437          1 {txt}{c |}
+4413. {c |} {res}Ecuador   .6874529          2 {txt}{c |}
+4414. {c |} {res}Ecuador   .7254065          2 {txt}{c |}
+4415. {c |} {res}Ecuador   .7723183          3 {txt}{c |}
+4416. {c |} {res}Ecuador   .7378501          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4417. {c |} {res}Ecuador   .7015942          2 {txt}{c |}
+4418. {c |} {res}Ecuador   .5084354          1 {txt}{c |}
+4419. {c |} {res}Ecuador   .5624999          1 {txt}{c |}
+4420. {c |} {res}Ecuador   .4513215          1 {txt}{c |}
+4422. {c |} {res}Ecuador   .9287169          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4423. {c |} {res}Ecuador   .9172118          4 {txt}{c |}
+4424. {c |} {res}Ecuador   .7859197          3 {txt}{c |}
+4425. {c |} {res}Ecuador   .4797918          1 {txt}{c |}
+4426. {c |} {res}Ecuador   .8540209          3 {txt}{c |}
+4429. {c |} {res}Ecuador   .5298645          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4431. {c |} {res}Ecuador   .7412953          2 {txt}{c |}
+4433. {c |} {res}Ecuador   .9208767          4 {txt}{c |}
+4434. {c |} {res}Ecuador   .7281553          2 {txt}{c |}
+4435. {c |} {res}Ecuador   .7306381          2 {txt}{c |}
+4436. {c |} {res}Ecuador   .8674699          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4437. {c |} {res}Ecuador   .8611511          3 {txt}{c |}
+4438. {c |} {res}Ecuador    .775786          3 {txt}{c |}
+4439. {c |} {res}Ecuador   .9240604          4 {txt}{c |}
+4440. {c |} {res}Ecuador    .916932          4 {txt}{c |}
+4441. {c |} {res}Ecuador   .9048544          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4443. {c |} {res}Ecuador   .8388174          3 {txt}{c |}
+4444. {c |} {res}Ecuador   .6983461          2 {txt}{c |}
+4445. {c |} {res}Ecuador   .9015304          4 {txt}{c |}
+4446. {c |} {res}Ecuador   .9288355          4 {txt}{c |}
+4447. {c |} {res}Ecuador   .8483866          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4448. {c |} {res}Ecuador   .8873783          4 {txt}{c |}
+4449. {c |} {res}Ecuador   .6722131          2 {txt}{c |}
+4450. {c |} {res}Ecuador   .4691165          1 {txt}{c |}
+4452. {c |} {res}Ecuador   .4447038          1 {txt}{c |}
+4454. {c |} {res}Ecuador   .6116397          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4456. {c |} {res}Ecuador   .5730563          1 {txt}{c |}
+4458. {c |} {res}Ecuador   .2897807          1 {txt}{c |}
+4461. {c |} {res}Ecuador   .5493208          1 {txt}{c |}
+4462. {c |} {res}Ecuador   .7946097          3 {txt}{c |}
+4464. {c |} {res}Ecuador   .6995098          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4465. {c |} {res}Ecuador     .81513          3 {txt}{c |}
+4467. {c |} {res}Ecuador   .6341276          2 {txt}{c |}
+4469. {c |} {res}Ecuador   .6498684          2 {txt}{c |}
+4470. {c |} {res}Ecuador   .6908896          2 {txt}{c |}
+4471. {c |} {res}Ecuador   .5192785          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4472. {c |} {res}Ecuador   .5480018          1 {txt}{c |}
+4473. {c |} {res}Ecuador   .5824019          1 {txt}{c |}
+4474. {c |} {res}Ecuador   .7941176          3 {txt}{c |}
+4475. {c |} {res}Ecuador   .4088562          1 {txt}{c |}
+4476. {c |} {res}Ecuador   .9149392          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4480. {c |} {res}Ecuador   .1927007          1 {txt}{c |}
+4482. {c |} {res}Ecuador   .9563748          4 {txt}{c |}
+4718. {c |} {res}Ecuador   .4693548          1 {txt}{c |}
+4720. {c |} {res}Ecuador   .5579407          1 {txt}{c |}
+4721. {c |} {res}Ecuador    .735194          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4722. {c |} {res}Ecuador   .7509948          2 {txt}{c |}
+4724. {c |} {res}Ecuador   .7571836          2 {txt}{c |}
+4726. {c |} {res}Ecuador   .5611905          1 {txt}{c |}
+4727. {c |} {res}Ecuador   .4162451          1 {txt}{c |}
+4728. {c |} {res}Ecuador   .8471385          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4729. {c |} {res}Ecuador   .9147233          4 {txt}{c |}
+4730. {c |} {res}Ecuador   .7546291          2 {txt}{c |}
+4731. {c |} {res}Ecuador   .3636364          1 {txt}{c |}
+4732. {c |} {res}Ecuador   .8302425          3 {txt}{c |}
+4733. {c |} {res}Ecuador   .6248643          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4734. {c |} {res}Ecuador   .8427713          3 {txt}{c |}
+4735. {c |} {res}Ecuador   .8304926          3 {txt}{c |}
+4736. {c |} {res}Ecuador    .771028          3 {txt}{c |}
+4739. {c |} {res}Ecuador   .7548558          2 {txt}{c |}
+4740. {c |} {res}Ecuador    .848222          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4741. {c |} {res}Ecuador   .4905196          1 {txt}{c |}
+4743. {c |} {res}Ecuador   .8143939          3 {txt}{c |}
+4744. {c |} {res}Ecuador   .7656336          3 {txt}{c |}
+4745. {c |} {res}Ecuador   .9179573          4 {txt}{c |}
+4746. {c |} {res}Ecuador   .5265981          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4747. {c |} {res}Ecuador   .3765092          1 {txt}{c |}
+4749. {c |} {res}Ecuador   .9230769          4 {txt}{c |}
+4750. {c |} {res}Ecuador   .6781656          2 {txt}{c |}
+4753. {c |} {res}Ecuador   .5656233          1 {txt}{c |}
+4754. {c |} {res}Ecuador   .5523256          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4755. {c |} {res}Ecuador   .6327387          2 {txt}{c |}
+4756. {c |} {res}Ecuador   .7738405          3 {txt}{c |}
+4758. {c |} {res}Ecuador   .3971892          1 {txt}{c |}
+4759. {c |} {res}Ecuador   .7889494          3 {txt}{c |}
+4760. {c |} {res}Ecuador    .616808          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4761. {c |} {res}Ecuador   .9687034          4 {txt}{c |}
+4762. {c |} {res}Ecuador   .8401505          3 {txt}{c |}
+4763. {c |} {res}Ecuador   .8888684          4 {txt}{c |}
+4764. {c |} {res}Ecuador   .7091293          2 {txt}{c |}
+4766. {c |} {res}Ecuador   .8552851          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4768. {c |} {res}Ecuador   .6311054          2 {txt}{c |}
+4769. {c |} {res}Ecuador    .529487          1 {txt}{c |}
+4771. {c |} {res}Ecuador    .386082          1 {txt}{c |}
+4772. {c |} {res}Ecuador   .8272607          3 {txt}{c |}
+4775. {c |} {res}Ecuador   .3018401          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4776. {c |} {res}Ecuador   .8875964          4 {txt}{c |}
+4777. {c |} {res}Ecuador   .7952468          3 {txt}{c |}
+4778. {c |} {res}Ecuador   .6454183          2 {txt}{c |}
+4779. {c |} {res}Ecuador   .6193353          2 {txt}{c |}
+4780. {c |} {res}Ecuador   .1094779          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4781. {c |} {res}Ecuador   .7692308          3 {txt}{c |}
+4782. {c |} {res}Ecuador   .8737744          4 {txt}{c |}
+4783. {c |} {res}Ecuador   .7712418          3 {txt}{c |}
+4784. {c |} {res}Ecuador   .5687203          1 {txt}{c |}
+4785. {c |} {res}Ecuador   .6054083          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4787. {c |} {res}Ecuador   .8473737          3 {txt}{c |}
+4789. {c |} {res}Ecuador   .6827012          2 {txt}{c |}
+4792. {c |} {res}Ecuador   .6673729          2 {txt}{c |}
+4793. {c |} {res}Ecuador   .9088022          4 {txt}{c |}
+4795. {c |} {res}Ecuador   .9001039          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4796. {c |} {res}Ecuador   .2799817          1 {txt}{c |}
+4797. {c |} {res}Ecuador   .6583428          2 {txt}{c |}
+4798. {c |} {res}Ecuador   .8478715          3 {txt}{c |}
+4799. {c |} {res}Ecuador    .797927          3 {txt}{c |}
+4800. {c |} {res}Ecuador   .7164577          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4802. {c |} {res}Ecuador   .5454546          1 {txt}{c |}
+4804. {c |} {res}Ecuador    .766831          3 {txt}{c |}
+4806. {c |} {res}Ecuador   .5898138          1 {txt}{c |}
+4810. {c |} {res}Ecuador   .7701492          3 {txt}{c |}
+4811. {c |} {res}Ecuador   .7310216          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4813. {c |} {res}Ecuador   .8514127          3 {txt}{c |}
+4814. {c |} {res}Ecuador   .7801965          3 {txt}{c |}
+4815. {c |} {res}Ecuador   .7061704          2 {txt}{c |}
+4816. {c |} {res}Ecuador   .8577761          3 {txt}{c |}
+4817. {c |} {res}Ecuador   .7885758          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4818. {c |} {res}Ecuador   .8831425          4 {txt}{c |}
+4819. {c |} {res}Ecuador   .8418748          3 {txt}{c |}
+4820. {c |} {res}Ecuador    .877193          4 {txt}{c |}
+4824. {c |} {res}Ecuador   .6631067          2 {txt}{c |}
+4825. {c |} {res}Ecuador   .8710555          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+4826. {c |} {res}Ecuador   .8969294          4 {txt}{c |}
+5198. {c |} {res}Ecuador    .666826          2 {txt}{c |}
+5199. {c |} {res}Ecuador   .5697835          1 {txt}{c |}
+5200. {c |} {res}Ecuador   .8427461          3 {txt}{c |}
+5202. {c |} {res}Ecuador   .8950662          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5206. {c |} {res}Ecuador    .861197          3 {txt}{c |}
+5207. {c |} {res}Ecuador   .2514626          1 {txt}{c |}
+5211. {c |} {res}Ecuador   .8298256          3 {txt}{c |}
+5215. {c |} {res}Ecuador   .5709935          1 {txt}{c |}
+5216. {c |} {res}Ecuador    .837546          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5217. {c |} {res}Ecuador   .8554755          3 {txt}{c |}
+5218. {c |} {res}Ecuador   .6155703          2 {txt}{c |}
+5219. {c |} {res}Ecuador   .7571861          2 {txt}{c |}
+5220. {c |} {res}Ecuador   .8602949          3 {txt}{c |}
+5222. {c |} {res}Ecuador   .7699068          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5223. {c |} {res}Ecuador    .650372          2 {txt}{c |}
+5225. {c |} {res}Ecuador   .9110878          4 {txt}{c |}
+5227. {c |} {res}Ecuador   .4539007          1 {txt}{c |}
+5229. {c |} {res}Ecuador   .7887049          3 {txt}{c |}
+5230. {c |} {res}Ecuador   .8543673          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5231. {c |} {res}Ecuador   .8258944          3 {txt}{c |}
+5232. {c |} {res}Ecuador    .369491          1 {txt}{c |}
+5233. {c |} {res}Ecuador   .7661955          3 {txt}{c |}
+5236. {c |} {res}Ecuador   .4114195          1 {txt}{c |}
+5237. {c |} {res}Ecuador   .7195498          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5238. {c |} {res}Ecuador     .84512          3 {txt}{c |}
+5240. {c |} {res}Ecuador   .3565201          1 {txt}{c |}
+5241. {c |} {res}Ecuador   .4166667          1 {txt}{c |}
+5242. {c |} {res}Ecuador   .6577322          2 {txt}{c |}
+5243. {c |} {res}Ecuador   .4627599          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5249. {c |} {res}Ecuador   .6196477          2 {txt}{c |}
+5252. {c |} {res}Ecuador   .3124924          1 {txt}{c |}
+5253. {c |} {res}Ecuador   .6738769          2 {txt}{c |}
+5254. {c |} {res}Ecuador   .7490572          2 {txt}{c |}
+5260. {c |} {res}Ecuador     .39239          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5263. {c |} {res}Ecuador   .5656416          1 {txt}{c |}
+5271. {c |} {res}Ecuador   .7268723          2 {txt}{c |}
+5275. {c |} {res}Ecuador   .6422976          2 {txt}{c |}
+5281. {c |} {res}Ecuador   .4504046          1 {txt}{c |}
+5282. {c |} {res}Ecuador   .5045521          1 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5284. {c |} {res}Ecuador   .9241608          4 {txt}{c |}
+5286. {c |} {res}Ecuador   .5046729          1 {txt}{c |}
+5287. {c |} {res}Ecuador   .8444445          3 {txt}{c |}
+5288. {c |} {res}Ecuador   .7942685          3 {txt}{c |}
+5289. {c |} {res}Ecuador   .6607434          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5292. {c |} {res}Ecuador    .784676          3 {txt}{c |}
+5293. {c |} {res}Ecuador   .5995115          1 {txt}{c |}
+5299. {c |} {res}Ecuador   .7449043          2 {txt}{c |}
+5301. {c |} {res}Ecuador    .916079          4 {txt}{c |}
+5302. {c |} {res}Ecuador   .9178486          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5303. {c |} {res}Ecuador   .9000874          4 {txt}{c |}
+5305. {c |} {res}Ecuador    .179855          1 {txt}{c |}
+5306. {c |} {res}Ecuador   .8531345          3 {txt}{c |}
+5307. {c |} {res}Ecuador   .6244697          2 {txt}{c |}
+5308. {c |} {res}Ecuador   .6749351          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5309. {c |} {res}Ecuador   .4865463          1 {txt}{c |}
+5310. {c |} {res}Ecuador    .705347          2 {txt}{c |}
+5311. {c |} {res}Ecuador   .8970463          4 {txt}{c |}
+5312. {c |} {res}Ecuador   .5304182          1 {txt}{c |}
+5315. {c |} {res}Ecuador   .6624365          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5316. {c |} {res}Ecuador   .6818182          2 {txt}{c |}
+5321. {c |} {res}Ecuador   .7369942          2 {txt}{c |}
+5337. {c |} {res}Ecuador   .8496094          3 {txt}{c |}
+5339. {c |} {res}Ecuador   .8723841          4 {txt}{c |}
+5342. {c |} {res}Ecuador   .8377972          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5343. {c |} {res}Ecuador     .80466          3 {txt}{c |}
+5345. {c |} {res}Ecuador   .7690482          3 {txt}{c |}
+5346. {c |} {res}Ecuador   .9761218          4 {txt}{c |}
+5347. {c |} {res}Ecuador   .8687745          4 {txt}{c |}
+5348. {c |} {res}Ecuador     .89275          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5349. {c |} {res}Ecuador   .9469026          4 {txt}{c |}
+5351. {c |} {res}Ecuador   .1072706          1 {txt}{c |}
+5352. {c |} {res}Ecuador   .9564809          4 {txt}{c |}
+5353. {c |} {res}Ecuador    .957303          4 {txt}{c |}
+5355. {c |} {res}Ecuador   .8520276          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5356. {c |} {res}Ecuador   .4956298          1 {txt}{c |}
+5357. {c |} {res}Ecuador   .7981125          3 {txt}{c |}
+5716. {c |} {res}Ecuador   .8985754          4 {txt}{c |}
+5717. {c |} {res}Ecuador   .6694525          2 {txt}{c |}
+5718. {c |} {res}Ecuador   .9009181          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5719. {c |} {res}Ecuador   .8285385          3 {txt}{c |}
+5720. {c |} {res}Ecuador    .977918          4 {txt}{c |}
+5721. {c |} {res}Ecuador   .5786179          1 {txt}{c |}
+5723. {c |} {res}Ecuador   .6115515          1 {txt}{c |}
+5724. {c |} {res}Ecuador   .7032773          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5725. {c |} {res}Ecuador   .7321836          2 {txt}{c |}
+5726. {c |} {res}Ecuador   .8381152          3 {txt}{c |}
+5727. {c |} {res}Ecuador   .9707326          4 {txt}{c |}
+5728. {c |} {res}Ecuador   .9371529          4 {txt}{c |}
+5730. {c |} {res}Ecuador   .8757187          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5731. {c |} {res}Ecuador   .8729662          4 {txt}{c |}
+5732. {c |} {res}Ecuador   .9581801          4 {txt}{c |}
+5733. {c |} {res}Ecuador   .9851019          4 {txt}{c |}
+5734. {c |} {res}Ecuador   .9073419          4 {txt}{c |}
+5735. {c |} {res}Ecuador          1          4 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5736. {c |} {res}Ecuador    .563204          1 {txt}{c |}
+5737. {c |} {res}Ecuador   .6746626          2 {txt}{c |}
+5739. {c |} {res}Ecuador   .6529625          2 {txt}{c |}
+5740. {c |} {res}Ecuador   .7541507          2 {txt}{c |}
+5741. {c |} {res}Ecuador   .6216519          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5742. {c |} {res}Ecuador   .9105148          4 {txt}{c |}
+5743. {c |} {res}Ecuador   .9136468          4 {txt}{c |}
+5744. {c |} {res}Ecuador   .8920169          4 {txt}{c |}
+5745. {c |} {res}Ecuador   .3386005          1 {txt}{c |}
+5747. {c |} {res}Ecuador   .7219905          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5748. {c |} {res}Ecuador   .6235186          2 {txt}{c |}
+5750. {c |} {res}Ecuador   .8004262          3 {txt}{c |}
+5752. {c |} {res}Ecuador    .677214          2 {txt}{c |}
+5753. {c |} {res}Ecuador   .5077156          1 {txt}{c |}
+5899. {c |} {res}Ecuador   .6960143          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5900. {c |} {res}Ecuador   .4376695          1 {txt}{c |}
+5901. {c |} {res}Ecuador   .4441454          1 {txt}{c |}
+5903. {c |} {res}Ecuador   .1326504          1 {txt}{c |}
+5904. {c |} {res}Ecuador   .5379488          1 {txt}{c |}
+5906. {c |} {res}Ecuador   .8430315          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5907. {c |} {res}Ecuador   .7415624          2 {txt}{c |}
+5910. {c |} {res}Ecuador    .521533          1 {txt}{c |}
+5911. {c |} {res}Ecuador   .8786309          4 {txt}{c |}
+5912. {c |} {res}Ecuador   .7849356          3 {txt}{c |}
+5913. {c |} {res}Ecuador    .826067          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5914. {c |} {res}Ecuador   .8741745          4 {txt}{c |}
+5915. {c |} {res}Ecuador   .6509696          2 {txt}{c |}
+5916. {c |} {res}Ecuador   .6358612          2 {txt}{c |}
+5917. {c |} {res}Ecuador   .7610018          3 {txt}{c |}
+5918. {c |} {res}Ecuador   .8568406          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5919. {c |} {res}Ecuador   .6807406          2 {txt}{c |}
+5920. {c |} {res}Ecuador   .8898876          4 {txt}{c |}
+5921. {c |} {res}Ecuador   .4449681          1 {txt}{c |}
+5922. {c |} {res}Ecuador   .9222818          4 {txt}{c |}
+5923. {c |} {res}Ecuador   .6729448          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5924. {c |} {res}Ecuador   .7056862          2 {txt}{c |}
+5925. {c |} {res}Ecuador   .6234126          2 {txt}{c |}
+5926. {c |} {res}Ecuador   .9462849          4 {txt}{c |}
+5927. {c |} {res}Ecuador   .6726925          2 {txt}{c |}
+5928. {c |} {res}Ecuador   .7530896          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5929. {c |} {res}Ecuador   .8461335          3 {txt}{c |}
+5930. {c |} {res}Ecuador   .8020685          3 {txt}{c |}
+5931. {c |} {res}Ecuador   .6640182          2 {txt}{c |}
+5932. {c |} {res}Ecuador   .9245326          4 {txt}{c |}
+5933. {c |} {res}Ecuador   .8150065          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5934. {c |} {res}Ecuador   .5965418          1 {txt}{c |}
+5935. {c |} {res}Ecuador    .936689          4 {txt}{c |}
+5936. {c |} {res}Ecuador    .861244          3 {txt}{c |}
+5937. {c |} {res}Ecuador   .8557844          3 {txt}{c |}
+5938. {c |} {res}Ecuador   .6997319          2 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5939. {c |} {res}Ecuador   .8063713          3 {txt}{c |}
+5940. {c |} {res}Ecuador   .4763359          1 {txt}{c |}
+5943. {c |} {res}Ecuador   .6122449          1 {txt}{c |}
+5946. {c |} {res}Ecuador   .8006601          3 {txt}{c |}
+5951. {c |} {res}Ecuador   .8378747          3 {txt}{c |}
+      {c LT}{hline 9}{c -}{hline 10}{c -}{hline 10}{c RT}
+5956. {c |} {res}Ecuador   .6413163          2 {txt}{c |}
+5958. {c |} {res}Ecuador   .9217877          4 {txt}{c |}
+5960. {c |} {res}Ecuador   .7547755          2 {txt}{c |}
+      {c BLC}{hline 9}{c -}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}. 
+.         ********************* LISTING VARIABLES FOR CAR ***********************
+.         
+.         gen S_HHHResp           = (S_relationship == 1)         if Country == 3
+{txt}(4,037 missing values generated)
+
+{com}.         gen S_HHDisplaced       = (S_hh_status    == 2)         if Country == 3
+{txt}(4,037 missing values generated)
+
+{com}.         gen S_HHHFemale         = (S_hh_head_sex  == 0)         if Country == 3
+{txt}(4,037 missing values generated)
+
+{com}.         gen S_HHHMarried        = (S_hh_head_marital == 1)      if Country == 3
+{txt}(4,037 missing values generated)
+
+{com}.         
+.         gen     S_HHCrowding    = S_hh_size/S_area_house        if Country == 3
+{txt}(4,102 missing values generated)
+
+{com}.         sum     S_HHCrowding
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+S_HHCrowding {c |}{res}      2,015    3.355499    1.781537        .25         15
+{txt}
+{com}.         replace S_HHCrowding  = `r(max)' if mi(S_HHCrowding) & Country == 3
+{txt}(65 real changes made)
+
+{com}.         
+.         gen S_HHBadRoof  = inlist(S_roofing_material_house, 1,2,3,4,5,6) if Country == 3
+{txt}(4,037 missing values generated)
+
+{com}.         gen S_HHBadFloor = inlist(S_floor_material_house, 1,2,3)                 if Country == 3
+{txt}(4,037 missing values generated)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Label variables
+. *******************************************************************************/
+.         label val CARI_Inc_Re FS_CARI
+{txt}
+{com}.         order CARI_Inc_* HHIncFirst_Accept HHIncFirst_Border HHIncFirst_Poor ///
+>                   HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50 ///
+>                   HHInc_Reduce50More, a(FES_Cat_4)
+{txt}
+{com}.          
+.         label def fes_secure_l  1 "Food secure with FES"        ///
+>                                                         0 "Food insecure with FES"
+{txt}
+{com}.         label val CARI_FES_Good fes_secure_l
+{txt}
+{com}.         
+.         label def inc_secure_l  1 "Food secure with Income"     ///
+>                                                         0 "Food insecure with Income"
+{txt}
+{com}.         label val rCARI_Inc_Good inc_secure_l
+{txt}
+{com}.         
+.         label var FCG_Poor                      "FCS: Poor"
+{txt}
+{com}.         label var FCG_Borderline        "FCS: Borderline"
+{txt}
+{com}.         label var FCG_Acceptable        "FCS: Acceptable"
+{txt}
+{com}.         label var FCG_Country           "FCS Groups (Country Specific)"
+{txt}
+{com}.         
+.         label var rCSI_Group            "rCSI Group"
+{txt}
+{com}.         label var rCSI_Phase1           "rCSI: Low"
+{txt}
+{com}.         label var rCSI_Phase2           "rCSI: Median"
+{txt}
+{com}.         label var rCSI_Phase3_5         "rCSI: Severe"
+{txt}
+{com}.         
+.         label var FCS_rCSI_4pt_1        "FCS & rCSI: Acceptable"
+{txt}
+{com}.         label var FCS_rCSI_4pt_2        "FCS & rCSI: Acceptable with reduced coping"
+{txt}
+{com}.         label var FCS_rCSI_4pt_3        "FCS & rCSI: Borderline"
+{txt}
+{com}.         label var FCS_rCSI_4pt_4        "FCS & rCSI: Poor"
+{txt}
+{com}.         
+.         label var CARI_Inc_1            "Income: Regular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_2            "Income: Regular and Reduced OR Irregular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_3            "Income: Irregular and Reduced"
+{txt}
+{com}.         label var CARI_Inc_4            "Income: No income sources"
+{txt}
+{com}.         
+.         label var CARI_Inc_Re_1         "Income: Regular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_Re_2         "Income: Regular and Reduced OR Irregular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_Re_3         "Income: Irregular and Reduced"
+{txt}
+{com}.         label var CARI_Inc_Re_4         "Income: No income sources"
+{txt}
+{com}.         
+.         label var FES_Cat_1                     "FES < 50 percent"
+{txt}
+{com}.         label var FES_Cat_2                     "FES: 50-65 percent"
+{txt}
+{com}.         label var FES_Cat_3                     "FES: 65-75 percent"
+{txt}
+{com}.         label var FES_Cat_4                     "FES: >= 75 percent"
+{txt}
+{com}.         
+.         label var HHInc_Change_None             "Income Change: None"
+{txt}
+{com}.         label var HHInc_Increase                "Income Change: Increase"
+{txt}
+{com}.         label var HHInc_Reduce25                "Income Change: Reduced < 25 percent"
+{txt}
+{com}.         label var HHInc_Reduce50                "Income Change: Reduced 25-50 percent"
+{txt}
+{com}.         label var HHInc_Reduce50More    "Income Change: Reduced 50+ percent"
+{txt}
+{com}.         
+.         label var rCARI_Inc_Cat1        "Food Secure"
+{txt}
+{com}.         label var rCARI_Inc_Cat2        "Marginally Food Secure"
+{txt}
+{com}.         label var rCARI_Inc_Cat3        "Moderately Food Insecure"
+{txt}
+{com}.         label var rCARI_Inc_Cat4        "Severely Food Insecure"
+{txt}
+{com}.         label var rCARI_Inc_Bad         "Food Insecure Group"
+{txt}
+{com}.         label var rCARI_Inc_Good        "Food Secure with Income"
+{txt}
+{com}.         
+.         label var CARI_FES_Cat1         "Food Secure"
+{txt}
+{com}.         label var CARI_FES_Cat2         "Marginally Food Secure"
+{txt}
+{com}.         label var CARI_FES_Cat3         "Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_FES_Cat4         "Severely Food Insecure"
+{txt}
+{com}.         label var CARI_FES_Bad          "Food Insecure Group"
+{txt}
+{com}.         label var CARI_FES_Good         "Food Secure with FES"
+{txt}
+{com}.         
+.         label var CARI_rCARI_1          "Food Secure"
+{txt}
+{com}.         label var CARI_rCARI_2          "Marginally Food Secure"
+{txt}
+{com}.         label var CARI_rCARI_3          "Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_rCARI_4          "Severely Food Insecure"
+{txt}
+{com}.         label var CARI_rCARI            "Food Insecure Group"
+{txt}
+{com}.         
+.         label var S_HHHResp                     "Household head is the respondent"
+{txt}
+{com}.         label var S_HHDisplaced         "Displaced household"
+{txt}
+{com}.         label var S_HHHFemale           "Female Household Head"
+{txt}
+{com}.         label var S_HHHMarried          "Married Household Head"
+{txt}
+{com}.         label var S_HHCrowding          "Household Crowding Index"
+{txt}
+{com}.         label var S_HHBadRoof           "Household has impoverished roof"
+{txt}
+{com}.         label var S_HHBadFloor          "Household has impoverished floor"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         compress
+  {txt}variable {bf}{res}FCG_Country{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI_Group{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Accept_Re{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Border_Re{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Poor_Re{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncome_3pt{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncome_3pt_Re{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncChg_3pt{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_CrdtFood_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_Health_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_ChildWork_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_HealthEdu_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_HealthEdu_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_DomMigration_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_ResAsset_yn{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc_Re{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc_Num{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc_Re_Num{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_1{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_2{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_3{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_4{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Bad{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCARI_Inc_Bad{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Good{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCARI_Inc_Good{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FES_pctile{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}S_HHHResp{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}S_HHDisplaced{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}S_HHHFemale{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}S_HHHMarried{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}S_HHBadRoof{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}S_HHBadFloor{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (752,391 bytes saved)
+
+{com}.         save "${c -(}all_dta{c )-}/ALL_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/ALL_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         keep if Completion == 1
+{txt}(2,363 observations deleted)
+
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}.         save            "${c -(}all_dta{c )-}/Complete_Full_Household_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/Complete_Full_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         export spss "${c -(}all_dta{c )-}/Complete_Full_Household_Analysis.sav", replace
+{res}{txt}file {bf:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/Complete_Full_Household_Analysis.sav} saved
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab CARI_Inc_Num
+
+{txt}CARI_Inc_Nu {c |}
+          m {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}      1,035       27.57       27.57
+{txt}          2 {c |}{res}      1,567       41.74       69.31
+{txt}          3 {c |}{res}        839       22.35       91.66
+{txt}          4 {c |}{res}        313        8.34      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,754      100.00
+
+{com}. corr CARI_Inc_Re_Num FES_pctile
+{txt}(obs=1,148)
+
+             {c |} CA~e_Num FES_pc~e
+{hline 13}{c +}{hline 18}
+CARI_Inc_R~m {c |}{res}   1.0000
+  {txt}FES_pctile {c |}{res}   0.0251   1.0000
+
+
+{com}. corr CARI_Inc_Re_Num FES_pctile if Country == 1
+{txt}(obs=305)
+
+             {c |} CA~e_Num FES_pc~e
+{hline 13}{c +}{hline 18}
+CARI_Inc_R~m {c |}{res}   1.0000
+  {txt}FES_pctile {c |}{res}   0.1935   1.0000
+
+
+{com}. 

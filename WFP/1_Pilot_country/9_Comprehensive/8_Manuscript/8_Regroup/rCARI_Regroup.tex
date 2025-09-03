@@ -1,0 +1,113 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
+\usepackage{indentfirst}
+\usepackage{afterpage}
+
+
+\author{rCARI validation study team-RAMN}
+\date{\today}
+\title{Validation and Calibration of the Remote Consolidated Approach of Reporting on Food Security (rCARI) Methodology 
+	\\ {\normalsize Preliminary results after re-grouping} }
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+	\tableofcontents
+	\pagebreak
+	
+% ---------
+\section{Main Results After Re-grouping}
+
+\subsubsection{Food Consumption Score (FCS)}
+
+The Country variables show the FCS groups using country specific cut-off points: Myanmar (24.5 and 38.5), Ecuador (28 and 42) and CAR (21 and 35).
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality on Food Consumption Score and Groups}
+			\scriptsize
+			\input{1_table/FCS_Modality_All_Country} 
+			\label{tab:FCS_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: The modality columns (F2F and Remote) show means, with standard deviations in parentheses. The Diff columns show the difference in means, with the p-value of the difference in parentheses and with stars specifiying significance as * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\subsection{CARI vs. rCARI}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: Standard CARI-FES vs. Standard rCARI-Inc}
+			\scriptsize
+			\input{1_table/CARI_rCARI_Modality_All_Country} 
+			\label{tab:CARI_rCARI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item  Note: The modality columns show means, with standard deviations in parentheses. The diff columns show the difference in means, with the p-value of the difference in parentheses and with stars specifiying significance as * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: CARI-FES vs. rCARI-FES}
+			\scriptsize
+			\input{1_table/CARI_FES_rCARI_Modality_All_Country} 
+			\label{tab:CARI_FES_rCARI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: The modality columns show means, with standard deviations in parentheses. The diff columns show the difference in means, with the p-value of the difference in parentheses and with stars specifiying significance as * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: CARI-Inc vs. rCARI-Inc}
+			\scriptsize
+			\input{1_table/Inc_CARI_rCARI_Modality_All_Country} 
+			\label{tab:Inc_CARI_rCARI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: The modality columns show means, with standard deviations in parentheses. The diff columns show the difference in means, with the p-value of the difference in parentheses and with stars specifiying significance as * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+\end{document}

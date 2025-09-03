@@ -1,0 +1,66 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES HH_Vul_Income if Modality == 1, grpvar(Form) nonote total replace format(%12.2fc) grplabels(1 Long @ 2 Short) onerow rowvarlabels savetex("/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_F2F_Length_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lcccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(3)}  & \multicolumn{1}{c}{(2)-(3)} \\
+ & \multicolumn{1}{c}{Total}  & \multicolumn{1}{c}{Long}  & \multicolumn{1}{c}{Short}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+Consumption over the past 7 days (cereals and tubers)   & 5.38    & 5.38    & 5.38    & 0.00   \\
+ & (0.08)  & (0.12)  & (0.11)  &  \\ [1ex]
+Consumption over the past 7 days (pulses)   & 2.00    & 1.91    & 2.09    & -0.18   \\
+ & (0.07)  & (0.11)  & (0.10)  &  \\ [1ex]
+Consumption over the past 7 days (dairy products)   & 1.38    & 1.35    & 1.40    & -0.06   \\
+ & (0.07)  & (0.10)  & (0.11)  &  \\ [1ex]
+Consumption over the past 7 days (protein-rich foods)   & 3.03    & 3.06    & 3.00    & 0.06   \\
+ & (0.09)  & (0.13)  & (0.12)  &  \\ [1ex]
+Consumption over the past 7 days (vegetables)   & 3.93    & 4.00    & 3.87    & 0.13   \\
+ & (0.10)  & (0.14)  & (0.15)  &  \\ [1ex]
+Consumption over the past 7 days (fruit)   & 2.58    & 2.77    & 2.40    & 0.38**   \\
+ & (0.09)  & (0.13)  & (0.13)  &  \\ [1ex]
+Consumption over the past 7 days (oil)   & 5.38    & 5.59    & 5.17    & 0.42**   \\
+ & (0.09)  & (0.12)  & (0.13)  &  \\ [1ex]
+Consumption over the past 7 days (sugar)   & 5.39    & 5.45    & 5.32    & 0.14   \\
+ & (0.09)  & (0.13)  & (0.13)  &  \\ [1ex]
+Food Consumption Score   & 46.28    & 46.42    & 46.16    & 0.26   \\
+ & (0.78)  & (1.11)  & (1.10)  &  \\ [1ex]
+Relied on less preferred, less expensive food   & 4.41    & 4.26    & 4.55    & -0.29   \\
+ & (0.09)  & (0.13)  & (0.13)  &  \\ [1ex]
+Borrowed food or relied on help from friends or relatives   & 1.64    & 1.63    & 1.64    & -0.01   \\
+ & (0.07)  & (0.10)  & (0.10)  &  \\ [1ex]
+Reduced portion size of meals at meals time   & 3.80    & 3.78    & 3.81    & -0.03   \\
+ & (0.10)  & (0.14)  & (0.14)  &  \\ [1ex]
+Restricted Coping by adults in order for young-children to eat   & 1.87    & 1.87    & 1.87    & 0.00   \\
+ & (0.09)  & (0.13)  & (0.12)  &  \\ [1ex]
+Reduced the number of meals eaten per day   & 2.77    & 2.78    & 2.76    & 0.02   \\
+ & (0.09)  & (0.13)  & (0.13)  &  \\ [1ex]
+Reduced Coping Strategies Index (rCSI)   & 19.86    & 19.69    & 20.02    & -0.32   \\
+ & (0.45)  & (0.66)  & (0.62)  &  \\ [1ex]
+Household engaged in stress coping strategies   & 0.85    & 0.82    & 0.88    & -0.06**   \\
+ & (0.01)  & (0.02)  & (0.02)  &  \\ [1ex]
+Household engaged in crisis coping strategies   & 0.59    & 0.59    & 0.60    & -0.01   \\
+ & (0.02)  & (0.03)  & (0.03)  &  \\ [1ex]
+Household engaged in emergency coping strategies   & 0.21    & 0.18    & 0.23    & -0.05   \\
+ & (0.01)  & (0.02)  & (0.02)  &  \\ [1ex]
+Total monthly food expenditure (average)   & 254.98    & 276.03    & 234.25    & 41.77***   \\
+ & (8.10)  & (12.26)  & (10.51)  &  \\ [1ex]
+Total monthly non-food expenditure (average)   & 102.80    & 112.94    & 92.82    & 20.13**   \\
+ & (4.48)  & (7.71)  & (4.58)  &  \\ [1ex]
+Monthly total household expenditure   & 357.78    & 388.97    & 327.07    & 61.90***   \\
+ & (10.34)  & (16.25)  & (12.67)  &  \\ [1ex]
+Monthly total household expenditure per capita   & 101.39    & 112.17    & 90.78    & 21.40***   \\
+ & (3.42)  & (5.50)  & (4.02)  &  \\ [1ex]
+Food Expenditure Share   & 0.71    & 0.72    & 0.70    & 0.02   \\
+ & (0.01)  & (0.01)  & (0.01)  &  \\ [1ex]
+Household being vulnerable using FES CARI   & 0.76    & 0.76    & 0.75    & 0.01   \\
+ & (0.02)  & (0.02)  & (0.02)  &  \\ [1ex]
+Household being vulnerable using Income rCARI   & 0.64    & 0.64    & 0.64    & 0.00   \\
+ & (0.02)  & (0.02)  & (0.02)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 760   & 377   & 383  & 760  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

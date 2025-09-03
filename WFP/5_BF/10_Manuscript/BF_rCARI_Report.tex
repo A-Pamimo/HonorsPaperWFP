@@ -1,0 +1,569 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+%\usepackage{draftwatermark}
+\usepackage{blindtext}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
+\usepackage{indentfirst}
+%\SetWatermarkText{DO NOT SHARE \\    \\INTERNAL USE ONLY}
+%\SetWatermarkScale{0.4}
+%\SetWatermarkColor[gray]{0.85}
+
+
+\author{rCARI Study Team - WFP, ROME \\	\\For enquiries contact:\\		\\alirah.weyori@wfp.org, nicole.wu@wfp.org or mohamed.salem@wfp.org}
+\date{\today}
+\title{Validation and Calibration of the Remote Consolidated Approach of Reporting on Food Security (rCARI) Methodology 
+	\\ {\normalsize Preliminary results from Burkina Faso pilot study} 
+	\\{\normalsize{Version 1.0}} }
+
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+	\tableofcontents
+	\pagebreak
+	
+	% -------
+	
+	\textbf{Executive Summary}
+	
+	During the COVID-19 pandemic, a remote version of the Consolidated Approach for Reporting Food Insecurity (rCARI) was developed as an adaptation of the standard CARI methodology to report on food insecurity. The rCARI method differed from the standard CARI only in the economic vulnerability dimension. While the standard CARI used FES (food expenditure share) or ECMEN (economic capacity to meet essential needs) as an economic vulnerability indicator, rCARI used the household’s income source and income change in place of FES because of the difficulty of collecting expenditure data over the phone. The rCARI methodology is has not yet been validated against the standard CARI. 
+	
+	Using a survey experiment methodology with stratified sample, this study aimed to evaluate and validate the rCARI methodology of collecting and reporting on food security against the standard CARI methodology. The sample frame for the study was the national population within which a random sample of households were selected in 3 regions; Plateau, Centro-Nord and Nord Regions (ADMIN1). A total of 4225 households were randomly selected from 38 villages (ADMIN5) (i.e., primary sampling units-PSUs)for the study. The regions selected were done purposively based on mobile phone coverage, food security situation \& accessibility (considering the security situation on the ground). Study respondents were compiled through a full village census conducted in all selected villages (ADMIN5). Randomly selected households for the study were further randomized and assigned to one of two study groups: a first group which received standard CARI modules in face-to-face (F2F) interviews and a second group which received the rCARI modules through remote (phone) interviews. 
+	
+	In Burkina Faso, one of the key challenges was the low phone access (approximately 75\% of listed households did not have access to mobile phones). To address this, 300 low-budget phones were randomly distributed to households that were randomly assigned to receive phone interviews but did not have access to phones. The study interviewed a total of 1,245 household all together (969 (92\%) F2F and 276 (27\%) remote interviews respectively) out of a total of 2080 potential eligible households.
+	
+	This report investigates the comparability of food security indicators across the different modalities of F2F and remote. Consequently, the analysis investigates three different versions of CARI have been computed and compared to the standard CARI over the modality of data collection. These include: 1) CARI using FES from remote surveys, 2) CARI using income variable from F2F surveys, and 3) CARI using income sources and income change variable (the remote version of this indicator was implemented at the height of the COVID-19 pandemic and thus, for the purposes of this study is referred to as the standard rCARI). 
+	
+	The results show that; 
+	\begin{itemize}
+		\item Households without mobile phones (usually excluded in mobile phone (CATI) surveys) are significantly more food insecure (by up to 35\% more) regardless of the CARI calculation methodology used. 
+		\item The standard rCARI methodology (income choice and income change variable) tend to significantly underestimates AFI (acute food insecurity) compared to the conventional CARI methodology-driven largely by the income indicator.
+		\item The aggregated CARI results show that, replacing the FES with the income source \& income change indicator significantly underestimates food insecurity (by up to 24\% points).
+		\item Households, generally tend to report better food consumption (better FCS) and worse coping (LCS \& rCSI) over the phone than they report in F2F.
+		\item The form (questionnaire) length does not have any statistical effect on AFI classification.
+		\item Phone ownership has a significant influence on AFI classification (the effect ranges between 14\% \& 19\% using FES, and 21\% \& 31\% using income and income change indicators respectively). Survey modality on the other hand does not have any effect controlling for household and other respondent level characteristics.
+	\end{itemize}
+	
+	\pagebreak
+	
+	% ------- 
+	\section{Introduction}
+	
+	Food security assessment and reporting are at the core of WFP’s mandate of addressing hunger and food insecurity. Over time, different methodologies (e.g, IPC, CARI, Cadre Harmonise, etc.) have been developed and used to assess and report global food insecurity each differing in scope, and purpose. A commonality that cuts across all methods is the use of primary household data collected through face-to-face interviews/surveys. However, in recent times particularly with the outbreak of the Covid-19 pandemic and attendant restrictions on movement and physical contact, data collection through conventional face-to-face method has been adversely affected. This negatively impacted the ability to assess food security needs because of the data gap created. Developing methodologies to accurately measure and interpret food insecurity especially in emergencies where physical access is restricted thus, is of great importance for WFP and many stakeholders. This is particularly important during emergencies when rapid assessment is required for advocacy to save lives and livelihoods but physical access to the field is restricted either because of health threats or security considerations for enumerators. 
+	
+	To leverage the increased penetration of technology in operational areas of WFP during the Covid lockdowns, a remote version of the Consolidated Approach for Reporting Food Insecurity (CARI)- the so-called rCARI- was developed as an adaptation of the standard CARI methodology and administered remotely (over the phone). The methodology provided a stop-gap solution during the lockdown, however, questions about the validity of food security numbers it produces remain. For example, how are the remote modules comparable with already standardized face-to-face modules in capturing food insecurity. Although there exist validated studies on the use of face-to-face modules in assessing and reporting on food insecurity, remote methodology such as rCARI remains scant until now. 
+	
+	The potential advantages of the methodology abound for humanitarian work particularly for hard-to-reach areas. For example, the remote methodology has potential to save lives by providing real-time food insecurity data on the exposed population within the shortest possible time to inform policy. Furthermore, it can result in better use of scarce resources to achieve high end results by rolling out few targeted modules to assess food insecurity of a larger population.  	
+	
+	The overall objective of this study was to assess the comparability of the remote consolidated approach for reporting food insecurity - rCARI modules with the conventional CARI modules for assessing and reporting food insecurity. The study compared indicators collected through phone survey with conventional face-to-face survey, considering the latter as the standard methodology. Specifically, food Consumption Score (FCS), reduced Coping Strategy Index (rCSI), Livelihood Coping Strategy (LCS), Food Expenditure Share (FES), and income sources and income change have been compared over the two modalities. The Economic Capacity to Meet Essential Needs (ECMEN) indicator which is sometimes used to aggregate CARI will not be tested in this study, as it requires the standard long expenditure module which cannot be collected over phone. In addition, ECMEN calculation requires having an updated value of the minimum expenditure basket (MEB) of the study population, which is not available for the study areas. In its stead, a shortened version of the standard expenditure module was be used to test the possibility of collecting FES data over the phone.
+	
+	It is important to clarify that the objective of this study is not to report food security at the national level or aim for external validity across the entire population of each pilot country. Instead, the primary goal is to assess the comparability of two methodologies—standard Consolidated Approach for Reporting Food Insecurity (CARI) and remote CARI (rCARI)—when deployed within the same population. By focusing on the same population within each pilot country, the study seeks to understand how the two methodologies perform under similar conditions and contexts. This approach allows for a direct comparison of the effectiveness and accuracy of the two methodologies in assessing food security indicators.
+	
+	While the findings of this study provide valuable insights into the relative performance of the two methodologies within specific populations, they may not be representative of food security trends at the national level. Therefore, the conclusions drawn from this study should be interpreted within the context of the population under investigation and may not be generalized to the entire country. By emphasizing internal validity within the selected populations, this study aims to provide robust evidence to inform decision-making and improve food security assessments, particularly in the context of remote data collection during crises such as the COVID-19 pandemic.
+	
+	As CAR has one of the lowest mobile phone penetration rates globally (approximately 70\% of the population do not own/use mobile phones), testing the comparability of data collection modalities (Face-to-Face (F2F) vs. Phone (Remote)) should be done within the wider consideration factors that could confound data collection using phones remotely. For example, other factors aside the modules should be considered while reading results of any remote survey.
+	
+	\begin{itemize}[label=--, left=1.5em]
+		\item[1.]	Mobile phone ownership (mobile phone penetration rate in the study area) could likely exclude the most vulnerable population from the sample. 
+		\item[2.]	Mobile phone network coverage: Even in countries with high penetration rates, network coverage could be a problem, especially when electricity cuts are frequent and local infrastructure, such as communication masts, are not evenly distributed (World Bank, 2020).
+		\item[3.]	Response rate: It is well documented that response rate in phone surveys is usually lower compared to F2F surveys (L’Engle et al., 2018; World Bank, 2020). 
+	\end{itemize}
+	
+	These factors may lead to skewed sample bias from phone surveys especially if the goal to report national representative results/outcomes. Nevertheless, there are several statistical weighting techniques that can adjust the results of phone surveys using baseline variables like using demographics characteristics of the most recent face-to-face surveys (Nagpal et al. 2021; Glazerman et al. 2020; Valliant et al. 2013; Elkasabi, 2015). This allows the results of such exercises to be computed and extrapolated to reflect some level of representativeness. 
+	
+	However, the current study may not be affected by these confounding issues since the main objective is not to report results at national level but to assess the effectiveness of remote modules to collect and report on food insecurity using a statistically comparable stratified sample. Thus, this current analysis does not employ weighting techniques to adjust for sampling skewness and response rate. Nonetheless, the study design will allow for controlling sample skewness due to mobile phone ownership, and the underlying background variables that are associated with mobile coverage, and non-response rate over the phone.
+	
+	
+	\pagebreak
+	
+	% -------
+	
+	\section{Study design \& sample}
+	
+	\subsection{Survey implementation}
+	
+	
+	\pagebreak
+	
+	% --------
+	
+	\section{Descriptive statistics}
+	
+	In this section, the core descriptive statistics of the study sample are presented. Given the rather elaborate design that has been implemented, a number of statistics in the form of interview completion, balance tables and attrition statistics across the different levels of implementation are presented.
+	
+	\subsection{Survey completion}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Sample Completion: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/BF_rCARI_Completion} 
+				\label{tab:BF_rCARI_Completion}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\subsection{Group balance check for the completed sample}
+	
+	One of the cardinal requirements of the study design is the statistical comparability of the two study groups at the time of data collection (balance test) based on observable characteristics. To assess the statistical comparability (equivalence) of the two study groups - F2F and Remote - various baseline demographics, and other observable characteristics collected during the listing phase have been compared using the appropriate statistical tools. This helped to evaluate the equivalence of groups across the different levels of randomization implemented in the study. 
+	
+	Additional test of statistical balance for the different levels of randomization using the information collected during the listing phase has been conducted and the results presented as part of the Annexe section.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table by Randomized Survey Modality: Face-to-Face vs. Remote for Completed Surveys}
+				\scriptsize
+				\input{1_table/BF_Completed_Demo_Balance_Modality} 
+				\label{tab:BF_Completed_Demo_Balance_Modality}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	Given that results of the household randomization is balanced based on baseline observables, the main results of study showing the different outcome indicators calculated are presented next (for the results of the post survey attrition analysis, refer to the attrition tables in the Annexes). 
+	
+	\pagebreak
+	
+	% ---------
+	\section{Results \& discussions}
+	
+	In this section, the main results of the study aggregated by the food security indicator are analysed and presented. Here, the different versions of CARI calculated using remote or F2F is compared with the standard CARI. A test of group means using student t-test of equivalence is performed. The comparison is at the subsample level of phone-ownership, no phone, and the combined full sample. 
+	
+	\subsection{CARI vs. rCARI}
+	
+	Conventional/standard CARI:  CARI-FES: Standard CARI using FES from F2F surveys.
+	
+	Other ways of aggregating CARI (that are tested)
+	\begin{itemize}[label=--, left=1.5em]
+		\item rCARI-FES: Standard CARI using FES from remote surveys.
+		\item CARI-Inc: CARI using the income variable from the F2F surveys.
+		\item rCARI-Inc: Standard rCARI using income and income change variable from remote surveys (this is the CARI version that was used during COVID 19 Pandemic).
+	\end{itemize}
+	
+	The different methods of calculating CARI that are tested against the standard/conventional CARI are shown in Table 3. 
+	
+	
+	For more information on the calculation of food security indicators included in each methodology refer to Annexes attached. 
+	
+	The first comparison is between CARI aggregated using remote modules and replacing FES with income source and income change variable (rCARI-Inc). The results are presented Table 4 is for all the 3 subsample comparisons.
+	
+	The main significant finding across the results in Table 4 is that rCARI-Inc, significantly under-reports the number of food insecure people. The difference is found to be 21 percentage points amongst phone-owners subsample, 9 percentage points in the no-phone group and up to 23 percentage points in the combined full sample. This means that, the income source in its current form (as was used during the COVID-19 pandemic) likely underestimated the number of people that were food insecure compared to what would have been found if the standard CARI-FES was implemented around the same time.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: Standard CARI-FES vs. Standard rCARI-Inc}
+				\scriptsize
+				\input{1_table/CARI_rCARI_Modality_BF} 
+				\label{tab:CARI_rCARI_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: CARI-FES vs. rCARI-FES}
+				\scriptsize
+				\input{1_table/CARI_FES_rCARI_Modality_BF} 
+				\label{tab:CARI_FES_rCARI_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality: CARI-Inc vs. rCARI-Inc}
+				\scriptsize
+				\input{1_table/Inc_CARI_rCARI_Modality_BF} 
+				\label{tab:Inc_CARI_rCARI_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\subsection{Comparison of the food security indicators across modality} 
+	In this section, the results of the individual indicators compared over the two modalities (F2F vs remote) are compared statistically and presented.
+	
+	\subsubsection{Food Consumption Score (FCS)}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Food Consumption Score and Groups}
+				\scriptsize
+				\input{1_table/FCS_Modality_BF} 
+				\label{tab:FCS_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak	
+	
+	% --------
+	
+	\subsubsection{Reduced Coping Strategies Index (rCSI)}
+	
+	The reduced Coping Strategies index (rCSI) is used to compare households’ stress levels due to food shortages. It measures the frequency and severity of the food consumption related behaviours by households to cope with food shortage within a 7day recall period. The indicator is comprised of 5 standard strategies framed around how and who consumes food in times of shortage. It serves as a proxy indicator for food access.
+	
+	Table 10 presents the results of the rCSI module for the three subsamples. The results show that consistently, households reported higher rCSI (2.9 points amongst the phone owners' group, 3.95 in the non-phone owners and 3.52 in the combined sample respectively). This trend is further reflected in classifying more respondents as being food secure (rCSI severe category). The difference is mainly driven by more households over the phone restricting adult food consumption, reducing meals per day and meal sizes eaten.
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Reduced Coping Strategy Index Classification}
+				\scriptsize
+				\input{1_table/rCSI_Modality_BF} 
+				\label{tab:rCSI_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\subsubsection{Livelihood Coping Strategies (LCS)}
+	
+	The livelihood coping strategy indicator is a household-level indicator that measures the household's capacity to deal with the insufficient food consumption because of shortages or the lack of money in the medium- to long-term bases (30days to 12months) to meet their dietary requirements. Broadly, the strategies are categorized into 3 broad groups: stress, crisis, and emergency level. For purposes of targeting and assistance, only the LCS crisis and emergency categories are usually considered (these categories classify households into food insecure).
+	
+	Table 11 shows the aggregated LCS results categorized into the 4 main categories. The results show some consistency in both magnitude and direction of the difference between F2F and remote, the remote sample consistently reported doing worse compared to the F2F sample (28\% more households in the phone-owners subsample, 30\%  in the non-phone owners and 29\% in the combined sample cumulatively for crisis and emergency categories). In general, reporting emergency coping was 4 to 5 times higher in the remote compared to F2F across the different sub-groups of analysis.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Livelihood Coping Strategy}
+				\scriptsize
+				\input{1_table/LCS_Modality_BF} 
+				\label{tab:LCS_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	To understand the composition of the different categories reported in Table 11, the individual strategies adopted are disaggregated and reported in Table 12. Among the phone-owners and non-phone owners' subsamples, strategies such as selling productive assets, scavenging, reduced health care expenditure and selling places of dwelling drive the significant difference between the remote and F2F modality. However, in the full sample, the remote modality significantly adopted more of each strategy than the F2F modality.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{CAR: Each Coping Strategy Used}
+				\scriptsize
+				\input{1_table/LCS_Ind_Modality_BF} 
+				\label{tab:LCS_Ind_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\subsubsection{Food Expenditure Share (FES)}
+	
+	The food expenditure share (FES) is a proxy food security indicator used to measure the economic vulnerability of a household. It is given as the share of household's total consumption expenditure spent on food. The higher the share of food expenditure of a household, the more vulnerable/food insecure the household.
+	
+	Table 13 presents the summarized FES variable across the different groups. The aggregate FES ranges from 67-73 percent depending on whether the respondent belongs to the phone-owners' or non-phone owners' subsamples. For the phone owners' sample, the remote modality estimates FES at 73  percentage (6 percentage points higher than F2F). The effect is that, it significantly overestimates the number of households in category 4 (>= 75\%) severely food insecure by 10 percentage points. On the non-phone owners' subsample, the aggregate FES is significantly lower in remote modality compared to the F2F modality by 6 percentage points reflected in the FES category 4 (underestimating this category by 11 percentage points).
+	
+	Once the two samples are combined, there is no significant difference between the aggregate FES from remote and F2F modalities.  
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Expenditure and Food Expenditure Share}
+				\scriptsize
+				\input{1_table/FES_Modality_BF} 
+				\label{tab:FES_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\subsubsection{Income Source and Income Change}
+	The income indicator captures the respondent/household income source and income change experienced in the last 12 months prior to the interview. This indicator is a recent addition that was introduced to calculate CARI in remote assessment during COVID-19 and is not yet part of the CARI console. The indicator reflects the economic situation of the respondent/household in the absence of the FES. This was especially important during the COVID-19 outbreak when exigencies of the time did not allow for the collection of expenditure to calculate FES. The type of income generating activity and how economic situation at the time impacted on income flow either positive or negative was considered a good proxy for vulnerable the household could be. Based on the type of income (regular/irregular) and the change to income (change/no change) to the income stream, the respondent/household is classified into one of 4 CARI categories (see Table 14 for the categories). The irregular \& reduced, and no income sources groups corresponding to FES category 3 (FES: 65-75\%) and category 4 (FES: >= 75\%), respectively.
+	
+	The results of the income source and income change indicator comparison over modality shows that, respondents tend to underreport their food security over the phone (more households reported stable regular income source in the F2F interviews than remote across all the subsamples). Although this may be driven by the categorization of agricultural income as regular income, the effect should be the same across modalities. On the other hand, respondents reported engaging in significantly more irregular income sources (unstable and reducing income) over the phone compared to F2F. 
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Income}
+				\scriptsize
+				\input{1_table/INC_Modality_BF} 
+				\label{tab:INC_Modality_BF}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\subsection{CARI using FES vs CARI Income source \& income change}
+
+	
+	\pagebreak
+	
+	% ------- 
+	
+	\section{Regression analysis}
+	
+	
+	
+	\pagebreak
+	
+	%---------
+	
+	\section{Summary \& conclusions}
+	
+	The following are some key highlights from the results of the analysis from the CAR pilot study:
+	
+	\begin{itemize}[left=2.5em]
+		\item Respondents over the phone generally tend to overreport their food security status compared to F2F interviews. However, when controlling phone ownership and other demographics, the modality doesn’t show significant influence on the final AFI estimation.
+		\item 	The results comparing the standard F2F subsample with the phone owners’ subsample (i.e., a typical CATI sample) show that using the standard CATI in regions/countries/areas where phone penetration is low tends to exclude more vulnerable and food insecure households in so doing underreporting AFI.
+		\item The results of the food insecurity aggregation show that, rCARI-Inc methodology significantly underestimates acute food insecurity (AFI) by between 9 and 21 percentage points. This is largely driven by the classification  income sources into the 4 four CARI income groups (e.g. the classification of small scale agricultural households as stable income source category inadvertently puts them in the food secure group  using income while FES classifies same households as being food insecure).
+		\item While there is no significant difference between CARI-FES and rCARI-FES in the phone owner subsample, rCARI-Inc significantly underestimates food insecurity by up to 7 percentage points.
+		\item The analysis of the long- and short- LCS, FES and FCS modules (F2F) overall does not show any statistically significant difference. This means that by fine-tuning the short modules could potentially replace the longer versions in F2F surveys to reduce survey fatigue both for the interviewee and interviewer.
+		\item In terms of the food security indicators,  households tend to  reports higher food consumption (FCS) and worse coping situations (rCSI and LCS)  interviewed over the phone (remote modality) compared to when interviewed F2F. Also, when interviewed remotely, households report significantly higher FES compared to F2F. 
+		
+		
+	\end{itemize}
+	
+	
+	\pagebreak
+	
+	% --------
+	
+	\subsection{Study limitations \& implementation challenges}
+	Though the study has been implemented with outmost regard for all theoretical and empirical guidelines and protocols underpinning experimental survey designs, the study nonetheless has some limitations worth mentioning
+	\begin{itemize}
+		\item First, the final remote sample that has been interviewed is relatively small. 
+		\item Second, although there is no statistical difference between the respondents who received phones from the project and phone owners, their response may be influenced by receipt of the mobile phones. 
+		\item Third, the results have not been weighted to adjust for the different response rates.
+		\item Fourth, the low phone ownership (25\%) and mobile coverage influenced greatly the study implementation, sampling and number of households reached over the phone (remote sample). The response rate was generally low in the remote modality even though phones were distributed to potential respondents.
+	\end{itemize}
+	
+	Similarly, although extensive efforts were made to reduce and manage implementation challenges, some remained and affected the survey's successful implementation. These include:
+	
+	\begin{itemize}[label=--, left=2.5em]
+		\item[1.] Restricted access to the field because of security concerns.
+		\item[2.] Poor mobile phone network/infrastructure 
+		\begin{itemize}[label=--, left=1.75em]
+			\item[a.]	Most parts of the country do not have mobile phone network coverage.
+			\item[b.]	In places where mobile coverage exists, poor infrastructure and frequent power cuts affected call quality.
+			\item[c.]	Inadequate access to electricity for charging phones.
+		\end{itemize}
+		\item[3.] Low phone ownership in the population
+		\begin{itemize}[label=--, left=1.75em]
+			\item[a.] Only 25\% of households in the sample owned phones.
+		\end{itemize}
+		\item[4.] Logistic challenges.
+		\begin{itemize}[label=--, left=1.75em]
+			\item[a.]	Acquisition and distribution of mobile phones/SIM cards to study sample without phones.
+			\item[b.]	Had to rely on UNHAS (United Nations Humanitarian Air Service) for enumerator deployment affecting timely start of the survey.
+		\end{itemize}
+		\item[5.] Low response rate in the remote arm (high attrition for the remote sample).
+		\item[6.] Lack of an established platform for remote data collection. 
+		\begin{itemize}[label=--, left=1.75em]
+			\item [a.] This affected the ability to record phone interviews.
+			\item [b.] Reduced the ability of the team to perform real time monitoring of the remote data collection.
+			\item [c.] Overall monitoring was affected
+		\end{itemize}
+		\item[7.] Weather disruptions/rainy season
+	\end{itemize}
+	
+	
+	\subsection{Next steps \& further analysis...}
+	
+	\begin{itemize}[label=--, left=2.5em]
+		\item[1.] Conduct further in-depth analysis (statistical diagnostics)  of the data - exploring the association between FES and income indicators in particular.
+		\item[2.] Explore the actual categorization of the different income sources into the four rCARI income groups to identify trends across different pilot countries (this will feed into possible recalibration efforts of the income indicator to align more with the FES).
+		\item[3.] Prepare the draft manuscripts for  peer review publication.	
+		\item[4.] Continue with the overall data collection in other pilot countries
+	\end{itemize} 
+	
+	
+	\pagebreak
+	
+	% ------- 
+	
+	\section{References}
+	
+	Elkasabi, M. A. (2015). Weighting procedures for dual frame telephone surveys: A case study in Egypt. Survey Insights: Methods from the Field. Weighting: Practical Issues and ‘How to’ Approach. 1–11. https://surveyinsights.org/wp-content/uploads/2015/02/Weighting-Procedures-for-Dual-Frame-Telephone-Surveys.pdf
+	
+	Glazerman, S., Rosenbaum, M., Sandino, R., and Shaughnessy, L., (2020). Remote Surveying in a Pandemic: Handbook. Newark, DE: Innovation for Poverty Action (IPA).
+	
+	Kelly L’Engle, E. S., Adimazoya, E. A., Yartey, E., Lenzi, R., Tarpo, C., Heward-Mills, N. L., Lew, K. and Ampeh, Y. (2018). Survey research with a random digit dial national mobile phone sample in Ghana: methods and sample quality. PloS one, 13(1).
+	
+	Nagpal, K., Mathur, M. R., Biswas, A., and Fraker, A. (2021). Who do phone surveys miss, and how to reduce exclusion: recommendations from phone surveys in nine Indian states. BMJ Global Health, 6:e005610. doi:10.1136/bmjgh-2021-005610
+	
+	Valliant, R., Dever, J. A., and Kreuter, F. (2013). Practical Tools for Designing and Weighting Survey Samples. Springer Science \& Business Media.
+	
+	World Bank, (2020). High Frequency Mobile Phone Surveys of Households to Assess the Impacts of COVID-19 April 2020. Guidelines on Sampling Design (Prepared by Himelein K. Eckman S. Kastelic J and Yoshida N).
+	
+	\pagebreak
+	
+	% ------- 
+	
+	\section{Annexes}
+	
+	\subsection{Randomization balance test}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Survey Modality Assignment: Face-to-Face vs. Remote}
+				\scriptsize
+				\input{1_table/BF_Listing_Demo_Balance_Modality} 
+				\label{tab:BF_Listing_Demo_Balance_Modality}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Questionnaire Length Assignment in F2F Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/BF_Listing_Demo_Balance_F2F_Length} 
+				\label{tab:BF_Listing_Demo_Balance_F2F_Length}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Questionnaire Length Assignment in Remote Survey: Long vs. Short}
+				\scriptsize
+				\input{1_table/BF_Listing_Demo_Balance_RM_Length} 
+				\label{tab:BF_Listing_Demo_Balance_RM_Length}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	\subsection{F2F Attrition Tables}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Questionnaire Length Assignment in F2F Survey: Completed vs. Attrition}
+				\scriptsize
+				\input{1_table/BF_Listing_Demo_Attrition_F2F} 
+				\label{tab:BF_Listing_Demo_Attrition_F2F}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	\subsection{Remote Attrition}
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Balance Table for Randomized Questionnaire Length Assignment in Remote Survey: Completed vs. Attrition}
+				\scriptsize
+				\input{1_table/BF_Listing_Demo_Attrition_Remote} 
+				\label{tab:BF_Listing_Demo_Attrition_Remote}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Robust standard deviations in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001.
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+	\pagebreak
+	
+	\pagebreak
+	%--------
+	
+	\subsection{Supporting documents}
+	\subsubsection{CARI resources}
+	\begin{itemize}
+		\item \href{https://resources.vam.wfp.org/data-analysis/quantitative/food-security/cari}{CARI methodology Consolidated Approach for Reporting Indicators of Food Security (CARI) Guidelines - Third edition}
+		\item \href{https://resources.vam.wfp.org/data-analysis/quantitative/food-security/food-consumption-score}{FCS}
+		\item \href{https://resources.vam.wfp.org/data-analysis/quantitative/food-security/reduced-coping-strategies-index}{rCSI}
+		\item \href{https://resources.vam.wfp.org/data-analysis/quantitative/food-security/livelihood-coping-strategies-food-security}{LCS}
+		\item \href{https://resources.vam.wfp.org/data-analysis/quantitative/food-security/food-expenditure-share}{FES}
+	\end{itemize} 
+	
+\end{document}

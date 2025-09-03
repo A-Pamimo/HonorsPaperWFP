@@ -1,0 +1,1037 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd00c_rm_correct_20230928.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}28 Sep 2023, 14:00:33
+{txt}
+{com}.         di `cdate'
+{res}20230928
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/CAR_RM_Household_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}sampleYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPpart{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}RESPAvailable{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPConNo{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPcallback{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPMStatus{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPStatusHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PSchoolEver{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PschoolGrade{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSStap{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSILessQlty{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIBorrow{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIGenderMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_HealthEdu{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_DomMigration{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_ResAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpStap_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpStap_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpStap_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpPro_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpPro_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpPro_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFruVeg_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFruVeg_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFruVeg_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFOther_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFOther_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFOther_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_YN1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTranspPh_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTranspPh_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFUtilities_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNFUtilities_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNFAlcTobac_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFAlcTobac_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_MNCRD_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_GiftAid_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpF_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpF_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHInc_PCT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_SRi{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHIncChg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHWaterSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEnerCookSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRoofType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}start{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}end{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}HHPhNmb{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHID_manual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}calc_ID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}RESPRelationHHH_oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}HHHOccupation{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str40{sf}
+  {txt}variable {bf}{res}HHIncFirst_Oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}audit{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (658,524 bytes saved)
+
+{com}.         
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}start{col 15}HHID_manual{col 29}HHHOccupat~n{col 43}instanceID{col 57}___version
+{col 1}end{col 15}HHID{col 29}HHIncFirst~h{col 43}___uuid{col 57}___duration
+{col 1}deviceid{col 15}calc_ID{col 29}comments{col 43}___parent_~e{col 57}___submitt~y
+{col 1}EnuName_Di~y{col 15}RESPpart_oth{col 29}remarks{col 43}___tags{col 57}___xform_id
+{col 1}HHPhNmb{col 15}RESPRelati~h{col 29}audit{col 43}___notes
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(441 real changes made)
+(0 real changes made)
+(1 real change made)
+(437 real changes made)
+(441 real changes made)
+(156 real changes made)
+(437 real changes made)
+(182 real changes made)
+(221 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(441 real changes made)
+(441 real changes made)
+(441 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+.         ** temp
+.         replace HHID = HHID_manual if mi(HHID)          // this is temporary
+{txt}(0 real changes made)
+
+{com}.         drop if mi(HHID)
+{txt}(0 observations deleted)
+
+{com}.         
+.         ** check duplicates
+.         duplicates tag HHID, generate(Dup)
+
+{p 0 4}{txt}Duplicates in terms of {res} HHID{p_end}
+{txt}
+{com}.         
+.         ** Recode for best outcome - combining the consent and availability
+.         recode RESPpart (0=6) (1=1) (2=7) (3=4) (4=5) (999=8), gen(Outcome_Order)
+{txt}(154 differences between {bf:RESPpart} and {bf:Outcome_Order})
+
+{com}.         replace Outcome_Order = 2 if Outcome_Order == 1 & RESPAvailable == 2
+{txt}(0 real changes made)
+
+{com}.         replace Outcome_Order = 3 if Outcome_Order == 1 & RESPAvailable == 0
+{txt}(0 real changes made)
+
+{com}.         
+.         label def Outcome_L 1 "Agreed & Available" 2 "Agreed & Later" ///
+>                                                 3 "Agreed & Not Available"                                ///
+>                                                 4 "Did not connect/network issues"                ///
+>                                                 5 "Invalid or inactive number"                    ///
+>                                                 6 "Not answer/busy" 7 "Refused" 8 "Other"
+{txt}
+{com}.         label val Outcome_Order Outcome_L
+{txt}
+{com}.         
+.         bysort HHID: egen Survey_Outcome = min(Outcome_Order) if Dup >= 1
+{txt}(399 missing values generated)
+
+{com}.         replace Survey_Outcome = Outcome_Order if Dup == 0
+{txt}(399 real changes made)
+
+{com}.         label val Survey_Outcome Outcome_L
+{txt}
+{com}.         
+.         gen HH_Final = (Outcome_Order == Survey_Outcome)
+{txt}
+{com}.         
+.         egen HH_TAG = tag(HHID) if HH_Final == 1
+{txt}
+{com}.         
+.         replace Survey_Outcome = . if HH_TAG == 0 
+{txt}(21 real changes made, 21 to missing)
+
+{com}.                 
+.         ** create one consent variable 
+.         gen  Temp_Complete = !mi(HHIncChg)
+{txt}
+{com}. 
+.         bysort HHID: gen Consent = (Survey_Outcome == 1) if !mi(Survey_Outcome)
+{txt}(21 missing values generated)
+
+{com}.         label val Consent sampleYN
+{txt}
+{com}.         
+.         keep if Temp_Complete == 1
+{txt}(154 observations deleted)
+
+{com}. *       isid HHID 
+.         drop if ___uuid == "7b2b1308-4a44-4e14-98e5-2c30e623a98a"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "4d1e8624-ba7f-4cb7-911c-d57c16928df2"
+{txt}(1 observation deleted)
+
+{com}.         
+.         ieduplicates HHID using "${c -(}note{c )-}/CAR_RM_DuplicateID_`cdate'.xlsx",              ///
+>                                           keepvar(today EnuName_Display RESPpart RESPAvailable RESPAge RESPSex HHSize)                  ///
+>                                           uniquevars(___uuid) nodaily force 
+{res}{phang}Excel file created at: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/5_Field_notes/CAR_RM_DuplicateID_20230928.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/5_Field_notes/CAR_RM_DuplicateID_20230928.xlsx}.{p_end}
+
+{phang}There are 4 duplicated IDs still unresolved. IDs still containing duplicates: CAR12018 CAR1397 CAR22110 CAR2342. The unresolved duplicate observations were exported in the Excel file. The data set is returned without those duplicates and with HHID uniquely and fully identifying the data set.{p_end}
+{txt}
+{com}.                                   
+. *       isid   HHID
+.         
+.         mmerge HHID using "${c -(}sample{c )-}/CAR_Sample_Merge.dta", type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000005
+{txt}{ralign 20:obs} {c |} {res}   277
+{txt}{ralign 20:vars} {c |} {res}   117
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta
+{txt}{ralign 20:obs} {c |} {res}  2287{txt}
+{txt}{ralign 20:vars} {c |} {res}    23{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{p 0 7 2}
+(variable
+{bf:HHID} was {bf:str8}, now {bf:str10} to accommodate using data's values)
+{p_end}
+{txt}{hi:result}          file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000005
+{txt}{ralign 20:obs} {c |} {res}  2287
+{txt}{ralign 20:vars} {c |} {res}   141{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2010{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    277{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+.         tab S_Assign_Modality Temp_Complete
+
+    {txt}Assigned {c |} Temp_Compl
+      Survey {c |}    ete
+    Modality {c |}         1 {c |}     Total
+{hline 13}{c +}{hline 11}{c +}{hline 10}
+      Remote {c |}{res}       277 {txt}{c |}{res}       277 
+{txt}{hline 13}{c +}{hline 11}{c +}{hline 10}
+       Total {c |}{res}       277 {txt}{c |}{res}       277 
+{txt}
+{com}.         
+.         ** keep only Remote sample for attrition analysis
+.         drop if S_Assign_Modality == 1
+{txt}(1,264 observations deleted)
+
+{com}.         gen Attrition = (_merge == 2)
+{txt}
+{com}.         label val Attrition sampleYN
+{txt}
+{com}.         
+.         /*
+>         dtable i.S_Assign_Length i.S_Geo_Admin1 i.S_Geo_Admin2 i.S_Geo_Admin3    ///
+>                    i.S_Geo_Admin5 S_age i.S_relationship i.S_hh_status                           ///
+>                    i.S_hh_head_sex i.S_hh_head_marital S_hh_head_educ S_hh_size          ///
+>                    S_mem_lessthan15 S_mem_greaterthan60 i.S_mem_disability                       ///
+>                    i.S_house_type S_area_house i.S_roofing_material_house                        ///
+>                    i.S_floor_material_house, by(Attrition, tests)                                        ///
+>                    title(CAR rCARI Validation Remote Attrition Analysis)                         ///
+>                    export(${c -(}d_tex_tab{c )-}/CAR_rCARI_RM_Attrition.docx, replace) 
+>         
+>         */
+.         drop if Attrition == 1
+{txt}(746 observations deleted)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         isid HHID                                       // check unique identifier
+{txt}
+{com}.         s
+{err}command {bf}s{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta", clear
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Randomization of Sample                                                            *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *                                               Alirah Weyori (alirah.weyori@wfp.org)                              *
+> *  DATE:                                Jul 31, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    "${c -(}sample{c )-}/Listed HHs for CAR_20230731.xlsx"
+>                                         
+>         ** CREATES:             "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.xlsx"
+>                                         
+>         ** NOTES:               1. Full sample randomization since we already randomly selected
+>                                            them in the listing and only 2 rejections
+>                                         2. Separate randomization based on phone ownership: 25% have phones
+>                                         3. Filter out those 1) assigned with remote
+>                                                                                 2) without phones
+>                                                                                 3) has coverage 
+>                                            to give phones
+> 
+> ********************************************************************************
+> *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+> *******************************************************************************/
+. 
+. local user_commands ietoolkit iefieldkit 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} 
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(17.0)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}. 
+.         * Alirah to add
+. if $alirah {c -(}
+.         global rcari  "C:\Users\alirah.weyori\World Food Programme\RAMN-N~1\018309~1.FOO\1ADA2~1.3RE\2_CARI~1\1_RCAR~1\1_PILO~1"
+.         {c )-} 
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl car                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}car{c )-}/3_Sampling"
+{txt}
+{com}.         gl bal                  "${c -(}sample{c )-}/Balance"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}car{c )-}/9_Analysis"     
+{txt}
+{com}.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         
+.         * Load sample
+.         *------------
+.         use "${c -(}sample{c )-}/Listed HHs for CAR_20230731.dta", clear           
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Admin1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}confirm_location{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_number{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_type{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentRsn{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}gender_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}relationship{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_status{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_sex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_marital{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_educ{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_size{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_lessthan15{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_greaterthan60{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_disability{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}area_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}phone_ownership{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}second_phone{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}roofing_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}floor_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}contact_time_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_6{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_structure{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mobile_coverage{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}starttime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}endtime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}subscriberid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}simid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}devicephonenum{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str28{sf}
+  {txt}variable {bf}{res}village_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}HHCoord{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}respondent_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}hhhead_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str33{sf}
+  {txt}variable {bf}{res}phone_number_1{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_3{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}contact_time{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str7{sf}
+  {txt}variable {bf}{res}hh_landmark_photo{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}hh_landmark_photo2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,537,294 bytes saved)
+
+{com}.         
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         * Set the environment to make randomization replicable
+.     isid ___index, sort
+{txt}(data now sorted by {bf:___index})
+
+{com}.     set  seed 208976  // bit.ly/stata-random set the random seed for replication 
+{txt}
+{com}.         
+.         ********* Sample selection
+.         ** check consent
+.         keep if consentYN == 1  // 2 observations dropped
+{txt}(2 observations deleted)
+
+{com}.         // ignore attrition on 2 rejecation out of 2513 total observations
+.         keep if !mi(Admin5Name)
+{txt}(11 observations deleted)
+
+{com}.         
+.         tab phone_ownership, nol
+
+   {txt}Does the {c |}
+  household {c |}
+have access {c |}
+  to mobile {c |}
+     phone? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,872       74.88       74.88
+{txt}          1 {c |}{res}        628       25.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+{txt}
+{com}. /*      dtable i.Admin1Name i.Admin2Name i.Admin3Name i.Admin5Name,                     ///
+>                    by(phone_ownership) title(CAR rCARI Validation Study - Summary of Listed Sample ADMIN Distribution)  ///
+>                    export(${c -(}sample{c )-}/CAR_rCARI_Listed_Sample_ADMIN.docx, replace)
+> */        
+. 
+. ********************************************************************************
+. *                                               PART 3:  RUN RANDOMIZATION - Own Phone                         *
+. ********************************************************************************        
+.         
+.         * keep if phone_ownership == 1
+.         
+.     * Assign sampled household with phone to F2F and Remote 
+.         sort Admin5Name, stable
+{txt}
+{com}.         by Admin5Name: gen  Modality_RandomNum_P = uniform()                      ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name: egen Modality_Order_P = rank(Modality_RandomNum_P) ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name: egen TotSample_P  = max(Modality_Order_P)                  ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.     gen    Modality_Type_P = (Modality_Order_P <= TotSample_P/2)          ///
+>                    if phone_ownership == 1 
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         ********* Form Length
+.         sort Admin5Name Modality_Type_P, stable
+{txt}
+{com}.         by Admin5Name Modality_Type_P: gen  Length_RandomNum_P = uniform() ///
+>                                                                    if !mi(Modality_Type_P)
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_P: egen Length_Order_P = rank(Length_RandomNum_P) ///
+>                                                                    if !mi(Modality_Type_P)
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_P: egen TotModality_P  = max(Length_Order_P) ///
+>                                                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         gen    Length_Type_P = (Length_Order_P <= TotModality_P/2)                         ///
+>                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         ** check in Own Phone group, assigned to Remote but without coverage
+.         count if Modality_Type_P == 1 & mobile_coverage == 0 // 68
+  {res}68
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 4:  RUN RANDOMIZATION - No Phone                          *
+. ********************************************************************************        
+.         
+.         * keep if phone_ownership == 0
+.         sort Admin5Name, stable
+{txt}
+{com}.     * Assign sampled household with phone to F2F and Remote 
+.         by Admin5Name: gen  Modality_RandomNum_NP = uniform()                           ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name: egen Modality_Order_NP = rank(Modality_RandomNum_NP) ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name: egen TotSample_NP  = max(Modality_Order_NP)                      ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.     gen    Modality_Type_NP = (Modality_Order_NP <= TotSample_NP/2)         ///
+>                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         ********* Form Length 
+.         sort Admin5Name Modality_Type_NP, stable
+{txt}
+{com}.         by Admin5Name Modality_Type_NP: gen  Length_RandomNum_NP = uniform()    ///
+>                                                                         if !mi(Modality_Type_NP)
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_NP: egen Length_Order_NP = rank(Length_RandomNum_NP) ///
+>                                                                         if !mi(Modality_Type_NP)
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_NP: egen TotModality_NP  = max(Length_Order_NP) ///
+>                                                                         if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         gen    Length_Type_NP = (Length_Order_NP <= TotModality_NP/2)                      ///
+>                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         ** check in Own Phone group, assigned to Remote but without coverage
+.         count if Modality_Type_NP == 1 & mobile_coverage == 0 // 213
+  {res}213
+{txt}
+{com}.         gen   FLAG_Remote_NoPhone_NoCoverage = (Modality_Type_NP == 1 & mobile_coverage == 0)
+{txt}
+{com}.         
+.         count if Modality_Type_NP == 1 & mobile_coverage == 1 // 715
+  {res}715
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 5:  Label Variables                                           *
+. ********************************************************************************        
+.         
+.         gen               Modality_Type = Modality_Type_P  if  phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         replace   Modality_Type = Modality_Type_NP if  phone_ownership == 0
+{txt}(1,872 real changes made)
+
+{com}.         
+.         replace   Modality_Type = . if FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}(213 real changes made, 213 to missing)
+
+{com}.         
+.         gen       Length_Type   = Length_Type_P    if  phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         replace   Length_Type   = Length_Type_NP   if  phone_ownership == 0
+{txt}(1,872 real changes made)
+
+{com}.         replace   Length_Type   = . if FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}(213 real changes made, 213 to missing)
+
+{com}.         
+.         label var Modality_Type                 "Modality Assignment: Type"
+{txt}
+{com}.         label var Length_Type                   "Form Length Assignment: Type"
+{txt}
+{com}.                 
+.         label def Modality_L                    1 "Remote"        0 "Face-to-Face"
+{txt}
+{com}.         label val Modality_Type                 Modality_L
+{txt}
+{com}.         
+.         label def Length_L                              1 "Long Form" 0 "Short Form"
+{txt}
+{com}.         label val Length_Type                   Length_L
+{txt}
+{com}.         
+.         sort Modality_Type Length_Type, stable
+{txt}
+{com}.         
+.         save "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. *       export excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_${c -(}today{c )-}.xlsx", ///
+>                    firstrow(variables) replace
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}.           
+.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    92
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_03709.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    95{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         replace Phone_Assignment = 0 if mi(Phone_Assignment)
+{txt}(2,200 real changes made)
+
+{com}.         drop _merge
+{txt}
+{com}.         
+.         replace Phone_Assignment = . if phone_ownership == 1 | mobile_coverage == 0 | Modality_Type == 0
+{txt}(1,785 real changes made, 1,785 to missing)
+
+{com}.         
+. ** Initial Balance Test on Listing Charateristics
+.         
+.         gen HHHResp                     = (relationship == 1)
+{txt}
+{com}.         gen HHHRespSpouse       = (relationship == 2)
+{txt}
+{com}.         gen HHDisplaced         = (hh_status    == 2)
+{txt}
+{com}.         gen HHHFemale           = (hh_head_sex  == 0)
+{txt}
+{com}.         gen HHHMarried          = (hh_head_marital == 1)
+{txt}
+{com}.         
+.         gen     HHCrowding      = hh_size/area_house
+{txt}(74 missing values generated)
+
+{com}.         sum     HHCrowding
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}HHCrowding {c |}{res}      2,426    3.298289    1.779506        .25         15
+{txt}
+{com}.         replace HHCrowding  = `r(max)' if mi(HHCrowding)
+{txt}(74 real changes made)
+
+{com}.         
+. ** Randomly select 300 from the 737 non phone owner
+.         sort ___index, stable
+{txt}
+{com}.         gen  Select_RandomNum = uniform() if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         egen Select_Order         = rank(Select_RandomNum)                              ///
+>                                                                           if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.                                                                                  
+.         gen  Select_Yes           = (Select_Order <= 300) if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         
+.         gen     Random_Comparison = 1 if Select_Yes == 1                // F2F Random Partial
+{txt}(2,200 missing values generated)
+
+{com}.         replace Random_Comparison = 0 if Phone_Assignment == 1  // Remote Gave Phone 
+{txt}(300 real changes made)
+
+{com}.         
+. *       gen     HHRoof_Bad  = inlist(roofing_material_house, ）
+.         
+.         dtable age i.relationship i.hh_status i.hh_head_sex i.hh_head_marital           ///
+>                    hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability ///
+>                    area_house i.phone_ownership i.roofing_material_house                        ///
+>                    i.floor_material_house, by(Modality_Type, test)                                              ///
+>                    title(CAR rCARI Study - Balance Tests of Listed Sample Assignment)   ///
+>                    export(${c -(}sample{c )-}/CAR_rCARI_Listing_Assignment_Balance.docx, replace)
+{res}{txt}{p 0 6 2}
+note: using test {bf:regress} across levels of {bf:Modality_Type} for {bf:age}, {bf:hh_head_educ}, {bf:hh_size}, {bf:mem_lessthan15}, {bf:mem_greaterthan60}, {bf:mem_disability}, and {bf:area_house}.
+{p_end}
+{p 0 6 2}
+note: using test {bf:pearson} across levels of {bf:Modality_Type} for {bf:relationship}, {bf:hh_status}, {bf:hh_head_sex}, {bf:hh_head_marital}, {bf:phone_ownership}, {bf:roofing_material_house}, and {bf:floor_material_house}.
+{p_end}
+{res}
+{smcl}
+{reset}{...}
+{p}CAR rCARI Study - Balance Tests of Listed Sample Assignment{p_end}
+{hline 79}{c -}{hline 15}{c -}{hline 15}{c -}{hline 15}{c -}{hline 5}
+{space 79} {space 14}Modality Assignment: Type{space 14}
+{space 79} {space 2}Face-to-Face{space 1} {space 5}Remote{space 4} {space 5}Total{space 5} {space 1}Test
+{hline 79}{c -}{hline 15}{c -}{hline 15}{c -}{hline 15}{c -}{hline 5}
+N{space 78} {space 2}{result:1,264 (55.3%)} {space 2}{result:1,023 (44.7%)} {space 1}{result:2,287 (100.0%)} {space 5}
+How old are you?{space 63} {result:38.478 (13.882)} {result:38.818 (13.827)} {result:38.630 (13.855)} {result:0.559}
+What is ${respondent_name}'s relationship to the household head?{space 15} {space 15} {space 15} {space 15} {space 5}
+  Household head (self){space 56} {space 4}{result:960 (75.9%)} {space 4}{result:793 (77.5%)} {space 2}{result:1,753 (76.7%)} {result:0.622}
+  Spouse{space 71} {space 4}{result:254 (20.1%)} {space 4}{result:184 (18.0%)} {space 4}{result:438 (19.2%)} {space 5}
+  Child{space 72} {space 6}{result:28 (2.2%)} {space 6}{result:31 (3.0%)} {space 6}{result:59 (2.6%)} {space 5}
+  Parent{space 71} {space 6}{result:14 (1.1%)} {space 6}{result:11 (1.1%)} {space 6}{result:25 (1.1%)} {space 5}
+  Sibling{space 70} {space 7}{result:4 (0.3%)} {space 7}{result:3 (0.3%)} {space 7}{result:7 (0.3%)} {space 5}
+  Uncle/Aunt{space 67} {space 7}{result:3 (0.2%)} {space 7}{result:1 (0.1%)} {space 7}{result:4 (0.2%)} {space 5}
+  Non-family relation{space 58} {space 7}{result:1 (0.1%)} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.0%)} {space 5}
+Status of the household{space 56} {space 15} {space 15} {space 15} {space 5}
+  Permanent resident{space 59} {space 2}{result:1,197 (94.7%)} {space 4}{result:963 (94.1%)} {space 2}{result:2,160 (94.4%)} {result:0.478}
+  Displaced{space 68} {space 6}{result:67 (5.3%)} {space 6}{result:59 (5.8%)} {space 5}{result:126 (5.5%)} {space 5}
+  Refugee{space 70} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.0%)} {space 5}
+Sex of the household head?{space 53} {space 15} {space 15} {space 15} {space 5}
+  Female{space 71} {space 4}{result:340 (26.9%)} {space 4}{result:291 (28.4%)} {space 4}{result:631 (27.6%)} {result:0.411}
+  Male{space 73} {space 4}{result:924 (73.1%)} {space 4}{result:732 (71.6%)} {space 2}{result:1,656 (72.4%)} {space 5}
+Is the household head married?{space 49} {space 15} {space 15} {space 15} {space 5}
+  No{space 75} {space 2}{result:1,055 (83.5%)} {space 4}{result:864 (84.5%)} {space 2}{result:1,919 (83.9%)} {result:0.521}
+  Yes{space 74} {space 4}{result:209 (16.5%)} {space 4}{result:159 (15.5%)} {space 4}{result:368 (16.1%)} {space 5}
+Years of education of the household head{space 39} {space 2}{result:4.619 (3.999)} {space 2}{result:4.564 (4.124)} {space 2}{result:4.594 (4.055)} {result:0.749}
+How many people are in this household?{space 41} {space 2}{result:6.514 (3.064)} {space 2}{result:6.562 (3.232)} {space 2}{result:6.536 (3.140)} {result:0.717}
+How many members in your household are younger than 15years of age?{space 12} {space 2}{result:3.441 (2.130)} {space 2}{result:3.390 (2.006)} {space 2}{result:3.418 (2.075)} {result:0.562}
+How many members in your household are older than 60years of age?{space 14} {space 2}{result:0.202 (0.487)} {space 2}{result:0.193 (0.502)} {space 2}{result:0.198 (0.493)} {result:0.659}
+Is there anyone with disability/chronic disease in your household?{space 13} {space 2}{result:0.195 (0.396)} {space 2}{result:0.203 (0.403)} {space 2}{result:0.199 (0.399)} {result:0.604}
+How many rooms are in the house?{space 47} {space 2}{result:2.244 (1.226)} {space 2}{result:2.239 (1.270)} {space 2}{result:2.241 (1.246)} {result:0.922}
+Does the household have access to mobile phone?{space 32} {space 15} {space 15} {space 15} {space 5}
+  No{space 75} {space 4}{result:944 (74.7%)} {space 4}{result:715 (69.9%)} {space 2}{result:1,659 (72.5%)} {result:0.011}
+  Yes{space 74} {space 4}{result:320 (25.3%)} {space 4}{result:308 (30.1%)} {space 4}{result:628 (27.5%)} {space 5}
+Please select the option that best describes the roofing material of this house {space 15} {space 15} {space 15} {space 5}
+  No roof{space 70} {space 7}{result:1 (0.1%)} {space 7}{result:8 (0.8%)} {space 7}{result:9 (0.4%)} {result:0.075}
+  Thatch/Palm leaf{space 61} {space 4}{result:147 (11.6%)} {space 6}{result:90 (8.8%)} {space 4}{result:237 (10.4%)} {space 5}
+  Rustic mat{space 67} {space 7}{result:3 (0.2%)} {space 7}{result:0 (0.0%)} {space 7}{result:3 (0.1%)} {space 5}
+  Palm/bamboo{space 66} {space 4}{result:832 (65.8%)} {space 4}{result:684 (66.9%)} {space 2}{result:1,516 (66.3%)} {space 5}
+  Wood planks{space 66} {space 6}{result:32 (2.5%)} {space 6}{result:33 (3.2%)} {space 6}{result:65 (2.8%)} {space 5}
+  Metal/tin{space 68} {space 4}{result:208 (16.5%)} {space 4}{result:171 (16.7%)} {space 4}{result:379 (16.6%)} {space 5}
+  Wood planks{space 66} {space 7}{result:4 (0.3%)} {space 7}{result:3 (0.3%)} {space 7}{result:7 (0.3%)} {space 5}
+  Ceramic tiles{space 64} {space 7}{result:1 (0.1%)} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.0%)} {space 5}
+  Cement{space 71} {space 7}{result:3 (0.2%)} {space 7}{result:5 (0.5%)} {space 7}{result:8 (0.3%)} {space 5}
+  Roofing shingles{space 61} {space 7}{result:2 (0.2%)} {space 7}{result:1 (0.1%)} {space 7}{result:3 (0.1%)} {space 5}
+  Don't know{space 67} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.0%)} {space 5}
+  Other (specify){space 62} {space 6}{result:31 (2.5%)} {space 6}{result:27 (2.6%)} {space 6}{result:58 (2.5%)} {space 5}
+Please select the option that best describes the floor material of this house{space 2} {space 15} {space 15} {space 15} {space 5}
+  Earth/sand{space 67} {space 2}{result:1,194 (94.5%)} {space 4}{result:968 (94.6%)} {space 2}{result:2,162 (94.5%)} {result:0.719}
+  Wood planks{space 66} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.1%)} {space 7}{result:2 (0.1%)} {space 5}
+  Palm/bamboo{space 66} {space 6}{result:21 (1.7%)} {space 6}{result:17 (1.7%)} {space 6}{result:38 (1.7%)} {space 5}
+  Parquet or polished wood{space 53} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.0%)} {space 5}
+  Ceramic tiles{space 64} {space 7}{result:1 (0.1%)} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.0%)} {space 5}
+  Cement{space 71} {space 6}{result:45 (3.6%)} {space 6}{result:36 (3.5%)} {space 6}{result:81 (3.5%)} {space 5}
+  Other (specify){space 62} {space 7}{result:2 (0.2%)} {space 7}{result:0 (0.0%)} {space 7}{result:2 (0.1%)} {space 5}
+{hline 79}{c -}{hline 15}{c -}{hline 15}{c -}{hline 15}{c -}{hline 5}
+{res}{txt}{p 0 1 2}
+(collection {res:DTable} exported to file {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_Balance.docx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_Balance.docx})
+{p_end}
+
+{com}. 
+.         gl list_var age HHHResp HHHRespSpouse HHDisplaced HHHFemale HHHMarried          ///
+>                                 hh_head_educ hh_size mem_lessthan15 mem_greaterthan60                   ///
+>                                 mem_disability area_house HHCrowding
+{txt}
+{com}.         
+.         save "${c -(}sample{c )-}/CAR_Sample_Merge.dta", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. ***************************** Balance for Randomization ************************
+.         
+.         ** Quality of Randomization in Phone Owners
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 1, grpvar(Modality_Type) ///
+>                          nonote onerow nototal replace                                                          ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization of Non Phone Owners
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 0 & mobile_coverage == 1     ///
+>                                                  & Phone_Assignment != 0,                                                       ///
+>                          grpvar(Modality_Type) nonote onerow nototal replace                    ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels           ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization of Non Phone Owners - Assigning Phone
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Random_Comparison)                                                         ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels                     ///
+>              grplabels(0 F2F Random Partial Sample @ 1 Remote Gave Phone)       ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization for Phone Assignment
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Phone_Assignment)                                                  ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels             ///
+>              grplabels(0 Not Assigned Phone @ 1 Assigned Phone)                         ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         
+.         
+.         
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Modality_Type) nonote onerow nototal replace       ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}sample{c )-}/CAR_rCARI_Listing_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}list_var{c )-} if Modality_Type == 0, grpvar(Length_Type) nonote          ///
+>                          onerow nototal replace rowvarlabels                                                            ///
+>              format(%12.2fc) grplabels(0 Short Form @ 1 Long Form )                     ///
+>              savexlsx("${c -(}sample{c )-}/CAR_rCARI_Listing_F2F_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_F2F_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_F2F_Length_Balance.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}list_var{c )-} if Modality_Type == 1, grpvar(Length_Type) nonote          ///
+>                          onerow nototal replace rowvarlabels                                                            ///
+>              format(%12.2fc) grplabels(0 Short Form @ 1 Long Form )                     ///
+>              savexlsx("${c -(}sample{c )-}/CAR_rCARI_Listing_RM_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_RM_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_RM_Length_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta"
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Prepare overall sample list                                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Aug 12, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}sample{c )-}/CAR_Sample_Merge.xlsx
+>                                         
+>         ** CREATES:             ${c -(}sample{c )-}/CAR_Sample_Merge.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                       PART 1: Prepare Sample List
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

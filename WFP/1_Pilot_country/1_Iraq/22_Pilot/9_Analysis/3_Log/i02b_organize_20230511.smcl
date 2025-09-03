@@ -1,0 +1,2714 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i02b_organize_20230511.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 May 2023, 16:27:19
+{txt}
+{com}.         di `cdate'
+{res}20230511
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}dta{c )-}/Iraq_RM_Household_Raw.dta", clear 
+{txt}
+{com}.         
+.         gen     Status = 1 if (ADMIN5Name == 1 | ADMIN5Name == 5 | ADMIN5Name == 10) 
+{txt}(268 missing values generated)
+
+{com}.         replace Status = 2 if (ADMIN5Name == 2 | ADMIN5Name == 3) 
+{txt}(268 real changes made)
+
+{com}.         
+. ** Demongraphics and basic respondents/household information
+. 
+.         gen RESPHHH     = (RESPRelationHHH              == 100)
+{txt}
+{com}.         gen RESPFemale  = (RESPSex                              == 0)
+{txt}
+{com}.         
+.         gl var_demo RESPAge RESPSex RESPFemale RESPHHH HHSize
+{txt}
+{com}. 
+. ** Outcome: [FCS] Food consumption score 
+.         sum FCS*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}FCSStap {c |}{res}        540    5.866667    1.951357          0          7
+{txt}{space 4}FCSPulse {c |}{res}        540    2.762963    1.929009          0          7
+{txt}{space 4}FCSDairy {c |}{res}        540    5.003704    2.641187          0          7
+{txt}{space 7}FCSPr {c |}{res}        540    1.074074    1.125713          0          7
+{txt}{space 6}FCSVeg {c |}{res}        540    4.187037    2.454827          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 4}FCSFruit {c |}{res}        540        1.75    2.038247          0          7
+{txt}{space 6}FCSFat {c |}{res}        540    6.753704    .9200333          0          7
+{txt}{space 4}FCSSugar {c |}{res}        540    4.837037    3.068077          0          7
+{txt}
+{com}.         
+.         gen FCS = FCSStap * 2 + FCSPulse * 3 + FCSDairy * 4 + FCSPr * 4 +                ///
+>                           FCSVeg  * 1 + FCSFruit * 1 + FCSFat * 0.5 + FCSSugar * 0.5
+{txt}
+{com}.         gen FCSCat28 = cond(FCS <= 28, 1, cond(FCS <= 42, 2, 3))
+{txt}
+{com}.         
+.         gen     FCG = 1 if (FCSCat28 == 1 | FCSCat28 == 2)
+{txt}(416 missing values generated)
+
+{com}.         replace FCG = 2 if (FCSCat28 == 3)
+{txt}(416 real changes made)
+
+{com}.         
+.         gl  out_fcs FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat               ///
+>                                 FCSSugar FCS FCSCat28 FCG 
+{txt}
+{com}. 
+. ** Outcome: [rCSI] Reduced Coping Strategies (rCSI - Gendered)
+. 
+.         gen rCSI         = rCSILessQlty * 1 + rCSIBorrow * 2 + rCSIMealNb * 1 +         ///
+>                                    rCSIMealSize * 1 + rCSIMealAdult * 3
+{txt}
+{com}.         
+.         gl out_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIGenderMealSize rCSIMealAdult    ///
+>                                 rCSIGenderMealAdult rCSIMealNb rCSIGenderMealNb rCSI 
+{txt}
+{com}.         
+. ** LCS 
+.         ren LcsEN_em_ChildWork Lcs_em_ChildWork
+{res}{txt}
+{com}.         gen Lcs_Stress_Coping    = (Lcs_stress_DomAsset   == 20 | Lcs_stress_DomAsset   == 30 | ///
+>                                                                 Lcs_stress_CrdtFood   == 20 | Lcs_stress_CrdtFood   == 30 | ///
+>                                                                 Lcs_stress_Saving     == 20 | Lcs_stress_Saving     == 30 | ///
+>                                                                 Lcs_stress_BorrowCash == 20 | Lcs_stress_BorrowCash == 30 )
+{txt}
+{com}.         gen Lcs_Crisis_Coping    = (Lcs_crisis_ProdAssets == 20 | Lcs_crisis_ProdAssets == 30 | ///
+>                                                                 Lcs_crisis_HealthEdu  == 20 | Lcs_crisis_HealthEdu  == 30 | ///
+>                                                                 Lcs_crisis_OutSchool  == 20 | Lcs_crisis_OutSchool  == 30 )                     
+{txt}
+{com}.         gen Lcs_Emergency_Coping = (Lcs_em_ChildWork  == 20 | Lcs_em_ChildWork  == 30 | ///
+>                                                                 Lcs_em_Begged     == 20 | Lcs_em_Begged     == 30 | ///
+>                                                                 Lcs_em_IllegalAct == 20 | Lcs_em_IllegalAct == 30 )
+{txt}
+{com}.                                                                 
+.         gen     LCS_Cat = 1
+{txt}
+{com}.         replace LCS_Cat = 2 if Lcs_Stress_Coping == 1
+{txt}(485 real changes made)
+
+{com}.         replace LCS_Cat = 3 if Lcs_Crisis_Coping == 1 
+{txt}(332 real changes made)
+
+{com}.         replace LCS_Cat = 4 if Lcs_Emergency_Coping == 1
+{txt}(147 real changes made)
+
+{com}.         
+.         gl  out_lcs  Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping LCS_Cat
+{txt}
+{com}.         
+. ** Economic vulnerability: Income
+.         
+.         ** One additional group 9 High risk activity (e.g. begging, scavenging) became 2 options in HHIncFirst_SRi - need to recode or change the values
+.         recode HHIncFirst_SRi (10 = 9)(11 = 10)(12 = 11)(13 = 12)(14 = 13)(15 = 14) ///
+>                                                   (16 = 15), gen(HHIncFirst_SRi_C)
+{txt}(70 differences between {bf:HHIncFirst_SRi} and {bf:HHIncFirst_SRi_C})
+
+{com}.         order HHIncFirst_SRi_C, a(HHIncFirst_SRi)
+{txt}
+{com}.         drop  HHIncFirst_SRi
+{txt}
+{com}.         ren       HHIncFirst_SRi_C HHIncFirst_SRi
+{res}{txt}
+{com}.         
+.         tab HHIncFirst_Oth
+
+                                {txt}Specify {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                  راتب رعاية الاجتماعيه {c |}{res}          1        8.33        8.33
+{txt}                              سائق تكسي {c |}{res}          2       16.67       25.00
+{txt}                           عاطل على عمل {c |}{res}          2       16.67       41.67
+{txt}            عاطل على عمل  لم يقدر العلم {c |}{res}          1        8.33       50.00
+{txt}           عاطل على عمل ولم يعمل أي عمل {c |}{res}          1        8.33       58.33
+{txt}                        عربانه بيع مواد {c |}{res}          1        8.33       66.67
+{txt}                            لا أحد يعمل {c |}{res}          3       25.00       91.67
+{txt}                                  متطوع {c |}{res}          1        8.33      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}         12      100.00
+{txt}
+{com}.         replace HHIncFirst_SRi = 7 if HHIncFirst_Oth == "راتب رعاية الاجتماعيه" 
+{txt}(1 real change made)
+
+{com}.         // Social Welfare Salary as aid/gift
+.         replace HHIncFirst_SRi = 2 if HHIncFirst_Oth == "سائق تكسي"
+{txt}(2 real changes made)
+
+{com}.         // Taxi driver as Wage Labor - Skilled
+.         replace HHIncFirst_SRi = 11 if HHIncFirst_Oth == "عربانه بيع مواد"
+{txt}(1 real change made)
+
+{com}.         // Cart selling materials as petty trade/selling on streets
+.         
+.         gen CARI_Inc = .
+{txt}(540 missing values generated)
+
+{com}.         replace CARI_Inc = 1 if inlist(HHIncFirst_SRi, 1, 2, 5, 12, 13, 15) & inlist(HHIncChg, 0, 1, 5)
+{txt}(55 real changes made)
+
+{com}.         replace CARI_Inc = 2 if inlist(HHIncFirst_SRi, 1, 2, 5, 12, 13, 15) & inlist(HHIncChg, 2, 3, 4)
+{txt}(59 real changes made)
+
+{com}.         replace CARI_Inc = 2 if inlist(HHIncFirst_SRi, 3, 4, 6, 11) & inlist(HHIncChg, 0, 1, 5)
+{txt}(129 real changes made)
+
+{com}.         replace CARI_Inc = 3 if inlist(HHIncFirst_SRi, 3, 4, 6, 11) & inlist(HHIncChg, 2, 3, 4)
+{txt}(145 real changes made)
+
+{com}.         replace CARI_Inc = 4 if HHIncNb == 0 | inlist(HHIncFirst_SRi, 7, 8, 9, 10)
+{txt}(151 real changes made)
+
+{com}.         replace CARI_Inc = 5 if HHIncFirst_SRi == 999
+{txt}(8 real changes made)
+
+{com}.         * Recode missing values
+.         replace CARI_Inc = . if CARI_Inc == 5
+{txt}(8 real changes made, 8 to missing)
+
+{com}.         
+.         replace CARI_Inc = 4 if HHIncFirst_Oth == "عاطل على عمل" | ///
+>                         HHIncFirst_Oth == "عاطل على عمل  لم يقدر العلم"  | ///
+>                         HHIncFirst_Oth == "عاطل على عمل ولم يعمل أي عمل" | ///
+>                         HHIncFirst_Oth == "لا أحد يعمل"
+{txt}(7 real changes made)
+
+{com}.         // unemployed or nobody works
+.                 
+. ** Outcome: [CARI] COMBINING CURRENT STATUS AND COPING CAPACITY
+.         recode  FCSCat28 (1 = 4) (2 = 3) (3 = 1), gen(FCS_4pt_CARI)
+{txt}(540 differences between {bf:FCSCat28} and {bf:FCS_4pt_CARI})
+
+{com}.         replace FCS_4pt_CARI = 2 if FCSCat28 == 3 & rCSI >= 4
+{txt}(310 real changes made)
+
+{com}.         
+.         gen CC_Inc_Cat   = (CARI_Inc + LCS_Cat)/2       // no round here
+{txt}(1 missing value generated)
+
+{com}.         gen CARI_Inc_Raw = (FCS_4pt_CARI + CC_Inc_Cat)/2
+{txt}(1 missing value generated)
+
+{com}.         gen CARI_Inc_Cat = round(CARI_Inc_Raw)
+{txt}(1 missing value generated)
+
+{com}.         
+.         gen HH_Vul_CARI  = (CARI_Inc_Cat == 3 | CARI_Inc_Cat == 4)
+{txt}
+{com}. 
+.         gl out_cari FCS_4pt_CARI CC_Inc_Cat CARI_Inc_Cat HH_Vul_CARI
+{txt}
+{com}.         
+. ** Outcome: [FES] Food Expenditure Share
+. 
+.         * 7 days food purchase in cash/credit 
+. egen HHExp_Food_Purch_MN_7D = rowtotal(HHExpStap_MNCRD_7D HHExpPro_MNCRD_7D HHExpFruVeg_MNCRD_7D ///
+>          HHExpFOther_MNCRD_7D HHExpF_MNCRD_7D)
+{txt}
+{com}.         
+.         * 7 days food gift/aid value
+. egen HHExp_Food_GiftAid_MN_7D = rowtotal(HHExpStap_GiftAid_7D HHExpPro_GiftAid_7D ///
+>          HHExpFruVeg_GiftAid_7D HHExpFOther_GiftAid_7D HHExpF_GiftAid_7D)
+{txt}
+{com}. 
+.         * 7 days food own-production value
+. egen HHExp_Food_Own_MN_7D = rowtotal(HHExpStap_Own_7D HHExpPro_Own_7D HHExpFruVeg_Own_7D  ///
+>          HHExpFOther_Own_7D HHExpF_Own_7D)
+{txt}
+{com}. 
+.         * 7 days food values in total and 1 month average 
+.         gen HHExpFoodTotal_7D = HHExp_Food_Purch_MN_7D + HHExp_Food_GiftAid_MN_7D + HHExp_Food_Own_MN_7D
+{txt}
+{com}.         gen HHExpFoodTotal_1M = (HHExpFoodTotal_7D/7) * 30
+{txt}
+{com}.         
+. ***** NON-FOOD EXPENDITURE *****************************************************
+.         
+.         **** 1 MONTH but actually 6 MONTH ****
+.          replace HHExpNFEduMedCloth_MNCRD_1M  = HHExpNFEduMedCloth_MNCRD_1M/6
+{txt}variable {bf}{res}HHExpNFEduMedCloth_MNCRD_1M{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}double{sf}
+{txt}(272 real changes made)
+
+{com}.          replace HHExpNFEduMedCloth_GiftAid_1M  = HHExpNFEduMedCloth_GiftAid_1M/6
+{txt}variable {bf}{res}HHExpNFEduMedCloth_GiftAid_1M{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}double{sf}
+{txt}(46 real changes made)
+
+{com}.          
+.         **** 1 MONTH ****
+.         * Monthly non food expenditure in cash/credit
+. egen HHExpNFTotal_Purch_MN_1M = rowtotal(HHExpNFHyg_MNCRD_1M HHExpNFTranspPh_MNCRD_1M  ///
+>          HHExpNFUtilities_MNCRD_1M HHExpNFAlcTobac_MNCRD_1M HHExpNF_MNCRD_1M                       ///
+>          HHExpNFEduMedCloth_MNCRD_1M)
+{txt}
+{com}. 
+.          * Monthly non food gift/aid value
+. egen HHExpNFTotal_GiftAid_MN_1M = rowtotal(HHExpNFHyg_GiftAid_1M HHExpNFTranspPh_GiftAid_1M ///
+>          HHExpNFUtilities_GiftAid_1M HHExpNFAlcTobac_GiftAid_1M HHExpNF_GiftAid_1M                              ///
+>          HHExpNFEduMedCloth_GiftAid_1M)
+{txt}
+{com}. 
+.         **** TOTAL 1 MONTH AVERAGE ****
+.         * Total monthly non-food
+.         gen HHExpNFTotal_1M = HHExpNFTotal_Purch_MN_1M + HHExpNFTotal_GiftAid_MN_1M
+{txt}
+{com}.         
+.         **** TOTAL **** 
+.         gen HHExpTotal = HHExpFoodTotal_1M + HHExpNFTotal_1M
+{txt}
+{com}.         gen PCExpTotal = HHExpTotal/HHSize
+{txt}
+{com}. 
+.         * FES // household level
+.         gen     FES = HHExpFoodTotal_1M/HHExpTotal * 100
+{txt}
+{com}.         count if HHExpFoodTotal_1M == 0 // 3 missing
+  {res}3
+{txt}
+{com}.         
+.         replace FES = 0          if mi(FES)
+{txt}(0 real changes made)
+
+{com}.         
+.         gen byte FES_Cat = 1 if FES <  50
+{txt}(460 missing values generated)
+
+{com}.         replace  FES_Cat = 2 if FES >= 50 & FES < 65
+{txt}(81 real changes made)
+
+{com}.         replace  FES_Cat = 3 if FES >= 65 & FES < 75
+{txt}(92 real changes made)
+
+{com}.         replace  FES_Cat = 4 if FES >= 75
+{txt}(287 real changes made)
+
+{com}.         
+.         gl out_fes HHExpFoodTotal_1M HHExpNFTotal_Purch_MN_1M HHExpNFTotal_GiftAid_MN_1M  ///
+>                            HHExpNFTotal_1M HHExpTotal PCExpTotal FES FES_Cat
+{txt}
+{com}. 
+.         ** CARI based on FES
+.         gen CC_FES_Cat   = (FES_Cat + LCS_Cat)/2        // no round here
+{txt}
+{com}.         gen CARI_FES_Raw = (FCS_4pt_CARI + CC_FES_Cat)/2
+{txt}
+{com}.         gen CARI_FES_Cat = round(CARI_FES_Raw)
+{txt}
+{com}.         
+.         gen HH_Vul_CARI_FES  = (CARI_FES_Cat == 3 | CARI_FES_Cat == 4)
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 3: Label Variables
+. *******************************************************************************/        
+. 
+.         label def YesNo                 0 "No"   1 "Yes"
+{txt}
+{com}.         label val Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping HH_Vul_CARI YesNo
+{txt}
+{com}.         
+.         label def FCSCat                1 "Poor" 2 "Borderline" 3 "Acceptable"
+{txt}
+{com}.         label val FCSCat28 FCSCat
+{txt}
+{com}.         
+.         label def FCG_l                 1 "FCS Poor or Boarderline" 2 "FCS Acceptable"
+{txt}
+{com}.         label val FCG FCG_l
+{txt}
+{com}.         
+.         label def Income_l      1       "Wage Labor - Professional"                                     ///
+>                                                 2       "Wage Labor - Skilled"                                                  ///
+>                                                 3       "Wage Labor - Unskilled/Casual/Agriculture"     ///
+>                                                 4       "Wage Labor - Unskilled/Casual/non-agriculture" ///
+>                                                 5       "Pension"                                                                               ///
+>                                                 6       "Remittances"                                                                   ///
+>                                                 7       "Aid/gifts"                                                                             ///
+>                                                 8       "Borrowing money/Living off debt"                               ///
+>                                                 9       "High risk activity (e.g. begging, scavenging)" ///
+>                                                 10  "Saving/selling assets"                                                     ///
+>                                                 11      "Petty trade/selling on streets"                                ///
+>                                                 12      "Small trade (own business)"                                    ///
+>                                                 13      "Medium/large trade (own business)"                            ///
+>                                                 14      "Small Agriculture production including livestock" ///
+>                                                 15      "Medium/large agriculture production including livestock" ///
+>                                                 999     "Other (specify)"
+{txt}
+{com}.         label val HHIncFirst_SRi Income_l
+{txt}
+{com}. 
+.         label def CARI_Inc_lbl 1 "Regular employment – no change or increase" ///
+>                                                    2 "Regular employment but reduced income or informal labour/remittances no change/increase" ///
+>                            3 "Informal labour/remittances but reduced income" ///
+>                            4 "No income, dependent on assistance or support"
+{txt}
+{com}.         label val CARI_Inc CARI_Inc_lbl
+{txt}
+{com}.         
+.         label var RESPHHH                               "Head of Household Respondent"
+{txt}
+{com}.         label var RESPAge                               "Respondent Age"
+{txt}
+{com}.         label var RESPFemale                    "Female Respondent"
+{txt}
+{com}.         label var HHSize                                "Household Size"
+{txt}
+{com}. 
+.         label var FCSStap                               "Consumption over the past 7 days (cereals and tubers)"
+{txt}
+{com}.         label var FCSVeg                                "Consumption over the past 7 days (vegetables)"
+{txt}
+{com}.         label var FCSFruit                              "Consumption over the past 7 days (fruit)"
+{txt}
+{com}.         label var FCSPr                                 "Consumption over the past 7 days (protein-rich foods)"
+{txt}
+{com}.         label var FCSPulse                              "Consumption over the past 7 days (pulses)"
+{txt}
+{com}.         label var FCSDairy                              "Consumption over the past 7 days (dairy products)"
+{txt}
+{com}.         label var FCSFat                                "Consumption over the past 7 days (oil)"
+{txt}
+{com}.         label var FCSSugar                              "Consumption over the past 7 days (sugar)"
+{txt}
+{com}.         label var FCS                                   "Food Consumption Score"
+{txt}
+{com}.         label var FCSCat28                              "FCS Categories, thresholds 28-42"
+{txt}
+{com}.         label var FCG                                   "FCS Group"
+{txt}
+{com}.         label var FCS_4pt_CARI                  "CARI: Current Status of FCS and rCSI"
+{txt}
+{com}.         
+.         label var rCSILessQlty                  "Relied on less preferred, less expensive food"
+{txt}
+{com}.         label var rCSIBorrow                    "Borrowed food or relied on help from friends or relatives"
+{txt}
+{com}.         label var rCSIMealSize                  "Reduced portion size of meals at meals time"
+{txt}
+{com}.         label var rCSIMealAdult                 "Restricted consumption by adults in order for young-children to eat"
+{txt}
+{com}.         label var rCSIMealNb                    "Reduced the number of meals eaten per day"
+{txt}
+{com}.         label var rCSI                                  "Reduced Consumption Strategies Index (rCSI)"
+{txt}
+{com}.         
+.         label def LCS_l         1 "Not adopting coping strategies"      ///
+>                                                 2 "Stress coping strategies"            ///
+>                                                 3 "Crisis coping strategies"            ///
+>                                                 4 "Emergencies coping strategies" 
+{txt}
+{com}.         label val FES_Cat       LCS_l
+{txt}
+{com}.         
+.         label var Lcs_stress_DomAsset   "Stress coping: Sold household assets/goods"
+{txt}
+{com}.         label var Lcs_stress_CrdtFood   "Stress coping: Purchased food/non-food on credit (incur debts)"
+{txt}
+{com}.         label var Lcs_stress_Saving             "Stress coping: Spent savings"
+{txt}
+{com}.         label var Lcs_stress_BorrowCash "Stress coping: Borrowed money"
+{txt}
+{com}.         label var Lcs_crisis_ProdAssets "Crisis coping: Sold productive assets or means of transport"
+{txt}
+{com}.         label var Lcs_crisis_HealthEdu  "Crisis coping: Reduced expenses on health or education"
+{txt}
+{com}.         label var Lcs_crisis_OutSchool  "Crisis coping: Withdrew children from school"
+{txt}
+{com}.         label var Lcs_em_ChildWork              "Emergency coping: Send children to work for household income"
+{txt}
+{com}.         label var Lcs_em_Begged                 "Emergency coping: Begged and/or scavenged"
+{txt}
+{com}.         label var Lcs_em_IllegalAct             "Emergency coping: Engaged in illegal income activities"
+{txt}
+{com}.         label var Lcs_Stress_Coping     "Household engaged in stress coping strategies" 
+{txt}
+{com}.         label var Lcs_Crisis_Coping     "Household engaged in crisis coping strategies" 
+{txt}
+{com}.         label var Lcs_Emergency_Coping  "Household engaged in emergency coping strategies" 
+{txt}
+{com}.         label var LCS_Cat                               "Livelihood Coping Strategies Cateory"
+{txt}
+{com}.         
+.         label var HHExp_Food_Purch_MN_7D                "Total weekly food expenditure on cash/credit"
+{txt}
+{com}.         label var HHExp_Food_GiftAid_MN_7D              "Total weekly food expenditure from gift aid"
+{txt}
+{com}.         label var HHExp_Food_Own_MN_7D                  "Total weekly food expenditure from own production"
+{txt}
+{com}.         label var HHExpFoodTotal_7D                             "Total weekly food expenditure" 
+{txt}
+{com}.         label var HHExpFoodTotal_1M                             "Total monthly food expenditure (average)"
+{txt}
+{com}.         label var HHExpNFTotal_Purch_MN_1M              "Total monthly non-food exp on cash (average)"
+{txt}
+{com}.         label var HHExpNFTotal_GiftAid_MN_1M    "Total monthly non-food exp from aid (average)"
+{txt}
+{com}.         label var HHExpNFTotal_1M                               "Total monthly non-food expenditure (average)"
+{txt}
+{com}.         
+.         label var HHExpTotal                    "Monthly total household expenditure"
+{txt}
+{com}.         label var PCExpTotal                    "Monthly total household expenditure per capita"
+{txt}
+{com}.         label var FES                                   "Food Expenditure Share"
+{txt}
+{com}.         label var FES_Cat                               "Food Security Category based on FES"
+{txt}
+{com}.         
+.         label def FS_CARI          1 "Food Secure"  2 "Marginally Food Secure"                          ///
+>                                                    3 "Moderately Food Insecure" 4 "Severely Food Insecure"
+{txt}
+{com}.         label val FCS_4pt_CARI CARI_Inc_Cat FES_Cat CARI_Inc FS_CARI       
+{txt}
+{com}.         
+.         label var CC_Inc_Cat                    "Coping Capacity Combined Category using Income"
+{txt}
+{com}.         label var CARI_Inc_Raw                  "Raw CARI Category based on Income"
+{txt}
+{com}.         label var CARI_Inc_Cat                  "CARI Category using Income"
+{txt}
+{com}.         label var HH_Vul_CARI                   "Household being vulnerable using Income rCARI"
+{txt}
+{com}.         label var Status                                "Household Status IDP vs. Refugee" 
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 4: Check Balance Dataset
+. *******************************************************************************/
+. 
+.         asdoc pwcorr HH_Vul_CARI HH_Vul_CARI_FES, star(.05) replace save(${c -(}tabs_val{c )-}/Iraq_rCARI_Inc_FES_Correlation.doc) ///
+>                                                                                   fhc(\b) font(Roboto) label dec(2) tzok
+{res}
+             {txt}{c |} HH_Vul~I HH_Vul~S
+{hline 13}{c +}{hline 18}
+{res} {txt}HH_Vul_CARI {c |} {res}  1.0000 
+{txt}HH_Vul_CAR~S {c |} {res}  0.5740*  1.0000 
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/rCARI_Validation/Iraq_rCARI_Inc_FES_Correlation.doc"}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/rCARI_Validation/Iraq_rCARI_Inc_FES_Correlation.doc"}
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}Version{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Status{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPHHH{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFemale{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSCat28{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCG{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Stress_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Crisis_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Emergency_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LCS_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCS_4pt_CARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_CARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_CARI_FES{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (27,540 bytes saved)
+
+{com}.         keep HHID Version Status $var_demo $out_fcs $out_rcsi $out_lcs $out_fes $out_cari
+{txt}
+{com}.         save "${c -(}dta{c )-}/Iraq_RM_Household_Analysis.dta", replace   
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_RM_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         * Overall Version A vs. Version B Randomization Balance
+.         iebaltab        $var_demo $out_fcs $out_rcsi $out_lcs $out_fes $out_cari,               ///
+>                                 grpvar(Version) grplabels(1 Version A @ 2 Version B) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_bal{c )-}/Iraq_RM_Version_Balance.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_RM_Version_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_RM_Version_Balance.xlsx}{p_end}
+{txt}
+{com}.                                                 
+.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}. ********************************************************************************
+. *                                       PART 1: rCSI Original vs. Opposite Sex
+. *******************************************************************************/
+.         
+.         use "${c -(}dta{c )-}/Iraq_F2F_Household_Analysis.dta", clear
+{txt}
+{com}.         
+.         tab RESPSex rCSIRESPSex_oth
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        13        160 {txt}{c |}{res}       173 
+{txt}      Male {c |}{res}       237          1 {txt}{c |}{res}       238 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       250        161 {txt}{c |}{res}       411 
+{txt}
+{com}.         
+. /*  Sex of the | Sex of the respondent
+>         respondent |    Female       Male |     Total
+>         -----------+----------------------+----------
+>                 Female |        13        160 |       173 
+>                   Male |       237          1 |       238 
+>         -----------+----------------------+----------
+>                  Total |       250        161 |       411 
+> 
+> */
+.         drop if RESPSex == rCSIRESPSex_oth      // dropped 14 both female or male 
+{txt}(14 observations deleted)
+
+{com}. 
+.         sum $out_rcsi           
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+rCSILessQlty {c |}{res}        576    3.213542    2.232851          0          7
+{txt}{space 2}rCSIBorrow {c |}{res}        576    .4149306    1.011096          0          7
+{txt}rCSIMealSize {c |}{res}        576       2.125    2.306513          0          7
+{txt}rCSIGender~e {c |}{res}        355    3.735211    1.843533          1          6
+{txt}rCSIMealAd~t {c |}{res}        576    2.123264    2.339174          0          7
+{txt}{hline 13}{c +}{hline 57}
+rCSIGender~t {c |}{res}        358    2.444134    .7676635          1          3
+{txt}{space 2}rCSIMealNb {c |}{res}        576    1.852431    2.378328          0          7
+{txt}rCSIGender~b {c |}{res}        297    3.744108    1.844048          1          6
+{txt}{space 8}rCSI {c |}{res}        576    14.39063    12.57057          0         56
+{txt}
+{com}.         gl analysis_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb ///
+>                                          rCSIGenderMealSize rCSIGenderMealAdult rCSIGenderMealNb rCSI
+{txt}
+{com}. 
+.         * Box graph for original rCSI by Gender and FCG
+.         graph box rCSI, over(RESPSex) over(FCG)                                         ///
+>         graphregion(color(white)) bgcolor(white)                                        ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Original respondent Male vs. Female by FCS Group", size(3))   ///
+>         outergap(70) bargap(100) ylabel(0(7)56, nogrid labsize(3))      ///
+>         note("Note: Original Respondents N = 576 (Male = 281, Female = 295)", ///
+>         ring(4) pos(6) size(2.5)) legend(ring(4) pos(6) rows(5) size(small))
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_Index_F2F_Original_Gender_FCG.png", replace       
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_Index_F2F_Original_Gender_FCG.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         iebaltab        rCSI, grpvar(RESPSex) grplabels(1 Male @ 0 Female) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_gender{c )-}/Iraq_rCSI_Index_F2F_Balance_Original_Gender.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_Index_F2F_Balance_Original_Gender.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_Index_F2F_Balance_Original_Gender.xlsx}{p_end}
+{txt}
+{com}.         
+. /* * Box graph for difference
+>         
+>         graph box rCSILessQlty_diff rCSIBorrow_diff rCSIMealSize_diff   ///
+>                           rCSIMealAdult_diff rCSIMealNb_diff,                                   ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("rCSI Cross-Gender Reporting: Iraq F2F", size(5))                 ///
+>         subtitle("Original Respondent - Opposite Sex Respondent", size(3))              ///
+>         yline(0)                                                                                        ///
+>         outergap(70) bargap(100)                                                                                ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         legend(ring(0) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")          ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small))
+>         graph export "${c -(}figs{c )-}/Iraq_F2F_Full_rCSI_Opposite_Comparison.png", replace       
+>    
+>    ** Diff by Group
+>    graph box rCSILessQlty_diff rCSIBorrow_diff rCSIMealSize_diff        ///
+>                           rCSIMealAdult_diff rCSIMealNb_diff, over(Group)                                       ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("rCSI Cross-Gender Reporting: Iraq F2F by Group", size(5))                ///
+>         subtitle("Original Respondent - Opposite Sex Respondent", size(3))              ///
+>         yline(0)                                                                                        ///
+>         outergap(70) bargap(100)                                                                                ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         legend(ring(0) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")          ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small))
+>         graph export "${c -(}figs{c )-}/Iraq_F2F_Full_rCSI_Opposite_Comparison.png", replace
+> */
+.         
+. ********************************************************************************
+. *                                       PART 2: rCSI Gendered Difference
+. *******************************************************************************/
+.   
+. foreach var of global analysis_rcsi {c -(}
+{txt}  2{com}.         gen     `var'_F = `var'         if RESPSex                 == 0
+{txt}  3{com}.         replace `var'_F = `var'_oth if rCSIRESPSex_oth == 0
+{txt}  4{com}.         lab var `var'_F "Female reported `var'"
+{txt}  5{com}.         
+.         gen     `var'_M = `var'         if RESPSex                 == 1
+{txt}  6{com}.         replace `var'_M = `var'_oth if rCSIRESPSex_oth == 1
+{txt}  7{com}.         lab var `var'_M "Male reported `var'"
+{txt}  8{com}.         
+.         gen `var'_g_diff = `var'_F - `var'_M
+{txt}  9{com}.         lab var  `var'_g_diff "Difference between female reported and male Reported `var'"
+{txt} 10{com}. {c )-}
+{txt}(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(379 missing values generated)
+(129 real changes made)
+(418 missing values generated)
+(109 real changes made)
+(338 missing values generated)
+(376 missing values generated)
+(130 real changes made)
+(418 missing values generated)
+(108 real changes made)
+(338 missing values generated)
+(418 missing values generated)
+(111 real changes made)
+(437 missing values generated)
+(80 real changes made)
+(385 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+
+{com}.         
+.         save "${c -(}temp{c )-}/Iraq_rCSI_F2F_Analysis.dta", replace      
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/4_Temp/Iraq_rCSI_F2F_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         * rename for exporting results
+.         ren rCSI*_F F_*
+{res}{txt}
+{com}.         ren rCSI*_M M_*
+{res}{txt}
+{com}.         ren *_MealSize  *_MealSz
+{res}{txt}
+{com}.         ren *_MealAdult *_MealAd
+{res}{txt}
+{com}.         ren F_          F_rCSI
+{res}{txt}
+{com}.         ren M_          M_rCSI
+{res}{txt}
+{com}.         
+.         
+.         asdoc ttest F_LessQlty == M_LessQlty, replace   save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            title(Paired Gender Difference for rCSI) fhc(\b) fhr(\b) font(Roboto) label dec(2) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Less~y {c |}{res}{col 12}    397{col 22} 2.947103{col 34} .1136301{col 46} 2.264063{col 58}  2.72371{col 70} 3.170497
+{txt}M_Less~y {c |}{res}{col 12}    397{col 22} 2.952141{col 34} .1124541{col 46} 2.240632{col 58} 2.731059{col 70} 3.173223
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0050378{col 34} .0788723{col 46} 1.571519{col 58}-.1600985{col 70} .1500229
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_LessQlty{txt} - {res}M_LessQlty{txt})                   t = {res} -0.0639
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4746         {txt}Pr(|T| > |t|) = {res}0.9491          {txt}Pr(T > t) = {res}0.5254
+
+{txt}{p 20 20 2}Paired Gender Difference for rCSI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:    2.947}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    2.952}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0050378}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .079}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .949}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+
+{com}.         asdoc ttest F_Borrow == M_Borrow,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Borrow {c |}{res}{col 12}    397{col 22} .4609572{col 34} .0533014{col 46} 1.062022{col 58} .3561682{col 70} .5657462
+{txt}M_Borrow {c |}{res}{col 12}    397{col 22} .4030227{col 34} .0492622{col 46} .9815422{col 58} .3061745{col 70} .4998708
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} .0579345{col 34} .0554665{col 46} 1.105162{col 58}-.0511111{col 70} .1669801
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_Borrow{txt} - {res}M_Borrow{txt})                       t = {res}  1.0445
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.8516         {txt}Pr(|T| > |t|) = {res}0.2969          {txt}Pr(T > t) = {res}0.1484
+
+{txt}{p 20 20 2}Paired t test : F_Borrow M_Borrow   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:     .461}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .403}}}{space 1}{space 1}{ralign 9:{res:{sf: .0579345}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0555}}}{space 1}{space 1}{ralign 9:{res:{sf:     1.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .297}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_MealSz == M_MealSz,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealSz {c |}{res}{col 12}    397{col 22} 1.942065{col 34} .1118181{col 46}  2.22796{col 58} 1.722234{col 70} 2.161897
+{txt}M_MealSz {c |}{res}{col 12}    397{col 22}  1.97733{col 34} .1154325{col 46} 2.299976{col 58} 1.750393{col 70} 2.204267
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0352645{col 34} .0669896{col 46} 1.334759{col 58}-.1669643{col 70} .0964353
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealSz{txt} - {res}M_MealSz{txt})                       t = {res} -0.5264
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.2994         {txt}Pr(|T| > |t|) = {res}0.5989          {txt}Pr(T > t) = {res}0.7006
+
+{txt}{p 20 20 2}Paired t test : F_MealSz M_MealSz   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:    1.942}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:   1.9775}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0352645}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .067}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.55}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .599}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_MealAd == M_MealAd,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealAd {c |}{res}{col 12}    397{col 22} 1.939547{col 34} .1142069{col 46} 2.275556{col 58} 1.715019{col 70} 2.164074
+{txt}M_MealAd {c |}{res}{col 12}    397{col 22}  1.95466{col 34} .1147246{col 46} 2.285872{col 58} 1.729114{col 70} 2.180205
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0151134{col 34}  .066341{col 46} 1.321834{col 58}-.1455379{col 70} .1153112
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealAd{txt} - {res}M_MealAd{txt})                       t = {res} -0.2278
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4100         {txt}Pr(|T| > |t|) = {res}0.8199          {txt}Pr(T > t) = {res}0.5900
+
+{txt}{p 20 20 2}Paired t test : F_MealAd M_MealAd   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:   1.9395}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:   1.9545}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0151134}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0665}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.25}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      .82}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_MealNb == M_MealNb,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealNb {c |}{res}{col 12}    397{col 22} 1.667506{col 34} .1166198{col 46} 2.323633{col 58} 1.438235{col 70} 1.896778
+{txt}M_MealNb {c |}{res}{col 12}    397{col 22} 1.738035{col 34} .1175067{col 46} 2.341304{col 58}  1.50702{col 70}  1.96905
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} -.070529{col 34} .0657688{col 46} 1.310433{col 58}-.1998285{col 70} .0587706
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealNb{txt} - {res}M_MealNb{txt})                       t = {res} -1.0724
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.1421         {txt}Pr(|T| > |t|) = {res}0.2842          {txt}Pr(T > t) = {res}0.8579
+
+{txt}{p 20 20 2}Paired t test : F_MealNb M_MealNb   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:   1.6675}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    1.738}}}{space 1}{space 1}{ralign 9:{res:{sf: -.070529}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .066}}}{space 1}{space 1}{ralign 9:{res:{sf:    -1.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .284}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_rCSI       == M_rCSI,    rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+  F_rCSI {c |}{res}{col 12}    397{col 22} 13.29723{col 34} .6430286{col 46} 12.81225{col 58} 12.03305{col 70} 14.56141
+  {txt}M_rCSI {c |}{res}{col 12}    397{col 22} 13.33753{col 34} .6403316{col 46} 12.75852{col 58} 12.07866{col 70} 14.59641
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0403023{col 34} .3191725{col 46} 6.359467{col 58}-.6677866{col 70} .5871821
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_rCSI{txt} - {res}M_rCSI{txt})                           t = {res} -0.1263
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4498         {txt}Pr(|T| > |t|) = {res}0.8996          {txt}Pr(T > t) = {res}0.5502
+
+{txt}{p 20 20 2}Paired t test : F_rCSI M_rCSI   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:   13.297}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:  13.3375}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0403023}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .319}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.15}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .8995}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}. 
+.                                                                                 
+.         ttest `var'_g_diff == 0
+{err}variable {bf}_g_diff{sf} not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         eststo clear
+{txt}
+{com}. eststo: ttest F_LessQlty == M_LessQlty
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Less~y {c |}{res}{col 12}    397{col 22} 2.947103{col 34} .1136301{col 46} 2.264063{col 58}  2.72371{col 70} 3.170497
+{txt}M_Less~y {c |}{res}{col 12}    397{col 22} 2.952141{col 34} .1124541{col 46} 2.240632{col 58} 2.731059{col 70} 3.173223
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0050378{col 34} .0788723{col 46} 1.571519{col 58}-.1600985{col 70} .1500229
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_LessQlty{txt} - {res}M_LessQlty{txt})                   t = {res} -0.0639
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4746         {txt}Pr(|T| > |t|) = {res}0.9491          {txt}Pr(T > t) = {res}0.5254
+{txt}({res}est1{txt} stored)
+
+{com}. eststo: ttest F_Borrow == M_Borrow
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Borrow {c |}{res}{col 12}    397{col 22} .4609572{col 34} .0533014{col 46} 1.062022{col 58} .3561682{col 70} .5657462
+{txt}M_Borrow {c |}{res}{col 12}    397{col 22} .4030227{col 34} .0492622{col 46} .9815422{col 58} .3061745{col 70} .4998708
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} .0579345{col 34} .0554665{col 46} 1.105162{col 58}-.0511111{col 70} .1669801
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_Borrow{txt} - {res}M_Borrow{txt})                       t = {res}  1.0445
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.8516         {txt}Pr(|T| > |t|) = {res}0.2969          {txt}Pr(T > t) = {res}0.1484
+{txt}({res}est2{txt} stored)
+
+{com}. eststo: ttest F_MealSz == M_MealSz
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealSz {c |}{res}{col 12}    397{col 22} 1.942065{col 34} .1118181{col 46}  2.22796{col 58} 1.722234{col 70} 2.161897
+{txt}M_MealSz {c |}{res}{col 12}    397{col 22}  1.97733{col 34} .1154325{col 46} 2.299976{col 58} 1.750393{col 70} 2.204267
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0352645{col 34} .0669896{col 46} 1.334759{col 58}-.1669643{col 70} .0964353
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealSz{txt} - {res}M_MealSz{txt})                       t = {res} -0.5264
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.2994         {txt}Pr(|T| > |t|) = {res}0.5989          {txt}Pr(T > t) = {res}0.7006
+{txt}({res}est3{txt} stored)
+
+{com}. eststo: ttest F_MealAd == M_MealAd
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealAd {c |}{res}{col 12}    397{col 22} 1.939547{col 34} .1142069{col 46} 2.275556{col 58} 1.715019{col 70} 2.164074
+{txt}M_MealAd {c |}{res}{col 12}    397{col 22}  1.95466{col 34} .1147246{col 46} 2.285872{col 58} 1.729114{col 70} 2.180205
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0151134{col 34}  .066341{col 46} 1.321834{col 58}-.1455379{col 70} .1153112
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealAd{txt} - {res}M_MealAd{txt})                       t = {res} -0.2278
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4100         {txt}Pr(|T| > |t|) = {res}0.8199          {txt}Pr(T > t) = {res}0.5900
+{txt}({res}est4{txt} stored)
+
+{com}. eststo: ttest F_MealNb == M_MealNb
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealNb {c |}{res}{col 12}    397{col 22} 1.667506{col 34} .1166198{col 46} 2.323633{col 58} 1.438235{col 70} 1.896778
+{txt}M_MealNb {c |}{res}{col 12}    397{col 22} 1.738035{col 34} .1175067{col 46} 2.341304{col 58}  1.50702{col 70}  1.96905
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} -.070529{col 34} .0657688{col 46} 1.310433{col 58}-.1998285{col 70} .0587706
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealNb{txt} - {res}M_MealNb{txt})                       t = {res} -1.0724
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.1421         {txt}Pr(|T| > |t|) = {res}0.2842          {txt}Pr(T > t) = {res}0.8579
+{txt}({res}est5{txt} stored)
+
+{com}. eststo: ttest F_rCSI == M_rCSI
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+  F_rCSI {c |}{res}{col 12}    397{col 22} 13.29723{col 34} .6430286{col 46} 12.81225{col 58} 12.03305{col 70} 14.56141
+  {txt}M_rCSI {c |}{res}{col 12}    397{col 22} 13.33753{col 34} .6403316{col 46} 12.75852{col 58} 12.07866{col 70} 14.59641
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0403023{col 34} .3191725{col 46} 6.359467{col 58}-.6677866{col 70} .5871821
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_rCSI{txt} - {res}M_rCSI{txt})                           t = {res} -0.1263
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4498         {txt}Pr(|T| > |t|) = {res}0.8996          {txt}Pr(T > t) = {res}0.5502
+{txt}({res}est6{txt} stored)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}. ********************************************************************************
+. *                                       PART 1: rCSI Original vs. Opposite Sex
+. *******************************************************************************/
+.         
+.         use "${c -(}dta{c )-}/Iraq_F2F_Household_Analysis.dta", clear
+{txt}
+{com}.         
+.         tab RESPSex rCSIRESPSex_oth
+
+{txt}Sex of the {c |} Sex of the respondent
+respondent {c |}    Female       Male {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+    Female {c |}{res}        13        160 {txt}{c |}{res}       173 
+{txt}      Male {c |}{res}       237          1 {txt}{c |}{res}       238 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       250        161 {txt}{c |}{res}       411 
+{txt}
+{com}.         
+. /*  Sex of the | Sex of the respondent
+>         respondent |    Female       Male |     Total
+>         -----------+----------------------+----------
+>                 Female |        13        160 |       173 
+>                   Male |       237          1 |       238 
+>         -----------+----------------------+----------
+>                  Total |       250        161 |       411 
+> 
+> */
+.         drop if RESPSex == rCSIRESPSex_oth      // dropped 14 both female or male 
+{txt}(14 observations deleted)
+
+{com}. 
+.         sum $out_rcsi           
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+rCSILessQlty {c |}{res}        576    3.213542    2.232851          0          7
+{txt}{space 2}rCSIBorrow {c |}{res}        576    .4149306    1.011096          0          7
+{txt}rCSIMealSize {c |}{res}        576       2.125    2.306513          0          7
+{txt}rCSIGender~e {c |}{res}        355    3.735211    1.843533          1          6
+{txt}rCSIMealAd~t {c |}{res}        576    2.123264    2.339174          0          7
+{txt}{hline 13}{c +}{hline 57}
+rCSIGender~t {c |}{res}        358    2.444134    .7676635          1          3
+{txt}{space 2}rCSIMealNb {c |}{res}        576    1.852431    2.378328          0          7
+{txt}rCSIGender~b {c |}{res}        297    3.744108    1.844048          1          6
+{txt}{space 8}rCSI {c |}{res}        576    14.39063    12.57057          0         56
+{txt}
+{com}.         gl analysis_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb ///
+>                                          rCSIGenderMealSize rCSIGenderMealAdult rCSIGenderMealNb rCSI
+{txt}
+{com}. 
+.         * Box graph for original rCSI by Gender and FCG
+.         graph box rCSI, over(RESPSex) over(FCG)                                         ///
+>         graphregion(color(white)) bgcolor(white)                                        ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Original respondent Male vs. Female by FCS Group", size(3))   ///
+>         outergap(70) bargap(100) ylabel(0(7)56, nogrid labsize(3))      ///
+>         note("Note: Original Respondents N = 576 (Male = 281, Female = 295)", ///
+>         ring(4) pos(6) size(2.5)) legend(ring(4) pos(6) rows(5) size(small))
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_Index_F2F_Original_Gender_FCG.png", replace       
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_Index_F2F_Original_Gender_FCG.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         iebaltab        rCSI, grpvar(RESPSex) grplabels(1 Male @ 0 Female) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_gender{c )-}/Iraq_rCSI_Index_F2F_Balance_Original_Gender.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_Index_F2F_Balance_Original_Gender.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_Index_F2F_Balance_Original_Gender.xlsx}{p_end}
+{txt}
+{com}.         
+. /* * Box graph for difference
+>         
+>         graph box rCSILessQlty_diff rCSIBorrow_diff rCSIMealSize_diff   ///
+>                           rCSIMealAdult_diff rCSIMealNb_diff,                                   ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("rCSI Cross-Gender Reporting: Iraq F2F", size(5))                 ///
+>         subtitle("Original Respondent - Opposite Sex Respondent", size(3))              ///
+>         yline(0)                                                                                        ///
+>         outergap(70) bargap(100)                                                                                ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         legend(ring(0) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")          ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small))
+>         graph export "${c -(}figs{c )-}/Iraq_F2F_Full_rCSI_Opposite_Comparison.png", replace       
+>    
+>    ** Diff by Group
+>    graph box rCSILessQlty_diff rCSIBorrow_diff rCSIMealSize_diff        ///
+>                           rCSIMealAdult_diff rCSIMealNb_diff, over(Group)                                       ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("rCSI Cross-Gender Reporting: Iraq F2F by Group", size(5))                ///
+>         subtitle("Original Respondent - Opposite Sex Respondent", size(3))              ///
+>         yline(0)                                                                                        ///
+>         outergap(70) bargap(100)                                                                                ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         legend(ring(0) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")          ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small))
+>         graph export "${c -(}figs{c )-}/Iraq_F2F_Full_rCSI_Opposite_Comparison.png", replace
+> */
+.         
+. ********************************************************************************
+. *                                       PART 2: rCSI Gendered Difference
+. *******************************************************************************/
+.   
+. foreach var of global analysis_rcsi {c -(}
+{txt}  2{com}.         gen     `var'_F = `var'         if RESPSex                 == 0
+{txt}  3{com}.         replace `var'_F = `var'_oth if rCSIRESPSex_oth == 0
+{txt}  4{com}.         lab var `var'_F "Female reported `var'"
+{txt}  5{com}.         
+.         gen     `var'_M = `var'         if RESPSex                 == 1
+{txt}  6{com}.         replace `var'_M = `var'_oth if rCSIRESPSex_oth == 1
+{txt}  7{com}.         lab var `var'_M "Male reported `var'"
+{txt}  8{com}.         
+.         gen `var'_g_diff = `var'_F - `var'_M
+{txt}  9{com}.         lab var  `var'_g_diff "Difference between female reported and male Reported `var'"
+{txt} 10{com}. {c )-}
+{txt}(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+(379 missing values generated)
+(129 real changes made)
+(418 missing values generated)
+(109 real changes made)
+(338 missing values generated)
+(376 missing values generated)
+(130 real changes made)
+(418 missing values generated)
+(108 real changes made)
+(338 missing values generated)
+(418 missing values generated)
+(111 real changes made)
+(437 missing values generated)
+(80 real changes made)
+(385 missing values generated)
+(281 missing values generated)
+(237 real changes made)
+(295 missing values generated)
+(160 real changes made)
+(179 missing values generated)
+
+{com}.         
+.         save "${c -(}temp{c )-}/Iraq_rCSI_F2F_Analysis.dta", replace      
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/4_Temp/Iraq_rCSI_F2F_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         * rename for exporting results
+.         ren rCSI*_F F_*
+{res}{txt}
+{com}.         ren rCSI*_M M_*
+{res}{txt}
+{com}.         ren *_MealSize  *_MealSz
+{res}{txt}
+{com}.         ren *_MealAdult *_MealAd
+{res}{txt}
+{com}.         ren F_          F_rCSI
+{res}{txt}
+{com}.         ren M_          M_rCSI
+{res}{txt}
+{com}.         
+.         
+.         asdoc ttest F_LessQlty == M_LessQlty, replace   save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            title(Paired Gender Difference for rCSI) fhc(\b) fhr(\b) font(Roboto) label dec(2) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Less~y {c |}{res}{col 12}    397{col 22} 2.947103{col 34} .1136301{col 46} 2.264063{col 58}  2.72371{col 70} 3.170497
+{txt}M_Less~y {c |}{res}{col 12}    397{col 22} 2.952141{col 34} .1124541{col 46} 2.240632{col 58} 2.731059{col 70} 3.173223
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0050378{col 34} .0788723{col 46} 1.571519{col 58}-.1600985{col 70} .1500229
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_LessQlty{txt} - {res}M_LessQlty{txt})                   t = {res} -0.0639
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4746         {txt}Pr(|T| > |t|) = {res}0.9491          {txt}Pr(T > t) = {res}0.5254
+
+{txt}{p 20 20 2}Paired Gender Difference for rCSI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:    2.947}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    2.952}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0050378}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .079}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_LessQlty - M_LessQ~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .949}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+
+{com}.         asdoc ttest F_Borrow == M_Borrow,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Borrow {c |}{res}{col 12}    397{col 22} .4609572{col 34} .0533014{col 46} 1.062022{col 58} .3561682{col 70} .5657462
+{txt}M_Borrow {c |}{res}{col 12}    397{col 22} .4030227{col 34} .0492622{col 46} .9815422{col 58} .3061745{col 70} .4998708
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} .0579345{col 34} .0554665{col 46} 1.105162{col 58}-.0511111{col 70} .1669801
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_Borrow{txt} - {res}M_Borrow{txt})                       t = {res}  1.0445
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.8516         {txt}Pr(|T| > |t|) = {res}0.2969          {txt}Pr(T > t) = {res}0.1484
+
+{txt}{p 20 20 2}Paired t test : F_Borrow M_Borrow   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:     .461}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .403}}}{space 1}{space 1}{ralign 9:{res:{sf: .0579345}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0555}}}{space 1}{space 1}{ralign 9:{res:{sf:     1.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_Borrow - M_Borrow   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .297}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_MealSz == M_MealSz,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealSz {c |}{res}{col 12}    397{col 22} 1.942065{col 34} .1118181{col 46}  2.22796{col 58} 1.722234{col 70} 2.161897
+{txt}M_MealSz {c |}{res}{col 12}    397{col 22}  1.97733{col 34} .1154325{col 46} 2.299976{col 58} 1.750393{col 70} 2.204267
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0352645{col 34} .0669896{col 46} 1.334759{col 58}-.1669643{col 70} .0964353
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealSz{txt} - {res}M_MealSz{txt})                       t = {res} -0.5264
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.2994         {txt}Pr(|T| > |t|) = {res}0.5989          {txt}Pr(T > t) = {res}0.7006
+
+{txt}{p 20 20 2}Paired t test : F_MealSz M_MealSz   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:    1.942}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:   1.9775}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0352645}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .067}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.55}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealSz - M_MealSz   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .599}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_MealAd == M_MealAd,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealAd {c |}{res}{col 12}    397{col 22} 1.939547{col 34} .1142069{col 46} 2.275556{col 58} 1.715019{col 70} 2.164074
+{txt}M_MealAd {c |}{res}{col 12}    397{col 22}  1.95466{col 34} .1147246{col 46} 2.285872{col 58} 1.729114{col 70} 2.180205
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0151134{col 34}  .066341{col 46} 1.321834{col 58}-.1455379{col 70} .1153112
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealAd{txt} - {res}M_MealAd{txt})                       t = {res} -0.2278
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4100         {txt}Pr(|T| > |t|) = {res}0.8199          {txt}Pr(T > t) = {res}0.5900
+
+{txt}{p 20 20 2}Paired t test : F_MealAd M_MealAd   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:   1.9395}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:   1.9545}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0151134}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0665}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.25}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealAd - M_MealAd   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      .82}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_MealNb == M_MealNb,  rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealNb {c |}{res}{col 12}    397{col 22} 1.667506{col 34} .1166198{col 46} 2.323633{col 58} 1.438235{col 70} 1.896778
+{txt}M_MealNb {c |}{res}{col 12}    397{col 22} 1.738035{col 34} .1175067{col 46} 2.341304{col 58}  1.50702{col 70}  1.96905
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} -.070529{col 34} .0657688{col 46} 1.310433{col 58}-.1998285{col 70} .0587706
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealNb{txt} - {res}M_MealNb{txt})                       t = {res} -1.0724
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.1421         {txt}Pr(|T| > |t|) = {res}0.2842          {txt}Pr(T > t) = {res}0.8579
+
+{txt}{p 20 20 2}Paired t test : F_MealNb M_MealNb   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:   1.6675}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    1.738}}}{space 1}{space 1}{ralign 9:{res:{sf: -.070529}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .066}}}{space 1}{space 1}{ralign 9:{res:{sf:    -1.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_MealNb - M_MealNb   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .284}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest F_rCSI       == M_rCSI,    rowappend save(${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc) ///
+>                                                                            fhr(\b) font(Roboto) label dec(2) tzok
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+  F_rCSI {c |}{res}{col 12}    397{col 22} 13.29723{col 34} .6430286{col 46} 12.81225{col 58} 12.03305{col 70} 14.56141
+  {txt}M_rCSI {c |}{res}{col 12}    397{col 22} 13.33753{col 34} .6403316{col 46} 12.75852{col 58} 12.07866{col 70} 14.59641
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0403023{col 34} .3191725{col 46} 6.359467{col 58}-.6677866{col 70} .5871821
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_rCSI{txt} - {res}M_rCSI{txt})                           t = {res} -0.1263
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4498         {txt}Pr(|T| > |t|) = {res}0.8996          {txt}Pr(T > t) = {res}0.5502
+
+{txt}{p 20 20 2}Paired t test : F_rCSI M_rCSI   {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      397}}}{space 1}{space 1}{ralign 9:{res:{sf:   13.297}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:  13.3375}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0403023}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .319}}}{space 1}{space 1}{ralign 9:{res:{sf:     -.15}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:F_rCSI - M_rCSI   }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .8995}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Gender_Difference_Paired_ttest.doc"}
+{txt}
+{com}. 
+.         eststo clear
+{txt}
+{com}. eststo: ttest F_LessQlty == M_LessQlty
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Less~y {c |}{res}{col 12}    397{col 22} 2.947103{col 34} .1136301{col 46} 2.264063{col 58}  2.72371{col 70} 3.170497
+{txt}M_Less~y {c |}{res}{col 12}    397{col 22} 2.952141{col 34} .1124541{col 46} 2.240632{col 58} 2.731059{col 70} 3.173223
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0050378{col 34} .0788723{col 46} 1.571519{col 58}-.1600985{col 70} .1500229
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_LessQlty{txt} - {res}M_LessQlty{txt})                   t = {res} -0.0639
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4746         {txt}Pr(|T| > |t|) = {res}0.9491          {txt}Pr(T > t) = {res}0.5254
+{txt}({res}est1{txt} stored)
+
+{com}. eststo: ttest F_Borrow == M_Borrow
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_Borrow {c |}{res}{col 12}    397{col 22} .4609572{col 34} .0533014{col 46} 1.062022{col 58} .3561682{col 70} .5657462
+{txt}M_Borrow {c |}{res}{col 12}    397{col 22} .4030227{col 34} .0492622{col 46} .9815422{col 58} .3061745{col 70} .4998708
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} .0579345{col 34} .0554665{col 46} 1.105162{col 58}-.0511111{col 70} .1669801
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_Borrow{txt} - {res}M_Borrow{txt})                       t = {res}  1.0445
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.8516         {txt}Pr(|T| > |t|) = {res}0.2969          {txt}Pr(T > t) = {res}0.1484
+{txt}({res}est2{txt} stored)
+
+{com}. eststo: ttest F_MealSz == M_MealSz
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealSz {c |}{res}{col 12}    397{col 22} 1.942065{col 34} .1118181{col 46}  2.22796{col 58} 1.722234{col 70} 2.161897
+{txt}M_MealSz {c |}{res}{col 12}    397{col 22}  1.97733{col 34} .1154325{col 46} 2.299976{col 58} 1.750393{col 70} 2.204267
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0352645{col 34} .0669896{col 46} 1.334759{col 58}-.1669643{col 70} .0964353
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealSz{txt} - {res}M_MealSz{txt})                       t = {res} -0.5264
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.2994         {txt}Pr(|T| > |t|) = {res}0.5989          {txt}Pr(T > t) = {res}0.7006
+{txt}({res}est3{txt} stored)
+
+{com}. eststo: ttest F_MealAd == M_MealAd
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealAd {c |}{res}{col 12}    397{col 22} 1.939547{col 34} .1142069{col 46} 2.275556{col 58} 1.715019{col 70} 2.164074
+{txt}M_MealAd {c |}{res}{col 12}    397{col 22}  1.95466{col 34} .1147246{col 46} 2.285872{col 58} 1.729114{col 70} 2.180205
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0151134{col 34}  .066341{col 46} 1.321834{col 58}-.1455379{col 70} .1153112
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealAd{txt} - {res}M_MealAd{txt})                       t = {res} -0.2278
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4100         {txt}Pr(|T| > |t|) = {res}0.8199          {txt}Pr(T > t) = {res}0.5900
+{txt}({res}est4{txt} stored)
+
+{com}. eststo: ttest F_MealNb == M_MealNb
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+F_MealNb {c |}{res}{col 12}    397{col 22} 1.667506{col 34} .1166198{col 46} 2.323633{col 58} 1.438235{col 70} 1.896778
+{txt}M_MealNb {c |}{res}{col 12}    397{col 22} 1.738035{col 34} .1175067{col 46} 2.341304{col 58}  1.50702{col 70}  1.96905
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22} -.070529{col 34} .0657688{col 46} 1.310433{col 58}-.1998285{col 70} .0587706
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_MealNb{txt} - {res}M_MealNb{txt})                       t = {res} -1.0724
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.1421         {txt}Pr(|T| > |t|) = {res}0.2842          {txt}Pr(T > t) = {res}0.8579
+{txt}({res}est5{txt} stored)
+
+{com}. eststo: ttest F_rCSI == M_rCSI
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+  F_rCSI {c |}{res}{col 12}    397{col 22} 13.29723{col 34} .6430286{col 46} 12.81225{col 58} 12.03305{col 70} 14.56141
+  {txt}M_rCSI {c |}{res}{col 12}    397{col 22} 13.33753{col 34} .6403316{col 46} 12.75852{col 58} 12.07866{col 70} 14.59641
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    397{col 22}-.0403023{col 34} .3191725{col 46} 6.359467{col 58}-.6677866{col 70} .5871821
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}F_rCSI{txt} - {res}M_rCSI{txt})                           t = {res} -0.1263
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     396
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.4498         {txt}Pr(|T| > |t|) = {res}0.8996          {txt}Pr(T > t) = {res}0.5502
+{txt}({res}est6{txt} stored)
+
+{com}. 
+. 
+. 
+.         * Box graph for difference
+.         graph box rCSILessQlty_g_diff rCSIBorrow_g_diff rCSIMealSize_g_diff     ///
+>                           rCSIMealAdult_g_diff rCSIMealNb_g_diff,                               ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported", size(3))    ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(70) bargap(100)            ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         note("Note: Matched pairs N = 397", ring(4) pos(6) size(2.5))   ///
+>         legend(ring(4) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")  ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small))
+{res}{p 0 4 2}
+{txt}(note:  named style
+thin not found in class
+linestyle,  default attributes used)
+{p_end}
+{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_F2F_Gender_Comparison.png", replace       
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_F2F_Gender_Comparison.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.    
+.         graph box rCSI_g_diff,                                                                                  ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported", size(3))    ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(70) bargap(100) ///
+>         ylabel(-28(7)35, nogrid labsize(3))                                                     ///
+>         note("Note: Matched pairs N = 397", ring(4) pos(6) size(2.5))   ///
+>         legend(ring(4) pos(6) rows(5) size(small))
+{res}{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_Index_F2F_Gender_Comparison.png", replace         
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_Index_F2F_Gender_Comparison.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.    
+.    ** By FSC Groups
+.    graph box rCSILessQlty_g_diff rCSIBorrow_g_diff rCSIMealSize_g_diff  ///
+>                          rCSIMealAdult_g_diff rCSIMealNb_g_diff, over(FCG)      ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported by FCS Group", size(3))  ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(50) bargap(10)     ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         note("Note: Matched pairs N = 397: FCS Poor and boarderline N = 40; FCS Acceptable N = 357", ring(4) pos(6) size(2.5))  ///
+>         legend(ring(4) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")  ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small))
+{res}{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_F2F_Gender_Comparison_FCG.png", replace   
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_F2F_Gender_Comparison_FCG.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         graph box rCSI_g_diff, over(FCG)                                                                ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported by FCS Group", size(3))       ///
+>         note("Note: Matched pairs N = 397: FCS Poor and boarderline N = 40; FCS Acceptable N = 357", ring(4) pos(6) size(2.5))  ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(70) bargap(100)    ///
+>         ylabel(-28(7)35, nogrid labsize(3))                                                     ///
+>         legend(ring(4) pos(6) rows(5) size(small))
+{res}{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_Index_F2F_Gender_Comparison_FCG.png", replace     
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_Index_F2F_Gender_Comparison_FCG.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** By Group A & B
+.         graph box rCSILessQlty_g_diff rCSIBorrow_g_diff rCSIMealSize_g_diff              ///
+>                           rCSIMealAdult_g_diff rCSIMealNb_g_diff, over(Group)   ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported by Group", size(3))   ///
+>         note("Note: Matched pairs N = 397: Group A N = 226; Group B N = 171", ring(4) pos(6) size(2.5))         ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(50) bargap(10)                                                             ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         legend(ring(4) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat") ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small)) 
+{res}{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_F2F_Gender_Comparison_Group.png", replace         
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_F2F_Gender_Comparison_Group.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** By Refugee & IDP Status
+.         graph box rCSILessQlty_g_diff rCSIBorrow_g_diff rCSIMealSize_g_diff     ///
+>                           rCSIMealAdult_g_diff rCSIMealNb_g_diff, over(Status)  ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported by Status", size(3))  ///
+>         note("Note: Matched pairs N = 397: IDP N = 177; Refugee N = 220", ring(4) pos(6) size(2.5))     ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(50) bargap(10)     ///
+>         ylabel(-7(1)7, nogrid labsize(3))                                                               ///
+>         legend(ring(4) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat") ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(small)) 
+{res}{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_F2F_Gender_Comparison_Status.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_F2F_Gender_Comparison_Status.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** By Refugee & IDP Status & FCS Groups
+.         graph box rCSILessQlty_g_diff rCSIBorrow_g_diff                                 ///
+>                           rCSIMealSize_g_diff rCSIMealAdult_g_diff                              ///
+>                           rCSIMealNb_g_diff, over(FCG) over(Status)                     ///
+>         graphregion(color(white)) bgcolor(white)                                                ///
+>         title("Iraq F2F: rCSI Cross-Gender Reporting", size(5))                 ///
+>         subtitle("Female reported - Male reported by Status and FCS Group", size(3))   ///
+>         note("Note: Matched pairs N = 397: IDP N = 177; Refugee N = 220", ring(4) pos(6) size(2.5)) ///
+>         yline(0, lwidth(0.25pt) lcolor(grey) lp(shortdash)) outergap(50) bargap(10) legend(size(2))             ///
+>         ylabel(-7(1)7, nogrid labsize(2.5))     lintensity(*)                           ///
+>         legend(ring(4) pos(6) rows(5)                                                                   ///
+>           lab(1 "Relied on less preferred, less expensive food")                ///
+>           lab(2 "Borrowed food or relied on help")                                              ///
+>           lab(3 "Reduced portion size of meals at meals time")                  ///
+>           lab(4 "Restricted consumption by adults in order for young-children to eat")          ///
+>           lab(5 "Reduced the number of meals eaten per day")                    ///
+>           size(2)) 
+{res}{p 0 4 2}
+{txt}(note:  named style
+* not found in class
+intensity,  default attributes used)
+{p_end}
+{p 0 4 2}
+{txt}(note:  named style
+grey not found in class
+color,  default attributes used)
+{p_end}
+{res}{txt}
+{com}.         graph export "${c -(}figs_gender{c )-}/Iraq_rCSI_F2F_Gender_Comparison_Status_FCG.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/6_Figures/F2F_Gender/Iraq_rCSI_F2F_Gender_Comparison_Status_FCG.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.                                 
+.         iebaltab        rCSILessQlty_g_diff rCSIBorrow_g_diff                           ///
+>                             rCSIMealSize_g_diff rCSIMealAdult_g_diff                    ///
+>                             rCSIMealNb_g_diff rCSI_g_diff,                                              ///
+>                                 grpvar(Status) grplabels(1 IDP @ 2 Refugee) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Balance_Status.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Balance_Status.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Balance_Status.xlsx}{p_end}
+{txt}
+{com}.         
+.         iebaltab        rCSILessQlty_g_diff rCSIBorrow_g_diff                           ///
+>                             rCSIMealSize_g_diff rCSIMealAdult_g_diff                    ///
+>                             rCSIMealNb_g_diff rCSI_g_diff,                                              ///
+>                                 grpvar(FCG) grplabels(1 Poor and Boarderline @ 2 Acceptable) ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_gender{c )-}/Iraq_rCSI_F2F_Balance_FCG.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Balance_FCG.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/F2F_Gender/Iraq_rCSI_F2F_Balance_FCG.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/8_Datasets/F2F/Demographic_module_RepeatPID_vA.dta", clear
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/8_Datasets/F2F/Demographic_module_RepeatPID_vB.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/8_Datasets/F2F/Demographic_module_RepeatPID_vB.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/8_Datasets/F2F/Demographic_module_RepeatPID_vA.dta"
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         tempfile roster_a roster_b
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         tempfile roster_a roster_b
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         gen Group = 2
+{txt}
+{com}.         save `roster_b'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vA.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str52{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (388,964 bytes saved)
+
+{com}.         gen Group = 1
+{txt}
+{com}.         
+.         lab def G_l 1 "Group A" 2 "Group B"
+{txt}
+{com}.         lab val Group G_l
+{txt}
+{com}.         
+.         append using `roster_b'
+{txt}(label {bf:{txt}MDDIHHHealthPregFacility} already defined)
+(label {bf:{txt}MDDIHHHealthPregCare} already defined)
+(label {bf:{txt}MDDIHHHealthPreg} already defined)
+(label {bf:{txt}HHPreg} already defined)
+(label {bf:{txt}MDDIHHNoSchoolNb_6M} already defined)
+(label {bf:{txt}MDDIHHImmMeas} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}HHIntFirstSec} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+
+{com}. 
+{txt}end of do-file
+
+{com}. codebook HHID
+
+{txt}{hline}
+{res}HHID{right:Household ID}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}10101087{txt},{res}4.200e+09{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}585{col 51}{txt}Missing .: {res}0{txt}/{res}2,810
+
+{txt}{col 19}Mean: {res}{ralign 7:1.4e+09}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.5e+09}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:1.1e+08}{ralign 10: 2.1e+08}{ralign 10: 4.3e+08}{ralign 10: 2.1e+09}{ralign 10: 4.2e+09}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         tempfile roster_a roster_b
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         
+.         bysort HHID gen Ind_Index = _n
+{err}: required
+{txt}{search r(100), local:r(100);}
+
+end of do-file
+
+{search r(100), local:r(100);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         bysort HHID: gen Ind_Index = _n
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Ind_Index:{txt}{p_end}
+1346 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Ind_Index:{txt}{p_end}
+1346 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         ** drop irrelevant variables
+.         drop HH_index EnuName EnuSex HHIntFirstSec ___index ___parent_table_name
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         tempfile roster_a roster_b
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         gen Group = 2
+{txt}
+{com}.         save `roster_b'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vA.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str52{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (388,964 bytes saved)
+
+{com}.         gen Group = 1
+{txt}
+{com}.         
+.         lab def G_l 1 "Group A" 2 "Group B"
+{txt}
+{com}.         lab val Group G_l
+{txt}
+{com}.         
+.         append using `roster_b'
+{txt}(label {bf:{txt}MDDIHHHealthPregFacility} already defined)
+(label {bf:{txt}MDDIHHHealthPregCare} already defined)
+(label {bf:{txt}MDDIHHHealthPreg} already defined)
+(label {bf:{txt}HHPreg} already defined)
+(label {bf:{txt}MDDIHHNoSchoolNb_6M} already defined)
+(label {bf:{txt}MDDIHHImmMeas} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}HHIntFirstSec} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         ** generate individual index within each household
+.         bysort HHID: gen Ind_Index = _n
+{txt}
+{com}.         
+.         ** drop irrelevant variables 
+.         drop HH_index EnuName EnuSex HHIntFirstSec ___index ___parent_table_name        ///
+>                  ADMIN1Name ADMIN5Name
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}. 
+.         tempfile roster_b resp master 
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         gen Group = 2
+{txt}
+{com}.         save `roster_b'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vA.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str52{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (388,964 bytes saved)
+
+{com}.         gen Group = 1
+{txt}
+{com}.         
+.         lab def G_l 1 "Group A" 2 "Group B"
+{txt}
+{com}.         lab val Group G_l
+{txt}
+{com}.         
+.         append using `roster_b'
+{txt}(label {bf:{txt}MDDIHHHealthPregFacility} already defined)
+(label {bf:{txt}MDDIHHHealthPregCare} already defined)
+(label {bf:{txt}MDDIHHHealthPreg} already defined)
+(label {bf:{txt}HHPreg} already defined)
+(label {bf:{txt}MDDIHHNoSchoolNb_6M} already defined)
+(label {bf:{txt}MDDIHHImmMeas} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}HHIntFirstSec} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         ** drop irrelevant variables 
+.         drop HH_index EnuName EnuSex HHIntFirstSec ___index ___parent_table_name        ///
+>                  ADMIN1Name ADMIN5Name
+{txt}
+{com}.         
+.         save `master'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000003{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         /* Respondent him/herself is not listed as part of the roster, need to split 
+>         and append back - This is strange!!                     */
+.         
+.         keep HHID RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         ren  RESPName PName
+{res}{txt}
+{com}.         ren  RESPAge  PAge
+{res}{txt}
+{com}.         ren  RESPSex  PSex
+{res}{txt}
+{com}.         ren  RESPRelationHHH PRelationHHH
+{res}{txt}
+{com}.         
+.         save `resp'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. help tag
+
+. help tab
+
+. help tag 
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         sort HHID
+{txt}
+{com}.         egen Respondent = tag(HHID)
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. tab Respondent
+
+  {txt}tag(HHID) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      2,225       79.18       79.18
+{txt}          1 {c |}{res}        585       20.82      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,810      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         keep Respondent == 1 
+{err}== invalid name
+{txt}{search r(198), local:r(198);}
+
+end of do-file
+
+{search r(198), local:r(198);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         keep if Respondent == 1 
+{txt}(2,225 observations deleted)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         tempfile roster_b resp master 
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         gen Group = 2
+{txt}
+{com}.         save `roster_b'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vA.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str52{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (388,964 bytes saved)
+
+{com}.         gen Group = 1
+{txt}
+{com}.         
+.         lab def G_l 1 "Group A" 2 "Group B"
+{txt}
+{com}.         lab val Group G_l
+{txt}
+{com}.         
+.         append using `roster_b'
+{txt}(label {bf:{txt}MDDIHHHealthPregFacility} already defined)
+(label {bf:{txt}MDDIHHHealthPregCare} already defined)
+(label {bf:{txt}MDDIHHHealthPreg} already defined)
+(label {bf:{txt}HHPreg} already defined)
+(label {bf:{txt}MDDIHHNoSchoolNb_6M} already defined)
+(label {bf:{txt}MDDIHHImmMeas} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}HHIntFirstSec} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         ** drop irrelevant variables 
+.         drop HH_index EnuName EnuSex HHIntFirstSec ___index ___parent_table_name        ///
+>                  ADMIN1Name ADMIN5Name
+{txt}
+{com}.         
+.         save `master'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000003{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         /* Respondent him/herself is not listed as part of the roster, need to split 
+>         and append back - This is strange!!                     */
+.         
+.         keep HHID RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         ren  RESPName PName
+{res}{txt}
+{com}.         ren  RESPAge  PAge
+{res}{txt}
+{com}.         ren  RESPSex  PSex
+{res}{txt}
+{com}.         ren  RESPRelationHHH PRelationHHH
+{res}{txt}
+{com}.         
+.         sort HHID
+{txt}
+{com}.         egen Respondent = tag(HHID)
+{txt}
+{com}.         keep if Respondent == 1 
+{txt}(2,225 observations deleted)
+
+{com}.         
+.         save `resp'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_15359.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use `master'
+{txt}
+{com}.         drop RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         
+.         
+.         
+. 
+{txt}end of do-file
+
+{com}. help append
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,109 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd04_hfc_sum_20230817.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}17 Aug 2023, 22:13:37
+{txt}
+{com}.         di `cdate'      
+{res}20230817
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/CAR_Full_Household_Analysis_`cdate'.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         tab S_Assign_Modality   Modality
+
+    {txt}Assigned {c |} Survey Modality: F2F
+      Survey {c |}      vs. Remote
+    Modality {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-To-Face {c |}{res}       282          0 {txt}{c |}{res}       282 
+{txt}      Remote {c |}{res}         0        154 {txt}{c |}{res}       154 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       282        154 {txt}{c |}{res}       436 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+  {txt}Assigned {c |}  Form Type: Long vs.
+    Survey {c |}         Short
+    Length {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       203          0 {txt}{c |}{res}       203 
+{txt}Short Form {c |}{res}         0        233 {txt}{c |}{res}       233 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       203        233 {txt}{c |}{res}       436 
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab count_resp HHSize
+
+{txt}Get number {c |}
+        of {c |}
+respondent {c |}                                                           Household Size
+         s {c |}         1          2          3          4          5          6          7          8          9         10         11         12 {c |}     Total
+{hline 11}{c +}{hline 132}{c +}{hline 10}
+         1 {c |}{res}         3          6         16         33         49         42         36         38         23         18          7          5 {txt}{c |}{res}       282 
+{txt}{hline 11}{c +}{hline 132}{c +}{hline 10}
+     Total {c |}{res}         3          6         16         33         49         42         36         38         23         18          7          5 {txt}{c |}{res}       282 
+
+
+{txt}Get number {c |}
+        of {c |}
+respondent {c |}          Household Size
+         s {c |}        15         18         20 {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+         1 {c |}{res}         2          2          2 {txt}{c |}{res}       282 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}         2          2          2 {txt}{c |}{res}       282 
+
+{com}. tab R_Err_Resp
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+ respondent {c |}
+  in roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        262       92.91       92.91
+{txt}          1 {c |}{res}         20        7.09      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        282      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD01312.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for Remote sample                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Aug 14, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/CAR_RM_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/CAR_RM_Household_Correct_`cdate'.dta
+>                         
+>         ** NOTES:               
+>                                         
+>                                         Attempt level dataset -> Household level
+>                                         1. Best survey outcome per household
+>                                         2. Keep only the best obs for each household
+>                                         3. Drop duplicates when answered the last survey question
+>                                         4. Attrition analysis (adding listing information? or do it 
+>                                            later)
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

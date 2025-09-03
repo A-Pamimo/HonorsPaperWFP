@@ -1,0 +1,96 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/3_Log/m01_organize_20230714.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}14 Jul 2023, 13:03:54
+{txt}
+{com}.         di `cdate'      
+{res}20230714
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}dta{c )-}/Myanmar_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl out_oth  FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency               ///
+>                                 HHExpTotal PCExpTotal FES 
+{txt}
+{com}.                                 
+.         gl out_fes HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES
+{txt}
+{com}.         
+.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}.         
+.         gl out_cari     CARI_FES_Cat1 CARI_FES_Cat2 CARI_FES_Cat3 CARI_FES_Cat4 ///
+>                         rCARI_Inc_Cat1 rCARI_Inc_Cat2 rCARI_Inc_Cat3 rCARI_Inc_Cat4 ///
+>                         CARI_rCARI      
+{txt}
+{com}.         gl out_lcs LCS_None LCS_Stress LCS_Crisis LCS_Emergency
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+.         
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}out_oth{c )-}, grpvar(Modality) nonote onerow                                                     ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_Outcome_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_Outcome_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_Outcome_Modality_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}out_cari{c )-}, grpvar(Modality) nonote onerow                                                    ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_CARI_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_CARI_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_CARI_Modality_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_fes{c )-} if Modality == 1, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_FES_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_fes{c )-} if Modality == 2, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_FES_RM_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_FES_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_lcs{c )-} if Modality == 1, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long(EN) @ 2 Short(FS))                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_LCS_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_LCS_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_LCS_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         
+. 
+.         // onerow
+. 
+{txt}end of do-file
+
+{com}. help iebaltab
+
+. 

@@ -1,0 +1,2372 @@
+<!doctype html>
+<html>
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <style type="text/css">.clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { display: table; content: ""; line-height: 0; } .clearfix:after { clear: both; } .hide-text { font: 0/0 a; color: transparent; text-shadow: none; background-color: transparent; border: 0; } .input-block-level { display: block; width: 100%; min-height: 30px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; } body { margin: 10px; font-family: "Arial Unicode MS", "Arial Unicode", Arial, sans-serif; -fs-pdf-font-embed: embed; -fs-pdf-font-encoding: Identity-H; font-size: 11px; line-height: 20px; color: #333333; background-color: #ffffff; } a { color: #0088cc; text-decoration: none; } a:hover, a:focus { color: #005580; text-decoration: underline; } .img-rounded { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; } .img-polaroid { padding: 4px; background-color: #fff; border: 1px solid #ccc; border: 1px solid rgba(0, 0, 0, 0.2); -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); } .img-circle { -webkit-border-radius: 500px; -moz-border-radius: 500px; border-radius: 500px; } p { margin: 0 10px 0 0; } .lead { margin-bottom: 20px; font-size: 21px; font-weight: 200; line-height: 30px; } small { font-size: 85%; } strong { font-weight: bold; } em { font-style: italic; } cite { font-style: normal; } .muted { color: #999999; } a.muted:hover, a.muted:focus { color: #808080; } .text-warning { color: #c09853; } a.text-warning:hover, a.text-warning:focus { color: #a47e3c; } .text-publishError { color: #b94a48; } a.text-publishError:hover, a.text-publishError:focus { color: #953b39; } .text-info { color: #3a87ad; } a.text-info:hover, a.text-info:focus { color: #2d6987; } .text-success { color: #468847; } a.text-success:hover, a.text-success:focus { color: #356635; } .text-left { text-align: left; } .text-right { text-align: right; } .text-center { text-align: center; } h1, h2, h3, h4, h5, h6 { margin: 10px 0; font-family: inherit; font-weight: bold; line-height: 20px; color: inherit; text-rendering: optimizelegibility; } h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { font-weight: normal; line-height: 1; color: #999999; } h1, h2, h3 { line-height: 40px; } h1 { font-size: 38.5px; } h2 { font-size: 31.5px; } h3 { font-size: 24.5px; } h4 { font-size: 17.5px; } h5 { font-size: 14px; } h6 { font-size: 11.9px; } h1 small { font-size: 24.5px; } h2 small { font-size: 17.5px; } h3 small { font-size: 14px; } h4 small { font-size: 14px; } .page-header { padding-bottom: 9px; margin: 20px 0 30px; border-bottom: 1px solid #eeeeee; } ul, ol { padding: 0; margin: 0 0 10px 25px; } ul ul, ul ol, ol ol, ol ul { margin-bottom: 0; } li { line-height: 20px; } ul.unstyled, ol.unstyled { margin-left: 0; list-style: none; } ul.inline, ol.inline { margin-left: 0; list-style: none; } ul.inline li, ol.inline li { display: inline-block; *display: inline; *zoom: 1; padding-left: 5px; padding-right: 5px; } dl { margin-bottom: 20px; } dt, dd { line-height: 20px; } dt { font-weight: bold; } dd { margin-left: 10px; } .dl-horizontal { *zoom: 1; } .dl-horizontal:before, .dl-horizontal:after { display: table; content: ""; line-height: 0; } .dl-horizontal:after { clear: both; } .dl-horizontal dt { float: left; width: 160px; clear: left; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .dl-horizontal dd { margin-left: 180px; } hr { margin: 20px 0; border: 0; border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff; } abbr[title], abbr[data-original-title] { cursor: help; border-bottom: 1px dotted #999999; } abbr.initialism { font-size: 90%; text-transform: uppercase; } blockquote { padding: 0 0 0 15px; margin: 0 0 20px; border-left: 5px solid #eeeeee; } blockquote p { margin-bottom: 0; font-size: 17.5px; font-weight: 300; line-height: 1.25; } blockquote small { display: block; line-height: 20px; color: #999999; } blockquote small:before { content: '\2014 \00A0'; } blockquote.pull-right { float: right; padding-right: 15px; padding-left: 0; border-right: 5px solid #eeeeee; border-left: 0; } blockquote.pull-right p, blockquote.pull-right small { text-align: right; } blockquote.pull-right small:before { content: ''; } blockquote.pull-right small:after { content: '\00A0 \2014'; } q:before, q:after, blockquote:before, blockquote:after { content: ""; } address { display: block; margin-bottom: 20px; font-style: normal; line-height: 20px; } table { max-width: 100%; background-color: transparent; border-collapse: collapse; border-spacing: 0; } .table { width: 100%; /*margin-bottom: 20px;*/ } .table th, .table td { padding: 8px; line-height: 20px; text-align: left; vertical-align: top; border-top: 1px solid #dddddd; } .table th { font-weight: bold; } .table thead th { vertical-align: bottom; } .table caption+thead tr:first-child th, .table caption+thead tr:first-child td, .table colgroup+thead tr:first-child th, .table colgroup+thead tr:first-child td, .table thead:first-child tr:first-child th, .table thead:first-child tr:first-child td { border-top: 0; } .table tbody+tbody { border-top: 2px solid #dddddd; } .table .table { background-color: #ffffff; } .table-condensed th, .table-condensed td { padding: 0; } .table-bordered { border: 1px solid #dddddd; border-collapse: collapse; border-left: 0; /*-webkit-border-radius: 4px;*/ /*-moz-border-radius: 4px;*/ /*border-radius: 4px;*/ } .table-bordered th, .table-bordered td { border-left: 1px solid #dddddd; } .table-bordered caption+thead tr:first-child th, .table-bordered caption+tbody tr:first-child th, .table-bordered caption+tbody tr:first-child td, .table-bordered colgroup+thead tr:first-child th, .table-bordered colgroup+tbody tr:first-child th, .table-bordered colgroup+tbody tr:first-child td, .table-bordered thead:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child td { border-top: 0; } .table-bordered thead:first-child tr:first-child th:first-child, .table-bordered tbody:first-child tr:first-child td:first-child, .table-bordered tbody:first-child tr:first-child th:first-child { /*-webkit-border-top-left-radius: 4px;*/ /*-moz-border-radius-topleft: 4px;*/ /*border-top-left-radius: 4px;*/ } .table-bordered thead:first-child tr:first-child th:last-child, .table-bordered tbody:first-child tr:first-child td:last-child, .table-bordered tbody:first-child tr:first-child th:last-child { /*-webkit-border-top-right-radius: 4px;*/ /*-moz-border-radius-topright: 4px;*/ /*border-top-right-radius: 4px;*/ } .table-bordered thead:last-child tr:last-child th:first-child, .table-bordered tbody:last-child tr:last-child td:first-child, .table-bordered tbody:last-child tr:last-child th:first-child, .table-bordered tfoot:last-child tr:last-child td:first-child, .table-bordered tfoot:last-child tr:last-child th:first-child { /*-webkit-border-bottom-left-radius: 4px;*/ /*-moz-border-radius-bottomleft: 4px;*/ /*border-bottom-left-radius: 4px;*/ } .table-bordered thead:last-child tr:last-child th:last-child, .table-bordered tbody:last-child tr:last-child td:last-child, .table-bordered tbody:last-child tr:last-child th:last-child, .table-bordered tfoot:last-child tr:last-child td:last-child, .table-bordered tfoot:last-child tr:last-child th:last-child { /*-webkit-border-bottom-right-radius: 4px;*/ /*-moz-border-radius-bottomright: 4px;*/ /*border-bottom-right-radius: 4px;*/ } .table-bordered tfoot+tbody:last-child tr:last-child td:first-child { /*-webkit-border-bottom-left-radius: 0;*/ /*-moz-border-radius-bottomleft: 0;*/ /*border-bottom-left-radius: 0;*/ } .table-bordered tfoot+tbody:last-child tr:last-child td:last-child { /*-webkit-border-bottom-right-radius: 0;*/ /*-moz-border-radius-bottomright: 0;*/ /*border-bottom-right-radius: 0;*/ } .table-bordered caption+thead tr:first-child th:first-child, .table-bordered caption+tbody tr:first-child td:first-child, .table-bordered colgroup+thead tr:first-child th:first-child, .table-bordered colgroup+tbody tr:first-child td:first-child { /*-webkit-border-top-left-radius: 4px;*/ /*-moz-border-radius-topleft: 4px;*/ /*border-top-left-radius: 4px;*/ } .table-bordered caption+thead tr:first-child th:last-child, .table-bordered caption+tbody tr:first-child td:last-child, .table-bordered colgroup+thead tr:first-child th:last-child, .table-bordered colgroup+tbody tr:first-child td:last-child { /*-webkit-border-top-right-radius: 4px;*/ /*-moz-border-radius-topright: 4px;*/ /*border-top-right-radius: 4px;*/ } .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th { background-color: #f9f9f9; } .table-hover tbody tr:hover td, .table-hover tbody tr:hover th { background-color: #f5f5f5; } table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="span"], .row-fluid table th[class*="span"] { display: table-cell; float: none; margin-left: 0; } .table td.span1, .table th.span1 { float: none; width: 44px; margin-left: 0; } .table td.span2, .table th.span2 { float: none; width: 124px; margin-left: 0; } .table td.span3, .table th.span3 { float: none; width: 204px; margin-left: 0; } .table td.span4, .table th.span4 { float: none; width: 284px; margin-left: 0; } .table td.span5, .table th.span5 { float: none; width: 364px; margin-left: 0; } .table td.span6, .table th.span6 { float: none; width: 444px; margin-left: 0; } .table td.span7, .table th.span7 { float: none; width: 524px; margin-left: 0; } .table td.span8, .table th.span8 { float: none; width: 604px; margin-left: 0; } .table td.span9, .table th.span9 { float: none; width: 684px; margin-left: 0; } .table td.span10, .table th.span10 { float: none; width: 764px; margin-left: 0; } .table td.span11, .table th.span11 { float: none; width: 844px; margin-left: 0; } .table td.span12, .table th.span12 { float: none; width: 924px; margin-left: 0; } .table tbody tr.success td { background-color: #dff0d8; } .table tbody tr.publishError td { background-color: #f2dede; } .table tbody tr.warning td { background-color: #fcf8e3; } .table tbody tr.info td { background-color: #d9edf7; } .table-hover tbody tr.success:hover td { background-color: #d0e9c6; } .table-hover tbody tr.publishError:hover td { background-color: #ebcccc; } .table-hover tbody tr.warning:hover td { background-color: #faf2cc; } .table-hover tbody tr.info:hover td { background-color: #c4e3f3; } .table tbody tr.gray td { background-color: #f9f9f9; } .table tbody tr.entryRow { height: 20px; } .hidden { visibility: hidden; } table.leveled { border-collapse: collapse; } .leveled td { /*border: 0;*/ } .spacer { /*border-radius: 0;*/ padding: 0; margin: 0; width: 10px; min-width: 10px; max-width: 10px; /*display: inline-block;*/ /*float: left;*/ } th.headerCell { padding-left: 5px; font-size: 12px; } td.questionCell { padding-left: 5px; } td.answerCell { padding-left: 5px; } td.fieldCell { white-space: nowrap; } td.response-note-cell { min-width: 15px; padding-left: 3px; padding-right: 3px; text-align: center; vertical-align: middle; font-size: 13px; } p.constraint, p.relevance { font-style: italic; padding-left: 10px; } p.hint { font-size: 10px; line-height: 14px; font-style: italic; } table.borderless td { border: 0; } p.noteHolder { border: 1px dotted #A9A9A9; margin: 3px; padding: 3px; white-space: normal; font-style: italic; } img.questionPrompt { max-width: 580px; } img.choicePrompt { max-width: 130px; } .required { color: red; font-style: italic; }</style>
+ </head>
+ <body>
+  <div style="margin: auto; width: 1000px">
+   <h4>CARI Validation Study Remote Test</h4>
+   <table class="table table-bordered table-condensed" style="height: 100%; width: 100%">
+    <thead>
+     <tr>
+      <th style="width: 20%;" class="headerCell"><h6>Field</h6></th>
+      <th style="width: 60%;" class="headerCell"><h6>Question</h6></th>
+      <th style="width: 20%;" class="headerCell"><h6>Answer</h6></th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Technique</span></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;" colspan="3">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td style="padding-left: 5px; background-color: #8C8C8C; color: #FFFFFF;"><span>Technique &gt; Technique (De base)</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>SvyDate</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Date de l'enquête <p class="constraint">Response constrained to: .= ${today}</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>EnuName <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Nom de l'enquêteur (ou ID)</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">4</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">5</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">6</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">7</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">8</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">11</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">12</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">13</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">14</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">15</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">16</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Nom</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>EnuSex <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Sexe de l'enquêteur</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Féminin</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Masculin</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>sampleYN</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Ce ménage fait-il partie de la liste d'échantillons fournie ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHID_manual</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">- <p class="hint">Le code se compose de 7 ou 8 chiffres à prélever dans la liste d'échantillons.</p> <p class="relevance">Question relevant when: ${sampleYN} ='0'</p> <p class="constraint">Response constrained to: regex(.,'^[0-9]{7,8}$')</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHID <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">ID du ménage <p class="hint">Le code se compose de 7 ou 8 chiffres à prélever dans la liste d'échantillons.</p> <p class="relevance">Question relevant when: ${sampleYN} ='1'</p></td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">Uid</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>ID</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>generated_note_name_16</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Vous avez sélectionné l'ID de ménage [HHID] appartenant à [calc_ID], veuillez vérifier par recoupement avec la liste d'échantillons fournie qu'il s'agit bien du bon ménage. <p class="relevance">Question relevant when: ${sampleYN} ='1'</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHPhNmb <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">- <p class="hint">Composé de 11 chiffres</p> <p class="constraint">Response constrained to: regex(.,'[0-9]{11}')</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>ADMIN1Name <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Prefecture(Admin 1)</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>ADMIN3Name <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Sous-Prefecture(Admin 2)</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">4</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">5</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">6</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">7</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>ADMIN5Name <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Commune(Admin 3)</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">4</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">5</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">6</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">7</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">8</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">11</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">12</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">13</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">14</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">15</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">16</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">17</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">18</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">19</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">21</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>-</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPpart <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Le répondant a-t-il accepté d'être interrogé ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>N'a pas décroché / pas de réponse</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>A accepté d'être interviewé</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>A refusé d'être interviewé</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Autre (précisez)</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPpart_oth <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Expliquer <p class="relevance">Question relevant when: ${RESPpart} ='999'</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Consentement</span> <p class="relevance">Group relevant when: ${RESPpart} ='1'</p></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Consent_note</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Bonjour monsieur/madame, je m'appelle [EnuName_Display], et je vous appelle depuis ........., au nom du Programme alimentaire mondial des Nations unies. Nous vous appelons pour mener un entretien téléphonique afin de mieux comprendre la situation des ménages en matière de sécurité alimentaire. Au cours de cet entretien, nous cherchons à obtenir des informations sur la sécurité alimentaire, les moyens de subsistance et les conditions de vie générales de vous et de votre ménage, qui nous aideront à améliorer les outils utilisés pour évaluer les ménages. Votre ménage a été sélectionné au hasard dans cette région pour participer à l'étude. <br><br>Toutes les informations que vous fournirez resteront strictement confidentielles et ne seront pas communiquées à d'autres personnes. Le résultat de ces informations n'est EN AUCUN CAS lié à l'aide alimentaire. Il s'agit d'une démarche volontaire et vous pouvez choisir de ne pas répondre à l'une ou à l'ensemble des questions si vous le souhaitez. Toutefois, nous espérons que vous participerez, car votre avis est important. Votre participation est très appréciée et n'influencera pas votre statut d'assistance (assistée ou non).<br><br>L'entretien durera environ 30 minutes. L'appel sera enregistré à des fins de qualité des données uniquement.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPAvailable <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Le répondant est-il disponible pour mener l'entretien maintenant ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui mais plus tard</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPcallback <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quand le répondant peut-il être rappelé ? (Dans les deux prochains jours) <p class="relevance">Question relevant when: ${RESPAvailable} ='2'</p></td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Demain matin</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Demain aprés midi</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Le lendemain dans l'après midi</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">4</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Le lendemain matin</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPvoice</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Le répondant a-t-il accepté d'enregistrer sa voix à des fins d'assurance qualité ? <p class="relevance">Question relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1' and ${RESPAvailable} ='2'</p></td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Caractéristiques démographiques</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1'</p></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPAge <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Âge du répondant <p class="hint">[OPÉRATEUR : si la personne interrogée est âgée de moins de 15 ans, demandez à parler au nom d'une autre personne du ménage. Si personne n'est disponible, veuillez mettre fin à l'interview].</p> <p class="constraint">Response constrained to: . &gt;= 15 and .&lt;=99</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPSex <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Sexe du répondant</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Féminin</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Masculin</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHSize <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quel est le nombre total de personnes dans votre ménage ? <p class="constraint">Response constrained to: .&gt;0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPRelationHHH <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est votre relation avec le chef de famille ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">100</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Chef de ménage</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">200</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Epouse/partenaire</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">300</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Fils/Fille</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">400</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Mère/Père</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">500</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Frère/Soeur</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">601</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Autre lien par le sang</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">602</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Autre lien par le mariage</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">700</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Autre personnes non apparentées</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPRelationHHH_oth <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Autre (précisez) <p class="relevance">Question relevant when: ${RESPRelationHHH} ='999'</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Consommation de Nourriture</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1'</p></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSNote</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Combien de jours au cours des 7 derniers jours, la plupart des membres de votre ménage (50% +) ont-ils mangé les aliments suivants, à l'intérieur ou à l'extérieur de la maison ? <p class="hint">[OPÉRATEUR : Ne pas inclure les aliments consommés en très petites quantités. Par exemple, moins d'une cuillère de lait ajoutée au thé]&lt;br/&gt;[Si le même aliment est consommé plusieurs fois par jour, par exemple au cours du déjeuner et du dîner, il ne doit être compté que pour une journée.]</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSStap <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Céréales, graines, racines et tubercules, tels que : <p class="hint">Sorgho, mil, maïs, blé, riz, pain/galette, beignets, farine, pâtes alimentaire, manioc, pomme de terre, patates douces, ignames, tubercules y racines sauvages</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSPulse <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Légumineuses/noix, tels que : <p class="hint">Haricots, niébé, arachides, lentilles, noix, soja, pois .</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSDairy <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Lait et autres produits laitiers, tels que : <p class="hint">Lait frais/ aigri, yaourt, fromage, autres produits laitiers SAUF margarine / beurre ou de petites quantités de lait pour le thé / café (Lait en poudre : seulement si des verres de lait en poudre sont consommés)</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSPr <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Viande, poisson et œufs, tels que : <p class="hint">Chèvre, bœuf, poulet, porc, mouton poisson, y compris thon en conserve, escargot et/ou autres fruits de mer, œufs (viande et poisson consommés en grande quantité et non comme condiment), termites, chenille(en grande quantité).</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSVeg <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Légumes et feuilles, tels que : <p class="hint">Aubergines, carottes, poivrons rouges, oignons, tomates, citrouilles, patates douces orange, épinards, tomates, concombres, gombos, champignon, amarante, jute, gnetum(Koko), feuilles de manioc et/ou autres feuilles/légumes</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSFruit <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Fruits, tels que : <p class="hint">Bananes, ananas, melons, pastèques, pommes, mangues, dattes, papayes, Mandarine, pamplemousse, goyage, citron, fruit de la passion et/ou autres fruits</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSFat <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Huile/graisse/beurre, tels que : <p class="hint">Huile végétale, huile de palme, beurre de karité, margarine, autres graisses/huiles.</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>FCSSugar <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Sucre, ou desserts, tels que : <p class="hint">Sucre, miel, confiture, biscuits, pâtisseries, gâteaux et autres sucreries (boissons sucrées).</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Stratégies de Subsistance Réduites (rCSI - &lt;br/&gt;par sexe)</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1'</p></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSINote</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Maintenant, je vais vous demander combien de jours, au cours des 7 derniers jours, votre ménage a-t-il pu faire certaines des actions suivantes pour faire face à un manque de nourriture ou d'argent pour acheter de la nourriture ?</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSILessQlty <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 7 derniers jours, y a-t-il eu des jours (et, si oui, combien) où votre ménage a dû compter sur des aliments moins appréciés et moins chers pour faire face à un manque de nourriture ou d'argent pour en acheter? <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSIBorrow <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 7 derniers jours, y a-t-il eu des jours (et, si oui, combien) où votre ménage a dû emprunter de la nourriture ou compter sur l'aide d'un parent ou d'un ami pour faire face à un manque de nourriture ou d'argent pour en acheter? <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSIMealSize <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 7 derniers jours, y a-t-il eu des jours (et, si oui, combien) où votre ménage a dû limiter la taille des portions de repas aux heures de repas pour faire face à un manque de nourriture ou d'argent pour en acheter ? <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSIMealAdult <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 7 derniers jours, y a-t-il eu des jours (et, si oui, combien) où votre ménage a dû restreindre la consommation des adultes pour permettre aux jeunes enfants de manger pour faire face à un manque de nourriture ou d'argent pour en acheter? <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSIGenderMealAdult <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 7 derniers jours, quel adulte de votre ménage a principalement limité sa consommation pour que les enfants puissent manger? <p class="hint">ENQUETEUR : Sélectionnez une option, ne lisez pas l'option de réponse. Cette question ne concerne que les adultes. Ne lisez pas les options de réponse, sélectionnez une option de réponse qui correspond à l'information fournie par le répondant.</p> <p class="relevance">Question relevant when: ${rCSIMealAdult} =1 or ${rCSIMealAdult} =2 or ${rCSIMealAdult} =3 or ${rCSIMealAdult} =4 or ${rCSIMealAdult} =5 or ${rCSIMealAdult} =6 or ${rCSIMealAdult} =7</p></td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Principalement les hommes adultes</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Principalement les femmes adultes</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Tous les adultes de façon général</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>rCSIMealNb <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 7 derniers jours, y a-t-il eu des jours (et, si oui, combien) où votre ménage a dû réduire le nombre de repas pris dans une journée pour faire face à un manque de nourriture ou d'argent pour en acheter? <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=7</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Stratégies d'adaptation aux moyens de subsistance (LCS-FS)</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1'</p></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Je vais maintenant vous demander si vous ou un membre de votre ménage avez entrepris, au cours des 30 derniers jours, des actions pour faire face au manque de nourriture ou d'argent pour acheter de la nourriture.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_stress_DomAsset <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou l'un des membres de votre ménage avez-vous dû vendre des biens (radio, meubles, réfrigérateur, télévision, bijoux, etc.) en raison du manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus la capacité de le faire.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non applicable, car nous n'avons plus de biens ménagers à vendre.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_stress_CrdtFood <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû acheter de la nourriture ou d'autres produits de première nécessité à crédit ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, parce que le ménage avait déjà épuisé cette stratégie au cours des 12 derniers mois et que nous ne pouvons plus acheter de nourriture à crédit.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non applicable, car nous n'avons pas cette possibilité.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_stress_Saving <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou l'un des membres de votre ménage avez-vous dû faire des économies en raison du manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus d'économies.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu d'économies au cours des 12 derniers mois.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_stress_BorrowCash <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû emprunter de l'argent en raison du manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, parce que le ménage a déjà épuisé cette stratégie au cours des 12 derniers mois et qu'il ne peut plus emprunter d'argent auprès de parents, d'amis ou de voisins.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non applicable, car nous n'avons personne à qui emprunter de l'argent.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_crisis_ProdAssets <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû vendre des biens de production ou des moyens de transport (voiture, moto, machine à coudre, brouette, vélo, etc.) en raison du manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus d'actifs productifs à vendre.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non applicable, car nous n'avons plus d'actifs productifs à vendre.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_crisis_HealthEdu <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû réduire vos dépenses de santé (y compris les médicaments) ou d'éducation en raison du manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus la possibilité de le faire (pour réduire davantage les dépenses de santé et d'éducation).</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_crisis_OutSchool <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû retirer des enfants de l'école en raison du manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus la possibilité de le faire.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non applicable, car nous n'avons pas d'enfants en âge scolaire ou nous les avons retirés il y a plus de 12 mois.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>LcsEN_em_ChildWork <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû envoyer des enfants (de moins de 15 ans) travailler pour contribuer au revenu du ménage (par exemple, domestique, travail occasionnel), en raison d'un manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'emprunter de l'argent.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus la capacité de le faire.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non applicable, car nous n'avons pas d'enfants (moins de 15 ans).</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_em_Begged <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, vous ou un membre de votre ménage avez-vous dû envoyer des enfants (de moins de 15 ans) travailler pour contribuer au revenu du ménage (par exemple, domestique, travail occasionnel), en raison d'un manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, parce que nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et que nous n'avons plus la capacité de le faire.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Lcs_em_IllegalAct <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, avez-vous, ou quelqu'un de votre foyer, exercé des activités socialement dégradantes, à haut risque ou d'exploitation, ou des activités lucratives mettant votre vie en danger (vol, prostitution) en raison d'un manque de nourriture ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous n'avons pas eu besoin d'appliquer cette stratégie</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">20</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non, car nous avons déjà épuisé cette stratégie au cours des 12 derniers mois et nous n'avons plus la possibilité de le faire.</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">30</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui, nous avons dû appliquer cette stratégie au cours des 30 derniers jours en raison d'un manque de nourriture.</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Dépense</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1' and string-length( ${HHID} )=10</p></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;" colspan="3">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td style="padding-left: 5px; background-color: #8C8C8C; color: #FFFFFF;"><span>Dépense &gt; Dépenses alimentaires</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>EXPfood_note</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">J'aimerais maintenant vous poser quelques questions concernant la consommation et les achats de nourriture par une personne de votre ménage au cours des sept derniers jours. <p class="hint">Notez que ce module est différent du score de consommation alimentaire, dans la mesure où il concerne les dépenses/achats (pas nécessairement la consommation) effectués par n'importe quel individu du ménage, à n'importe quel moment et pour n'importe quel montant.</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpStap_MNCRD_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé en aliments de base (tels que céréales, tubercules, légumineuses) destinés à la consommation du ménage au cours des 7 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpStap_GiftAid_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des aliments de base (céréales, tubercules, légumineuses) provenant de dons ou d'assistance en nature que votre ménage a consommés au cours des 7 derniers jours ? <p class="hint">Veuillez indiquer la valeur de cet aliment comme si vous l'achetiez au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpStap_Own_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des aliments de base (céréales, tubercules, légumineuses) produits, cueillis, chassés ou reçus en échange de travail par votre ménage et que celui-ci a consommés au cours des 7 derniers jours ? <p class="hint">Veuillez indiquer la valeur de cet aliment comme si vous l'achetiez au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpPro_MNCRD_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé en aliments riches en protéines (tels que la viande, les œufs, le poisson, le lait et les produits laitiers) destinés à votre propre consommation au cours des sept derniers jours? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpPro_GiftAid_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des aliments riches en protéines (tels que la viande, les œufs, le poisson, le lait et les produits laitiers) provenant de dons en nature ou d'une assistance que votre ménage a consommés au cours des 7 derniers jours ? <p class="hint">Veuillez indiquer la valeur de cet aliment comme si vous l'achetiez au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpPro_Own_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des aliments riches en protéines (tels que la viande, les œufs, le poisson, le lait, les produits laitiers) produits, cueillis, chassés ou reçus en échange de travail par votre ménage et que celui-ci a consommés au cours des sept derniers jours ? <p class="hint">Veuillez indiquer la valeur de cet aliment comme si vous l'achetiez au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpFruVeg_MNCRD_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé en fruits et légumes destinés à votre propre consommation au cours des sept derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpFruVeg_GiftAid_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des fruits et légumes provenant de dons ou d'aides en nature que votre ménage a consommés au cours des 7 derniers jours ? <p class="hint">Veuillez indiquer la valeur de cet aliment comme si vous l'achetiez au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpFruVeg_Own_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des fruits et légumes produits, cueillis, chassés ou reçus en échange de travail par votre ménage et que celui-ci a consommés au cours des 7 derniers jours ? <p class="hint">Veuillez indiquer la valeur de cet aliment comme si vous l'achetiez au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpFOther_MNCRD_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé pour d'autres produits alimentaires (huile, sucre, noix, sucreries, condiments, boissons, etc.) destinés à votre propre consommation au cours des 7 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpFOther_GiftAid_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des autres produits alimentaires (huile, sucre, noix, bonbons, condiments, boissons, etc.) provenant de dons ou d'aides en nature que votre ménage a consommés au cours des 7 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpFOther_Own_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des autres produits alimentaires (huile, sucre, noix, bonbons, condiments, boissons, etc.) produits, cueillis, chassés ou reçus en échange de travail par votre ménage et que celui-ci a consommés au cours des 7 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;" colspan="3">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td style="padding-left: 5px; background-color: #8C8C8C; color: #FFFFFF;"><span>Dépense &gt; Dépenses Non alimentaires</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>EXPNF_note</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">J'aimerais maintenant vous poser quelques questions concernant la consommation et l'utilisation d'articles non alimentaires (y compris les services) dans votre ménage au cours des 30 derniers jours.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNF_GiftAid_YN1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Votre ménage a-t-il consommé/utilisé des produits non alimentaires (articles d'hygiène, éducation, logement, services publics, vêtements, transport, communication) provenant d'une aide en nature ou de dons ?</td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Non</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Oui</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFHyg_MNCRD_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé en articles d'hygiène et de soins personnels destinés à votre propre consommation au cours des 30 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFHyg_GiftAid_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, votre ménage a-t-il utilisé des articles et services d'hygiène provenant de dons en nature ou d'une assistance en nature ? <p class="hint">Veuillez indiquer la valeur des articles non alimentaires comme si vous deviez les payer.</p> <p class="relevance">Question relevant when: ${HHExpNF_GiftAid_YN1M} ='1'</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFTranspPh_MNCRD_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé pour les transports et les communications destinés à votre propre consommation au cours des 30 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFTranspPh_GiftAid_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des articles de transport et de communication provenant de dons ou d'aides en nature que votre ménage a consommés ou utilisés au cours des 30 derniers jours ? <p class="hint">Veuillez indiquer la valeur des articles non alimentaires comme si vous deviez les payer.</p> <p class="relevance">Question relevant when: ${HHExpNF_GiftAid_YN1M} ='1'</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFUtilities_MNCRD_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé pour le logement et les services publics destinés à votre propre consommation au cours des 30 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFUtilities_GiftAid_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des dépenses de logement et de services publics provenant de dons ou d'aides en nature que votre ménage a consommées ou utilisées au cours des 30 derniers jours ? <p class="hint">Veuillez indiquer la valeur des articles non alimentaires comme si vous deviez les payer.</p> <p class="relevance">Question relevant when: ${HHExpNF_GiftAid_YN1M} ='1'</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFAlcTobac_MNCRD_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé pour le tabac et l'alcool destinés à votre propre consommation au cours des 30 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFAlcTobac_GiftAid_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Au cours des 30 derniers jours, votre ménage a-t-il consommé de l'alcool et du tabac provenant de dons en nature ou d'une aide en nature ? <p class="hint">Veuillez indiquer la valeur des articles non alimentaires comme si vous deviez les payer.</p> <p class="relevance">Question relevant when: ${HHExpNF_GiftAid_YN1M} ='1'</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFIntNote</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Maintenant, je vais vous poser à nouveau des questions sur la consommation et l'utilisation d'articles non alimentaires dans votre ménage. Cependant, cette fois, je vais vous poser des questions sur les 6 derniers mois.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFEduMedCloth_MNCRD_6M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé pour l'éducation, la santé et l'habillement destinés à votre propre consommation au cours des six derniers mois ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNFEduMedCloth_GiftAid_6M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur de l'éducation, de la santé et de l'habillement provenant de dons ou d'aides en nature que votre ménage a consommé ou utilisé au cours des 6 derniers mois ? <p class="hint">Veuillez indiquer la valeur des articles non alimentaires comme si vous deviez les payer.</p> <p class="relevance">Question relevant when: ${HHExpNF_GiftAid_YN1M} ='1'</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Dépenses</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1' and string-length( ${HHID_manual} )=7 or string-length( ${HHID} )=7</p></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;" colspan="3">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td style="padding-left: 5px; background-color: #8C8C8C; color: #FFFFFF;"><span>Dépenses &gt; Dépenses alimentaires</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>EXPfood_note_S</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">J'aimerais maintenant vous poser quelques questions concernant la consommation et les achats de nourriture par votre ménage au cours des sept derniers jours. <p class="hint">Notez que ce module est différent du score de consommation alimentaire, dans la mesure où il concerne les dépenses/achats (pas nécessairement la consommation) effectués par n'importe quel individu du ménage, à n'importe quel moment et pour n'importe quel montant.</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpF_MNCRD_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé en denrées alimentaires destinées à sa consommation au cours des sept derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpF_GiftAid_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur de la nourriture provenant de dons ou d'aides en nature que votre ménage a consommée au cours des 7 derniers jours ? <p class="hint">Demandez-leur d'en estimer la valeur comme s'ils avaient acheté cet aliment au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpF_Own_7D <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des aliments produits, cueillis, chassés ou reçus en échange de travail par votre ménage et que celui-ci a consommés au cours des 7 derniers jours ? <p class="hint">Demandez-leur d'en estimer la valeur comme s'ils avaient acheté cet aliment au marché.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;" colspan="3">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td style="padding-left: 5px; background-color: #8C8C8C; color: #FFFFFF;"><span>Dépenses &gt; Dépenses non alimentaires</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>EXPNF_note_S</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">J'aimerais maintenant vous poser quelques questions concernant la consommation et l'utilisation d'articles non alimentaires et de services de votre ménage au cours des 30 derniers jours, y compris les articles d'hygiène, le transport, le carburant, les services publics, la communication/le rechargement, les loisirs, la santé et l'éducation, l'habillement, etc.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNF_MNCRD_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">En tenant compte des achats effectués au comptant et à crédit, combien votre ménage a-t-il dépensé en articles non alimentaires destinés à votre propre consommation au cours des 30 derniers jours ? <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="spacer" style="background-color: #8C8C8C;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHExpNF_GiftAid_1M <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la valeur des articles non alimentaires provenant de dons ou d'aides en nature que votre ménage a consommés ou utilisés au cours des 30 derniers jours ? <p class="hint">Demandez-leur d'estimer la valeur des articles non alimentaires comme s'ils devaient les payer.</p> <p class="constraint">Response constrained to: .&gt;=0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Revenu</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1'</p></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>Income_note</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Nous avons presque terminé. Je vais maintenant vous poser quelques questions sur les sources de revenus et le niveau de revenus de votre ménage.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHHOccupation <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la profession du chef de ménage?</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHInc_PCT</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Combien de membres du ménage contribuent au revenu du ménage ? <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;= ${HHSize}</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHIncNb <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Combien de sources de revenus votre ménage a-t-il? <p class="hint">Veuillez indiquer le nombre total de sources de revenus par type ; il peut y avoir plus d'un individu gagnant un revenu au sein d'un ménage, et un individu peut également avoir plus d'une source de revenus différente (ou aucune) ; le revenu peut également être lié au ménage plutôt qu'à l'individu (par exemple, les envois de fonds ou l'aide).</p> <p class="constraint">Response constrained to: . &gt;= 0 and .&lt;=15</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHIncFirst</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Principale source de revenus du ménage. <p class="hint">IL S'AGIT DE LA SOURCE DE REVENUS LA PLUS STABLE POUR LE MÉNAGE</p> <p class="relevance">Question relevant when: ${HHIncNb} &gt;0</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHIncFirst_SRi <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Quelle est la principale source de revenus du ménage? <p class="relevance">Question relevant when: ${HHIncNb} &gt;0</p></td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Travail salarié - Professionnel</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Salaire de la main-d'œuvre - qualifiée</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Salaire de la main-d'œuvre - non qualifiée/occasionnelle/agricole</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">4</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Salaire - non qualifié/occasionnel/non-agricole</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">5</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Pensions</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">6</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Envois de fonds</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">7</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Aide/dons</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">8</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Emprunter de l'argent/vivre de ses dettes</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">9</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Activités à haut risque</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">10</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Mendicité, fouille des poubelles</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">11</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Épargne/vente d'actifs</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">12</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Petit commerce/vente dans la rue</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">13</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Petit commerce (entreprise personnelle)</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">14</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Moyen/grand commerce (entreprise personnelle)</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">15</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Petite production agricole, y compris l'élevage (propres terres ou louées/propre bétail)</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">16</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Moyenne/grande production agricole, y compris l'élevage (propres terres ou louées/propre bétail)</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">999</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Autre (précisez)</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHIncFirst_Oth <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Autre (précisez) <p class="relevance">Question relevant when: ${HHIncFirst_SRi} ='999'</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>HHIncChg <span class="required">(required)</span> </span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Les revenus ont-ils changé au cours de l'année écoulée ? <p class="hint">(Ne tenez pas compte de la dévaluation de la monnaie).</p></td>
+      <td>
+       <table class="table table-bordered table-condensed">
+        <tbody>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">0</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Pas de changement</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">1</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Aumenté</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">2</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Réduction de moins de 25%</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">3</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Réduit de plus de 25% et de moins de 50%</span></td>
+         </tr>
+         <tr>
+          <td class="response-note-cell"></td>
+          <td style="text-align: center; padding-left: 3px; padding-right: 3px;">4</td>
+          <td style="width: 100%; padding-left: 3px; padding-right: 3px;"><span>Réduit de plus de 50%</span></td>
+         </tr>
+        </tbody>
+       </table></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="padding-left: 5px; background-color: #707070; color: #FFFFFF;" colspan="3"><span>Fin</span> <p class="relevance">Group relevant when: ${RESPpart} ='1' and ${RESPAvailable} ='1'</p></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>note_close1</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Merci d'avoir pris le temps de répondre à nos questions.</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>RESPPhNmbAlt</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Demander leur numéro de téléphone personnel, sinon le numéro de téléphone fixe <p class="hint">Composé de 11 chiffres</p> <p class="constraint">Response constrained to: regex(.,'[0-9]{11}')</p></td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>comments</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Avez vous des commentaires</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+     <tr class="gray entryRow">
+      <td style="height: 100%;">
+       <div style="height: 100%; width: 100%">
+        <table class="table borderless" style="height: 100%">
+         <tbody>
+          <tr>
+           <td class="spacer" style="background-color: #707070;"></td>
+           <td class="fieldCell" style="padding-left: 5px;"><span>remarks</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div></td>
+      <td class="questionCell">Remarques de l'enqueteur</td>
+      <td class="answerCell response-note-cell"></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+ </body>
+</html>

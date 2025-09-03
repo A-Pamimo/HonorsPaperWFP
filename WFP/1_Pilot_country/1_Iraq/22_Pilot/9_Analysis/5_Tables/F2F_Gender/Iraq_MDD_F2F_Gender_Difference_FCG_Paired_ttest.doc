@@ -1,0 +1,411 @@
+{\rtf1\ansi\deff0 {\fonttbl{\f0\fnil Garamond;}}
+{\info {\author .}{\company .}{\title .}}
+\deflang1033\plain\fs20
+{\footer\pard\qc\plain\f0\fs20\chpgn\par}
+{
+{\fs20\b\qc\line Paired Gender Difference for MDDW }{\par}
+{\trowd\trgaph108\trleft-108
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx2420
+\fs20\pard\intbl\qr { }\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx3640
+\fs20\pard\intbl\qr {{ Mean1 }}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx4860
+\fs20\pard\intbl\qr {{ Mean2 }}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx6080
+\fs20\pard\intbl\qr {{ dif }}\cell
+\clbrdrt\brdrw10\brdrs \clbrdrb\brdrw25\brdrs  \cellx7300
+\fs20\pard\intbl\qr {{ p value}}\cell
+\row}
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ StapCer ~ }}\cell
+\cellx3640
+\qr {{0.940}}\cell
+\cellx4860
+\qr {{0.970}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ StapRoo ~ }}\cell
+\cellx3640
+\qr {{0.666}}\cell
+\cellx4860
+\qr {{0.545}}\cell
+\cellx6080
+\qr {{0.121}}\cell
+\cellx7300
+\qr {{0.044}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Pulse F ~ }}\cell
+\cellx3640
+\qr {{0.455}}\cell
+\cellx4860
+\qr {{0.576}}\cell
+\cellx6080
+\qr {{-0.121}}\cell
+\cellx7300
+\qr {{0.161}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Nuts F -~ }}\cell
+\cellx3640
+\qr {{0.000}}\cell
+\cellx4860
+\qr {{0.030}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.325}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Milk F -~ }}\cell
+\cellx3640
+\qr {{0.363}}\cell
+\cellx4860
+\qr {{0.334}}\cell
+\cellx6080
+\qr {{0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Dairy F ~ }}\cell
+\cellx3640
+\qr {{0.758}}\cell
+\cellx4860
+\qr {{0.666}}\cell
+\cellx6080
+\qr {{0.091}}\cell
+\cellx7300
+\qr {{0.183}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ PrMeatO ~ }}\cell
+\cellx3640
+\qr {{0.030}}\cell
+\cellx4860
+\qr {{0.030}}\cell
+\cellx6080
+\qr {{0.000}}\cell
+\cellx7300
+\qr {{.}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ PrMeatF ~ }}\cell
+\cellx3640
+\qr {{0.000}}\cell
+\cellx4860
+\qr {{0.000}}\cell
+\cellx6080
+\qr {{0.000}}\cell
+\cellx7300
+\qr {{.}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ PrMeatPr~ }}\cell
+\cellx3640
+\qr {{0.000}}\cell
+\cellx4860
+\qr {{0.000}}\cell
+\cellx6080
+\qr {{0.000}}\cell
+\cellx7300
+\qr {{.}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ PrMeatWh~ }}\cell
+\cellx3640
+\qr {{0.363}}\cell
+\cellx4860
+\qr {{0.363}}\cell
+\cellx6080
+\qr {{0.000}}\cell
+\cellx7300
+\qr {{1.000}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ PrFish F~ }}\cell
+\cellx3640
+\qr {{0.060}}\cell
+\cellx4860
+\qr {{0.030}}\cell
+\cellx6080
+\qr {{0.030}}\cell
+\cellx7300
+\qr {{0.325}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ PrEgg F ~ }}\cell
+\cellx3640
+\qr {{0.545}}\cell
+\cellx4860
+\qr {{0.576}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ VegGre F~ }}\cell
+\cellx3640
+\qr {{0.576}}\cell
+\cellx4860
+\qr {{0.485}}\cell
+\cellx6080
+\qr {{0.091}}\cell
+\cellx7300
+\qr {{0.183}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ VegOrg F~ }}\cell
+\cellx3640
+\qr {{0.363}}\cell
+\cellx4860
+\qr {{0.363}}\cell
+\cellx6080
+\qr {{0.000}}\cell
+\cellx7300
+\qr {{1.000}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ FruitOrg~ }}\cell
+\cellx3640
+\qr {{0.060}}\cell
+\cellx4860
+\qr {{0.000}}\cell
+\cellx6080
+\qr {{0.061}}\cell
+\cellx7300
+\qr {{0.161}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ VegOth F~ }}\cell
+\cellx3640
+\qr {{0.394}}\cell
+\cellx4860
+\qr {{0.485}}\cell
+\cellx6080
+\qr {{-0.091}}\cell
+\cellx7300
+\qr {{0.374}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ FruitOth~ }}\cell
+\cellx3640
+\qr {{0.212}}\cell
+\cellx4860
+\qr {{0.151}}\cell
+\cellx6080
+\qr {{0.061}}\cell
+\cellx7300
+\qr {{0.325}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Snf F - ~ }}\cell
+\cellx3640
+\qr {{0.000}}\cell
+\cellx4860
+\qr {{0.000}}\cell
+\cellx6080
+\qr {{0.000}}\cell
+\cellx7300
+\qr {{.}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Staples ~ }}\cell
+\cellx3640
+\qr {{0.940}}\cell
+\cellx4860
+\qr {{0.970}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Pulses F~ }}\cell
+\cellx3640
+\qr {{0.455}}\cell
+\cellx4860
+\qr {{0.576}}\cell
+\cellx6080
+\qr {{-0.121}}\cell
+\cellx7300
+\qr {{0.161}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ NutsSeed~ }}\cell
+\cellx3640
+\qr {{0.000}}\cell
+\cellx4860
+\qr {{0.030}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.325}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Dairies ~ }}\cell
+\cellx3640
+\qr {{0.818}}\cell
+\cellx4860
+\qr {{0.788}}\cell
+\cellx6080
+\qr {{0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ MeatFish~ }}\cell
+\cellx3640
+\qr {{0.424}}\cell
+\cellx4860
+\qr {{0.394}}\cell
+\cellx6080
+\qr {{0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Eggs F -~ }}\cell
+\cellx3640
+\qr {{0.545}}\cell
+\cellx4860
+\qr {{0.576}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.572}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ LeafGVeg~ }}\cell
+\cellx3640
+\qr {{0.576}}\cell
+\cellx4860
+\qr {{0.485}}\cell
+\cellx6080
+\qr {{0.091}}\cell
+\cellx7300
+\qr {{0.183}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ VitA F -~ }}\cell
+\cellx3640
+\qr {{0.424}}\cell
+\cellx4860
+\qr {{0.363}}\cell
+\cellx6080
+\qr {{0.061}}\cell
+\cellx7300
+\qr {{0.488}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ OtherVeg~ }}\cell
+\cellx3640
+\qr {{0.394}}\cell
+\cellx4860
+\qr {{0.485}}\cell
+\cellx6080
+\qr {{-0.091}}\cell
+\cellx7300
+\qr {{0.374}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ OtherFru~ }}\cell
+\cellx3640
+\qr {{0.212}}\cell
+\cellx4860
+\qr {{0.151}}\cell
+\cellx6080
+\qr {{0.061}}\cell
+\cellx7300
+\qr {{0.325}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Index F ~ }}\cell
+\cellx3640
+\qr {{4.788}}\cell
+\cellx4860
+\qr {{4.818}}\cell
+\cellx6080
+\qr {{-0.030}}\cell
+\cellx7300
+\qr {{0.882}}\cell
+\row}
+
+{\trowd\trgaph108\trleft-108
+\cellx2420
+\fs20\pard\intbl\ql {{ Index 5 ~ }}\cell
+\cellx3640
+\qr {{0.545}}\cell
+\cellx4860
+\qr {{0.606}}\cell
+\cellx6080
+\qr {{-0.061}}\cell
+\cellx7300
+\qr {{0.422}}\cell
+\row}
+
+
+\writepositionforappend
+}}

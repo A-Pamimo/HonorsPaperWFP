@@ -1,0 +1,26 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES if Modality == 2, grpvar(Form) nonote nototal replace onerow format(%12.2fc) grplabels(1 Long @ 2 Short) rowvarlabels savetex("C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_FES_RM_Length_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(1)-(2)} \\
+ & \multicolumn{1}{c}{Long}  & \multicolumn{1}{c}{Short}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+Total monthly food expenditure (average)   & 40,460.82    & 58,288.50    & -17,827.68***   \\
+ & (4,071.12)  & (4,793.00)  &  \\ [1ex]
+Total monthly non-food expenditure (average)   & 19,262.26    & 39,332.66    & -20,070.40   \\
+ & (2,583.85)  & (15,862.22)  &  \\ [1ex]
+Monthly total household expenditure   & 59,723.08    & 97,621.16    & -37,898.08*   \\
+ & (5,870.92)  & (16,932.70)  &  \\ [1ex]
+Monthly total household expenditure per capita   & 8,827.35    & 12,948.42    & -4,121.07*   \\
+ & (856.92)  & (2,033.49)  &  \\ [1ex]
+Food Expenditure Share   & 0.56    & 0.76    & -0.19***   \\
+ & (0.03)  & (0.02)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 120   & 157  & 277  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

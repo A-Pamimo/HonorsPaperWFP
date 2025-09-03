@@ -1,0 +1,535 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd04_hfc_sum_20230928.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}28 Sep 2023, 13:54:47
+{txt}
+{com}.         di `cdate'      
+{res}20230928
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/CAR_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         tab S_Assign_Modality   Modality
+
+    {txt}Assigned {c |} Survey Modality: F2F
+      Survey {c |}      vs. Remote
+    Modality {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-To-Face {c |}{res}       969          0 {txt}{c |}{res}       969 
+{txt}      Remote {c |}{res}         0        277 {txt}{c |}{res}       277 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       969        277 {txt}{c |}{res}     1,246 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+  {txt}Assigned {c |}  Form Type: Long vs.
+    Survey {c |}         Short
+    Length {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       586          0 {txt}{c |}{res}       586 
+{txt}Short Form {c |}{res}         0        660 {txt}{c |}{res}       660 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       586        660 {txt}{c |}{res}     1,246 
+{txt}
+{com}.         
+. *       replace S_Assign_Modality = Modality if mi(S_Assign_Modality)
+. *       replace S_Assign_Length   = Form         if mi(S_Assign_Length)
+.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         ** 1 Survey Completion  
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Not Comple~d}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      295}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.89899}}}{space 1}{space 1}{ralign 9:{res:{sf: 28.33814}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.33861}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      746}}}{space 1}{space 1}{ralign 9:{res:{sf: 32.61915}}}{space 1}{space 1}{ralign 9:{res:{sf: 71.66186}}}{space 1}{space 1}{ralign 9:{res:{sf: 72.92278}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1041}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.51815}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.51815}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf: 42.36992}}}{space 1}{space 1}{ralign 9:{res:{sf: 77.76886}}}{space 1}{space 1}{ralign 9:{res:{sf: 76.66139}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      277}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.11194}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.23114}}}{space 1}{space 1}{ralign 9:{res:{sf: 27.07722}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1246}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.48185}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.48185}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1264}}}{space 1}{space 1}{ralign 9:{res:{sf: 55.26891}}}{space 1}{space 1}{ralign 9:{res:{sf: 55.26891}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1023}}}{space 1}{space 1}{ralign 9:{res:{sf: 44.73109}}}{space 1}{space 1}{ralign 9:{res:{sf: 44.73109}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2287}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}.         esttab using "${c -(}d_tex_tab{c )-}/CAR_rCARI_Completion.tex",                                   ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace 
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_rCARI_Completion.tex"'})
+
+{com}. 
+.         /*
+>         dtable i.S_Assign_Modality i.S_Assign_Length i.S_Geo_Admin1 i.S_Geo_Admin2    ///
+>                    i.S_Geo_Admin3 i.S_Geo_Admin5 S_age i.S_relationship i.S_hh_status     ///
+>                    i.S_hh_head_sex i.S_hh_head_marital S_hh_head_educ S_hh_size          ///
+>                    S_mem_lessthan15 S_mem_greaterthan60 i.S_mem_disability                       ///
+>                    i.S_house_type S_area_house i.S_roofing_material_house                        ///
+>                    i.S_floor_material_house, by(Completion, test)                                               ///
+>                    title(Myanmar rCARI Validation Study Progress)                                       ///
+>                    export(${c -(}d_tex_tab{c )-}/CAR_rCARI_Completion_by_Admin.docx, replace)     
+> 
+>                    */
+.                    
+.         ** Survey Progress by Date
+.         tostring Sys_submission_time, g(Date_Str) format(%tdd_m_CY) force
+{txt}Date_Str generated as {res:str11}
+Date_Str was forced to string; some loss of information
+
+{com}.         replace Date_Str = "" if Date_Str == "."
+{txt}(1,041 real changes made)
+
+{com}.         encode  Date_Str, gen(Data_Cat)
+{txt}
+{com}.         
+.         catplot Modality, asyvars stack recast(bar)                     ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45))) ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(10)90, nogrid labsize(2))                              ///
+>                         legend(ring(4) pos(6) rows(1) size(3))                  ///
+>                         ytitle("") blabel(bar, pos(center) size(2)      ///
+>                         gap(1)) b1title("") 
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/CAR_rCARI_Progress_Day.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/2_figure/CAR_rCARI_Progress_Day.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** F2F by Date
+.         catplot Modality if Modality == 1, asyvars stack recast(bar)    ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45)))   ///
+>                         by (EnuName_Display)                                                    ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(5)15, nogrid labsize(2))                               ///
+>                         ytitle("") blabel(bar, pos(out) size(2)                 ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/CAR_rCARI_Progress_Enum_F2F_Date.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/2_figure/CAR_rCARI_Progress_Enum_F2F_Date.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         catplot Modality if Modality == 2, asyvars stack recast(bar)    ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45)))   ///
+>                         by (EnuName_Display)                                                    ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(5)15, nogrid labsize(2))                               ///
+>                         ytitle("") blabel(bar, pos(out) size(2)                 ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/CAR_rCARI_Progress_Enum_RM_Date.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/2_figure/CAR_rCARI_Progress_Enum_RM_Date.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+.         ** 2 Survey Duration: Doesn't Work and can be ignored for now   
+. /*      tostring today, g(Date_Str) format(%tdd_m_CY) force
+>         replace Date_Str = "" if Date_Str == "."
+>         
+>         gen NewDate = date(Date_Str, "DMY")
+>         format NewDate %tdCCYYNNDD
+> 
+>         graph box Duration_Min if Modality == 1, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)1500, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>         graph export "${c -(}d_tex_fig{c )-}/CAR_rCARI_Duration_F2F_Date.png", replace
+>          
+>         graph box Duration_Min if Modality == 2, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)2100, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>     graph export "${c -(}d_tex_fig{c )-}/CAR_rCARI_Duration_RM_Date.png", replace
+> */    
+.         ** 3 Household Size by Enumerator
+.         graph box HHSize, by(Modality) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(3)15, nogrid labsize(3))  ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+{res}{txt}
+{com}.     graph export "${c -(}d_tex_fig{c )-}/CAR_rCARI_HHSize_Modality.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/2_figure/CAR_rCARI_HHSize_Modality.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+. 
+.         gl bal_all      RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_f2f      RESPAge RESPFemale RESPHHH RESPSingle RESPMarried                                ///
+>                                 HHDisplaced HHDisable MDDIHHDisabledNb           ///
+>                                 R_HHH_Literate HHSize R_Num_Male R_Num_Female R_Num_Child                ///
+>                                 R_Num_Senior R_Num_Adult         ///
+>                                 FemaleMale_Ratio Dependency_Ratio HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_rm       RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl outcome  FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS ///
+>                                 rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI  ///
+>                                 Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping                        ///
+>                                 HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES             ///
+>                                 HH_Vul_FES HH_Vul_Income
+{txt}
+{com}.         
+.         * Randomization Balance
+.         iebaltab ${c -(}bal_all{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/CAR_Demo_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Demo_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Demo_Modality_Balance.tex}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}bal_f2f{c )-} if Modality == 1, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/CAR_Demo_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Demo_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Demo_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}bal_rm{c )-}  if Modality == 2, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                        ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/CAR_Demo_RM_Length_Balance.tex")
+
+{txt}{phang}Warning: The R2 was not possible to calculate in the regression for the pair-wise test of variable [HHInc_None] for observations with values [1] and [2] in the groupvar [Form].{p_end}.
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Demo_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Demo_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}.                                 
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}outcome{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow                 ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/CAR_Outcome_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Outcome_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Outcome_Modality_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}outcome{c )-} if Modality == 1, grpvar(Form) nonote total replace ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short) onerow                         ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/CAR_Outcome_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Outcome_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Outcome_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}outcome{c )-} if Modality == 2, grpvar(Form) nonote total replace ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short) onerow                         ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/CAR_Outcome_RM_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Outcome_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/CAR_Outcome_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         // onerow
+.         
+.         gl var_ad       HHID Sys_uuid ADMIN1Name ADMIN3Name ADMIN5Name EnuName EnuName_Display  ///
+>                                 Sys_HHCoord_latitude Sys_HHCoord_longitude Sys_HHCoord_altitude Consent ///
+>                                 Completion Duration_Min Modality Form S_Assign_Modality S_Assign_Length
+{txt}
+{com}.         gl demo RESPAge RESPSex HHSize RESPHHH RESPFemale HHDisplaced HHHSingle                 ///
+>                                 HHHMarried HHDisable R_*        
+{txt}
+{com}.         gl var_dem  RESPAge HHSize
+{txt}
+{com}.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI 
+{txt}
+{com}.         gl var_lcs      Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping
+{txt}
+{com}.         gl var_fes      HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES
+{txt}
+{com}.         gl var_inc      HH_Vul_Income
+{txt}
+{com}.         
+.         eststo  clear
+{txt}
+{com}.     estpost tabstat ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}var_lcs{c )-} ${c -(}var_fes{c )-} ${c -(}var_inc{c )-},            ///
+>                         by(Modality) statistics(mean sd range cv) columns(statistics) nototal
+
+{txt}Summary statistics: mean sd range cv
+     for variables: FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES HH_Vul_Income
+  by categories of: Modality
+
+{space 0}{space 0}{ralign 12:Modality}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(range)}{space 1}{space 1}{ralign 9:e(cv)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Face-to-Face}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.319917}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.111271}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .3968616}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.535604}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.20373}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .8691146}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2012384}}}{space 1}{space 1}{ralign 9:{res:{sf: .9946959}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.942874}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .879257}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.446309}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.644922}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.991744}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.807151}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .7032392}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3828689}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.129505}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.950108}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.869969}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.725684}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .9497261}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.623323}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.26442}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.394929}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 29.18989}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.94018}}}{space 1}{space 1}{ralign 9:{res:{sf:       98}}}{space 1}{space 1}{ralign 9:{res:{sf: .5460858}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.551084}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.320347}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .6534194}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8059856}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.225388}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.52036}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        2}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.352245}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.176123}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.583075}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.829387}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.15559}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.609907}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.40835}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.495956}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 13.52219}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.49054}}}{space 1}{space 1}{ralign 9:{res:{sf:       56}}}{space 1}{space 1}{ralign 9:{res:{sf: .7758019}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .624355}}}{space 1}{space 1}{ralign 9:{res:{sf: .4845391}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .7760634}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .1517028}}}{space 1}{space 1}{ralign 9:{res:{sf: .3589178}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.365928}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0526316}}}{space 1}{space 1}{ralign 9:{res:{sf: .2234122}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.244832}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  28510.9}}}{space 1}{space 1}{ralign 9:{res:{sf: 24628.11}}}{space 1}{space 1}{ralign 9:{res:{sf: 199247.1}}}{space 1}{space 1}{ralign 9:{res:{sf: .8638137}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11816.76}}}{space 1}{space 1}{ralign 9:{res:{sf: 15682.67}}}{space 1}{space 1}{ralign 9:{res:{sf: 166166.7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.327155}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 40327.66}}}{space 1}{space 1}{ralign 9:{res:{sf: 33611.78}}}{space 1}{space 1}{ralign 9:{res:{sf: 255819.3}}}{space 1}{space 1}{ralign 9:{res:{sf:  .833467}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 7327.976}}}{space 1}{space 1}{ralign 9:{res:{sf: 8049.468}}}{space 1}{space 1}{ralign 9:{res:{sf: 167683.4}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.098457}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7145132}}}{space 1}{space 1}{ralign 9:{res:{sf: .1821089}}}{space 1}{space 1}{ralign 9:{res:{sf: .8969169}}}{space 1}{space 1}{ralign 9:{res:{sf: .2548713}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8565531}}}{space 1}{space 1}{ralign 9:{res:{sf:  .350709}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .4094422}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6718266}}}{space 1}{space 1}{ralign 9:{res:{sf: .4697908}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .6992738}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Remote}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.649819}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.846493}}}{space 1}{space 1}{ralign 9:{res:{sf:        6}}}{space 1}{space 1}{ralign 9:{res:{sf: .3268234}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  2.98917}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.082508}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .6966844}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8194946}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.892945}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.309894}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.454874}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.692573}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.163382}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.613718}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.706411}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .3039717}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   .66787}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.290214}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.931834}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.494585}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.494372}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .5549727}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.823105}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.604575}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .9225925}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 39.30505}}}{space 1}{space 1}{ralign 9:{res:{sf: 18.14435}}}{space 1}{space 1}{ralign 9:{res:{sf:       88}}}{space 1}{space 1}{ralign 9:{res:{sf: .4616288}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.981949}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.132317}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .7150747}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8194946}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.156229}}}{space 1}{space 1}{ralign 9:{res:{sf:        6}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.410905}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.566787}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.117914}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .8251226}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.577617}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.979589}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .7679918}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.115523}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.08888}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .9874055}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  17.0361}}}{space 1}{space 1}{ralign 9:{res:{sf:  9.26964}}}{space 1}{space 1}{ralign 9:{res:{sf:       46}}}{space 1}{space 1}{ralign 9:{res:{sf: .5441175}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8122744}}}{space 1}{space 1}{ralign 9:{res:{sf: .3911997}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .4816103}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3537906}}}{space 1}{space 1}{ralign 9:{res:{sf: .4790106}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.353938}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2274368}}}{space 1}{space 1}{ralign 9:{res:{sf: .4199356}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.846384}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 50565.32}}}{space 1}{space 1}{ralign 9:{res:{sf: 54538.43}}}{space 1}{space 1}{ralign 9:{res:{sf: 443571.4}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.078574}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  30637.9}}}{space 1}{space 1}{ralign 9:{res:{sf: 150905.1}}}{space 1}{space 1}{ralign 9:{res:{sf:  2003008}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.925437}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 81203.22}}}{space 1}{space 1}{ralign 9:{res:{sf:   166073}}}{space 1}{space 1}{ralign 9:{res:{sf:  2101580}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.045152}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11163.12}}}{space 1}{space 1}{ralign 9:{res:{sf: 20226.79}}}{space 1}{space 1}{ralign 9:{res:{sf: 224010.2}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.811929}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6739075}}}{space 1}{space 1}{ralign 9:{res:{sf: .2816828}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .4179844}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7581227}}}{space 1}{space 1}{ralign 9:{res:{sf: .4289954}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .5658653}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6281588}}}{space 1}{space 1}{ralign 9:{res:{sf:  .484171}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:  .770778}}}{space 1}
+
+{com}.     esttab  using "${c -(}d_tex_tab{c )-}/Summary_Stats_Outlier.tex", replace style(tex)          ///
+>             cell("mean(fmt(2)) sd(fmt(2)) range(fmt(0)) cv(fmt(2))")  ///
+>             nolabel nonumbers noobs nomtitles unstack                             ///
+>                         collabels("Mean" "SD" "Range" "Coef of Variation")                ///
+>             refcat(RESPAge                       "      \textbf{c -(}\textit{c -(}Respondent Characteristics:{c )-}{c )-}"    ///
+>                    FCSStap                       "      \textbf{c -(}\textit{c -(}Food Consumption Score:{c )-}{c )-}"        ///
+>                    rCSILessQlty          "      \textbf{c -(}\textit{c -(}Reduced Coping Strategy Index:{c )-}{c )-}" ///
+>                                    Lcs_Stress_Coping "  \textbf{c -(}\textit{c -(}Livelihood Coping Strategies:{c )-}{c )-}"  ///
+>                                    HHExpFoodTotal_1M "  \textbf{c -(}\textit{c -(}Expenditure:{c )-}{c )-}"                                   ///
+>                                    HH_Vul_Income         "      \textbf{c -(}\textit{c -(}Income:{c )-}{c )-}", nolabel)
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/6_Report/1_table/Summary_Stats_Outlier.tex"'})
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD03709.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 30, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   balance                 1   // Produce balance tables
+{txt}
+{com}.         local   cari                    1       // Run key analysis on CARI vs. rCARI
+{txt}
+{com}.         local   gender                  1       // Run gendered analysis
+{txt}
+{com}.         local   wealth                  0       // Create wealth index
+{txt}
+{com}.         local   excel                   1       // Create result tables in Excel
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         gl nicole       1
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl tex_tab              "${c -(}paper{c )-}/1_table"
+{txt}
+{com}.         gl tex_fig              "${c -(}paper{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.1 Organize variables
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta
+. *                       
+. *       CREATES:        ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis_rCARI.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `organize'           do "${c -(}dofile{c )-}/m01_Organize.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Organize full dataset for analsysis                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 30, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

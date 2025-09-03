@@ -1,0 +1,356 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/3_Log/e01_cari_20231004.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Oct 2023, 12:37:58
+{txt}
+{com}.         di `cdate'      
+{res}20231004
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl out_oth  FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency               ///
+>                                 HHExpTotal PCExpTotal FES 
+{txt}
+{com}.                                 
+.         gl out_fes HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES
+{txt}
+{com}.         
+.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}.         
+.         gl out_cat      CARI_FES_Cat1 CARI_FES_Cat2 CARI_FES_Cat3 CARI_FES_Cat4         ///
+>                                 CARI_FES_Bad rCARI_Inc_Cat1 rCARI_Inc_Cat2 rCARI_Inc_Cat3       ///
+>                                 rCARI_Inc_Cat4 rCARI_Inc_Bad
+{txt}
+{com}.                                 
+.         gl out_lcs LCS_None LCS_Stress LCS_Crisis LCS_Emergency
+{txt}
+{com}.         
+.         gl out_cari CARI_rCARI_1 CARI_rCARI_2 CARI_rCARI_3 CARI_rCARI_4 CARI_rCARI
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+.         
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}out_oth{c )-}, grpvar(Modality) nonote onerow                                                     ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_Outcome_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Outcome_Modality_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Outcome_Modality_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}out_cat{c )-}, grpvar(Modality) nonote onerow                                                     ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_CARI_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_CARI_Modality_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_CARI_Modality_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_fes{c )-} if Modality == 1, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_FES_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_FES_F2F_Length_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_FES_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_fes{c )-} if Modality == 2, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_FES_RM_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_FES_RM_Length_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_FES_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_lcs{c )-} if Modality == 1, grpvar(Form)                                              ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long(EN) @ 2 Short(FS))                                ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_LCS_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_LCS_F2F_Length_Balance.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_LCS_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_cari{c )-}, grpvar(Modality) nonote onerow                                            ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote)            ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_CARI_Modality_Balance_Key.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_CARI_Modality_Balance_Key.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_CARI_Modality_Balance_Key.tex}{p_end}
+{txt}
+{com}.                           
+.         ren CARI_FES_Cat*       C_FES_*
+{res}{txt}
+{com}.         ren rCARI_Inc_Cat*  rC_Inc_*
+{res}{txt}
+{com}.         
+.         asdoc ttest C_FES_1 == rC_Inc_1 if Modality == 1, unpaired replace save(${c -(}tabs{c )-}/CAR_F2F_FESINC_Unpaired_ttest.doc) ///
+>                                                                            title(CARI vs. F2F rCARI) fhc(\b) fhr(\b) font(Open Sans) label dec(3) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_1 {c |}{res}{col 12}    969{col 22}  .002064{col 34} .0014587{col 46} .0454076{col 58}-.0007986{col 70} .0049266
+{txt}rC_Inc_1 {c |}{res}{col 12}    969{col 22} .0072239{col 34} .0027219{col 46}   .08473{col 58} .0018824{col 70} .0125655
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22}  -.00516{col 34} .0023028{col 46} .0716843{col 58}-.0096791{col 70}-.0006408
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_1{txt} - {res}rC_Inc_1{txt})                        t = {res} -2.2407
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0126         {txt}Pr(|T| > |t|) = {res}0.0253          {txt}Pr(T > t) = {res}0.9874
+
+{txt}{p 20 20 2}CARI vs. F2F rCARI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:     .002}}}{space 1}{space 1}{ralign 9:{res:{sf:     .007}}}{space 1}{space 1}{ralign 9:{res:{sf:  -.00516}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0025}}}{space 1}{space 1}{ralign 9:{res:{sf:    -2.25}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0255}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}{txt}{p 0 4 2}
+(file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc{rm}
+not found)
+{p_end}
+  {res}0.007
+Click to Open File:  {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}
+{com}.                                                                            
+.         forval i = 2/4 {c -(}
+{txt}  2{com}.         asdoc ttest C_FES_`i' == rC_Inc_`i' if Modality == 1, unpaired rowappend save(${c -(}tabs{c )-}/CAR_F2F_FESINC_Unpaired_ttest.doc) ///
+>                                 fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}  3{com}.         {c )-}
+{txt}(File C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_2 {c |}{res}{col 12}    969{col 22} .1413829{col 34} .0111985{col 46}  .348596{col 58} .1194067{col 70}  .163359
+{txt}rC_Inc_2 {c |}{res}{col 12}    969{col 22} .3209494{col 34} .0150049{col 46} .4670825{col 58} .2915036{col 70} .3503952
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22}-.1795666{col 34} .0134131{col 46} .4175334{col 58}-.2058887{col 70}-.1532445
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_2{txt} - {res}rC_Inc_2{txt})                        t = {res}-13.3874
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}1.0000
+
+{txt}{p 20 20 2}Unpaired t test : C_FES_2 rC_Inc_2 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1415}}}{space 1}{space 1}{ralign 9:{res:{sf:     .321}}}{space 1}{space 1}{ralign 9:{res:{sf:-.1795666}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0135}}}{space 1}{space 1}{ralign 9:{res:{sf:    -13.4}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}  0.321
+Click to Open File:  {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}(File C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_3 {c |}{res}{col 12}    969{col 22} .6955624{col 34} .0147904{col 46} .4604064{col 58} .6665375{col 70} .7245874
+{txt}rC_Inc_3 {c |}{res}{col 12}    969{col 22} .6398349{col 34} .0154293{col 46}  .480296{col 58} .6095561{col 70} .6701137
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22} .0557276{col 34} .0189544{col 46} .5900262{col 58} .0185312{col 70} .0929239
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_3{txt} - {res}rC_Inc_3{txt})                        t = {res}  2.9401
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9983         {txt}Pr(|T| > |t|) = {res}0.0034          {txt}Pr(T > t) = {res}0.0017
+
+{txt}{p 20 20 2}Unpaired t test : C_FES_3 rC_Inc_3 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:    .6955}}}{space 1}{space 1}{ralign 9:{res:{sf:      .64}}}{space 1}{space 1}{ralign 9:{res:{sf: .0557276}}}{space 1}{space 1}{ralign 9:{res:{sf:     .019}}}{space 1}{space 1}{ralign 9:{res:{sf:     2.95}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .0035}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}  0.640
+Click to Open File:  {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}(File C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_4 {c |}{res}{col 12}    969{col 22} .1609907{col 34} .0118126{col 46} .3677122{col 58} .1378094{col 70}  .184172
+{txt}rC_Inc_4 {c |}{res}{col 12}    969{col 22} .0319917{col 34} .0056561{col 46} .1760689{col 58}  .020892{col 70} .0430915
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22}  .128999{col 34} .0117215{col 46} .3648773{col 58} .1059964{col 70} .1520015
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_4{txt} - {res}rC_Inc_4{txt})                        t = {res} 11.0053
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Unpaired t test : C_FES_4 rC_Inc_4 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:     .161}}}{space 1}{space 1}{ralign 9:{res:{sf:     .032}}}{space 1}{space 1}{ralign 9:{res:{sf:  .128999}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0115}}}{space 1}{space 1}{ralign 9:{res:{sf:       11}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}  0.032
+Click to Open File:  {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}
+{com}.         
+.         asdoc ttest CARI_FES_Bad == rCARI_Inc_Bad if Modality == 1, unpaired rowappend save(${c -(}tabs{c )-}/CAR_F2F_FESINC_Unpaired_ttest.doc) ///
+>                                 fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}(File C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+CARI_F~d {c |}{res}{col 12}    969{col 22} .8565531{col 34} .0112664{col 46}  .350709{col 58} .8344438{col 70} .8786625
+{txt}rCARI_~d {c |}{res}{col 12}    969{col 22} .6718266{col 34} .0150919{col 46} .4697908{col 58} .6422101{col 70} .7014431
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22} .1847265{col 34} .0131392{col 46} .4090075{col 58} .1589419{col 70} .2105111
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}CARI_FES_Bad{txt} - {res}rCARI_Inc_Bad{txt})              t = {res} 14.0592
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Unpaired t test : CARI_FES_Bad rCARI_Inc_Bad {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}{space 1}{ralign 9:t_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:    .8565}}}{space 1}{space 1}{ralign 9:{res:{sf:     .672}}}{space 1}{space 1}{ralign 9:{res:{sf: .1847265}}}{space 1}{space 1}{ralign 9:{res:{sf:     .013}}}{space 1}{space 1}{ralign 9:{res:{sf:    14.05}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}
+{res}  0.672
+Click to Open File:  {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/5_Tables/CAR_F2F_FESINC_Unpaired_ttest.doc"}
+{txt}
+{com}.         
+.         // onerow
+. 
+.         ** disaggregation by groups 
+.         // LCS, rCSI, FES by food secure vs food insecure
+.         // gender
+.         
+.         iebaltab ${c -(}out_oth{c )-} if Modality == 1, grpvar(HH_Vul_FES)                                                ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(0 Food Secure @ 1 Food Insecure)                                 ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_F2F_Outcoem_Balance_FS_Disaggregation.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_F2F_Outcoem_Balance_FS_Disaggregation.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_F2F_Outcoem_Balance_FS_Disaggregation.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_oth{c )-} if Modality == 2, grpvar(HH_Vul_FES)                                                ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(0 Food Secure @ 1 Food Insecure)                                 ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/CAR_RM_Outcoem_Balance_FS_Disaggregation.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_RM_Outcoem_Balance_FS_Disaggregation.tex":C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_RM_Outcoem_Balance_FS_Disaggregation.tex}{p_end}
+{txt}
+{com}.         
+.         
+. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.4     Gender Difference
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `gender'                     do "${c -(}dofile{c )-}/c04_Gender.do"
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                               3.99 Excel
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `excel'                      do "${c -(}dofile{c )-}/c99_Excel.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check Balance and Produce Excel Tables                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Sep 20, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/CAR_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

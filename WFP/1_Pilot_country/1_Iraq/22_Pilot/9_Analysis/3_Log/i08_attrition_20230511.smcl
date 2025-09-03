@@ -1,0 +1,96 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i08_attrition_20230511.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 May 2023, 16:18:45
+{txt}
+{com}.         di `cdate'
+{res}20230511
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}dta{c )-}/Iraq_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         
+.         * attrition balance check variables
+.         gl      var_attri RESPAge HHSize FCSStap FCSPulse FCSDairy FCSPr FCSVeg ///
+>                                   FCSFruit FCSFat FCSSugar FCS rCSILessQlty rCSIBorrow ///
+>                                   rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}. 
+. foreach var of global var_attri {c -(}
+{txt}  2{com}.         gen     bal_`var' = `var'
+{txt}  3{com}.         replace bal_`var' = r_`var' if mi(`var')
+{txt}  4{com}. {c )-}
+{txt}(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+(86 missing values generated)
+(86 real changes made)
+
+{com}. 
+.         iebaltab        bal_*,                  ///
+>                                 grpvar(Source)  ///
+>                                 rowvarlabels savexlsx("${c -(}tabs_bal{c )-}/Iraq_rCARI_Attrition_Balance.xlsx") replace
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_rCARI_Attrition_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/5_Tables/Balance/Iraq_rCARI_Attrition_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD15359.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Iraq                            * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create clean variables for Remote                                          *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Apr 24, 2023                                                                               *
+> *  LATEST UPDATE:               Apr 24, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Iraq_RM_Household_Raw.dta
+>                                         
+>         ** CREATES:             ${c -(}dta{c )-}/Iraq_RM_Household_Analysis.dta
+>                                                                 
+>         ** NOTES:               N = 540 (Version A = 297 and Version B = 243)
+>                                         
+> ********************************************************************************
+> *                                                               Define Variables
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

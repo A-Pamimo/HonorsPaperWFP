@@ -1,0 +1,1875 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/3_Log/02_balance_20231005.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Oct 2023, 15:30:18
+{txt}
+{com}.         di `cdate'      
+{res}20231005
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}all_dta{c )-}/Complete_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar ///
+>                                 FCS FCG_Poor FCG_Borderline FCG_Acceptable
+{txt}
+{com}.         
+.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb       ///
+>                                 rCSI rCSI_Phase1 rCSI_Phase2 rCSI_Phase3_5                                              ///
+>                                 FCS_rCSI_4pt_1 FCS_rCSI_4pt_2 FCS_rCSI_4pt_3 FCS_rCSI_4pt_4
+{txt}
+{com}.         
+.         gl var_lcs_m Lcs_stress_DomAsset_yn Lcs_stress_CrdtFood_yn Lcs_stress_Saving_yn ///
+>                                  Lcs_stress_BorrowCash_yn Lcs_crisis_ProdAssets_yn                                      ///
+>                                  Lcs_crisis_Health_yn Lcs_crisis_OutSchool_yn Lcs_em_ChildWork_yn       ///
+>                                  Lcs_em_Begged_yn Lcs_em_IllegalAct_yn Lcs_Stress_Coping                        ///
+>                                  Lcs_Crisis_Coping Lcs_Emergency_Coping LCS_None LCS_Stress             ///
+>                                  LCS_Crisis LCS_Emergency
+{txt}
+{com}.         
+.         gl var_lcs_e Lcs_stress_DomAsset_yn Lcs_stress_CrdtFood_yn Lcs_stress_Saving_yn  ///
+>                                  Lcs_stress_BorrowCash_yn Lcs_crisis_ProdAssets_yn                                       ///
+>                                  Lcs_crisis_HealthEdu_yn Lcs_crisis_OutSchool_yn Lcs_em_ChildWork_yn ///
+>                                  Lcs_em_Begged_yn Lcs_em_IllegalAct_yn Lcs_Stress_Coping                         ///
+>                                  Lcs_Crisis_Coping Lcs_Emergency_Coping LCS_None LCS_Stress              ///
+>                                  LCS_Crisis LCS_Emergency
+{txt}
+{com}.         
+.         gl var_lcs_c Lcs_stress_DomAsset_yn Lcs_stress_HealthEdu_yn Lcs_stress_Saving_yn  ///
+>                                  Lcs_stress_BorrowCash_yn Lcs_crisis_ProdAssets_yn                                       ///
+>                                  Lcs_crisis_DomMigration_yn Lcs_crisis_OutSchool_yn Lcs_em_ResAsset_yn ///
+>                                  Lcs_em_Begged_yn Lcs_em_IllegalAct_yn Lcs_Stress_Coping                         ///
+>                                  Lcs_Crisis_Coping Lcs_Emergency_Coping LCS_None LCS_Stress              ///
+>                                  LCS_Crisis LCS_Emergency
+{txt}
+{com}.         
+.         gl var_fes  HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES ///
+>                                 FES_Cat_1 FES_Cat_2 FES_Cat_3 FES_Cat_4 CARI_FES_Bad
+{txt}
+{com}.                                 
+.         gl var_inc  HHIncFirst_Accept HHIncFirst_Border HHIncFirst_Poor                         ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50  ///
+>                                 HHInc_Reduce50More CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4 rCARI_Inc_Bad
+{txt}
+{com}.                                 
+.         gl var_cari CARI_FES_Cat1 CARI_FES_Cat2 CARI_FES_Cat3 CARI_FES_Cat4             ///
+>                                 rCARI_Inc_Cat1 rCARI_Inc_Cat2 rCARI_Inc_Cat3 rCARI_Inc_Cat4     ///
+>                                 CARI_rCARI_1 CARI_rCARI_2 CARI_rCARI_3 CARI_rCARI_4 CARI_rCARI
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+. 
+.         ** Myanmar
+.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}var_lcs_m{c )-} ${c -(}var_inc{c )-} if Country == 1,        ///
+>                          grpvar(Modality) nonote nototal replace format(%12.2fc)                        ///
+>                          grplabels(1 F2F @ 2 Remote) rowvarlabels                                                       ///
+>              savexlsx("${c -(}all_tabs{c )-}/Myanmar_Outcome_Modality_No_FES.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_Outcome_Modality_No_FES.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_Outcome_Modality_No_FES.xlsx}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}var_fes{c )-} ${c -(}var_cari{c )-} if Country == 1 & Err_ExpNF == 0,                       ///
+>                          grpvar(Modality) nonote nototal replace format(%12.2fc)                        ///
+>                          grplabels(1 F2F @ 2 Remote) rowvarlabels onerow                                        ///
+>              savexlsx("${c -(}all_tabs{c )-}/Myanmar_Outcome_Modality_FES_CARI.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_Outcome_Modality_FES_CARI.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_Outcome_Modality_FES_CARI.xlsx}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}var_lcs_e{c )-} ${c -(}var_inc{c )-} ${c -(}var_fes{c )-}                      ///
+>                          ${c -(}var_cari{c )-} if Country == 2,                                                                           ///
+>                          grpvar(Modality) nonote nototal replace format(%12.2fc)                        ///
+>                          grplabels(1 F2F @ 2 Remote) rowvarlabels onerow                                        ///
+>              savexlsx("${c -(}all_tabs{c )-}/Ecuador_Outcome_Modality.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_Outcome_Modality.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_Outcome_Modality.xlsx}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}var_lcs_c{c )-} ${c -(}var_inc{c )-} ${c -(}var_fes{c )-}                      ///
+>                          ${c -(}var_cari{c )-} if Country == 3,                                                                           ///
+>                          grpvar(Modality) nonote nototal replace format(%12.2fc)                        ///
+>                          grplabels(1 F2F @ 2 Remote) rowvarlabels onerow                                        ///
+>              savexlsx("${c -(}all_tabs{c )-}/CAR_Outcome_Modality.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_Outcome_Modality.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_Outcome_Modality.xlsx}{p_end}
+{txt}
+{com}.         
+.         ren CARI_FES_Cat*       C_FES_*
+{res}{txt}
+{com}.         ren rCARI_Inc_Cat*  rC_Inc_*
+{res}{txt}
+{com}.         
+.         ** Myanmar
+.         asdoc ttest C_FES_1 == rC_Inc_1 if Modality == 1 & Country == 1, replace ///
+>                   save(${c -(}all_tabs{c )-}/Myanmar_F2F_FESINC_Paired_ttest.doc)                                  ///
+>                   title(CARI vs. F2F rCARI) fhc(\b) fhr(\b) font(Open Sans) label dec(3) tzok                                                              
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_1 {c |}{res}{col 12}    610{col 22} .0819672{col 34} .0111158{col 46} .2745399{col 58} .0601373{col 70} .1037972
+{txt}rC_Inc_1 {c |}{res}{col 12}    610{col 22} .1606557{col 34} .0148802{col 46} .3675145{col 58}  .131433{col 70} .1898785
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22}-.0786885{col 34} .0139433{col 46} .3443729{col 58}-.1060712{col 70}-.0513058
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_1{txt} - {res}rC_Inc_1{txt})                        t = {res} -5.6435
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}1.0000
+
+{txt}{p 20 20 2}CARI vs. F2F rCARI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .082}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1605}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0786885}}}{space 1}{space 1}{ralign 9:{res:{sf:     .014}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    -5.65}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc"}
+
+{com}.         forval i = 2/4 {c -(}
+{txt}  2{com}.         asdoc ttest C_FES_`i' == rC_Inc_`i' if Modality == 1 & Country == 1, rowappend ///
+>                   save(${c -(}all_tabs{c )-}/Myanmar_F2F_FESINC_Paired_ttest.doc) ///
+>                   fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}  3{com}.         {c )-}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_2 {c |}{res}{col 12}    610{col 22} .4442623{col 34} .0201347{col 46} .4972914{col 58} .4047203{col 70} .4838042
+{txt}rC_Inc_2 {c |}{res}{col 12}    610{col 22} .4295082{col 34} .0200587{col 46} .4954122{col 58} .3901157{col 70} .4689007
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0147541{col 34} .0208094{col 46}  .513955{col 58}-.0261129{col 70} .0556211
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_2{txt} - {res}rC_Inc_2{txt})                        t = {res}  0.7090
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.7607         {txt}Pr(|T| > |t|) = {res}0.4786          {txt}Pr(T > t) = {res}0.2393
+
+{txt}{p 20 20 2}Paired t test : C_FES_2 rC_Inc_2 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4445}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4295}}}{space 1}{space 1}{ralign 9:{res:{sf: .0147541}}}{space 1}{space 1}{ralign 9:{res:{sf:     .021}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:       .7}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4785}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_3 {c |}{res}{col 12}    610{col 22} .4409836{col 34} .0201194{col 46} .4969123{col 58} .4014718{col 70} .4804954
+{txt}rC_Inc_3 {c |}{res}{col 12}    610{col 22} .3868852{col 34} .0197357{col 46} .4874367{col 58} .3481269{col 70} .4256436
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0540984{col 34} .0165062{col 46} .4076742{col 58} .0216823{col 70} .0865144
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_3{txt} - {res}rC_Inc_3{txt})                        t = {res}  3.2774
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9994         {txt}Pr(|T| > |t|) = {res}0.0011          {txt}Pr(T > t) = {res}0.0006
+
+{txt}{p 20 20 2}Paired t test : C_FES_3 rC_Inc_3 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .441}}}{space 1}{space 1}{ralign 9:{res:{sf:     .387}}}{space 1}{space 1}{ralign 9:{res:{sf: .0540984}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0165}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      3.3}}}{space 1}{space 1}{ralign 9:{res:{sf:     .001}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_4 {c |}{res}{col 12}    610{col 22} .0327869{col 34} .0072161{col 46} .1782245{col 58} .0186154{col 70} .0469583
+{txt}rC_Inc_4 {c |}{res}{col 12}    610{col 22} .0229508{col 34}  .006068{col 46} .1498696{col 58}  .011034{col 70} .0348676
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0098361{col 34} .0069494{col 46} .1716384{col 58}-.0038117{col 70} .0234838
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_4{txt} - {res}rC_Inc_4{txt})                        t = {res}  1.4154
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9213         {txt}Pr(|T| > |t|) = {res}0.1575          {txt}Pr(T > t) = {res}0.0787
+
+{txt}{p 20 20 2}Paired t test : C_FES_4 rC_Inc_4 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .033}}}{space 1}{space 1}{ralign 9:{res:{sf:     .023}}}{space 1}{space 1}{ralign 9:{res:{sf: .0098361}}}{space 1}{space 1}{ralign 9:{res:{sf:     .007}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      1.4}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1575}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest CARI_FES_Bad == rCARI_Inc_Bad if Modality == 1 & Country == 1, rowappend ///
+>                   save(${c -(}tabs{c )-}/Myanmar_F2F_FESINC_Paired_ttest.doc) ///
+>                   fhr(\b) font(Open Sans) label dec(3) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+CARI_F~d {c |}{res}{col 12}    610{col 22} .4737705{col 34} .0202331{col 46} .4997213{col 58} .4340353{col 70} .5135057
+{txt}rCARI_~d {c |}{res}{col 12}    610{col 22} .4098361{col 34} .0199289{col 46} .4922069{col 58} .3706984{col 70} .4489737
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    610{col 22} .0639344{col 34} .0149029{col 46} .3680744{col 58} .0346671{col 70} .0932017
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}CARI_FES_Bad{txt} - {res}rCARI_Inc_Bad{txt})              t = {res}  4.2901
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     609
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Paired t test : CARI_FES_Bad rCARI_Inc_Bad {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      610}}}{space 1}{space 1}{ralign 9:{res:{sf:     .474}}}{space 1}{space 1}{ralign 9:{res:{sf:      .41}}}{space 1}{space 1}{ralign 9:{res:{sf: .0639344}}}{space 1}{space 1}{ralign 9:{res:{sf:     .015}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      4.3}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Myanmar_F2F_FESINC_Paired_ttest.doc"}
+
+{com}. 
+.         ** Ecuador
+.         asdoc ttest C_FES_1 == rC_Inc_1 if Modality == 1 & Country == 2, replace ///
+>                   save(${c -(}all_tabs{c )-}/Ecuador_F2F_FESINC_Paired_ttest.doc)                                  ///
+>                   title(CARI vs. F2F rCARI) fhc(\b) fhr(\b) font(Open Sans) label dec(3) tzok                                                              
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_1 {c |}{res}{col 12}    760{col 22} .0131579{col 34} .0041361{col 46} .1140258{col 58} .0050382{col 70} .0212775
+{txt}rC_Inc_1 {c |}{res}{col 12}    760{col 22} .0289474{col 34} .0060856{col 46}  .167769{col 58} .0170007{col 70}  .040894
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    760{col 22}-.0157895{col 34}  .006149{col 46} .1695166{col 58}-.0278606{col 70}-.0037184
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_1{txt} - {res}rC_Inc_1{txt})                        t = {res} -2.5678
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     759
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0052         {txt}Pr(|T| > |t|) = {res}0.0104          {txt}Pr(T > t) = {res}0.9948
+
+{txt}{p 20 20 2}CARI vs. F2F rCARI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf:     .013}}}{space 1}{space 1}{ralign 9:{res:{sf:     .029}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0157895}}}{space 1}{space 1}{ralign 9:{res:{sf:     .006}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    -2.55}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0105}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc"}
+
+{com}.         forval i = 2/4 {c -(}
+{txt}  2{com}.         asdoc ttest C_FES_`i' == rC_Inc_`i' if Modality == 1 & Country == 2, rowappend ///
+>                   save(${c -(}all_tabs{c )-}/Ecuador_F2F_FESINC_Paired_ttest.doc) ///
+>                   fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}  3{com}.         {c )-}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_2 {c |}{res}{col 12}    760{col 22} .2302632{col 34} .0152814{col 46} .4212785{col 58} .2002644{col 70} .2602619
+{txt}rC_Inc_2 {c |}{res}{col 12}    760{col 22} .3302632{col 34} .0170711{col 46} .4706175{col 58}  .296751{col 70} .3637753
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    760{col 22}      -.1{col 34} .0176844{col 46} .4875255{col 58}-.1347162{col 70}-.0652838
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_2{txt} - {res}rC_Inc_2{txt})                        t = {res} -5.6547
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     759
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}1.0000
+
+{txt}{p 20 20 2}Paired t test : C_FES_2 rC_Inc_2 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf:    .2305}}}{space 1}{space 1}{ralign 9:{res:{sf:    .3305}}}{space 1}{space 1}{ralign 9:{res:{sf:      -.1}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0175}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    -5.65}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_3 {c |}{res}{col 12}    760{col 22} .5934211{col 34} .0178292{col 46} .4915185{col 58} .5584206{col 70} .6284216
+{txt}rC_Inc_3 {c |}{res}{col 12}    760{col 22} .5342105{col 34} .0181063{col 46} .4991568{col 58} .4986661{col 70} .5697549
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    760{col 22} .0592105{col 34} .0212441{col 46} .5856604{col 58} .0175063{col 70} .1009148
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_3{txt} - {res}rC_Inc_3{txt})                        t = {res}  2.7871
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     759
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9973         {txt}Pr(|T| > |t|) = {res}0.0055          {txt}Pr(T > t) = {res}0.0027
+
+{txt}{p 20 20 2}Paired t test : C_FES_3 rC_Inc_3 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf:    .5935}}}{space 1}{space 1}{ralign 9:{res:{sf:     .534}}}{space 1}{space 1}{ralign 9:{res:{sf: .0592105}}}{space 1}{space 1}{ralign 9:{res:{sf:     .021}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      2.8}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0055}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_4 {c |}{res}{col 12}    760{col 22} .1631579{col 34} .0134124{col 46}  .369753{col 58} .1368282{col 70} .1894876
+{txt}rC_Inc_4 {c |}{res}{col 12}    760{col 22} .1065789{col 34} .0112006{col 46} .3087804{col 58}  .084591{col 70} .1285669
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    760{col 22} .0565789{col 34} .0128039{col 46} .3529792{col 58} .0314437{col 70} .0817142
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_4{txt} - {res}rC_Inc_4{txt})                        t = {res}  4.4189
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     759
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Paired t test : C_FES_4 rC_Inc_4 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf:     .163}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1065}}}{space 1}{space 1}{ralign 9:{res:{sf: .0565789}}}{space 1}{space 1}{ralign 9:{res:{sf:     .013}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      4.4}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest CARI_FES_Bad == rCARI_Inc_Bad if Modality == 1 & Country == 2, rowappend ///
+>                   save(${c -(}tabs{c )-}/Ecuador_F2F_FESINC_Paired_ttest.doc) ///
+>                   fhr(\b) font(Open Sans) label dec(3) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+CARI_F~d {c |}{res}{col 12}    760{col 22} .7565789{col 34} .0155771{col 46} .4294297{col 58} .7259997{col 70} .7871582
+{txt}rCARI_~d {c |}{res}{col 12}    760{col 22} .6407895{col 34} .0174145{col 46}  .480085{col 58} .6066031{col 70} .6749758
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    760{col 22} .1157895{col 34}  .016435{col 46} .4530827{col 58} .0835259{col 70}  .148053
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}CARI_FES_Bad{txt} - {res}rCARI_Inc_Bad{txt})              t = {res}  7.0453
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     759
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Paired t test : CARI_FES_Bad rCARI_Inc_Bad {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      760}}}{space 1}{space 1}{ralign 9:{res:{sf:    .7565}}}{space 1}{space 1}{ralign 9:{res:{sf:     .641}}}{space 1}{space 1}{ralign 9:{res:{sf: .1157895}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0165}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     7.05}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/Ecuador_F2F_FESINC_Paired_ttest.doc"}
+
+{com}. 
+.         ** CAR
+.         asdoc ttest C_FES_1 == rC_Inc_1 if Modality == 1 & Country == 3, replace ///
+>                   save(${c -(}all_tabs{c )-}/CAR_F2F_FESINC_Paired_ttest.doc)                              ///
+>                   title(CARI vs. F2F rCARI) fhc(\b) fhr(\b) font(Open Sans) label dec(3) tzok                                                              
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_1 {c |}{res}{col 12}    969{col 22}  .002064{col 34} .0014587{col 46} .0454076{col 58}-.0007986{col 70} .0049266
+{txt}rC_Inc_1 {c |}{res}{col 12}    969{col 22} .0072239{col 34} .0027219{col 46}   .08473{col 58} .0018824{col 70} .0125655
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22}  -.00516{col 34} .0023028{col 46} .0716843{col 58}-.0096791{col 70}-.0006408
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_1{txt} - {res}rC_Inc_1{txt})                        t = {res} -2.2407
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0126         {txt}Pr(|T| > |t|) = {res}0.0253          {txt}Pr(T > t) = {res}0.9874
+
+{txt}{p 20 20 2}CARI vs. F2F rCARI{p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:     .002}}}{space 1}{space 1}{ralign 9:{res:{sf:     .007}}}{space 1}{space 1}{ralign 9:{res:{sf:  -.00516}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0025}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_1 - rC_Inc_1 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    -2.25}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0255}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc"}
+
+{com}.         forval i = 2/4 {c -(}
+{txt}  2{com}.         asdoc ttest C_FES_`i' == rC_Inc_`i' if Modality == 1 & Country == 3, rowappend ///
+>                   save(${c -(}all_tabs{c )-}/CAR_F2F_FESINC_Paired_ttest.doc) ///
+>                   fhr(\b) font(Open Sans) label dec(3) tzok
+{txt}  3{com}.         {c )-}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_2 {c |}{res}{col 12}    969{col 22} .1413829{col 34} .0111985{col 46}  .348596{col 58} .1194067{col 70}  .163359
+{txt}rC_Inc_2 {c |}{res}{col 12}    969{col 22} .3209494{col 34} .0150049{col 46} .4670825{col 58} .2915036{col 70} .3503952
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22}-.1795666{col 34} .0134131{col 46} .4175334{col 58}-.2058887{col 70}-.1532445
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_2{txt} - {res}rC_Inc_2{txt})                        t = {res}-13.3874
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}1.0000
+
+{txt}{p 20 20 2}Paired t test : C_FES_2 rC_Inc_2 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1415}}}{space 1}{space 1}{ralign 9:{res:{sf:     .321}}}{space 1}{space 1}{ralign 9:{res:{sf:-.1795666}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0135}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_2 - rC_Inc_2 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    -13.4}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_3 {c |}{res}{col 12}    969{col 22} .6955624{col 34} .0147904{col 46} .4604064{col 58} .6665375{col 70} .7245874
+{txt}rC_Inc_3 {c |}{res}{col 12}    969{col 22} .6398349{col 34} .0154293{col 46}  .480296{col 58} .6095561{col 70} .6701137
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22} .0557276{col 34} .0189544{col 46} .5900262{col 58} .0185312{col 70} .0929239
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_3{txt} - {res}rC_Inc_3{txt})                        t = {res}  2.9401
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}0.9983         {txt}Pr(|T| > |t|) = {res}0.0034          {txt}Pr(T > t) = {res}0.0017
+
+{txt}{p 20 20 2}Paired t test : C_FES_3 rC_Inc_3 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:    .6955}}}{space 1}{space 1}{ralign 9:{res:{sf:      .64}}}{space 1}{space 1}{ralign 9:{res:{sf: .0557276}}}{space 1}{space 1}{ralign 9:{res:{sf:     .019}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_3 - rC_Inc_3 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2.95}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0035}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc"}
+{txt}(File /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc already exists, option {bf:append} was assumed)
+
+Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ C_FES_4 {c |}{res}{col 12}    969{col 22} .1609907{col 34} .0118126{col 46} .3677122{col 58} .1378094{col 70}  .184172
+{txt}rC_Inc_4 {c |}{res}{col 12}    969{col 22} .0319917{col 34} .0056561{col 46} .1760689{col 58}  .020892{col 70} .0430915
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22}  .128999{col 34} .0117215{col 46} .3648773{col 58} .1059964{col 70} .1520015
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}C_FES_4{txt} - {res}rC_Inc_4{txt})                        t = {res} 11.0053
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Paired t test : C_FES_4 rC_Inc_4 {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:     .161}}}{space 1}{space 1}{ralign 9:{res:{sf:     .032}}}{space 1}{space 1}{ralign 9:{res:{sf:  .128999}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0115}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:C_FES_4 - rC_Inc_4 }{space 1}{c |}{space 1}{ralign 9:{res:{sf:       11}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc"}
+{txt}
+{com}.         asdoc ttest CARI_FES_Bad == rCARI_Inc_Bad if Modality == 1 & Country == 3, rowappend ///
+>                   save(${c -(}tabs{c )-}/CAR_F2F_FESINC_Paired_ttest.doc) ///
+>                   fhr(\b) font(Open Sans) label dec(3) tzok
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+CARI_F~d {c |}{res}{col 12}    969{col 22} .8565531{col 34} .0112664{col 46}  .350709{col 58} .8344438{col 70} .8786625
+{txt}rCARI_~d {c |}{res}{col 12}    969{col 22} .6718266{col 34} .0150919{col 46} .4697908{col 58} .6422101{col 70} .7014431
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    969{col 22} .1847265{col 34} .0131392{col 46} .4090075{col 58} .1589419{col 70} .2105111
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}CARI_FES_Bad{txt} - {res}rCARI_Inc_Bad{txt})              t = {res} 14.0592
+{txt} H0: mean(diff) = 0                              Degrees of freedom = {res}     968
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{txt}{p 20 20 2}Paired t test : CARI_FES_Bad rCARI_Inc_Bad {p_end}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:obs}{space 1}{space 1}{ralign 9:Mean1}{space 1}{space 1}{ralign 9:Mean2}{space 1}{space 1}{ralign 9:dif}{space 1}{space 1}{ralign 9:St_Err}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf:    .8565}}}{space 1}{space 1}{ralign 9:{res:{sf:     .672}}}{space 1}{space 1}{ralign 9:{res:{sf: .1847265}}}{space 1}{space 1}{ralign 9:{res:{sf:     .013}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{space 0}{hline 23}{c  TT}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:}{space 1}{c |}{space 1}{ralign 9:t_value}{space 1}{space 1}{ralign 9:p_value}{space 1}
+{space 0}{hline 23}{c   +}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 22:CARI_FES_Bad - rCARI~ }{space 1}{c |}{space 1}{ralign 9:{res:{sf:    14.05}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{hline 23}{c  BT}{hline 11}{hline 10}
+{res}{txt}{p 0 4 2}
+(file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc{rm}
+not found)
+{p_end}
+Click to Open File:  {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/5_Tables/CAR_F2F_FESINC_Paired_ttest.doc"}
+
+{com}. 
+{txt}end of do-file
+
+{com}. keep if Country == 3 
+{txt}(2,509 observations deleted)
+
+{com}. tab Modality 
+
+      {txt}Survey {c |}
+   Modality: {c |}
+     F2F vs. {c |}
+      Remote {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        969       77.77       77.77
+{txt}      Remote {c |}{res}        277       22.23      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      1,246      100.00
+
+{com}. tab Modality if S_Assign_Phone == 1
+
+      {txt}Survey {c |}
+   Modality: {c |}
+     F2F vs. {c |}
+      Remote {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+      Remote {c |}{res}        119      100.00      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}        119      100.00
+
+{com}. tab Modality if S_phone_ownership == 1
+
+      {txt}Survey {c |}
+   Modality: {c |}
+     F2F vs. {c |}
+      Remote {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        294       65.19       65.19
+{txt}      Remote {c |}{res}        157       34.81      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}        451      100.00
+
+{com}. tab Modality if S_Assign_Phone == 0
+
+      {txt}Survey {c |}
+   Modality: {c |}
+     F2F vs. {c |}
+      Remote {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+Face-to-Face {c |}{res}        969       85.98       85.98
+{txt}      Remote {c |}{res}        158       14.02      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      1,127      100.00
+
+{com}. tab S_Assign_Modality
+
+{txt}Modality_Typ {c |}
+           e {c |}      Freq.     Percent        Cum.
+{hline 13}{c +}{hline 35}
+           0 {c |}{res}        969       77.77       77.77
+{txt}Face-to-Face {c |}{res}        277       22.23      100.00
+{txt}{hline 13}{c +}{hline 35}
+       Total {c |}{res}      1,246      100.00
+
+{com}. keep if S_Assign_Modality == 0
+{txt}(277 observations deleted)
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/9_Comprehensive/1_Data/CAR_Full_Household_Analysis.dta", clear
+
+. tab S_Assign_Modality  Modality
+
+    {txt}Assigned {c |} Survey Modality: F2F
+      Survey {c |}      vs. Remote
+    Modality {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-to-Face {c |}{res}       969          0 {txt}{c |}{res}       969 
+{txt}      Remote {c |}{res}         0        277 {txt}{c |}{res}       277 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       969        277 {txt}{c |}{res}     1,246 
+
+{com}. keep if S_Assign_Modality == 1
+{txt}(1,057 observations deleted)
+
+{com}. keep if Completion == 1
+{txt}(746 observations deleted)
+
+{com}. tab S_phone_ownership S_Assign_Phone
+
+           {txt}{c |}  Assigned cell phone
+ Household {c |}  to no phone remote
+owns phone {c |}         0          1 {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+        No {c |}{res}         1        119 {txt}{c |}{res}       120 
+{txt}       Yes {c |}{res}       157          0 {txt}{c |}{res}       157 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       158        119 {txt}{c |}{res}       277 
+
+{com}. tab HHID if S_phone_ownership == 0 & S_Assign_Phone == 1
+
+  {txt}Household {c |}
+         ID {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+    CAR1203 {c |}{res}          1        0.84        0.84
+{txt}   CAR12034 {c |}{res}          1        0.84        1.68
+{txt}   CAR12038 {c |}{res}          1        0.84        2.52
+{txt}   CAR12055 {c |}{res}          1        0.84        3.36
+{txt}   CAR12066 {c |}{res}          1        0.84        4.20
+{txt}   CAR12084 {c |}{res}          1        0.84        5.04
+{txt}   CAR12129 {c |}{res}          1        0.84        5.88
+{txt}   CAR12132 {c |}{res}          1        0.84        6.72
+{txt}   CAR12135 {c |}{res}          1        0.84        7.56
+{txt}   CAR12176 {c |}{res}          1        0.84        8.40
+{txt}   CAR12196 {c |}{res}          1        0.84        9.24
+{txt}    CAR1229 {c |}{res}          1        0.84       10.08
+{txt}    CAR1230 {c |}{res}          1        0.84       10.92
+{txt}    CAR1247 {c |}{res}          1        0.84       11.76
+{txt}    CAR1270 {c |}{res}          1        0.84       12.61
+{txt}    CAR1271 {c |}{res}          1        0.84       13.45
+{txt}    CAR1290 {c |}{res}          1        0.84       14.29
+{txt}    CAR1308 {c |}{res}          1        0.84       15.13
+{txt}    CAR1315 {c |}{res}          1        0.84       15.97
+{txt}    CAR1321 {c |}{res}          1        0.84       16.81
+{txt}    CAR1369 {c |}{res}          1        0.84       17.65
+{txt}    CAR1370 {c |}{res}          1        0.84       18.49
+{txt}    CAR1390 {c |}{res}          1        0.84       19.33
+{txt}    CAR1393 {c |}{res}          1        0.84       20.17
+{txt}   CAR22057 {c |}{res}          1        0.84       21.01
+{txt}   CAR22066 {c |}{res}          1        0.84       21.85
+{txt}   CAR22075 {c |}{res}          1        0.84       22.69
+{txt}   CAR22086 {c |}{res}          1        0.84       23.53
+{txt}   CAR22098 {c |}{res}          1        0.84       24.37
+{txt}   CAR22103 {c |}{res}          1        0.84       25.21
+{txt}   CAR22108 {c |}{res}          1        0.84       26.05
+{txt}   CAR22115 {c |}{res}          1        0.84       26.89
+{txt}   CAR22122 {c |}{res}          1        0.84       27.73
+{txt}   CAR22124 {c |}{res}          1        0.84       28.57
+{txt}   CAR22125 {c |}{res}          1        0.84       29.41
+{txt}   CAR22129 {c |}{res}          1        0.84       30.25
+{txt}   CAR22133 {c |}{res}          1        0.84       31.09
+{txt}   CAR22139 {c |}{res}          1        0.84       31.93
+{txt}   CAR22141 {c |}{res}          1        0.84       32.77
+{txt}   CAR22143 {c |}{res}          1        0.84       33.61
+{txt}   CAR22148 {c |}{res}          1        0.84       34.45
+{txt}   CAR22161 {c |}{res}          1        0.84       35.29
+{txt}   CAR22165 {c |}{res}          1        0.84       36.13
+{txt}   CAR22167 {c |}{res}          1        0.84       36.97
+{txt}   CAR22173 {c |}{res}          1        0.84       37.82
+{txt}   CAR22174 {c |}{res}          1        0.84       38.66
+{txt}   CAR22182 {c |}{res}          1        0.84       39.50
+{txt}   CAR22188 {c |}{res}          1        0.84       40.34
+{txt}   CAR22198 {c |}{res}          1        0.84       41.18
+{txt}   CAR22201 {c |}{res}          1        0.84       42.02
+{txt}   CAR22205 {c |}{res}          1        0.84       42.86
+{txt}   CAR22206 {c |}{res}          1        0.84       43.70
+{txt}   CAR22219 {c |}{res}          1        0.84       44.54
+{txt}   CAR22223 {c |}{res}          1        0.84       45.38
+{txt}   CAR22224 {c |}{res}          1        0.84       46.22
+{txt}   CAR22225 {c |}{res}          1        0.84       47.06
+{txt}   CAR22235 {c |}{res}          1        0.84       47.90
+{txt}   CAR22240 {c |}{res}          1        0.84       48.74
+{txt}   CAR22264 {c |}{res}          1        0.84       49.58
+{txt}   CAR22265 {c |}{res}          1        0.84       50.42
+{txt}   CAR22269 {c |}{res}          1        0.84       51.26
+{txt}   CAR22276 {c |}{res}          1        0.84       52.10
+{txt}   CAR22318 {c |}{res}          1        0.84       52.94
+{txt}   CAR22326 {c |}{res}          1        0.84       53.78
+{txt}   CAR22333 {c |}{res}          1        0.84       54.62
+{txt}   CAR22345 {c |}{res}          1        0.84       55.46
+{txt}   CAR22349 {c |}{res}          1        0.84       56.30
+{txt}   CAR22355 {c |}{res}          1        0.84       57.14
+{txt}    CAR2280 {c |}{res}          1        0.84       57.98
+{txt}    CAR2283 {c |}{res}          1        0.84       58.82
+{txt}    CAR2291 {c |}{res}          1        0.84       59.66
+{txt}    CAR2302 {c |}{res}          1        0.84       60.50
+{txt}    CAR2303 {c |}{res}          1        0.84       61.34
+{txt}    CAR2306 {c |}{res}          1        0.84       62.18
+{txt}    CAR2316 {c |}{res}          1        0.84       63.03
+{txt}    CAR2319 {c |}{res}          1        0.84       63.87
+{txt}    CAR2327 {c |}{res}          1        0.84       64.71
+{txt}    CAR2328 {c |}{res}          1        0.84       65.55
+{txt}    CAR2332 {c |}{res}          1        0.84       66.39
+{txt}    CAR2335 {c |}{res}          1        0.84       67.23
+{txt}    CAR2336 {c |}{res}          1        0.84       68.07
+{txt}    CAR2339 {c |}{res}          1        0.84       68.91
+{txt}    CAR2343 {c |}{res}          1        0.84       69.75
+{txt}    CAR2347 {c |}{res}          1        0.84       70.59
+{txt}    CAR2362 {c |}{res}          1        0.84       71.43
+{txt}    CAR2367 {c |}{res}          1        0.84       72.27
+{txt}    CAR2370 {c |}{res}          1        0.84       73.11
+{txt}    CAR2373 {c |}{res}          1        0.84       73.95
+{txt}    CAR2379 {c |}{res}          1        0.84       74.79
+{txt}    CAR2381 {c |}{res}          1        0.84       75.63
+{txt}    CAR2385 {c |}{res}          1        0.84       76.47
+{txt}    CAR2392 {c |}{res}          1        0.84       77.31
+{txt}    CAR2396 {c |}{res}          1        0.84       78.15
+{txt}    CAR2411 {c |}{res}          1        0.84       78.99
+{txt}    CAR2413 {c |}{res}          1        0.84       79.83
+{txt}    CAR2414 {c |}{res}          1        0.84       80.67
+{txt}    CAR2417 {c |}{res}          1        0.84       81.51
+{txt}    CAR2423 {c |}{res}          1        0.84       82.35
+{txt}    CAR2424 {c |}{res}          1        0.84       83.19
+{txt}    CAR2425 {c |}{res}          1        0.84       84.03
+{txt}    CAR2427 {c |}{res}          1        0.84       84.87
+{txt}    CAR2429 {c |}{res}          1        0.84       85.71
+{txt}    CAR2430 {c |}{res}          1        0.84       86.55
+{txt}    CAR2435 {c |}{res}          1        0.84       87.39
+{txt}    CAR2439 {c |}{res}          1        0.84       88.24
+{txt}    CAR2444 {c |}{res}          1        0.84       89.08
+{txt}    CAR2450 {c |}{res}          1        0.84       89.92
+{txt}    CAR2452 {c |}{res}          1        0.84       90.76
+{txt}    CAR2473 {c |}{res}          1        0.84       91.60
+{txt}    CAR2484 {c |}{res}          1        0.84       92.44
+{txt}    CAR2485 {c |}{res}          1        0.84       93.28
+{txt}    CAR2490 {c |}{res}          1        0.84       94.12
+{txt}    CAR2502 {c |}{res}          1        0.84       94.96
+{txt}    CAR2508 {c |}{res}          1        0.84       95.80
+{txt}    CAR2536 {c |}{res}          1        0.84       96.64
+{txt}    CAR2549 {c |}{res}          1        0.84       97.48
+{txt}    CAR2559 {c |}{res}          1        0.84       98.32
+{txt}    CAR2561 {c |}{res}          1        0.84       99.16
+{txt}    CAR2563 {c |}{res}          1        0.84      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        119      100.00
+
+{com}. 
+. 
+. tab HHID if S_phone_ownership == 0 & S_Assign_Phone == 0
+
+  {txt}Household {c |}
+         ID {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+   CAR22021 {c |}{res}          1      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}          1      100.00
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta", clear
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta"
+
+. keep if HHID == "CAR22021"
+{txt}(2,286 observations deleted)
+
+{com}. tab phone_ownership
+
+  {txt}Household {c |}
+ owns phone {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}          1      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}          1      100.00
+
+{com}. tab mobile_coverage
+
+  {txt}Household {c |}
+ has mobile {c |}
+    network {c |}
+   coverage {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        Yes {c |}{res}          1      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}          1      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{err}{p}file {bf:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/3_Sampling/HH_PhoneAssignment_Final.xls} not found{p_end}{txt}{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+. if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl CAR                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}CAR{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}CAR{c )-}/5_Field_notes"
+{txt}
+{com}.         gl analysis     "${c -(}CAR{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}CAR{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+.         gl all                  "${c -(}rcari{c )-}/9_Comprehensive"
+{txt}
+{com}.         gl all_dta              "${c -(}all{c )-}/1_Data"
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. keep if Uid == "CAR22021"
+{txt}(300 observations deleted)
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}Modality_Order_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotSample_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality_Type_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Order_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotModality_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Type_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality_Order_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}TotSample_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Modality_Type_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Order_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotModality_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Type_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FLAG_Remote_NoPhone_NoCoverage{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Ind_OutSample{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality_Type{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Type{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (115,000 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         import delimited "${c -(}sample{c )-}/Full_sample_Uid.csv", case(preserve) clear
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{res}{text}(45 vars, 2,287 obs)
+
+{com}.         keep   Uid ___index
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. keep if Uid == "CAR22021"
+{txt}(2,286 observations deleted)
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}Modality_Order_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotSample_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality_Type_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Order_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotModality_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Type_P{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality_Order_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}TotSample_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Modality_Type_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Order_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}TotModality_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Type_NP{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FLAG_Remote_NoPhone_NoCoverage{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Ind_OutSample{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality_Type{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Length_Type{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (115,000 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. keep if ___index == 498
+{txt}(2,499 observations deleted)
+
+{com}. list
+
+     {txt}{c TLC}{hline 31}{c TT}{hline 32}{c TT}{hline 12}{c TT}{hline 27}{c TT}{hline 11}{c TT}{hline 8}{c TRC}
+  1. {c |}                     starttime {c |}                       endtime  {c |}     today  {c |}                 deviceid  {c |} subscr~d  {c |} simid  {c |}
+     {c |} {res}2023-07-23T15:11:42.477+01:00 {txt}{c |} {res}2023-07-23T16:46:48.548+01:00  {txt}{c |} {res}23 Jul 23  {txt}{c |} {res}collect:Oca1Tg6uKbFv6oww  {txt}{c |} {res}          {txt}{c |} {res}       {txt}{c |}
+     {c LT}{hline 10}{c TT}{hline 20}{c BT}{hline 17}{c TT}{hline 14}{c BT}{hline 4}{c TT}{hline 7}{c BT}{hline 4}{c TT}{hline 15}{c TT}{hline 6}{c BT}{hline 8}{c TT}{hline 2}{c BT}{hline 8}{c RT}
+     {c |} device~m {c |}                             username {c |}   EnuName_Display {c |}   SvyDate  {c |}   Admin1Name  {c |}   Admin2Name  {c |} Admin3~e  {c |}
+     {c |} {res}         {txt}{c |} {res}aizaelisabeth.kpery-matsouka@wfp.org {txt}{c |} {res}ZOUIBONA Emmanuel {txt}{c |} {res}23 Jul 23  {txt}{c |} {res}Nana-Gribizi  {txt}{c |} {res}Kaga-Bandaro  {txt}{c |} {res}    Nana  {txt}{c |}
+     {c LT}{hline 10}{c +}{hline 10}{c TT}{hline 10}{c TT}{hline 14}{c TT}{hline 1}{c BT}{hline 19}{c BT}{hline 9}{c TT}{hline 2}{c BT}{hline 7}{c TT}{hline 7}{c BT}{hline 4}{c TT}{hline 10}{c +}{hline 11}{c RT}
+     {c |} Admin5~e {c |} confir~n {c |} villag~e {c |}      EnuName {c |}                       HHCoord {c |} _~atit~e {c |} ___~gitude {c |} _~alti~e {c |} ___HHC~n  {c |}
+     {c |} {res}DAMAKA 2 {txt}{c |} {res}     Yes {txt}{c |} {res}         {txt}{c |} {res}ZOUIBONA Emm {txt}{c |} {res}7.07243 19.0866967 468.9 96.0 {txt}{c |} {res} 7.07243 {txt}{c |} {res}19.0866967 {txt}{c |} {res}   468.9 {txt}{c |} {res}      96  {txt}{c |}
+     {c LT}{hline 10}{c +}{hline 10}{c BT}{hline 10}{c BT}{hline 7}{c TT}{hline 6}{c BT}{hline 3}{c TT}{hline 11}{c TT}{hline 11}{c TT}{hline 3}{c BT}{hline 7}{c TT}{hline 2}{c BT}{hline 8}{c TT}{hline 3}{c BT}{hline 10}{c BT}{hline 4}{c TT}{hline 6}{c RT}
+     {c |} house_~r {c |}           house_description {c |} house_~e {c |} consen~N  {c |} consen~n  {c |} gender~e  {c |} age_re~e  {c |}  respondent_name  {c |} age  {c |}
+     {c |} {res}       . {txt}{c |} {res}En face du chef de quartier {txt}{c |} {res}     Yes {txt}{c |} {res}     Yes  {txt}{c |} {res}       .  {txt}{c |} {res}       .  {txt}{c |} {res}       .  {txt}{c |} {res}Gueleba François  {txt}{c |} {res} 46  {txt}{c |}
+     {c LT}{hline 10}{c BT}{hline 4}{c TT}{hline 11}{c TT}{hline 12}{c BT}{hline 2}{c TT}{hline 7}{c BT}{hline 3}{c TT}{hline 7}{c BT}{hline 3}{c TT}{hline 7}{c BT}{hline 3}{c TT}{hline 7}{c BT}{hline 2}{c TT}{hline 8}{c BT}{hline 2}{c TT}{hline 11}{c TT}{hline 4}{c BT}{hline 6}{c RT}
+     {c |} relationship  {c |} hhhead~e  {c |}    hh_status  {c |} hh_hea~x  {c |} hh_hea~l  {c |} hh_hea~c  {c |} hh_size  {c |} mem_l~15  {c |} mem_g~60  {c |} mem_di~y  {c |}
+     {c |} {res}Household he  {txt}{c |} {res}          {txt}{c |} {res}Permanent re  {txt}{c |} {res}    Male  {txt}{c |} {res}      No  {txt}{c |} {res}       4  {txt}{c |} {res}      2  {txt}{c |} {res}       0  {txt}{c |} {res}       0  {txt}{c |} {res}      No  {txt}{c |}
+     {c LT}{hline 10}{c TT}{hline 4}{c BT}{hline 5}{c TT}{hline 5}{c BT}{hline 4}{c TT}{hline 10}{c +}{hline 10}{c TT}{c BT}{hline 9}{c TT}{hline 1}{c BT}{hline 11}{c +}{hline 10}{c BT}{hline 1}{c TT}{hline 9}{c BT}{c TT}{hline 10}{c +}{hline 11}{c RT}
+     {c |} area_h~e {c |} phone_~p {c |} phone_~1 {c |} second~e {c |} phone_~2 {c |} phone_~3 {c |} roofing_m~e {c |} floor_ma~e {c |} contac~e {c |} contac~1 {c |} contac~2  {c |}
+     {c |} {res}       2 {txt}{c |} {res}      No {txt}{c |} {res}         {txt}{c |} {res}       . {txt}{c |} {res}         {txt}{c |} {res}         {txt}{c |} {res}Palm/bamboo {txt}{c |} {res}Earth/sand {txt}{c |} {res}       5 {txt}{c |} {res}       0 {txt}{c |} {res}       0  {txt}{c |}
+     {c LT}{hline 10}{c BT}{hline 10}{c BT}{hline 2}{c TT}{hline 7}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 4}{c BT}{hline 10}{c BT}{hline 8}{c TT}{hline 4}{c BT}{hline 12}{c BT}{hline 7}{c TT}{hline 2}{c BT}{hline 10}{c BT}{hline 11}{c RT}
+     {c |}        contac~3        {c |}        contac~4        {c |}        contac~5        {c |}        contac~6         {c |}        hh_str~e         {c |}
+     {c |}        {res}       0        {txt}{c |}        {res}       0        {txt}{c |}        {res}       1        {txt}{c |}        {res}       0         {txt}{c |}        {res}     Yes         {txt}{c |}
+     {c LT}{hline 24}{c BT}{hline 24}{c BT}{hline 24}{c BT}{hline 25}{c BT}{hline 25}{c RT}
+     {c |}                                                                                                         hh_landmark_photo    {c |}
+     {c |}   {res}http://api.moda.wfp.org/api/v1/files/13430117?filename=caf/attachments/56168_sample_household_listing/1690127197509.jpg    {txt}{c |}
+     {c LT}{hline 126}{c RT}
+     {c |}                                                                                                        hh_landmark_photo2    {c |}
+     {c |}   {res}http://api.moda.wfp.org/api/v1/files/13430118?filename=caf/attachments/56168_sample_household_listing/1690127203664.jpg    {txt}{c |}
+     {c LT}{hline 12}{c TT}{hline 45}{c TT}{hline 12}{c TT}{hline 40}{c TT}{hline 13}{c RT}
+     {c |}  mobile~e  {c |}                                 instanceID  {c |}     ___id  {c |}                               ___uuid  {c |}  ___subm~e  {c |}
+     {c |}  {res}     Yes  {txt}{c |}  {res}uuid:f1b1108c-123a-430f-8078-66e44821e75c  {txt}{c |}  {res}39283921  {txt}{c |}  {res}f1b1108c-123a-430f-8078-66e44821e75c  {txt}{c |}  {res}28 Jul 23  {txt}{c |}
+     {c LT}{hline 10}{c TT}{hline 1}{c BT}{hline 8}{c TT}{hline 10}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 4}{c BT}{hline 7}{c TT}{hline 4}{c BT}{hline 5}{c TT}{hline 15}{c TT}{hline 10}{c TT}{hline 7}{c BT}{hline 2}{c TT}{hline 10}{c RT}
+     {c |} ___index {c |} ___par~e {c |} ___par~x {c |} ___tags {c |} ___notes {c |} ___version {c |} ___dur~n {c |} ___submitte~y {c |} ___xfo~d {c |} Moda~m_P {c |} Moda~r_P {c |}
+     {c |} {res}     498 {txt}{c |} {res}         {txt}{c |} {res}      -1 {txt}{c |} {res}        {txt}{c |} {res}         {txt}{c |} {res}2307171626 {txt}{c |} {res}  5706.0 {txt}{c |} {res}aizaelisabeth {txt}{c |} {res}   56168 {txt}{c |} {res}       . {txt}{c |} {res}       . {txt}{c |}
+     {c LT}{hline 10}{c +}{hline 10}{c +}{hline 10}{c +}{hline 9}{c BT}{c TT}{hline 9}{c BT}{c TT}{hline 11}{c +}{hline 10}{c BT}{c TT}{hline 11}{c TT}{hline 2}{c BT}{hline 8}{c TT}{hline 1}{c BT}{hline 9}{c TT}{c BT}{hline 10}{c RT}
+     {c |} TotSa~_P {c |} Moda~e_P {c |} Leng~m_P {c |} Leng~r_P {c |} TotMo~_P {c |} Leng~e_P  {c |} Mod~m_NP  {c |} Mod~r_NP  {c |} TotSa~NP  {c |} Mod~e_NP  {c |} Len~m_NP  {c |}
+     {c |} {res}       . {txt}{c |} {res}       . {txt}{c |} {res}       . {txt}{c |} {res}       . {txt}{c |} {res}       . {txt}{c |} {res}       .  {txt}{c |} {res}.1232338  {txt}{c |} {res}      14  {txt}{c |} {res}     100  {txt}{c |} {res}       1  {txt}{c |} {res}.4067572  {txt}{c |}
+     {c LT}{hline 10}{c BT}{hline 6}{c TT}{hline 3}{c BT}{hline 10}{c BT}{hline 2}{c TT}{hline 7}{c BT}{hline 9}{c TT}{c BT}{hline 11}{c BT}{hline 4}{c TT}{hline 6}{c BT}{hline 10}{c TT}{c BT}{hline 11}{c BT}{hline 4}{c TT}{hline 6}{c BT}{hline 11}{c RT}
+     {c |}    Len~r_NP     {c |}    TotMo~NP     {c |}    Len~e_NP     {c |}    FLAG_R~e     {c |}    Ind_Ou~e     {c |}    Modali~e     {c |}    Length_~e     {c |}
+     {c |}    {res}      21     {txt}{c |}    {res}      50     {txt}{c |}    {res}       1     {txt}{c |}    {res}       0     {txt}{c |}    {res}       0     {txt}{c |}    {res}  Remote     {txt}{c |}    {res}Long Form     {txt}{c |}
+     {c BLC}{hline 17}{c BT}{hline 17}{c BT}{hline 17}{c BT}{hline 17}{c BT}{hline 17}{c BT}{hline 17}{c BT}{hline 18}{c BRC}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Randomization of Sample                                                            *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *                                               Alirah Weyori (alirah.weyori@wfp.org)                              *
+> *  DATE:                                Jul 31, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    "${c -(}sample{c )-}/Listed HHs for CAR_20230731.xlsx"
+>                                         
+>         ** CREATES:             "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.xlsx"
+>                                         
+>         ** NOTES:               1. Full sample randomization since we already randomly selected
+>                                            them in the listing and only 2 rejections
+>                                         2. Separate randomization based on phone ownership: 25% have phones
+>                                         3. Filter out those 1) assigned with remote
+>                                                                                 2) without phones
+>                                                                                 3) has coverage 
+>                                            to give phones
+> 
+> ********************************************************************************
+> *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+> *******************************************************************************/
+. 
+. local user_commands ietoolkit iefieldkit 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} 
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(17.0)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}. 
+.         * Alirah to add
+. if $alirah {c -(}
+.         global rcari  "C:\Users\alirah.weyori\World Food Programme\RAMN-N~1\018309~1.FOO\1ADA2~1.3RE\2_CARI~1\1_RCAR~1\1_PILO~1"
+.         {c )-} 
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl car                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}car{c )-}/3_Sampling"
+{txt}
+{com}.         gl bal                  "${c -(}sample{c )-}/Balance"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}car{c )-}/9_Analysis"     
+{txt}
+{com}.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         
+.         * Load sample
+.         *------------
+.         use "${c -(}sample{c )-}/Listed HHs for CAR_20230731.dta", clear           
+{txt}
+{com}.         compress 
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Admin1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Admin5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}confirm_location{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_number{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}house_type{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}consentRsn{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}gender_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age_refuse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}age{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}relationship{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_status{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_sex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_marital{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_head_educ{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_size{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_lessthan15{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_greaterthan60{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mem_disability{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}area_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}phone_ownership{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}second_phone{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}roofing_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}floor_material_house{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}contact_time_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_5{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}contact_time_6{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}hh_structure{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}mobile_coverage{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}starttime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}endtime{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}subscriberid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}simid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}devicephonenum{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str28{sf}
+  {txt}variable {bf}{res}village_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}HHCoord{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}respondent_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}hhhead_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str33{sf}
+  {txt}variable {bf}{res}phone_number_1{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}phone_number_3{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}contact_time{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str7{sf}
+  {txt}variable {bf}{res}hh_landmark_photo{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}hh_landmark_photo2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str119{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,537,294 bytes saved)
+
+{com}.         
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} starttime endtime today deviceid subscriberid simid devicephonenum username EnuName_Display SvyDate Admin1Name Admin2Name Admin3Name Admin5Name confirm_location village_name EnuName HHCoord ___HHCoord_latitude ___HHCoord_longitude ___HHCoord_altitude ___HHCoord_precision house_number house_description house_type consentYN consentRsn gender_refuse age_refuse respondent_name age relationship hhhead_name hh_status hh_head_sex hh_head_marital hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability area_house phone_ownership phone_number_1 second_phone phone_number_2 phone_number_3 roofing_material_house floor_material_house contact_time contact_time_1 contact_time_2 contact_time_3 contact_time_4 contact_time_5 contact_time_6 hh_structure hh_landmark_photo hh_landmark_photo2 mobile_coverage instanceID ___id ___uuid ___submission_time ___index ___parent_table_name ___parent_index ___tags ___notes ___version ___duration ___submitted_by ___xform_id:{txt}{p_end}
+2513 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         * Set the environment to make randomization replicable
+.     isid ___index, sort
+{txt}(data now sorted by {bf:___index})
+
+{com}.     set  seed 208976  // bit.ly/stata-random set the random seed for replication 
+{txt}
+{com}.         
+.         ********* Sample selection
+.         ** check consent
+.         keep if consentYN == 1  // 2 observations dropped
+{txt}(2 observations deleted)
+
+{com}.         // ignore attrition on 2 rejecation out of 2513 total observations
+.         keep if !mi(Admin5Name)
+{txt}(11 observations deleted)
+
+{com}.         
+.         tab phone_ownership, nol
+
+   {txt}Does the {c |}
+  household {c |}
+have access {c |}
+  to mobile {c |}
+     phone? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,872       74.88       74.88
+{txt}          1 {c |}{res}        628       25.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+{txt}
+{com}. /*      dtable i.Admin1Name i.Admin2Name i.Admin3Name i.Admin5Name,                     ///
+>                    by(phone_ownership) title(CAR rCARI Validation Study - Summary of Listed Sample ADMIN Distribution)  ///
+>                    export(${c -(}sample{c )-}/CAR_rCARI_Listed_Sample_ADMIN.docx, replace)
+> */        
+. 
+. ********************************************************************************
+. *                                               PART 3:  RUN RANDOMIZATION - Own Phone                         *
+. ********************************************************************************        
+.         
+.         * keep if phone_ownership == 1
+.         
+.     * Assign sampled household with phone to F2F and Remote 
+.         sort Admin5Name, stable
+{txt}
+{com}.         by Admin5Name: gen  Modality_RandomNum_P = uniform()                      ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name: egen Modality_Order_P = rank(Modality_RandomNum_P) ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name: egen TotSample_P  = max(Modality_Order_P)                  ///
+>                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.     gen    Modality_Type_P = (Modality_Order_P <= TotSample_P/2)          ///
+>                    if phone_ownership == 1 
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         ********* Form Length
+.         sort Admin5Name Modality_Type_P, stable
+{txt}
+{com}.         by Admin5Name Modality_Type_P: gen  Length_RandomNum_P = uniform() ///
+>                                                                    if !mi(Modality_Type_P)
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_P: egen Length_Order_P = rank(Length_RandomNum_P) ///
+>                                                                    if !mi(Modality_Type_P)
+{txt}(1,872 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_P: egen TotModality_P  = max(Length_Order_P) ///
+>                                                                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         gen    Length_Type_P = (Length_Order_P <= TotModality_P/2)                         ///
+>                    if phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         
+.         ** check in Own Phone group, assigned to Remote but without coverage
+.         count if Modality_Type_P == 1 & mobile_coverage == 0 // 68
+  {res}68
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                               PART 4:  RUN RANDOMIZATION - No Phone                          *
+. ********************************************************************************        
+.         
+.         * keep if phone_ownership == 0
+.         sort Admin5Name, stable
+{txt}
+{com}.     * Assign sampled household with phone to F2F and Remote 
+.         by Admin5Name: gen  Modality_RandomNum_NP = uniform()                           ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name: egen Modality_Order_NP = rank(Modality_RandomNum_NP) ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name: egen TotSample_NP  = max(Modality_Order_NP)                      ///
+>                                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.     gen    Modality_Type_NP = (Modality_Order_NP <= TotSample_NP/2)         ///
+>                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         ********* Form Length 
+.         sort Admin5Name Modality_Type_NP, stable
+{txt}
+{com}.         by Admin5Name Modality_Type_NP: gen  Length_RandomNum_NP = uniform()    ///
+>                                                                         if !mi(Modality_Type_NP)
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_NP: egen Length_Order_NP = rank(Length_RandomNum_NP) ///
+>                                                                         if !mi(Modality_Type_NP)
+{txt}(628 missing values generated)
+
+{com}.         by Admin5Name Modality_Type_NP: egen TotModality_NP  = max(Length_Order_NP) ///
+>                                                                         if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         gen    Length_Type_NP = (Length_Order_NP <= TotModality_NP/2)                      ///
+>                    if phone_ownership == 0
+{txt}(628 missing values generated)
+
+{com}.         
+.         ** check in Own Phone group, assigned to Remote but without coverage
+.         count if Modality_Type_NP == 1 & mobile_coverage == 0 // 213
+  {res}213
+{txt}
+{com}.         gen   FLAG_Remote_NoPhone_NoCoverage = (Modality_Type_NP == 1 & mobile_coverage == 0)
+{txt}
+{com}.         
+.         count if Modality_Type_NP == 1 & mobile_coverage == 1 // 715
+  {res}715
+{txt}
+{com}.         
+.         gen Ind_OutSample = (phone_ownership == 0 & mobile_coverage == 0)
+{txt}
+{com}.         
+.         
+. ********************************************************************************
+. *                                                       PART 5:  Label Variables                                           *
+. ********************************************************************************        
+.         
+.         gen               Modality_Type = Modality_Type_P  if  phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         replace   Modality_Type = Modality_Type_NP if  phone_ownership == 0
+{txt}(1,872 real changes made)
+
+{com}.         
+.         replace   Modality_Type = . if FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}(213 real changes made, 213 to missing)
+
+{com}.         
+.         gen       Length_Type   = Length_Type_P    if  phone_ownership == 1
+{txt}(1,872 missing values generated)
+
+{com}.         replace   Length_Type   = Length_Type_NP   if  phone_ownership == 0
+{txt}(1,872 real changes made)
+
+{com}.         
+.         replace   Length_Type   = . if FLAG_Remote_NoPhone_NoCoverage == 1
+{txt}(213 real changes made, 213 to missing)
+
+{com}.         
+.         label var Modality_Type                 "Modality Assignment: Type"
+{txt}
+{com}.         label var Length_Type                   "Form Length Assignment: Type"
+{txt}
+{com}.         label var Ind_OutSample                 "Households to be dropped"
+{txt}
+{com}.         
+.         label def Modality_L                    1 "Remote"        0 "Face-to-Face"
+{txt}
+{com}.         label val Modality_Type                 Modality_L
+{txt}
+{com}.         
+.         label def Length_L                              1 "Long Form" 0 "Short Form"
+{txt}
+{com}.         label val Length_Type                   Length_L
+{txt}
+{com}.         
+.         sort Modality_Type Length_Type, stable
+{txt}
+{com}.         
+.         save "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. *       export excel using "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results_${c -(}today{c )-}.xlsx", ///
+>                    firstrow(variables) replace
+. 
+{txt}end of do-file
+
+{com}. tab phone_ownership
+
+   {txt}Does the {c |}
+  household {c |}
+have access {c |}
+  to mobile {c |}
+     phone? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}      1,872       74.88       74.88
+{txt}        Yes {c |}{res}        628       25.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,500      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}.           
+.         tempfile phone
+{txt}
+{com}.         
+.         import excel using "${c -(}sample{c )-}/HH_PhoneAssignment_Final.xls", ///
+>                   sheet("Sheet1") firstrow clear
+{res}{text}(45 vars, 300 obs)
+
+{com}.         replace STATUS = 1 if STATUS == 0
+{txt}(300 real changes made)
+
+{com}.         ren   STATUS   Assignment
+{res}{txt}
+{com}.         keep  ___index Assignment
+{txt}
+{com}.         save `phone'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_82820.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}sample{c )-}/CAR_rCARI_Sample_Randomization_Results.dta", clear
+{txt}
+{com}.         
+.         mmerge ___index using `phone', type(1:1) uname(Phone_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    93
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_82820.000001
+{txt}{ralign 20:obs} {c |} {res}   300{txt}
+{txt}{ralign 20:vars} {c |} {res}     2{txt}
+{txt}{ralign 20:match vars} {c |} {res}___index  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Sample_Randomization_Results.dta
+{txt}{ralign 20:obs} {c |} {res}  2500
+{txt}{ralign 20:vars} {c |} {res}    96{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2200{txt}  {lalign 37:obs only in master data} {ralign 10:(code==1)}
+{col 21}{txt} {c |}{res}    300{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         replace Phone_Assignment = 0 if mi(Phone_Assignment)
+{txt}(2,200 real changes made)
+
+{com}.         drop _merge
+{txt}
+{com}.         
+.         replace Phone_Assignment = . if phone_ownership == 1 | mobile_coverage == 0 | Modality_Type == 0
+{txt}(1,785 real changes made, 1,785 to missing)
+
+{com}.         
+. ** Initial Balance Test on Listing Charateristics
+.         
+.         gen HHHResp                     = (relationship == 1)
+{txt}
+{com}.         gen HHHRespSpouse       = (relationship == 2)
+{txt}
+{com}.         gen HHDisplaced         = (hh_status    == 2)
+{txt}
+{com}.         gen HHHFemale           = (hh_head_sex  == 0)
+{txt}
+{com}.         gen HHHMarried          = (hh_head_marital == 1)
+{txt}
+{com}.         
+.         gen     HHCrowding      = hh_size/area_house
+{txt}(74 missing values generated)
+
+{com}.         sum     HHCrowding
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 2}HHCrowding {c |}{res}      2,426    3.298289    1.779506        .25         15
+{txt}
+{com}.         replace HHCrowding  = `r(max)' if mi(HHCrowding)
+{txt}(74 real changes made)
+
+{com}.         
+. ** Randomly select 300 from the 737 non phone owner
+.         sort ___index, stable
+{txt}
+{com}.         gen  Select_RandomNum = uniform() if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         egen Select_Order         = rank(Select_RandomNum)                              ///
+>                                                                           if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.                                                                                  
+.         gen  Select_Yes           = (Select_Order <= 300) if phone_ownership == 0 & ///
+>                                                                                  mobile_coverage == 1 & ///
+>                                                                                  Modality_Type == 0
+{txt}(1,763 missing values generated)
+
+{com}.         
+.         gen     Random_Comparison = 1 if Select_Yes == 1                // F2F Random Partial
+{txt}(2,200 missing values generated)
+
+{com}.         replace Random_Comparison = 0 if Phone_Assignment == 1  // Remote Gave Phone 
+{txt}(300 real changes made)
+
+{com}.         
+. *       gen     HHRoof_Bad  = inlist(roofing_material_house, ）
+.         
+.         dtable age i.relationship i.hh_status i.hh_head_sex i.hh_head_marital           ///
+>                    hh_head_educ hh_size mem_lessthan15 mem_greaterthan60 mem_disability ///
+>                    area_house i.phone_ownership i.roofing_material_house                        ///
+>                    i.floor_material_house, by(Modality_Type, test)                                              ///
+>                    title(CAR rCARI Study - Balance Tests of Listed Sample Assignment)   ///
+>                    export(${c -(}sample{c )-}/CAR_rCARI_Listing_Assignment_Balance.docx, replace)
+{res}{txt}{p 0 6 2}
+note: using test {bf:regress} across levels of {bf:Modality_Type} for {bf:age}, {bf:hh_head_educ}, {bf:hh_size}, {bf:mem_lessthan15}, {bf:mem_greaterthan60}, {bf:mem_disability}, and {bf:area_house}.
+{p_end}
+{p 0 6 2}
+note: using test {bf:pearson} across levels of {bf:Modality_Type} for {bf:relationship}, {bf:hh_status}, {bf:hh_head_sex}, {bf:hh_head_marital}, {bf:phone_ownership}, {bf:roofing_material_house}, and {bf:floor_material_house}.
+{p_end}
+{res}
+{smcl}
+{reset}{...}
+{p}CAR rCARI Study - Balance Tests of Listed Sample Assignment{p_end}
+{hline 79}{c -}{hline 15}{c -}{hline 15}{c -}{hline 15}{c -}{hline 5}
+{space 79} {space 14}Modality Assignment: Type{space 14}
+{space 79} {space 2}Face-to-Face{space 1} {space 5}Remote{space 4} {space 5}Total{space 5} {space 1}Test
+{hline 79}{c -}{hline 15}{c -}{hline 15}{c -}{hline 15}{c -}{hline 5}
+N{space 78} {space 2}{result:1,264 (55.3%)} {space 2}{result:1,023 (44.7%)} {space 1}{result:2,287 (100.0%)} {space 5}
+How old are you?{space 63} {result:38.478 (13.882)} {result:38.818 (13.827)} {result:38.630 (13.855)} {result:0.559}
+What is ${respondent_name}'s relationship to the household head?{space 15} {space 15} {space 15} {space 15} {space 5}
+  Household head (self){space 56} {space 4}{result:960 (75.9%)} {space 4}{result:793 (77.5%)} {space 2}{result:1,753 (76.7%)} {result:0.622}
+  Spouse{space 71} {space 4}{result:254 (20.1%)} {space 4}{result:184 (18.0%)} {space 4}{result:438 (19.2%)} {space 5}
+  Child{space 72} {space 6}{result:28 (2.2%)} {space 6}{result:31 (3.0%)} {space 6}{result:59 (2.6%)} {space 5}
+  Parent{space 71} {space 6}{result:14 (1.1%)} {space 6}{result:11 (1.1%)} {space 6}{result:25 (1.1%)} {space 5}
+  Sibling{space 70} {space 7}{result:4 (0.3%)} {space 7}{result:3 (0.3%)} {space 7}{result:7 (0.3%)} {space 5}
+  Uncle/Aunt{space 67} {space 7}{result:3 (0.2%)} {space 7}{result:1 (0.1%)} {space 7}{result:4 (0.2%)} {space 5}
+  Non-family relation{space 58} {space 7}{result:1 (0.1%)} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.0%)} {space 5}
+Status of the household{space 56} {space 15} {space 15} {space 15} {space 5}
+  Permanent resident{space 59} {space 2}{result:1,197 (94.7%)} {space 4}{result:963 (94.1%)} {space 2}{result:2,160 (94.4%)} {result:0.478}
+  Displaced{space 68} {space 6}{result:67 (5.3%)} {space 6}{result:59 (5.8%)} {space 5}{result:126 (5.5%)} {space 5}
+  Refugee{space 70} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.0%)} {space 5}
+Sex of the household head?{space 53} {space 15} {space 15} {space 15} {space 5}
+  Female{space 71} {space 4}{result:340 (26.9%)} {space 4}{result:291 (28.4%)} {space 4}{result:631 (27.6%)} {result:0.411}
+  Male{space 73} {space 4}{result:924 (73.1%)} {space 4}{result:732 (71.6%)} {space 2}{result:1,656 (72.4%)} {space 5}
+Is the household head married?{space 49} {space 15} {space 15} {space 15} {space 5}
+  No{space 75} {space 2}{result:1,055 (83.5%)} {space 4}{result:864 (84.5%)} {space 2}{result:1,919 (83.9%)} {result:0.521}
+  Yes{space 74} {space 4}{result:209 (16.5%)} {space 4}{result:159 (15.5%)} {space 4}{result:368 (16.1%)} {space 5}
+Years of education of the household head{space 39} {space 2}{result:4.619 (3.999)} {space 2}{result:4.564 (4.124)} {space 2}{result:4.594 (4.055)} {result:0.749}
+How many people are in this household?{space 41} {space 2}{result:6.514 (3.064)} {space 2}{result:6.562 (3.232)} {space 2}{result:6.536 (3.140)} {result:0.717}
+How many members in your household are younger than 15years of age?{space 12} {space 2}{result:3.441 (2.130)} {space 2}{result:3.390 (2.006)} {space 2}{result:3.418 (2.075)} {result:0.562}
+How many members in your household are older than 60years of age?{space 14} {space 2}{result:0.202 (0.487)} {space 2}{result:0.193 (0.502)} {space 2}{result:0.198 (0.493)} {result:0.659}
+Is there anyone with disability/chronic disease in your household?{space 13} {space 2}{result:0.195 (0.396)} {space 2}{result:0.203 (0.403)} {space 2}{result:0.199 (0.399)} {result:0.604}
+How many rooms are in the house?{space 47} {space 2}{result:2.244 (1.226)} {space 2}{result:2.239 (1.270)} {space 2}{result:2.241 (1.246)} {result:0.922}
+Does the household have access to mobile phone?{space 32} {space 15} {space 15} {space 15} {space 5}
+  No{space 75} {space 4}{result:944 (74.7%)} {space 4}{result:715 (69.9%)} {space 2}{result:1,659 (72.5%)} {result:0.011}
+  Yes{space 74} {space 4}{result:320 (25.3%)} {space 4}{result:308 (30.1%)} {space 4}{result:628 (27.5%)} {space 5}
+Please select the option that best describes the roofing material of this house {space 15} {space 15} {space 15} {space 5}
+  No roof{space 70} {space 7}{result:1 (0.1%)} {space 7}{result:8 (0.8%)} {space 7}{result:9 (0.4%)} {result:0.075}
+  Thatch/Palm leaf{space 61} {space 4}{result:147 (11.6%)} {space 6}{result:90 (8.8%)} {space 4}{result:237 (10.4%)} {space 5}
+  Rustic mat{space 67} {space 7}{result:3 (0.2%)} {space 7}{result:0 (0.0%)} {space 7}{result:3 (0.1%)} {space 5}
+  Palm/bamboo{space 66} {space 4}{result:832 (65.8%)} {space 4}{result:684 (66.9%)} {space 2}{result:1,516 (66.3%)} {space 5}
+  Wood planks{space 66} {space 6}{result:32 (2.5%)} {space 6}{result:33 (3.2%)} {space 6}{result:65 (2.8%)} {space 5}
+  Metal/tin{space 68} {space 4}{result:208 (16.5%)} {space 4}{result:171 (16.7%)} {space 4}{result:379 (16.6%)} {space 5}
+  Wood planks{space 66} {space 7}{result:4 (0.3%)} {space 7}{result:3 (0.3%)} {space 7}{result:7 (0.3%)} {space 5}
+  Ceramic tiles{space 64} {space 7}{result:1 (0.1%)} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.0%)} {space 5}
+  Cement{space 71} {space 7}{result:3 (0.2%)} {space 7}{result:5 (0.5%)} {space 7}{result:8 (0.3%)} {space 5}
+  Roofing shingles{space 61} {space 7}{result:2 (0.2%)} {space 7}{result:1 (0.1%)} {space 7}{result:3 (0.1%)} {space 5}
+  Don't know{space 67} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.0%)} {space 5}
+  Other (specify){space 62} {space 6}{result:31 (2.5%)} {space 6}{result:27 (2.6%)} {space 6}{result:58 (2.5%)} {space 5}
+Please select the option that best describes the floor material of this house{space 2} {space 15} {space 15} {space 15} {space 5}
+  Earth/sand{space 67} {space 2}{result:1,194 (94.5%)} {space 4}{result:968 (94.6%)} {space 2}{result:2,162 (94.5%)} {result:0.719}
+  Wood planks{space 66} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.1%)} {space 7}{result:2 (0.1%)} {space 5}
+  Palm/bamboo{space 66} {space 6}{result:21 (1.7%)} {space 6}{result:17 (1.7%)} {space 6}{result:38 (1.7%)} {space 5}
+  Parquet or polished wood{space 53} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.1%)} {space 7}{result:1 (0.0%)} {space 5}
+  Ceramic tiles{space 64} {space 7}{result:1 (0.1%)} {space 7}{result:0 (0.0%)} {space 7}{result:1 (0.0%)} {space 5}
+  Cement{space 71} {space 6}{result:45 (3.6%)} {space 6}{result:36 (3.5%)} {space 6}{result:81 (3.5%)} {space 5}
+  Other (specify){space 62} {space 7}{result:2 (0.2%)} {space 7}{result:0 (0.0%)} {space 7}{result:2 (0.1%)} {space 5}
+{hline 79}{c -}{hline 15}{c -}{hline 15}{c -}{hline 15}{c -}{hline 5}
+{res}{txt}{p 0 1 2}
+(collection {res:DTable} exported to file {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_Balance.docx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_Assignment_Balance.docx})
+{p_end}
+
+{com}. 
+.         gl list_var age HHHResp HHHRespSpouse HHDisplaced HHHFemale HHHMarried          ///
+>                                 hh_head_educ hh_size mem_lessthan15 mem_greaterthan60                   ///
+>                                 mem_disability area_house HHCrowding
+{txt}
+{com}.         
+. ***************************** Balance for Randomization ************************
+.         
+.         ** Quality of Randomization in Phone Owners
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 1, grpvar(Modality_Type) ///
+>                          nonote onerow nototal replace                                                          ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_OwnPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization of Non Phone Owners
+.         iebaltab ${c -(}list_var{c )-} if phone_ownership == 0 & mobile_coverage == 1     ///
+>                                                  & Phone_Assignment != 0,                                                       ///
+>                          grpvar(Modality_Type) nonote onerow nototal replace                    ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels           ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_NoPhone_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization of Non Phone Owners - Assigning Phone
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Random_Comparison)                                                         ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels                     ///
+>              grplabels(0 F2F Random Partial Sample @ 1 Remote Gave Phone)       ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Random_Partial_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         ** Quality of Randomization for Phone Assignment
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Phone_Assignment)                                                  ///
+>                          nonote onerow nototal replace format(%12.2fc) rowvarlabels             ///
+>              grplabels(0 Not Assigned Phone @ 1 Assigned Phone)                         ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Phone_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}list_var{c )-}, grpvar(Modality_Type) nonote onerow nototal replace       ///
+>              format(%12.2fc) grplabels(0 F2F @ 1 Remote) rowvarlabels   ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_Assignment_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_Assignment_Balance.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}list_var{c )-} if Modality_Type == 0, grpvar(Length_Type) nonote          ///
+>                          onerow nototal replace rowvarlabels                                                            ///
+>              format(%12.2fc) grplabels(0 Short Form @ 1 Long Form )                     ///
+>              savexlsx("${c -(}bal{c )-}/CAR_rCARI_Listing_F2F_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_F2F_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/Balance/CAR_rCARI_Listing_F2F_Length_Balance.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}list_var{c )-} if Modality_Type == 1, grpvar(Length_Type) nonote          ///
+>                          onerow nototal replace rowvarlabels                                                            ///
+>              format(%12.2fc) grplabels(0 Short Form @ 1 Long Form )                     ///
+>              savexlsx("${c -(}sample{c )-}/CAR_rCARI_Listing_RM_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_RM_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/3_Sampling/CAR_rCARI_Listing_RM_Length_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD82820.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Prepare overall sample list                                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Aug 12, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}sample{c )-}/CAR_Sample_Merge.xlsx
+>                                         
+>         ** CREATES:             ${c -(}sample{c )-}/CAR_Sample_Merge.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                       PART 1: Prepare Sample List
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

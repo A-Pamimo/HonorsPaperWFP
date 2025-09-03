@@ -1,0 +1,24 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md03a_organize_20230605.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Jun 2023, 21:05:53
+{txt}
+{com}.         di `cdate'
+{res}20230605
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/Myanmar_F2F_Household_Prep_`cdate'.dta", clear 
+{txt}
+{com}.         
+.         ** rename ___variables
+.         ren ___* Sys_*
+{res}{txt}
+{com}.         order R_*, a(RepeatPID_count)
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. 

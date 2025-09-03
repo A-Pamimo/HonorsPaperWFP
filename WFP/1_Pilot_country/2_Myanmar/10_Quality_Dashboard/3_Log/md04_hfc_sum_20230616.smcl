@@ -1,0 +1,2691 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md04_hfc_sum_20230616.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}16 Jun 2023, 16:10:27
+{txt}
+{com}.         di `cdate'      
+{res}20230616
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/Myanmar_Full_Household_Analysis_`cdate'.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         tab S_Assign_Modality   Modality
+
+             {txt}{c |} Survey Modality: F2F
+Modality_Typ {c |}      vs. Remote
+           e {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-to-Face {c |}{res}       394          0 {txt}{c |}{res}       394 
+{txt}      Remote {c |}{res}         0        446 {txt}{c |}{res}       446 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       394        446 {txt}{c |}{res}       840 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+           {txt}{c |}  Form Type: Long vs.
+Length_Typ {c |}         Short
+         e {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       416          0 {txt}{c |}{res}       416 
+{txt}Short Form {c |}{res}         0        424 {txt}{c |}{res}       424 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       416        424 {txt}{c |}{res}       840 
+{txt}
+{com}.         
+. *       replace S_Assign_Modality = Modality if mi(S_Assign_Modality)
+. *       replace S_Assign_Length   = Form         if mi(S_Assign_Length)
+.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         ** 1 Survey Completion  
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion, nototal
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:To Complete}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      439}}}{space 1}{space 1}{ralign 9:{res:{sf: 26.36637}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.21212}}}{space 1}{space 1}{ralign 9:{res:{sf: 52.70108}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      386}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.18318}}}{space 1}{space 1}{ralign 9:{res:{sf: 46.78788}}}{space 1}{space 1}{ralign 9:{res:{sf: 46.39423}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      394}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.66366}}}{space 1}{space 1}{ralign 9:{res:{sf: 46.90476}}}{space 1}{space 1}{ralign 9:{res:{sf: 47.29892}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      446}}}{space 1}{space 1}{ralign 9:{res:{sf: 26.78679}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.09524}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.60577}}}{space 1}
+
+{com}.         esttab using "${c -(}d_tex_tab{c )-}/Myanmar_rCARI_Completion.tex",                                       ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace 
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_rCARI_Completion.tex"'})
+
+{com}. 
+.         tabout S_Assign_Modality S_Assign_Length S_Region S_Township S_Camp Completion  ///
+>         using "${c -(}d_tex_tab{c )-}/Myanmar_rCARI_Completion_by_Admin.docx", ///
+>         replace c(freq row) clab("Count" "Percent") style(docx) f(0c 1p) font(bold) ptotal(single)
+{res}
+{txt}Table output written to: /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_rCARI_Completion_by_Admin.docx
+
+
+{com}.         
+.         ** 2 Survey Duration: Doesn't Work and can be ignored for now   
+. /*      tostring today, g(Date_Str) format(%tdd_m_CY) force
+>         replace Date_Str = "" if Date_Str == "."
+>         
+>         gen NewDate = date(Date_Str, "DMY")
+>         format NewDate %tdCCYYNNDD
+> 
+>         graph box Duration_Min if Modality == 1, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)1500, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>         graph export "${c -(}d_tex_fig{c )-}/Myanmar_rCARI_Duration_F2F_Date.png", replace
+>          
+>         graph box Duration_Min if Modality == 2, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)2100, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>     graph export "${c -(}d_tex_fig{c )-}/Myanmar_rCARI_Duration_RM_Date.png", replace
+> */    
+.         ** 3 Household Size by Enumerator
+.         graph box HHSize, by(Modality) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(3)15, nogrid labsize(3))  ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+{res}{txt}
+{com}.     graph export "${c -(}d_tex_fig{c )-}/Myanmar_rCARI_HHSize_Modality.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/2_figure/Myanmar_rCARI_HHSize_Modality.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** 4 Other specify
+.         keep if Completion == 1
+{txt}(825 observations deleted)
+
+{com}.         
+. /*      codebook ${c -(}other_specify{c )-}
+>         export excel  using "${c -(}note{c )-}/Myanmar_other_specify_`cdate'.xlsx",       ///
+>                    firstrow(variables) replace     
+> 
+>         keep EnuName HHID HHHOccupation HHHOccupation_S HHStatusOth                             ///
+>                    HHHealthAcMildWhy_oth HHHealthAcSevereWhy_oth HHHealthChronWhy_oth                   ///
+>                    HHHealthEmergWhy_oth LhCSIEnAccess_stress_oth LhCSIEnAccess_crisis_oth               ///
+>                    LhCSIEnAccess_em_oth HHIncFirst_oth HHIncFirst_oth_S HHDwellType_oth                 ///
+>                    HHTenureType_oth HHWallType_oth HHRoofType_oth HHFloorType_oth                               ///
+>                    HHToiletType_oth HHEnerCookStove_oth HHEnerCookSRC_oth HHEnerLightSRC_oth    ///
+>                    HHWaterSRC_oth Sys_uuid
+> */      
+. 
+.         ** scatter between food security outcomes
+.         scatter FCS rCSI, by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{res}{txt}
+{com}.         scatter FCS FES , by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{res}{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+. 
+.         gl balance      RESPAge RESPSex RESPFemale RESPHHH HHSize                                                       ///
+>                                 FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS ///
+>                                 rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI  ///
+>                                 Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping                        ///
+>                                 HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES             ///
+>                                 HH_Vul_FES HH_Vul_Income
+{txt}
+{com}. 
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}balance{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Myanmar_Outcome_Modality_Balance.tex")
+
+{txt}{phang}Warning: The R2 was not possible to calculate in the regression for the pair-wise test of variable [FCSStap] for observations with values [1] and [2] in the groupvar [Modality].{p_end}.
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_Modality_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}balance{c )-} if Modality == 1, grpvar(Form) nonote total replace ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Myanmar_Outcome_F2F_Length_Balance.tex")
+
+{txt}{phang}Warning: The R2 was not possible to calculate in the regression for the pair-wise test of variable [FCSStap] for observations with values [1] and [2] in the groupvar [Form].{p_end}.
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}balance{c )-} if Modality == 2, grpvar(Form) nonote total replace ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Myanmar_Outcome_RM_Length_Balance.tex")
+
+{txt}{phang}Warning: The R2 was not possible to calculate in the regression for the pair-wise test of variable [FCSStap] for observations with values [1] and [2] in the groupvar [Form].{p_end}.
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Myanmar_Outcome_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         // onerow
+.         
+.         gl var_ad       HHID Sys_uuid ADMIN1Name ADMIN3Name ADMIN5Name EnuName EnuName_Display  ///
+>                                 Sys_HHCoord_latitude Sys_HHCoord_longitude Sys_HHCoord_altitude Consent ///
+>                                 Completion Duration_Min Modality Form S_Assign_Modality S_Assign_Length
+{txt}
+{com}.         gl demo RESPAge RESPSex HHSize RESPHHH RESPFemale HHDisplaced HHHSingle                 ///
+>                                 HHHMarried HHDisable R_*        
+{txt}
+{com}.         gl var_dem  RESPAge HHSize
+{txt}
+{com}.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI 
+{txt}
+{com}.         gl var_lcs      Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping
+{txt}
+{com}.         gl var_fes      HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES
+{txt}
+{com}.         gl var_inc      HH_Vul_Income
+{txt}
+{com}.         
+.         eststo  clear
+{txt}
+{com}.     estpost tabstat ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}var_lcs{c )-} ${c -(}var_fes{c )-} ${c -(}var_inc{c )-},            ///
+>                         by(Modality) statistics(mean sd range cv) columns(statistics) nototal
+
+{txt}Summary statistics: mean sd range cv
+     for variables: FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES HH_Vul_Income
+  by categories of: Modality
+
+{space 0}{space 0}{ralign 12:Modality}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(range)}{space 1}{space 1}{ralign 9:e(cv)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Face-to-Face}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.459391}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.424834}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .9763214}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .1573604}}}{space 1}{space 1}{ralign 9:{res:{sf: .5844544}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.714113}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.040609}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.053576}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .6753832}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 6.246193}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.527625}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .2445689}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.538071}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.880616}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.22271}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 6.583756}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.392214}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .2114619}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7360406}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.405685}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.909792}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 42.61421}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.01021}}}{space 1}{space 1}{ralign 9:{res:{sf:       62}}}{space 1}{space 1}{ralign 9:{res:{sf: .2818358}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.964467}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.22609}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.133178}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .571066}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.229938}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.153759}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6015228}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.38553}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.30337}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5837563}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.482498}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.539584}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2309645}}}{space 1}{space 1}{ralign 9:{res:{sf: .9023326}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.906803}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.690355}}}{space 1}{space 1}{ralign 9:{res:{sf: 7.913049}}}{space 1}{space 1}{ralign 9:{res:{sf:       38}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.390607}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7081218}}}{space 1}{space 1}{ralign 9:{res:{sf: .4552046}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .6428337}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2766497}}}{space 1}{space 1}{ralign 9:{res:{sf: .4479106}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.619053}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0380711}}}{space 1}{space 1}{ralign 9:{res:{sf: .1916112}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.032987}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 283184.9}}}{space 1}{space 1}{ralign 9:{res:{sf: 152128.6}}}{space 1}{space 1}{ralign 9:{res:{sf: 961714.3}}}{space 1}{space 1}{ralign 9:{res:{sf: .5372059}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 148236.3}}}{space 1}{space 1}{ralign 9:{res:{sf: 130377.1}}}{space 1}{space 1}{ralign 9:{res:{sf:  1146000}}}{space 1}{space 1}{ralign 9:{res:{sf: .8795223}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 431421.2}}}{space 1}{space 1}{ralign 9:{res:{sf: 233981.2}}}{space 1}{space 1}{ralign 9:{res:{sf:  1721322}}}{space 1}{space 1}{ralign 9:{res:{sf: .5423498}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  84725.4}}}{space 1}{space 1}{ralign 9:{res:{sf: 45509.92}}}{space 1}{space 1}{ralign 9:{res:{sf: 323697.1}}}{space 1}{space 1}{ralign 9:{res:{sf: .5371462}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 67.48902}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.41707}}}{space 1}{space 1}{ralign 9:{res:{sf: 82.66628}}}{space 1}{space 1}{ralign 9:{res:{sf:  .213621}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5253807}}}{space 1}{space 1}{ralign 9:{res:{sf: .4999903}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .9516724}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4441624}}}{space 1}{space 1}{ralign 9:{res:{sf: .4975041}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.120095}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Remote}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.856502}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.545429}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .8324412}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .1793722}}}{space 1}{space 1}{ralign 9:{res:{sf: .6282671}}}{space 1}{space 1}{ralign 9:{res:{sf:        6}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.502589}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  3.06278}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.969567}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .6430652}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      6.5}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.17416}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:   .18064}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.428251}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.712613}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.199098}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 6.412556}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.277365}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .1991975}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8721973}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.597551}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.831639}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 44.10874}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.15388}}}{space 1}{space 1}{ralign 9:{res:{sf:       73}}}{space 1}{space 1}{ralign 9:{res:{sf: .2755436}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.872197}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.286116}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: .7959467}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5695067}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.158598}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.034388}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7152466}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.429101}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.998053}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.280269}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.808821}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.412845}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8273543}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.699773}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.054468}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 9.394619}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.045521}}}{space 1}{space 1}{ralign 9:{res:{sf:       44}}}{space 1}{space 1}{ralign 9:{res:{sf: .9628407}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8587444}}}{space 1}{space 1}{ralign 9:{res:{sf: .3486761}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .4060302}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .441704}}}{space 1}{space 1}{ralign 9:{res:{sf: .4971476}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.125522}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .132287}}}{space 1}{space 1}{ralign 9:{res:{sf:  .339183}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.563993}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 271248.6}}}{space 1}{space 1}{ralign 9:{res:{sf: 131840.3}}}{space 1}{space 1}{ralign 9:{res:{sf:   990000}}}{space 1}{space 1}{ralign 9:{res:{sf: .4860497}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   154037}}}{space 1}{space 1}{ralign 9:{res:{sf: 111195.1}}}{space 1}{space 1}{ralign 9:{res:{sf:   650100}}}{space 1}{space 1}{ralign 9:{res:{sf: .7218726}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 425285.6}}}{space 1}{space 1}{ralign 9:{res:{sf: 197331.4}}}{space 1}{space 1}{ralign 9:{res:{sf:  1273571}}}{space 1}{space 1}{ralign 9:{res:{sf: .4639974}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 85659.76}}}{space 1}{space 1}{ralign 9:{res:{sf: 45116.52}}}{space 1}{space 1}{ralign 9:{res:{sf: 315158.3}}}{space 1}{space 1}{ralign 9:{res:{sf: .5266945}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 65.61281}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.23007}}}{space 1}{space 1}{ralign 9:{res:{sf: 75.80461}}}{space 1}{space 1}{ralign 9:{res:{sf: .2321203}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5852018}}}{space 1}{space 1}{ralign 9:{res:{sf: .4932404}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .8428553}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4932735}}}{space 1}{space 1}{ralign 9:{res:{sf: .5005162}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.014683}}}{space 1}
+
+{com}.     esttab  using "${c -(}d_tex_tab{c )-}/Summary_Stats_Outlier.tex", replace style(tex)          ///
+>             cell("mean(fmt(2)) sd(fmt(2)) range(fmt(0)) cv(fmt(2))")  ///
+>             nolabel nonumbers noobs nomtitles unstack                             ///
+>                         collabels("Mean" "SD" "Range" "Coef of Variation")                ///
+>             refcat(RESPAge                       "      \textbf{c -(}\textit{c -(}Respondent Characteristics:{c )-}{c )-}"    ///
+>                    FCSStap                       "      \textbf{c -(}\textit{c -(}Food Consumption Score:{c )-}{c )-}"        ///
+>                    rCSILessQlty          "      \textbf{c -(}\textit{c -(}Reduced Coping Strategy Index:{c )-}{c )-}" ///
+>                                    Lcs_Stress_Coping "  \textbf{c -(}\textit{c -(}Livelihood Coping Strategies:{c )-}{c )-}"  ///
+>                                    HHExpFoodTotal_1M "  \textbf{c -(}\textit{c -(}Expenditure:{c )-}{c )-}"                                   ///
+>                                    HH_Vul_Income         "      \textbf{c -(}\textit{c -(}Income:{c )-}{c )-}", nolabel)
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/6_Report/1_table/Summary_Stats_Outlier.tex"'})
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. sum
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}start {c |}{res}          0
+{txt}{space 9}end {c |}{res}          0
+{txt}{space 7}today {c |}{res}        840    23172.65    2.288256      23168      23177
+{txt}{space 4}deviceid {c |}{res}          0
+{txt}{space 5}SvyDate {c |}{res}        840    23172.65    2.288256      23168      23177
+{txt}{hline 13}{c +}{hline 57}
+{space 5}HHCoord {c |}{res}          0
+{txt}Sys_~atitude {c |}{res}        385    24.60228    .8068538   23.82084   25.49837
+{txt}Sys_H~gitude {c |}{res}        385    97.52014    .0987603   97.36297   97.69331
+{txt}Sys_~ltitude {c |}{res}        385    353.7611    321.6931          0      829.8
+{txt}Sys_HHCoor~n {c |}{res}        385    269.1639    686.5775      4.083       4300
+{txt}{hline 13}{c +}{hline 57}
+{space 2}ADMIN1Name {c |}{res}        840    1.463095    .4989333          1          2
+{txt}{space 2}ADMIN3Name {c |}{res}        840    4.484524    1.734388          1          7
+{txt}{space 2}ADMIN5Name {c |}{res}        840    10.79524    5.802344          1         21
+{txt}{space 5}EnuName {c |}{res}        840    8.767857    4.369104          1         16
+{txt}EnuName_Di~y {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}EnuSex {c |}{res}        840    .5452381     .498246          0          1
+{txt}{space 4}sampleYN {c |}{res}        840           1           0          1          1
+{txt}{space 1}HHID_manual {c |}{res}          0
+{txt}{space 8}HHID {c |}{res}          0
+{txt}{space 5}calc_ID {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 5}RESPAge {c |}{res}        840    39.72024    13.45709         16         85
+{txt}{space 5}RESPSex {c |}{res}        840    .1833333    .3871701          0          1
+{txt}{space 2}RESPStatus {c |}{res}        394     319.797    103.2005        100        500
+{txt}{space 3}ConsentYN {c |}{res}        394           1           0          1          1
+{txt}{space 2}ConsentRsn {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 4}HHStatus {c |}{res}        394    1.761421    .5515964          1          4
+{txt}{space 1}HHStatusOth {c |}{res}          0
+{txt}MDDIHHHDis~e {c |}{res}        284    20151.89     1272.54      18597      23162
+{txt}MDDIHHDisp~e {c |}{res}        284    .2746479    .4471246          0          1
+{txt}{space 2}HHhostDisp {c |}{res}        394    .1573604    .3646032          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 1}MDDIHHIdDoc {c |}{res}        394    1.619289     .615519          0          2
+{txt}{space 6}HHSize {c |}{res}        840     5.52619     2.17457          1         15
+{txt}RepeatPID_~t {c |}{res}          0
+{txt}{space 2}R_Err_Resp {c |}{res}        394     .071066    .2572617          0          1
+{txt}{space 2}R_Err_Head {c |}{res}        394     .035533     .185358          0          1
+{txt}{hline 13}{c +}{hline 57}
+R_Err_Spouse {c |}{res}        394    .3477157    .4768507          0          1
+{txt}R_Err_Spo~ge {c |}{res}        261           0           0          0          0
+{txt}R_Err_Chil~e {c |}{res}        346    .5317919    .4997109          0          1
+{txt}R_Err_Pare~e {c |}{res}         24           0           0          0          0
+{txt}R_Err_Pare~r {c |}{res}        367           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+R_Err_Same~x {c |}{res}        394           0           0          0          0
+{txt}{space 2}R_Num_Resp {c |}{res}        394    1.236041    1.149232          0         10
+{txt}{space 3}R_RESPSex {c |}{res}        383    .6527415    .4767215          0          1
+{txt}{space 3}R_Num_hhh {c |}{res}        394    .9796954    .1876435          0          2
+{txt}R_Num_Spouse {c |}{res}        394    .6725888    .4910496          0          2
+{txt}{hline 13}{c +}{hline 57}
+R_Num_Hous~d {c |}{res}        394    5.527919    2.156824          1         13
+{txt}{space 1}R_Num_Child {c |}{res}        394    2.758883    1.734322          0          9
+{txt}R_Age_Spouse {c |}{res}        261    44.16858    12.03753         20         80
+{txt}{space 2}R_Age_Head {c |}{res}        383    48.57702    13.06142         17         89
+{txt}R_Age_OldC~d {c |}{res}        357     20.4986    9.400462          2         58
+{txt}{hline 13}{c +}{hline 57}
+R_Age_Parent {c |}{res}         27    72.85185     13.2017         44         95
+{txt}R_HH_HasSp~e {c |}{res}        394    .6624365    .4734801          0          1
+{txt}R_HH_HasCh~d {c |}{res}        394    .9060914    .2920724          0          1
+{txt}R_Err_Marr~d {c |}{res}        394    .0532995    .2249157          0          1
+{txt}{space 1}R_Err_Child {c |}{res}        394    .0659898      .24858          0          1
+{txt}{hline 13}{c +}{hline 57}
+R_RESPRela~H {c |}{res}        389    195.2237    129.9762        100        602
+{txt}MDDIHHDisa~b {c |}{res}        394    .1903553    .4242141          0          2
+{txt}MMDIHHHeal~c {c |}{res}        394    .9771574    .1495916          0          1
+{txt}MMDIHHHeal~t {c |}{res}        385     16.8987    12.08725          2         90
+{txt}HHHeal~dNeed {c |}{res}        394    2.779188    44.71305          0        888
+{txt}{hline 13}{c +}{hline 57}
+HHHea~dTreat {c |}{res}        207    1.768116     .516098          0          2
+{txt}HHHealt~dWhy {c |}{res}         39    103.4103    306.7226          1        999
+{txt}HHH~dWhy_oth {c |}{res}          0
+{txt}HHHeal~eNeed {c |}{res}        394     .213198    .4100871          0          1
+{txt}HHHea~eTreat {c |}{res}         84    1.761905    .4814398          0          2
+{txt}{hline 13}{c +}{hline 57}
+HHHealt~eWhy {c |}{res}         18    167.3333    382.7155          1        999
+{txt}HHH~eWhy_oth {c |}{res}          0
+{txt}HHHealthCh~d {c |}{res}        394    .2182741    .4135997          0          1
+{txt}HHHealthCh~t {c |}{res}         86    1.755814    .4835177          0          2
+{txt}HHHealthCh~y {c |}{res}         19    263.7895    451.4124          1        999
+{txt}{hline 13}{c +}{hline 57}
+HHHealthCh~h {c |}{res}          0
+{txt}HHHealthEm~d {c |}{res}        394    .0431472    .2034467          0          1
+{txt}HHHealthEm~t {c |}{res}         17    1.588235    .6183469          0          2
+{txt}HHHealthEm~y {c |}{res}          6    333.6667     515.365          1        999
+{txt}HHHealthEm~h {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+RESPFoodWo~N {c |}{res}        394    .6522843    .4768507          0          1
+{txt}RESPPercFo~c {c |}{res}          0
+{txt}RESPPercFo~1 {c |}{res}        394    .5532995    .4977832          0          1
+{txt}RESPPercFo~2 {c |}{res}        394    .5050761    .5006099          0          1
+{txt}RESPPercFo~3 {c |}{res}        394     .071066    .2572617          0          1
+{txt}{hline 13}{c +}{hline 57}
+RESPPercFo~4 {c |}{res}        394    .0050761    .0711563          0          1
+{txt}{space 3}RESPMeals {c |}{res}        394    2.751269    .4667694          0          3
+{txt}{space 3}HHSNoFood {c |}{res}        194    .1443299    .3523332          0          1
+{txt}HHSNoFood_~S {c |}{res}         28    1.428571    .5039526          1          2
+{txt}{space 2}HHSBedHung {c |}{res}        194    .0257732     .158868          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHSBedHung~S {c |}{res}          5         1.6    .5477226          1          2
+{txt}{space 3}HHSNotEat {c |}{res}        194           0           0          0          0
+{txt}HHSNotEat_~S {c |}{res}          0
+{txt}{space 5}FCSStap {c |}{res}        840           7           0          7          7
+{txt}{space 4}FCSPulse {c |}{res}        840    1.670238    1.502345          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 4}FCSDairy {c |}{res}        840    .1690476    .6078502          0          6
+{txt}{space 7}FCSPr {c |}{res}        840    3.052381    2.008235          0          7
+{txt}{space 1}FCSNPrMeatF {c |}{res}        172    1.261628    1.305021          0          7
+{txt}{space 1}FCSNPrMeatO {c |}{res}        172    .0872093    .3876142          0          3
+{txt}{space 2}FCSNPrFish {c |}{res}        172    .8372093    .9954336          0          5
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSNPrEggs {c |}{res}        172    1.732558    1.547867          0          7
+{txt}{space 6}FCSVeg {c |}{res}        840    6.380952    1.356613          0          7
+{txt}{space 2}FCSNVegOrg {c |}{res}        199    .8190955    1.157949          0          7
+{txt}{space 2}FCSNVegGre {c |}{res}        199     5.21608    2.037165          0          7
+{txt}{space 4}FCSFruit {c |}{res}        840    1.479762    1.793132          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 1}FCSNFruiOrg {c |}{res}        118    1.711864    1.840205          0          7
+{txt}{space 6}FCSFat {c |}{res}        840    6.492857    1.334406          0          7
+{txt}{space 4}FCSSugar {c |}{res}        840    .8083333    1.511238          0          7
+{txt}{space 5}FCSCond {c |}{res}        394    6.911168    .7023966          0          7
+{txt}{space 3}FCS_check {c |}{res}        394    42.61421    12.01021         17         79
+{txt}{hline 13}{c +}{hline 57}
+{space 8}FCSG {c |}{res}          0
+{txt}{space 3}FCSStap_S {c |}{res}        194           7           0          7          7
+{txt}{space 2}FCSPulse_S {c |}{res}        194    1.556701    1.516535          0          7
+{txt}{space 2}FCSDairy_S {c |}{res}        194    .1804124    .5699085          0          3
+{txt}{space 5}FCSPr_S {c |}{res}        194    2.896907    1.958029          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 4}FCSVeg_S {c |}{res}        194    6.293814    1.503455          0          7
+{txt}{space 2}FCSFruit_S {c |}{res}        194    1.541237    1.893772          0          7
+{txt}{space 4}FCSFat_S {c |}{res}        194    6.623711    1.368655          0          7
+{txt}{space 2}FCSSugar_S {c |}{res}        194    .7319588    1.271574          0          7
+{txt}{space 3}FCSCond_S {c |}{res}        194    6.953608    .5219656          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 7}FCS_S {c |}{res}          0
+{txt}{space 6}FCSG_S {c |}{res}          0
+{txt}rCSILessQlty {c |}{res}        840    2.446429    2.301885          0          7
+{txt}{space 2}rCSIBorrow {c |}{res}        840    .5702381    1.191876          0          7
+{txt}rCSIMealSize {c |}{res}        840    .6619048     1.40914          0          7
+{txt}{hline 13}{c +}{hline 57}
+rCSIMealAd~t {c |}{res}        840    .9535714    1.698765          0          7
+{txt}rCSIGender~t {c |}{res}        258    2.709302    .4958884          1          3
+{txt}{space 2}rCSIMealNb {c |}{res}        840     .547619    1.415096          0          7
+{txt}{space 2}rCSI_check {c |}{res}        394    5.690355    7.913049          0         38
+{txt}LcsEN_stre~t {c |}{res}        200     3706.88    4834.106         10       9999
+{txt}{hline 13}{c +}{hline 57}
+LcsEN_stre~d {c |}{res}        200      315.37    1707.275         10       9999
+{txt}LcsEN_stre~g {c |}{res}        200     3610.04     4803.75         10       9999
+{txt}LcsEN_stre~h {c |}{res}        200     568.145    2280.913         10       9999
+{txt}LhCSIEnAc~ss {c |}{res}          0
+{txt}LhCSIEn~ss_1 {c |}{res}        145    .8965517    .3055991          0          1
+{txt}{hline 13}{c +}{hline 57}
+LhCSIEn~ss_2 {c |}{res}        145           0           0          0          0
+{txt}LhCSIEn~ss_3 {c |}{res}        145    .2413793     .429403          0          1
+{txt}LhCSIEn~ss_4 {c |}{res}        145     .262069    .4412843          0          1
+{txt}LhCSIEn~ss_5 {c |}{res}        145    .0137931    .1170355          0          1
+{txt}LhCSIEn~ss_6 {c |}{res}        145           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+LhCSIEn~ss_7 {c |}{res}        145    .0137931    .1170355          0          1
+{txt}LhCSIEn~ss_8 {c |}{res}        145     .062069    .2421171          0          1
+{txt}LhCSI~ss_999 {c |}{res}        145    .0275862    .1643517          0          1
+{txt}LhCSI~ss_oth {c |}{res}          0
+{txt}LcsEN_cris~s {c |}{res}        200    2957.105    4566.616         10       9999
+{txt}{hline 13}{c +}{hline 57}
+LcsEN_cris~h {c |}{res}        200       514.5     2181.37         10       9999
+{txt}LcsEN_cris~l {c |}{res}        200     759.425    2637.548         10       9999
+{txt}LhCSIEnAc~is {c |}{res}          0
+{txt}LhCSIEn~is_1 {c |}{res}         57    .7192982    .4533363          0          1
+{txt}LhCSIEn~is_2 {c |}{res}         57           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+LhCSIEn~is_3 {c |}{res}         57    .1754386    .3837227          0          1
+{txt}LhCSIEn~is_4 {c |}{res}         57    .3333333    .4755949          0          1
+{txt}LhCSIEn~is_5 {c |}{res}         57           0           0          0          0
+{txt}LhCSIEn~is_6 {c |}{res}         57           0           0          0          0
+{txt}LhCSIEn~is_7 {c |}{res}         57           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+LhCSIEn~is_8 {c |}{res}         57    .1578947    .3678836          0          1
+{txt}LhCSI~is_999 {c |}{res}         57    .0175439    .1324532          0          1
+{txt}LhCSI~is_oth {c |}{res}          0
+{txt}LcsEN_em_C~k {c |}{res}        200     1108.84    3133.281         10       9999
+{txt}LcsEN_em_B~d {c |}{res}        200        10.4    2.807026         10         30
+{txt}{hline 13}{c +}{hline 57}
+LcsEN_em_I~t {c |}{res}        200        10.2    1.994969         10         30
+{txt}LhCSIEnAcc~m {c |}{res}          0
+{txt}LhCSIEnA~m_1 {c |}{res}          6    .6666667    .5163978          0          1
+{txt}LhCSIEnA~m_2 {c |}{res}          6           0           0          0          0
+{txt}LhCSIEnA~m_3 {c |}{res}          6    .1666667    .4082483          0          1
+{txt}{hline 13}{c +}{hline 57}
+LhCSIEnA~m_4 {c |}{res}          6    .1666667    .4082483          0          1
+{txt}LhCSIEnA~m_5 {c |}{res}          6           0           0          0          0
+{txt}LhCSIEnA~m_6 {c |}{res}          6           0           0          0          0
+{txt}LhCSIEnA~m_7 {c |}{res}          6           0           0          0          0
+{txt}LhCSIEnA~m_8 {c |}{res}          6           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+LhCSIE~m_999 {c |}{res}          6    .1666667    .4082483          0          1
+{txt}LhCSIE~m_oth {c |}{res}          0
+{txt}Lcs_stress~t {c |}{res}        839    4333.358    4950.604         10       9999
+{txt}Lcs_stress~d {c |}{res}        839    397.4946    1913.103         10       9999
+{txt}Lcs_stress~g {c |}{res}        839    4551.095    4971.857         10       9999
+{txt}{hline 13}{c +}{hline 57}
+Lcs_stress~h {c |}{res}        839    627.3409    2385.617         10       9999
+{txt}Lcs_crisis~s {c |}{res}        839    3618.006    4800.498         10       9999
+{txt}Lcs_crisis~h {c |}{res}        839    349.6567    1794.034         10       9999
+{txt}Lcs_crisis~l {c |}{res}        839    1046.333    3046.929         10       9999
+{txt}Lcs_em_Chi~k {c |}{res}        839    1129.554      3152.4         10       9999
+{txt}{hline 13}{c +}{hline 57}
+Lcs_em_Beg~d {c |}{res}        839     10.5006    3.126175         10         30
+{txt}Lcs_em_Ill~t {c |}{res}        839    10.73897    3.580282         10         30
+{txt}~er_Purch_7D {c |}{res}        200         .94    .2380828          0          1
+{txt}HHExpFCer_.. {c |}{res}        188     27680.7    20183.71       3000     120000
+{txt}HHExpFCer_.. {c |}{res}        200        .045    .2078243          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFCer_.. {c |}{res}          9    11111.11    6565.905       2000      21000
+{txt}H~Cer_Own_7D {c |}{res}        200         .03    .1710153          0          1
+{txt}HHExpFCer_.. {c |}{res}          6        9300    5801.724       1000      16800
+{txt}HHExpFT~h_7D {c |}{res}        200        .615    .4878164          0          1
+{txt}HHExpFTub_.. {c |}{res}        123    2982.927    2095.026        500      12000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFT~d_7D {c |}{res}        200        .005    .0707107          0          1
+{txt}HHExpFTub_.. {c |}{res}          1        4500           .       4500       4500
+{txt}HHExpFT~n_7D {c |}{res}        200         .01    .0997484          0          1
+{txt}~b_Own_MN_7D {c |}{res}          2        2250     1060.66       1500       3000
+{txt}HHExpFP~h_7D {c |}{res}        200         .59    .4930675          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFPuls.. {c |}{res}        118    2259.746    1739.416        400      10000
+{txt}HHExpFP~d_7D {c |}{res}        200         .04    .1964509          0          1
+{txt}HHExpFPuls.. {c |}{res}          8        3050     2854.57       1400      10000
+{txt}HHExpFP~n_7D {c |}{res}        200        .045    .2078243          0          1
+{txt}HHExpFPuls.. {c |}{res}          9    2166.667     1854.05        500       6000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFV~h_7D {c |}{res}        200         .93    .2557873          0          1
+{txt}HHExpFVeg_.. {c |}{res}        186     11008.6      7699.1       1000      35000
+{txt}HHExpFV~d_7D {c |}{res}        200        .065    .2471445          0          1
+{txt}HHExpFVeg_.. {c |}{res}         13    7269.231    10951.82       1000      35000
+{txt}HHExpFV~n_7D {c |}{res}        200        .255     .436955          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFVeg_.. {c |}{res}         51    6498.039    6579.225        500      35000
+{txt}~rt_Purch_7D {c |}{res}        200         .42     .494797          0          1
+{txt}HHExpFFrt_.. {c |}{res}         84    4046.429    3869.325       1000      24000
+{txt}HHExpFFrt_.. {c |}{res}        200         .11    .3136749          0          1
+{txt}HHExpFFrt_.. {c |}{res}         22        3250    2462.819       1000      10000
+{txt}{hline 13}{c +}{hline 57}
+HH~rt_Own_7D {c |}{res}        200        .145    .3529844          0          1
+{txt}HHExpFFrt_.. {c |}{res}         29    4241.379    3399.004       1000      15000
+{txt}~at_Purch_7D {c |}{res}        200         .62    .4866045          0          1
+{txt}HHExpFAnim.. {c |}{res}        124    8991.129    8235.181       1200      42500
+{txt}HHExpFAnim.. {c |}{res}        200         .01    .0997484          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFAnim.. {c |}{res}          2       16000    5656.854      12000      20000
+{txt}HH~at_Own_7D {c |}{res}        200        .025    .1565167          0          1
+{txt}HHExpFAnim.. {c |}{res}          5       23600    19204.17       7000      56000
+{txt}H~h_Purch_7D {c |}{res}        200          .4    .4911273          0          1
+{txt}HHExpFAnim.. {c |}{res}         80        4545     4751.04       1000      30000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFAnim.. {c |}{res}        200        .005    .0707107          0          1
+{txt}HHExpFAnim.. {c |}{res}          1        3000           .       3000       3000
+{txt}HHE~h_Own_7D {c |}{res}        200        .065    .2471445          0          1
+{txt}~h_Own_MN_7D {c |}{res}         13    5884.615    3342.615       2000      12000
+{txt}~ts_Purch_7D {c |}{res}        200         .96    .1964509          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFFats.. {c |}{res}        192    5191.443    3859.344          7      35000
+{txt}HHExpFFats.. {c |}{res}        200         .01    .0997484          0          1
+{txt}HHExpFFats.. {c |}{res}          2        7900    5798.276       3800      12000
+{txt}HH~ts_Own_7D {c |}{res}        200        .015    .1218575          0          1
+{txt}HHExpFFats.. {c |}{res}          3        6500    4444.097       1500      10000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFD~h_7D {c |}{res}        200        .075    .2640523          0          1
+{txt}HHExpFDair.. {c |}{res}         15    2646.667    1423.711       1000       6000
+{txt}HHExpFD~d_7D {c |}{res}        200        .015    .1218575          0          1
+{txt}HHExpFDair.. {c |}{res}          3    5666.667     4509.25       1000      10000
+{txt}HHExpFD~n_7D {c |}{res}        200           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+~y_Own_MN_7D {c |}{res}          0
+{txt}HHExpFE~h_7D {c |}{res}        200        .755    .4311665          0          1
+{txt}HHExpFEgg_.. {c |}{res}        151    4335.099    4021.927       1000      30000
+{txt}HHExpFE~d_7D {c |}{res}        200         .01    .0997484          0          1
+{txt}HHExpFEgg_.. {c |}{res}          2        3500    707.1068       3000       4000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFE~n_7D {c |}{res}        200        .005    .0707107          0          1
+{txt}HHExpFEgg_.. {c |}{res}          1        3500           .       3500       3500
+{txt}HHExpFS~h_7D {c |}{res}        200         .35    .4781665          0          1
+{txt}HHExpFSgr_.. {c |}{res}         70    3771.429    2750.291        500      15000
+{txt}HHExpFS~d_7D {c |}{res}        200         .03    .1710153          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFSgr_.. {c |}{res}          6    2833.333    3544.949       1000      10000
+{txt}HHExpFS~n_7D {c |}{res}        200           0           0          0          0
+{txt}HHExpFSgr_.. {c |}{res}          0
+{txt}H~d_Purch_7D {c |}{res}        200         .98    .1403513          0          1
+{txt}HHExpFCond.. {c |}{res}        196    4525.765    3911.775        300      23000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFCond.. {c |}{res}        200         .01    .0997484          0          1
+{txt}HHExpFCond.. {c |}{res}          2        4750     1060.66       4000       5500
+{txt}HHE~d_Own_7D {c |}{res}        200         .01    .0997484          0          1
+{txt}HHExpFCond.. {c |}{res}          2         400    282.8427        200        600
+{txt}HHExpFB~h_7D {c |}{res}        200         .23    .4218886          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFBev_.. {c |}{res}         46    5422.826     6338.82        400      30000
+{txt}HHExpFB~d_7D {c |}{res}        200         .02    .1403513          0          1
+{txt}HHExpFBev_.. {c |}{res}          4      2737.5    3064.685        250       7200
+{txt}HHExpFB~n_7D {c |}{res}        200        .005    .0707107          0          1
+{txt}~v_Own_MN_7D {c |}{res}          1        5000           .       5000       5000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFO~h_7D {c |}{res}        200        .335    .4731749          0          1
+{txt}HHExpFOut_.. {c |}{res}         67    5577.612    4715.154        200      21000
+{txt}HHExpFOut_.. {c |}{res}        200         .03    .1710153          0          1
+{txt}HHExpFOut_.. {c |}{res}          6    8083.333    11800.07       1000      32000
+{txt}HH~ut_Own_7D {c |}{res}        200           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+HHExpFOut_.. {c |}{res}          0
+{txt}~yg_Purch_1M {c |}{res}        200         .87    .3371474          0          1
+{txt}HHExpNFHyg.. {c |}{res}        174    18976.15    17246.71       1000     150000
+{txt}HHExpNFHyg.. {c |}{res}        369    996.3225    2935.793          0      30000
+{txt}HHExpNFHyg.. {c |}{res}         43    8969.767    10641.17        700      50000
+{txt}{hline 13}{c +}{hline 57}
+H~p_Purch_1M {c |}{res}        200         .36    .4812045          0          1
+{txt}HHExpNFTra.. {c |}{res}         72    35556.94    38321.98       1500     225000
+{txt}HHExpNFTra.. {c |}{res}        200        .015    .1218575          0          1
+{txt}HHExpNFTra.. {c |}{res}          3    29333.33    28746.01       3000      60000
+{txt}H~l_Purch_1M {c |}{res}        200         .69    .4636538          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFFue.. {c |}{res}        138    33449.28     29393.4       2000     150000
+{txt}HHExpNFFue.. {c |}{res}        200        .005    .0707107          0          1
+{txt}HHExpNFFue.. {c |}{res}          1        6000           .       6000       6000
+{txt}H~t_Purch_1M {c |}{res}        200        .215    .4118533          0          1
+{txt}HHExpNFWat.. {c |}{res}         43    2694.186    4805.604        500      30000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFWat.. {c |}{res}        200         .01    .0997484          0          1
+{txt}HHExpNFWat.. {c |}{res}          2       32500    38890.87       5000      60000
+{txt}~rg_Purch_1M {c |}{res}        200         .61    .4889739          0          1
+{txt}HHExpNFEne.. {c |}{res}        122    14965.16    13951.87        500      68000
+{txt}HHExpNFEne.. {c |}{res}        200         .03    .1710153          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEne.. {c |}{res}          6    15916.67    18222.01       1500      50000
+{txt}HHExpNF~n_1M {c |}{res}        200        .265    .4424407          0          1
+{txt}~g_Own_MN_1M {c |}{res}         53    28211.32    23750.13       1500     130000
+{txt}~er_Purch_1M {c |}{res}        200         .12     .325777          0          1
+{txt}HHExpNFDwe.. {c |}{res}         24        7050    9189.503        500      30000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFDwe.. {c |}{res}        200         .01    .0997484          0          1
+{txt}HHExpNFDwe.. {c |}{res}          2       21000    26870.06       2000      40000
+{txt}H~e_Purch_1M {c |}{res}        200         .96    .1964509          0          1
+{txt}HHExpNFPho.. {c |}{res}        192    13791.67    14019.74       1000      90000
+{txt}HHExpNFPho.. {c |}{res}        200         .03    .1710153          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFPho.. {c |}{res}          6    5666.667    3669.696       2000      10000
+{txt}~cr_Purch_1M {c |}{res}        200        .085    .2795815          0          1
+{txt}HHExpNFRec.. {c |}{res}         17    21294.12    24027.37       3000     100000
+{txt}HHExpNFRec.. {c |}{res}        200           0           0          0          0
+{txt}HHExpNFRec.. {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+H~c_Purch_1M {c |}{res}        200        .505    .5012296          0          1
+{txt}HHExpNFAlc.. {c |}{res}        101    14269.39    19311.46        300     130000
+{txt}HHExpNFAlc.. {c |}{res}        369    75.89431    510.4202          0       5000
+{txt}HHExpNFAlc.. {c |}{res}          5        4500    3316.625       1500      10000
+{txt}H~v_Purch_6M {c |}{res}        200         .73    .4450735          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFMed.. {c |}{res}        146      134250    190509.3       3000    1500000
+{txt}HHExpNFMed.. {c |}{res}        200         .09    .2868999          0          1
+{txt}HHExpNFMed.. {c |}{res}         18    35388.89    38937.19       2000     150000
+{txt}HHExpNFMed.. {c |}{res}        200        .425    .4955835          0          1
+{txt}HHExpNFMed.. {c |}{res}         85    54702.35      100524       1000     700000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFMed.. {c |}{res}        200          .1    .3007528          0          1
+{txt}HHExpNFMed.. {c |}{res}         20       34025    47261.44       3000     195000
+{txt}H~h_Purch_6M {c |}{res}        200        .835     .372112          0          1
+{txt}HHExpNFClo.. {c |}{res}        167    75905.39    89014.11       3000     500000
+{txt}HHExpNFClo.. {c |}{res}        200        .045    .2078243          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFClo.. {c |}{res}          9    35333.33    35993.05       5000     120000
+{txt}H~e_Purch_6M {c |}{res}        200        .575    .4955835          0          1
+{txt}HHExpNFEdu.. {c |}{res}        115    128626.1    177928.1       1500    1200000
+{txt}HHExpNFEdu.. {c |}{res}        200        .095    .2939507          0          1
+{txt}HHExpNFEdu.. {c |}{res}         19    54447.37    49790.92      10000     200000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEdu.. {c |}{res}        200          .6    .4911273          0          1
+{txt}HHExpNFEdu.. {c |}{res}        120    65680.83    71085.14        500     400000
+{txt}HHExpNFEdu.. {c |}{res}        200        .265    .4424407          0          1
+{txt}HHExpNFEdu.. {c |}{res}         53    52424.53       48077      10000     300000
+{txt}HHExpNFRen.. {c |}{res}        200        .185     .389272          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFRen.. {c |}{res}         37    22189.19    60050.37       1000     360000
+{txt}HHExpNFRen.. {c |}{res}        200        .005    .0707107          0          1
+{txt}HHExpNFRen.. {c |}{res}          1      180000           .     180000     180000
+{txt}~ft_Purch_6M {c |}{res}        200         .45    .4987421          0          1
+{txt}HHExpNFHHS.. {c |}{res}         90    24921.11    26409.45       2000     170000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHHS.. {c |}{res}        200        .065    .2471445          0          1
+{txt}HHExpNFHHS.. {c |}{res}         13    45076.92     92670.3       2500     350000
+{txt}HHExpNFHHM.. {c |}{res}        200        .095    .2939507          0          1
+{txt}HHExpNFHHM.. {c |}{res}         19    46578.95    54418.46       2000     200000
+{txt}HHExpNFHHM.. {c |}{res}        200        .025    .1565167          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHHM.. {c |}{res}          5      963000     1978527      25000    4500000
+{txt}HHExpFCer_.. {c |}{res}        194    .8917526    .3114965          0          1
+{txt}HHExpFCer_.. {c |}{res}        173    25081.79    15243.48       2000      92000
+{txt}HHExpFCer_.. {c |}{res}        194     .056701    .2318688          0          1
+{txt}HHExpFCer_.. {c |}{res}         11    21845.45    13736.91       1500      50000
+{txt}{hline 13}{c +}{hline 57}
+H~r_Own_7D_S {c |}{res}        194    .0206186    .1424713          0          1
+{txt}HHExpFCer_.. {c |}{res}          4       19500    15416.44       7000      42000
+{txt}HHExpFTub_.. {c |}{res}        194    .5463918    .4991312          0          1
+{txt}HHExpFTub_.. {c |}{res}        106    2784.915    2204.671        500      15001
+{txt}HHExpFTub_.. {c |}{res}        194    .0103093    .1012712          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFTub_.. {c |}{res}          2        2000    707.1068       1500       2500
+{txt}H~b_Own_7D_S {c |}{res}        194    .0412371    .1993526          0          1
+{txt}HHExpFTub_.. {c |}{res}          8      4687.5    4317.221       1000      14000
+{txt}HHExpFPuls.. {c |}{res}        194    .6185567    .4869978          0          1
+{txt}HHExpFPuls.. {c |}{res}        120    2672.917    2273.051        100      15000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFPuls.. {c |}{res}        194    .0412371    .1993526          0          1
+{txt}HHExpFPuls.. {c |}{res}          8        5625    7303.375       1000      22000
+{txt}H~s_Own_7D_S {c |}{res}        194    .0309278    .1735701          0          1
+{txt}HHExpFPuls.. {c |}{res}          6    4766.667    6169.819        500      16000
+{txt}HHExpFVegF.. {c |}{res}        194    .8865979     .317904          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFVegF.. {c |}{res}        172    11588.37    9190.364        500      50000
+{txt}HHExpFVegF.. {c |}{res}        194    .0876289     .283486          0          1
+{txt}HHExpFVegF.. {c |}{res}         17    3823.529    3166.925        500      12000
+{txt}~rt_Own_7D_S {c |}{res}        194    .3092784     .463392          0          1
+{txt}HHExpFVegF.. {c |}{res}         60        7465    6910.734       1500      45000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFAnim.. {c |}{res}        194    .8505155     .357488          0          1
+{txt}HHExpFAnim~7 {c |}{res}        165    11018.79    15913.58       1000     180000
+{txt}HHExpFAnim.. {c |}{res}        194    .0618557    .2415165          0          1
+{txt}HHExpFAnim~N {c |}{res}         12    5241.667    3920.913        900      15000
+{txt}H~g_Own_7D_S {c |}{res}        194    .0360825    .1869779          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFAnim~_ {c |}{res}          7    9928.571    5434.677       3000      18000
+{txt}HHExpFFats.. {c |}{res}        194          .5    .5012937          0          1
+{txt}HHExpFFats.. {c |}{res}         97    6313.402    12117.28       1000     120000
+{txt}HHExpFFats.. {c |}{res}        194    .0257732     .158868          0          1
+{txt}HHExpFFats.. {c |}{res}          5        4160    2846.577       1500       8000
+{txt}{hline 13}{c +}{hline 57}
+H~y_Own_7D_S {c |}{res}        194    .0051546    .0717958          0          1
+{txt}HHExpFFats.. {c |}{res}          1        2500           .       2500       2500
+{txt}HHExpFSgrC.. {c |}{res}        194    .5206186    .5008673          0          1
+{txt}HHExpFSgrC.. {c |}{res}        101     4701.98    3914.102        200      17500
+{txt}HHExpFSgrC.. {c |}{res}        194    .0670103    .2506868          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFSgrC.. {c |}{res}         13        3600    2861.526        500      10000
+{txt}H~d_Own_7D_S {c |}{res}        194    .0206186    .1424713          0          1
+{txt}HHExpFSgrC.. {c |}{res}          4        2875    1547.848       1500       5000
+{txt}HHExpFBev_.. {c |}{res}        194    .2319588    .4231749          0          1
+{txt}HHExpFBev_.. {c |}{res}         45    4517.778    4554.583        200      23000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFBev_.. {c |}{res}        194    .0257732     .158868          0          1
+{txt}HHExpFBev_.. {c |}{res}          5        6700    5596.874       2500      15000
+{txt}H~v_Own_7D_S {c |}{res}        194    .0051546    .0717958          0          1
+{txt}HHExpFBev_.. {c |}{res}          1         300           .        300        300
+{txt}HHExpFOut_.. {c |}{res}        194     .371134    .4843582          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpFOut_.. {c |}{res}         72    5443.056    4368.608        500      25000
+{txt}HHExpFOut_.. {c |}{res}        194    .0103093    .1012712          0          1
+{txt}HHExpFOut_.. {c |}{res}          2        4600    565.6854       4200       5000
+{txt}~ut_Own_7D_S {c |}{res}        194           0           0          0          0
+{txt}HHExpFOut_.. {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHyg.. {c |}{res}        194    .9226804    .2677889          0          1
+{txt}HHExpNFHyg.. {c |}{res}        179    17360.89    14099.37       1000     100000
+{txt}HHExpNFHyg.. {c |}{res}        194    .2010309     .401808          0          1
+{txt}HHExpNFHyg.. {c |}{res}         39    7182.051    7068.569       1000      30000
+{txt}HHExpNFTra.. {c |}{res}        194    .4226804    .4952636          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFTra.. {c |}{res}         82    45426.83     65289.3       2000     500000
+{txt}HHExpNFTra.. {c |}{res}        194    .0103093    .1012712          0          1
+{txt}HHExpNFTra~_ {c |}{res}          2       17500    3535.534      15000      20000
+{txt}HHExpNFEne.. {c |}{res}        194    .6649485    .4732297          0          1
+{txt}HHExpNFEne.. {c |}{res}        129    17486.05    15943.25        400      80000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEne.. {c |}{res}        194    .0515464    .2216815          0          1
+{txt}HHExp~n_1M_S {c |}{res}        194    .2680412    .4440852          0          1
+{txt}HH~n_MN_1M_S {c |}{res}         52    21332.69     14644.9       3000      80000
+{txt}HHExpNFEne.. {c |}{res}         10       10800    11215.56       2500      40000
+{txt}HHExpNFWat.. {c |}{res}        194    .1752577    .3811711          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFWat.. {c |}{res}         34    2391.176     2224.16        500      10000
+{txt}HHExpNFWat.. {c |}{res}        194    .0154639     .123708          0          1
+{txt}HHExpNFWat.. {c |}{res}          3    16833.33    15002.78        500      30000
+{txt}HHExpNFDwe.. {c |}{res}        194    .0876289     .283486          0          1
+{txt}HHExpNFDwe.. {c |}{res}         17    24723.53    76440.13        500     320000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFDwe.. {c |}{res}        194    .0103093    .1012712          0          1
+{txt}HHExpNFDwe.. {c |}{res}          2       26500    33234.02       3000      50000
+{txt}HHExpNFPho.. {c |}{res}        194    .9896907    .1012712          0          1
+{txt}HHExpNFPho.. {c |}{res}        192    12228.13    11073.52       1000      69000
+{txt}HHExpNFPho.. {c |}{res}        194    .0051546    .0717958          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFPho.. {c |}{res}          1        2000           .       2000       2000
+{txt}HHExpNFRec.. {c |}{res}        194    .0618557    .2415165          0          1
+{txt}HHExpNFRec.. {c |}{res}         12    16083.33    13142.29       3500      48000
+{txt}HHExpNFRec.. {c |}{res}        194           0           0          0          0
+{txt}HHExpNFRec.. {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFAlc.. {c |}{res}        194    .5463918    .4991312          0          1
+{txt}HHExpNFAlc.. {c |}{res}        106    13533.02    15664.55       1000      90000
+{txt}HHExpNFAlc.. {c |}{res}        194    .0154639     .123708          0          1
+{txt}HHExpNFAlc.. {c |}{res}          3        4000    1732.051       3000       6000
+{txt}HHExpNFMed.. {c |}{res}        194    .7680412    .4231749          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFMed.. {c |}{res}        149    172431.5    288650.7        800    2000000
+{txt}HHExpNFMed.. {c |}{res}        194    .1391753    .3470249          0          1
+{txt}HHExpNFMed.. {c |}{res}         27    76462.96    109664.3       2000     450000
+{txt}HHExpNFClo.. {c |}{res}        194    .8350515    .3720943          0          1
+{txt}HHExpNFClo.. {c |}{res}        162    81308.64    101354.4       5000     650000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFClo.. {c |}{res}        194     .056701    .2318688          0          1
+{txt}HHExpNFClo.. {c |}{res}         11    70363.64    164459.3       5000     565000
+{txt}HHExpNFEdu.. {c |}{res}        194     .685567    .4654909          0          1
+{txt}HHExpNFEdu.. {c |}{res}        133    161112.8      350079       2000    3000000
+{txt}HHExpNFEdu.. {c |}{res}        194    .1958763    .3979006          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEdu~_ {c |}{res}         38    46521.05       43592        800     240000
+{txt}HHExpNFRen.. {c |}{res}        194    .1701031    .3766955          0          1
+{txt}HHExpNFRen.. {c |}{res}         33    13560.61    16808.55       1000     100000
+{txt}HHExpNFRen.. {c |}{res}        194    .0103093    .1012712          0          1
+{txt}HHExpNFRen.. {c |}{res}          2       50000           0      50000      50000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHHS.. {c |}{res}        194    .4639175    .4999866          0          1
+{txt}HHExpNFHHS.. {c |}{res}         90    35657.78     47732.7       1500     300000
+{txt}HHExpNFHHS.. {c |}{res}        194    .0670103    .2506868          0          1
+{txt}HHExpNFHHS.. {c |}{res}         13    20230.77    21116.36       1000      80000
+{txt}HHAsstWFPC~N {c |}{res}        394    .9796954    .1412194          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHAsstWFPC~t {c |}{res}        386    295088.9      132556      35800     712500
+{txt}ShanFiftyP~n {c |}{res}        207    1.700483    1.073579          0          6
+{txt}{space 5}shan_hm {c |}{res}          0
+{txt}ShanHundre~n {c |}{res}        207    3.072464    1.526327          0          9
+{txt}KachinSevP~n {c |}{res}        187    2.385027    3.109367          0         13
+{txt}{hline 13}{c +}{hline 57}
+{space 3}kachin_hm {c |}{res}          0
+{txt}KachinHund~n {c |}{res}        187    3.016043    3.008011          0          9
+{txt}HHAsstUNNG~N {c |}{res}        394    .0532995    .2249157          0          1
+{txt}HHAsstUNNG~t {c |}{res}         21    131871.4    131658.3       3800     540000
+{txt}HHAsstOthC~N {c |}{res}        394    .0279188    .1649496          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHAsstOthC~t {c |}{res}         11    16754.55    12501.71       1500      50000
+{txt}HHAsstCBTC~e {c |}{res}        389    84.57326    33.06605          0        100
+{txt}HHHOccupat~n {c |}{res}          0
+{txt}{space 3}HHInc_PCT {c |}{res}        840    1.392857    .8157838          0          6
+{txt}{space 5}HHIncNb {c |}{res}        840    1.214286    .6416499          0          6
+{txt}{hline 13}{c +}{hline 57}
+HHIncFirst~i {c |}{res}        784    66.71939    238.2774          1        999
+{txt}HHIncFirst~h {c |}{res}          0
+{txt}HHIncFirst~T {c |}{res}        177    86.27119    20.96249         10        100
+{txt}HHIncSec_SRi {c |}{res}         51    84.05882    269.6175          1        999
+{txt}HHIncSec_PCT {c |}{res}         51    39.01961    23.70695          0        100
+{txt}{hline 13}{c +}{hline 57}
+HHIncThird~i {c |}{res}         12    89.91667    286.3407          1        999
+{txt}HHIncThird~T {c |}{res}         12    22.08333    12.33221          5         50
+{txt}TotHHInc_PCT {c |}{res}          0
+{txt}{space 2}HHIncF_PCT {c |}{res}        394    30.67513    40.91624          0        100
+{txt}HHInc017_PCT {c |}{res}        355    .4788732    6.017534          0        100
+{txt}{hline 13}{c +}{hline 57}
+{space 4}HHIncChg {c |}{res}        840     1.40119    1.373076          0          4
+{txt}HHHOccupat~S {c |}{res}          0
+{txt}{space 1}HHInc_PCT_S {c |}{res}        194    1.345361    .7680836          0          4
+{txt}{space 3}HHIncNb_S {c |}{res}        194    1.159794    .5937777          0          4
+{txt}HHIncFir~i_S {c |}{res}        180    66.16667    238.6909          1        999
+{txt}{hline 13}{c +}{hline 57}
+HHIncFir~h_S {c |}{res}          0
+{txt}HHIncF_PCT_S {c |}{res}        194    29.85052    41.73918          0        100
+{txt}HHInc017_P~S {c |}{res}        177    .3954802    4.039799          0         50
+{txt}{space 2}HHIncChg_S {c |}{res}        194    1.396907    1.385413          0          4
+{txt}FIESHHWorr~d {c |}{res}        200        .645    .4797141          0          1
+{txt}{hline 13}{c +}{hline 57}
+FIESHHHeal~y {c |}{res}        200        .365    .4826383          0          1
+{txt}FIESHHFewF~s {c |}{res}        200        .265    .4424407          0          1
+{txt}FIESHHSkip~d {c |}{res}        200        .125    .3315488          0          1
+{txt}FIESHHAteL~s {c |}{res}        200         .22    .4152858          0          1
+{txt}FIESHHRanOut {c |}{res}        200         .03    .1710153          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHSNoFood_FR {c |}{res}          6    1.666667    .8164966          1          3
+{txt}FIESHHHungry {c |}{res}        200         .03    .1710153          0          1
+{txt}HHSBedHung~R {c |}{res}          6         1.5    .5477226          1          2
+{txt}FIESHHWhol~y {c |}{res}        200         .01    .0997484          0          1
+{txt}HHSNotEat_FR {c |}{res}          2         1.5    .7071068          1          2
+{txt}{hline 13}{c +}{hline 57}
+FIESHHWorr~S {c |}{res}        194    .5979381    .4915829          0          1
+{txt}FIESHHHeal~S {c |}{res}        194    .4020619    .4915829          0          1
+{txt}FIESHHFewF~S {c |}{res}        194    .1649485    .3720943          0          1
+{txt}FIESHHSkip~S {c |}{res}        194    .0876289     .283486          0          1
+{txt}FIESHHAteL~S {c |}{res}        194    .1958763    .3979006          0          1
+{txt}{hline 13}{c +}{hline 57}
+FIESHHRanO~S {c |}{res}        194    .0463918    .2108762          0          1
+{txt}FIESHHHung~S {c |}{res}        194    .0618557    .2415165          0          1
+{txt}FIESHHWhol~S {c |}{res}        194           0           0          0          0
+{txt}{space 1}HHDwellType {c |}{res}        394    543.1472    144.5049        100        600
+{txt}HHDwellTyp~h {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+HHTenureType {c |}{res}        394    538.1574    160.1659        101        999
+{txt}HHTenureTy~h {c |}{res}          0
+{txt}HHTenureRisk {c |}{res}        394    197.9036    367.8349          1        888
+{txt}{space 2}HHRoomUsed {c |}{res}        394    1.312183    .5493497          1          4
+{txt}{space 2}HHWallType {c |}{res}        394    653.0051    167.9231        101        999
+{txt}{hline 13}{c +}{hline 57}
+HHWallType~h {c |}{res}          0
+{txt}{space 2}HHRoofType {c |}{res}        394    15.48223    86.26066          2        999
+{txt}HHRoofType~h {c |}{res}          0
+{txt}{space 1}HHFloorType {c |}{res}        394     43.8934    196.7539          1        999
+{txt}HHFloorTyp~h {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+HHToiletType {c |}{res}        394    3.314721    1.743745          1          8
+{txt}HHToiletTy~h {c |}{res}          0
+{txt}{space 1}HHToiletWho {c |}{res}        394    .9035533    .2955782          0          1
+{txt}HHEnerCook~e {c |}{res}        394    9.032995    2.036918          1         10
+{txt}HHEner~e_oth {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+HHEnerCook~C {c |}{res}        367    6.550409     1.53361          5         13
+{txt}HHE~kSRC_oth {c |}{res}          0
+{txt}HHEnerLigh~C {c |}{res}        394    64.90863    243.4465          0        999
+{txt}HHEnerLigh~h {c |}{res}          0
+{txt}{space 2}HHWaterSRC {c |}{res}        394     5.22335    2.083709          1         15
+{txt}{hline 13}{c +}{hline 57}
+HHWaterSRC~h {c |}{res}          0
+{txt}{space 2}HHWaterLoc {c |}{res}        392    1.153061    .4195245          1          3
+{txt}HHWaterDis~s {c |}{res}        349    1.140401    1.031292          1         15
+{txt}WealthSimp~s {c |}{res}          0
+{txt}WealthSimp~1 {c |}{res}        393    .0559796    .2301754          0          1
+{txt}{hline 13}{c +}{hline 57}
+WealthSimp~2 {c |}{res}        393    .4173028    .4937423          0          1
+{txt}WealthSimp~3 {c |}{res}        393    .0585242    .2350312          0          1
+{txt}WealthSimp~4 {c |}{res}        393    .0610687    .2397615          0          1
+{txt}WealthSimp~5 {c |}{res}        393    .0992366    .2993606          0          1
+{txt}WealthSimp~6 {c |}{res}        393    .0941476    .2924062          0          1
+{txt}{hline 13}{c +}{hline 57}
+WealthSi~999 {c |}{res}        393    .4452926    .4976316          0          1
+{txt}WealthBasi~s {c |}{res}          0
+{txt}WealthBasi~1 {c |}{res}        394    .9670051    .1788503          0          1
+{txt}WealthBasi~2 {c |}{res}        394    .5609137    .4969066          0          1
+{txt}WealthBasi~3 {c |}{res}        394    .0025381    .0503793          0          1
+{txt}{hline 13}{c +}{hline 57}
+WealthBasi~4 {c |}{res}        394    .1700508     .376155          0          1
+{txt}WealthBa~999 {c |}{res}        394    .0152284     .122616          0          1
+{txt}WealthAdvE~s {c |}{res}          0
+{txt}WealthAdvE~1 {c |}{res}        393    .0025445    .0504433          0          1
+{txt}WealthAdvE~2 {c |}{res}        393           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+WealthAdvE~3 {c |}{res}        393           0           0          0          0
+{txt}WealthAdvE~4 {c |}{res}        393           0           0          0          0
+{txt}WealthAdvE~5 {c |}{res}        393    .1475827     .355138          0          1
+{txt}WealthAd~999 {c |}{res}        393    .8498728    .3576514          0          1
+{txt}WealthTran~s {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+WealthTran~1 {c |}{res}        392           0           0          0          0
+{txt}WealthTran~2 {c |}{res}        392           0           0          0          0
+{txt}WealthTran~3 {c |}{res}        392           0           0          0          0
+{txt}WealthTran~4 {c |}{res}        392     .747449    .4350308          0          1
+{txt}WealthTran~5 {c |}{res}        392    .0688776    .2535694          0          1
+{txt}{hline 13}{c +}{hline 57}
+WealthTran~6 {c |}{res}        392           0           0          0          0
+{txt}WealthTr~999 {c |}{res}        392    .2397959    .4275045          0          1
+{txt}Weal~kAssets {c |}{res}          0
+{txt}We~kAssets_1 {c |}{res}        390    .1948718    .3966108          0          1
+{txt}We~kAssets_2 {c |}{res}        390    .0410256    .1986043          0          1
+{txt}{hline 13}{c +}{hline 57}
+We~kAssets_3 {c |}{res}        390           0           0          0          0
+{txt}WealthLive~4 {c |}{res}        390    .0025641     .050637          0          1
+{txt}WealthLive~5 {c |}{res}        390    .1102564    .3136114          0          1
+{txt}~kAssets_999 {c |}{res}        390    .7358974    .4414205          0          1
+{txt}Weal~sAssets {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+We~sAssets_1 {c |}{res}        393    .0254453     .157674          0          1
+{txt}We~sAssets_2 {c |}{res}        393    .0101781    .1004999          0          1
+{txt}We~sAssets_3 {c |}{res}        393    .0025445    .0504433          0          1
+{txt}~sAssets_999 {c |}{res}        393    .9618321    .1918458          0          1
+{txt}MDDIHHPerc~e {c |}{res}        394    .7081218    .4552046          0          1
+{txt}{hline 13}{c +}{hline 57}
+MDDIHHShI~6M {c |}{res}        394     .106599    .3089951          0          1
+{txt}MDDIHHDisc~m {c |}{res}        394    .0304569    .1720592          0          1
+{txt}PWMDDWStap~r {c |}{res}        394    .9771574    .1495916          0          1
+{txt}PWMDDWStap~o {c |}{res}        394    .3299492    .4707922          0          1
+{txt}{space 1}PWMDDWPulse {c |}{res}        394    .2918782    .4552046          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}PWMDDWNuts {c |}{res}        394    .0380711    .1916112          0          1
+{txt}{space 2}PWMDDWMilk {c |}{res}        394    .0253807    .1574785          0          1
+{txt}{space 1}PWMDDWDairy {c |}{res}        394    .0177665    .1322696          0          1
+{txt}PWMDDWPrMe~O {c |}{res}        394    .0076142    .0870371          0          1
+{txt}PWMDDWPrMe~F {c |}{res}        394     .213198    .4100871          0          1
+{txt}{hline 13}{c +}{hline 57}
+PWMDDWPrMe~o {c |}{res}        394    .0050761    .0711563          0          1
+{txt}PWMDDWPrMe~e {c |}{res}        394    .1548223    .3621952          0          1
+{txt}PWMDDWPrFish {c |}{res}        394    .1827411    .3869455          0          1
+{txt}{space 1}PWMDDWPrEgg {c |}{res}        394    .3426396    .4751956          0          1
+{txt}PWMDDWVegGre {c |}{res}        394     .893401    .3089951          0          1
+{txt}{hline 13}{c +}{hline 57}
+PWMDDWVegOrg {c |}{res}        394    .2055838    .4046414          0          1
+{txt}PWMDDWFrui~g {c |}{res}        394    .3020305    .4597222          0          1
+{txt}PWMDDWVegOth {c |}{res}        394    .7106599    .4540326          0          1
+{txt}PWMDDWFrui~h {c |}{res}        394    .1345178    .3416416          0          1
+{txt}{space 3}PWMDDWSnf {c |}{res}        394    .0380711    .1916112          0          1
+{txt}{hline 13}{c +}{hline 57}
+RESPPhNmbAlt {c |}{res}          0
+{txt}{space 4}comments {c |}{res}          0
+{txt}{space 5}remarks {c |}{res}          0
+{txt}{space 7}audit {c |}{res}          0
+{txt}{space 2}instanceID {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}Sys_id {c |}{res}        840    3.67e+07    103589.3   3.65e+07   3.69e+07
+{txt}{space 4}Sys_uuid {c |}{res}          0
+{txt}Sys_submis~e {c |}{res}        840     23172.9    2.197624      23168      23177
+{txt}{space 4}HH_Index {c |}{res}        840    249.9226    137.7543          1        520
+{txt}Sys_parent~e {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+Sys_parent~x {c |}{res}        840          -1           0         -1         -1
+{txt}{space 4}Sys_tags {c |}{res}          0
+{txt}{space 3}Sys_notes {c |}{res}          0
+{txt}{space 1}Sys_version {c |}{res}          0
+{txt}Sys_duration {c |}{res}        840    30360.84    40915.66     -21177     294832
+{txt}{hline 13}{c +}{hline 57}
+Sys_submit~y {c |}{res}          0
+{txt}Sys_xform_id {c |}{res}          0
+{txt}Duration_Min {c |}{res}        840    506.0139    681.9277    -352.95   4913.867
+{txt}{space 4}Modality {c |}{res}        840    1.530952    .4993383          1          2
+{txt}{space 3}ID_Length {c |}{res}        840    8.433333    1.125216          7         10
+{txt}{hline 13}{c +}{hline 57}
+{space 8}Form {c |}{res}        840    1.504762    .5002752          1          2
+{txt}{space 5}RESPHHH {c |}{res}        840    .3892857    .4878788          0          1
+{txt}{space 2}RESPFemale {c |}{res}        840    .5869048     .492683          0          1
+{txt}{space 1}HHDisplaced {c |}{res}        394    .7005076    .4586181          0          1
+{txt}{space 3}HHHSingle {c |}{res}        394    .0862944    .2811553          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}HHHMarried {c |}{res}        394    .6827411    .4660009          0          1
+{txt}{space 3}HHDisable {c |}{res}        394     .177665    .3827165          0          1
+{txt}RESPMeals_~e {c |}{res}        394    .7614213    .4267565          0          1
+{txt}RESPFoodWo~y {c |}{res}        394    .6522843    .4768507          0          1
+{txt}RESPFS_Eno~d {c |}{res}        394    .5532995    .4977832          0          1
+{txt}{hline 13}{c +}{hline 57}
+RESPFS_Les~r {c |}{res}        394    .5050761    .5006099          0          1
+{txt}RESPFS_Les~l {c |}{res}        394     .071066    .2572617          0          1
+{txt}RESPFS_Day~t {c |}{res}        394    .0050761    .0711563          0          1
+{txt}{space 2}CARI_Meals {c |}{res}        392    1.234694    .4243489          1          2
+{txt}{space 2}CARI_Worry {c |}{res}        394     1.72335    .5943868          1          4
+{txt}{hline 13}{c +}{hline 57}
+{space 9}FCS {c |}{res}        840    43.40774    12.10254         17         96
+{txt}{space 4}FCSCat28 {c |}{res}        840    2.413095    .6133749          1          3
+{txt}{space 8}rCSI {c |}{res}        840    7.657143    8.726356          0         44
+{txt}Lcs_Stress~g {c |}{res}        840    .7880952    .4089012          0          1
+{txt}Lcs_Crisis~g {c |}{res}        840    .3642857     .481516          0          1
+{txt}{hline 13}{c +}{hline 57}
+Lcs_Emerge~g {c |}{res}        840    .0880952    .2836022          0          1
+{txt}{space 5}LCS_Cat {c |}{res}        840         2.3    .8612987          1          4
+{txt}HHExp_Food.. {c |}{res}        840    55802.46    29928.33          0     232900
+{txt}HHExp_Food.. {c |}{res}        840    4560.476    14440.94          0     170000
+{txt}HHExp_Food.. {c |}{res}        840    4234.762    8533.293          0      70000
+{txt}{hline 13}{c +}{hline 57}
+HHExpFood~7D {c |}{res}        840     64597.7    33076.86       8500     240000
+{txt}HHExpFood~1M {c |}{res}        840    276847.3      141758   36428.57    1028571
+{txt}HHExp_NonF.. {c |}{res}        394    77678.07    68242.31        500     563000
+{txt}HHExp_NonF.. {c |}{res}        394    3246.954    9386.087          0     100000
+{txt}~d_Own_MN_1M {c |}{res}        394    6610.406    15040.14          0     130000
+{txt}{hline 13}{c +}{hline 57}
+HHExp_NonF.. {c |}{res}        394      323599    436861.9          0    4800000
+{txt}HHExp_NonF.. {c |}{res}        394    40606.09    235751.7          0    4530000
+{txt}HHExpNFTot.. {c |}{res}        840    138357.4    112695.3          0    1153000
+{txt}HHExpNFTot.. {c |}{res}        840    9858.155    35126.54          0     755000
+{txt}HHExpNF~l_1M {c |}{res}        840    151316.2    120534.5       4900    1153000
+{txt}{hline 13}{c +}{hline 57}
+{space 2}HHExpTotal {c |}{res}        840    428163.5    215190.9      52250    1773572
+{txt}{space 2}PCExpTotal {c |}{res}        840     85221.5    45276.84   12886.24   336583.3
+{txt}{space 9}FES {c |}{res}        840    66.49285    14.87501   13.85264   97.25446
+{txt}{space 5}FES_Cat {c |}{res}        840    2.736905    1.061211          1          4
+{txt}{space 4}CARI_Inc {c |}{res}        784    2.330357    .8749658          1          4
+{txt}{hline 13}{c +}{hline 57}
+FCS_4pt_CARI {c |}{res}        840     2.30119      .95725          1          4
+{txt}{space 2}CC_FES_Cat {c |}{res}        840    2.518452    .6644955          1          4
+{txt}CARI_FES_Raw {c |}{res}        840    2.409821    .6235653          1          4
+{txt}CARI_FES_Cat {c |}{res}        840    2.547619    .6695268          1          4
+{txt}{space 2}HH_Vul_FES {c |}{res}        840    .5571429    .4970199          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}CC_Inc_Cat {c |}{res}        784    2.314413    .6365287          1          4
+{txt}CARI_Inc_Raw {c |}{res}        784    2.321747    .6398103          1          4
+{txt}CARI_Inc_Cat {c |}{res}        784    2.441327    .7069271          1          4
+{txt}HH_Vul_Inc~e {c |}{res}        840    .4702381    .4994108          0          1
+{txt}{space 1}MDD_Staples {c |}{res}        394    .9771574    .1495916          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}MDD_Pulses {c |}{res}        394    .2918782    .4552046          0          1
+{txt}MDD_NutsSe~s {c |}{res}        394    .0380711    .1916112          0          1
+{txt}{space 1}MDD_Dairies {c |}{res}        394    .0431472    .2034467          0          1
+{txt}MDD_MeatFish {c |}{res}        394    .4492386     .498049          0          1
+{txt}{space 4}MDD_Eggs {c |}{res}        394    .3426396    .4751956          0          1
+{txt}{hline 13}{c +}{hline 57}
+MDD_LeafGVeg {c |}{res}        394     .893401    .3089951          0          1
+{txt}{space 4}MDD_VitA {c |}{res}        394    .4416244     .497212          0          1
+{txt}MDD_OtherVeg {c |}{res}        394    .7106599    .4540326          0          1
+{txt}MDD_OtherF~s {c |}{res}        394    .1345178    .3416416          0          1
+{txt}{space 3}MDD_Index {c |}{res}        394    4.322335    1.499842          0          9
+{txt}{hline 13}{c +}{hline 57}
+{space 1}MDD_Index_5 {c |}{res}        394    .4137056    .4931232          0          1
+{txt}{space 1}HHID_digits {c |}{res}          0
+{txt}{space 5}HHPhNmb {c |}{res}          0
+{txt}{space 4}RESPpart {c |}{res}        446           1           0          1          1
+{txt}RESPpart_oth {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+RESPAvaila~e {c |}{res}        446           1           0          1          1
+{txt}RESPcallback {c |}{res}          0
+{txt}{space 3}RESPvoice {c |}{res}          0
+{txt}RESPRelati~H {c |}{res}        446    217.6188    134.9828        100        602
+{txt}RESPRelati~h {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+HHExpSt~D_7D {c |}{res}        217    27417.79    17621.42          0     135000
+{txt}HHExpSt~d_7D {c |}{res}        217     3550.23    13040.78          0      72000
+{txt}HHExpSt~n_7D {c |}{res}        217    1398.618    5461.256          0      40000
+{txt}HHExpPro_M~D {c |}{res}        217    10536.87    8596.329          0      51500
+{txt}HHExpPro_G~D {c |}{res}        217    133.6406     654.841          0       6000
+{txt}{hline 13}{c +}{hline 57}
+HHExpPro_O~D {c |}{res}        217    414.7465    2111.118          0      15000
+{txt}HHExpFr~D_7D {c |}{res}        217    9765.438    7301.576          0      40000
+{txt}HHExpFr~d_7D {c |}{res}        217    705.0691    2051.518          0      21000
+{txt}HHExpFr~n_7D {c |}{res}        217    3310.599    6065.455          0      62500
+{txt}HHExpFO~D_7D {c |}{res}        217    8633.871    6790.408          0      57500
+{txt}{hline 13}{c +}{hline 57}
+HHExpFOthe.. {c |}{res}        217    631.3364    2094.798          0      15000
+{txt}H~her_Own_7D {c |}{res}        217    41.47465    388.6511          0       5000
+{txt}HHExpNF_~N1M {c |}{res}        217    .7788018    .4160133          0          1
+{txt}H~g_MNCRD_1M {c |}{res}        217    18747.93    26244.02          0     300000
+{txt}~Ph_MNCRD_1M {c |}{res}        217    37981.57    42985.59          0     410000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFTra.. {c |}{res}        169    1242.604    8376.929          0     100000
+{txt}H~s_MNCRD_1M {c |}{res}        217    13754.84     50875.7          0     513000
+{txt}HHExpNFUti.. {c |}{res}        169    2278.107    21153.41          0     270000
+{txt}H~c_MNCRD_1M {c |}{res}        217    5405.991    12594.12          0     120000
+{txt}HHExpNF~D_6M {c |}{res}        217    259766.8    369548.9          0    3000000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFEdu.. {c |}{res}        169    24258.58    45865.54          0     250000
+{txt}HHExpF_MN~7D {c |}{res}        229    48155.37    21886.31          0     100000
+{txt}HHExpF_Gi~7D {c |}{res}        229    7677.948    21871.37          0     170000
+{txt}HHExpF_Ow~7D {c |}{res}        229    4379.913    8671.573          0      70000
+{txt}HHExpNF_M~1M {c |}{res}        229    168132.3    105607.2          0     610000
+{txt}{hline 13}{c +}{hline 57}
+HHExpNF_Gi.. {c |}{res}        229    11620.96    35444.23          0     250000
+{txt}~th_MNCRD_1M {c |}{res}        217    43294.47    61591.49          0     500000
+{txt}HHExpNFEdu.. {c |}{res}        169    4043.097    7644.257          0   41666.67
+{txt}{space 5}Consent {c |}{res}        840           1           0          1          1
+{txt}{space 4}S_Region {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 2}S_Township {c |}{res}          0
+{txt}{space 6}S_Camp {c |}{res}          0
+{txt}S_Assign_M~y {c |}{res}        840    1.530952    .4993383          1          2
+{txt}S_Assign_L~h {c |}{res}        840    1.504762    .5002752          1          2
+{txt}{space 2}Completion {c |}{res}        840           1           0          1          1
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD10018.000000"
+{txt}
+{com}.         tab S_Assign_Modality   Modality
+
+             {txt}{c |} Survey Modality: F2F
+Modality_Typ {c |}      vs. Remote
+           e {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-to-Face {c |}{res}       394          0 {txt}{c |}{res}       394 
+{txt}      Remote {c |}{res}         0        446 {txt}{c |}{res}       446 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       394        446 {txt}{c |}{res}       840 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+           {txt}{c |}  Form Type: Long vs.
+Length_Typ {c |}         Short
+         e {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       416          0 {txt}{c |}{res}       416 
+{txt}Short Form {c |}{res}         0        424 {txt}{c |}{res}       424 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       416        424 {txt}{c |}{res}       840 
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab sampleYN
+
+    {txt}Is this {c |}
+  household {c |}
+   from the {c |}
+   provided {c |}
+     sample {c |}
+      list? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        Yes {c |}{res}        840      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        840      100.00
+
+{com}. tab HHID
+
+         {txt}i. {c |}
+  Household {c |}
+         ID {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+ 00009E3A17 {c |}{res}          1        0.12        0.12
+{txt} 0001301A22 {c |}{res}          1        0.12        0.24
+{txt} 0002404C80 {c |}{res}          1        0.12        0.36
+{txt} 00033F96D8 {c |}{res}          1        0.12        0.48
+{txt} 00038B7A2C {c |}{res}          1        0.12        0.60
+{txt}   0003DEE2 {c |}{res}          1        0.12        0.71
+{txt}  00045D0E5 {c |}{res}          1        0.12        0.83
+{txt}   0004966F {c |}{res}          1        0.12        0.95
+{txt} 0007E33441 {c |}{res}          1        0.12        1.07
+{txt}   0008AA0B {c |}{res}          1        0.12        1.19
+{txt} 000AFF9F44 {c |}{res}          1        0.12        1.31
+{txt} 000D243738 {c |}{res}          1        0.12        1.43
+{txt} 000D4E6DD5 {c |}{res}          1        0.12        1.55
+{txt}   000D65DF {c |}{res}          1        0.12        1.67
+{txt} 000DAEFB29 {c |}{res}          1        0.12        1.79
+{txt} 000F067802 {c |}{res}          1        0.12        1.90
+{txt} 00115363C4 {c |}{res}          1        0.12        2.02
+{txt}  0012656D2 {c |}{res}          1        0.12        2.14
+{txt} 0013757CE0 {c |}{res}          1        0.12        2.26
+{txt} 00139AF2EB {c |}{res}          1        0.12        2.38
+{txt}   0013B03C {c |}{res}          1        0.12        2.50
+{txt} 00146503F1 {c |}{res}          1        0.12        2.62
+{txt} 001489CEC4 {c |}{res}          1        0.12        2.74
+{txt} 00155A7770 {c |}{res}          1        0.12        2.86
+{txt}  0015A6D5F {c |}{res}          1        0.12        2.98
+{txt} 00166C4869 {c |}{res}          1        0.12        3.10
+{txt} 001689C717 {c |}{res}          1        0.12        3.21
+{txt} 001983B547 {c |}{res}          1        0.12        3.33
+{txt} 001A113C0F {c |}{res}          1        0.12        3.45
+{txt} 001A1D67D4 {c |}{res}          1        0.12        3.57
+{txt} 001C0CEFA2 {c |}{res}          1        0.12        3.69
+{txt} 001C86AEA8 {c |}{res}          1        0.12        3.81
+{txt} 001D67C6BC {c |}{res}          1        0.12        3.93
+{txt} 00208C43C2 {c |}{res}          1        0.12        4.05
+{txt} 00210329CC {c |}{res}          1        0.12        4.17
+{txt} 002293E9D7 {c |}{res}          1        0.12        4.29
+{txt}  0022A64F9 {c |}{res}          1        0.12        4.40
+{txt}   002330DE {c |}{res}          1        0.12        4.52
+{txt}  0023B3B4F {c |}{res}          1        0.12        4.64
+{txt}  002442F23 {c |}{res}          1        0.12        4.76
+{txt} 002462069F {c |}{res}          1        0.12        4.88
+{txt} 0024A67002 {c |}{res}          1        0.12        5.00
+{txt}   0026129E {c |}{res}          1        0.12        5.12
+{txt}   0026CB05 {c |}{res}          1        0.12        5.24
+{txt} 00270FFCBE {c |}{res}          1        0.12        5.36
+{txt} 002748D8DC {c |}{res}          1        0.12        5.48
+{txt} 0027A9794D {c |}{res}          1        0.12        5.60
+{txt}    002828D {c |}{res}          1        0.12        5.71
+{txt} 0028A5D2BC {c |}{res}          1        0.12        5.83
+{txt} 002AE49686 {c |}{res}          1        0.12        5.95
+{txt} 002C6472A4 {c |}{res}          1        0.12        6.07
+{txt} 002D672996 {c |}{res}          1        0.12        6.19
+{txt}   002E3910 {c |}{res}          1        0.12        6.31
+{txt} 002E6A2308 {c |}{res}          1        0.12        6.43
+{txt} 002E8A0D37 {c |}{res}          1        0.12        6.55
+{txt} 002ED92D04 {c |}{res}          1        0.12        6.67
+{txt}   002F7816 {c |}{res}          1        0.12        6.79
+{txt} 002FDD71B5 {c |}{res}          1        0.12        6.90
+{txt} 00301A3108 {c |}{res}          1        0.12        7.02
+{txt} 003130A5E9 {c |}{res}          1        0.12        7.14
+{txt}   0031481D {c |}{res}          1        0.12        7.26
+{txt} 003315AA87 {c |}{res}          1        0.12        7.38
+{txt} 0033950C4F {c |}{res}          1        0.12        7.50
+{txt} 003475CEB9 {c |}{res}          1        0.12        7.62
+{txt} 0036254AE3 {c |}{res}          1        0.12        7.74
+{txt}   00377EEE {c |}{res}          1        0.12        7.86
+{txt} 003791AEF3 {c |}{res}          1        0.12        7.98
+{txt} 0038B3CED5 {c |}{res}          1        0.12        8.10
+{txt} 0039BC8A08 {c |}{res}          1        0.12        8.21
+{txt} 003A0E8C46 {c |}{res}          1        0.12        8.33
+{txt}   003A1D6E {c |}{res}          1        0.12        8.45
+{txt}   003C396A {c |}{res}          1        0.12        8.57
+{txt} 003E4F0963 {c |}{res}          1        0.12        8.69
+{txt} 003EAC73B3 {c |}{res}          1        0.12        8.81
+{txt} 003F350D09 {c |}{res}          1        0.12        8.93
+{txt} 004096CDB9 {c |}{res}          1        0.12        9.05
+{txt}  0041720EF {c |}{res}          1        0.12        9.17
+{txt}   00417BC1 {c |}{res}          1        0.12        9.29
+{txt} 0041F9DDB5 {c |}{res}          1        0.12        9.40
+{txt} 0042D038AF {c |}{res}          1        0.12        9.52
+{txt} 0043AB86B0 {c |}{res}          1        0.12        9.64
+{txt} 00454233D4 {c |}{res}          1        0.12        9.76
+{txt} 0045EE75DE {c |}{res}          1        0.12        9.88
+{txt} 0045FDE074 {c |}{res}          1        0.12       10.00
+{txt} 00467A7B31 {c |}{res}          1        0.12       10.12
+{txt} 004775A697 {c |}{res}          1        0.12       10.24
+{txt} 0047A1E9C0 {c |}{res}          1        0.12       10.36
+{txt} 00484F0056 {c |}{res}          1        0.12       10.48
+{txt} 004A0D2ABF {c |}{res}          1        0.12       10.60
+{txt} 004A775939 {c |}{res}          1        0.12       10.71
+{txt} 004AC0C197 {c |}{res}          1        0.12       10.83
+{txt} 004B6D06A3 {c |}{res}          1        0.12       10.95
+{txt} 004CDC7890 {c |}{res}          1        0.12       11.07
+{txt} 004D08A8E4 {c |}{res}          1        0.12       11.19
+{txt} 004E41B5E7 {c |}{res}          1        0.12       11.31
+{txt}  004E46C5A {c |}{res}          1        0.12       11.43
+{txt}   004E4E41 {c |}{res}          1        0.12       11.55
+{txt}  004E58C4C {c |}{res}          1        0.12       11.67
+{txt} 004E8309A1 {c |}{res}          1        0.12       11.79
+{txt} 004F172EE4 {c |}{res}          1        0.12       11.90
+{txt}   004F69BA {c |}{res}          1        0.12       12.02
+{txt}   004F839F {c |}{res}          1        0.12       12.14
+{txt} 004F93CE5C {c |}{res}          1        0.12       12.26
+{txt} 00508378ED {c |}{res}          1        0.12       12.38
+{txt} 005145A4C3 {c |}{res}          1        0.12       12.50
+{txt} 00527A3C57 {c |}{res}          1        0.12       12.62
+{txt} 00554BF7F4 {c |}{res}          1        0.12       12.74
+{txt} 005576B0E0 {c |}{res}          1        0.12       12.86
+{txt} 0055B8DE9A {c |}{res}          1        0.12       12.98
+{txt} 005631D39F {c |}{res}          1        0.12       13.10
+{txt} 00567A4DF8 {c |}{res}          1        0.12       13.21
+{txt} 0056A8D310 {c |}{res}          1        0.12       13.33
+{txt} 0056C6469F {c |}{res}          1        0.12       13.45
+{txt} 00572EF54C {c |}{res}          1        0.12       13.57
+{txt}   005865C1 {c |}{res}          1        0.12       13.69
+{txt} 0058B21BDF {c |}{res}          1        0.12       13.81
+{txt} 005A9FEFA9 {c |}{res}          1        0.12       13.93
+{txt}   005C93E3 {c |}{res}          1        0.12       14.05
+{txt} 005CC2BB79 {c |}{res}          1        0.12       14.17
+{txt}   005DD874 {c |}{res}          1        0.12       14.29
+{txt} 005DEE2B87 {c |}{res}          1        0.12       14.40
+{txt} 00628CC92D {c |}{res}          1        0.12       14.52
+{txt} 00658E743D {c |}{res}          1        0.12       14.64
+{txt} 0065F6BCEF {c |}{res}          1        0.12       14.76
+{txt} 00673AFD48 {c |}{res}          1        0.12       14.88
+{txt} 006A1F1DD6 {c |}{res}          1        0.12       15.00
+{txt}   006A4879 {c |}{res}          1        0.12       15.12
+{txt} 006B3E3F33 {c |}{res}          1        0.12       15.24
+{txt} 006B7D87FC {c |}{res}          1        0.12       15.36
+{txt} 006DDE9F5C {c |}{res}          1        0.12       15.48
+{txt}   006F03F0 {c |}{res}          1        0.12       15.60
+{txt} 006F264282 {c |}{res}          1        0.12       15.71
+{txt} 006FB992E1 {c |}{res}          1        0.12       15.83
+{txt} 00739A7DFA {c |}{res}          1        0.12       15.95
+{txt} 0075DE9929 {c |}{res}          1        0.12       16.07
+{txt} 0076A533C5 {c |}{res}          1        0.12       16.19
+{txt}   0078F3DB {c |}{res}          1        0.12       16.31
+{txt} 007A04E802 {c |}{res}          1        0.12       16.43
+{txt} 007A9F5F58 {c |}{res}          1        0.12       16.55
+{txt} 007AD35974 {c |}{res}          1        0.12       16.67
+{txt} 007BD3FD4F {c |}{res}          1        0.12       16.79
+{txt}   007CA3CE {c |}{res}          1        0.12       16.90
+{txt} 007CBA5B36 {c |}{res}          1        0.12       17.02
+{txt} 007E65520F {c |}{res}          1        0.12       17.14
+{txt} 007EAC639D {c |}{res}          1        0.12       17.26
+{txt}   0080CD22 {c |}{res}          1        0.12       17.38
+{txt}   008184C1 {c |}{res}          1        0.12       17.50
+{txt} 0083F469C8 {c |}{res}          1        0.12       17.62
+{txt} 0084399A60 {c |}{res}          1        0.12       17.74
+{txt} 00853F3190 {c |}{res}          1        0.12       17.86
+{txt} 008591A2C8 {c |}{res}          1        0.12       17.98
+{txt} 0086A4CE97 {c |}{res}          1        0.12       18.10
+{txt} 0089CB759B {c |}{res}          1        0.12       18.21
+{txt} 0089D0BDF4 {c |}{res}          1        0.12       18.33
+{txt} 008C20483E {c |}{res}          1        0.12       18.45
+{txt} 008F4FBE3B {c |}{res}          1        0.12       18.57
+{txt}   008FDA38 {c |}{res}          1        0.12       18.69
+{txt} 00903553E0 {c |}{res}          1        0.12       18.81
+{txt}   00912BD9 {c |}{res}          1        0.12       18.93
+{txt} 0093E35195 {c |}{res}          1        0.12       19.05
+{txt} 00958C3BD7 {c |}{res}          1        0.12       19.17
+{txt} 0095CDAC8E {c |}{res}          1        0.12       19.29
+{txt} 0095D27B97 {c |}{res}          1        0.12       19.40
+{txt}   0095F247 {c |}{res}          1        0.12       19.52
+{txt} 009651AE56 {c |}{res}          1        0.12       19.64
+{txt} 00969A28E7 {c |}{res}          1        0.12       19.76
+{txt} 0097A30F33 {c |}{res}          1        0.12       19.88
+{txt} 009B1C649F {c |}{res}          1        0.12       20.00
+{txt}   009BC163 {c |}{res}          1        0.12       20.12
+{txt} 009E6931BD {c |}{res}          1        0.12       20.24
+{txt} 009F6802F3 {c |}{res}          1        0.12       20.36
+{txt} 00A128C006 {c |}{res}          1        0.12       20.48
+{txt} 00A5D10FEC {c |}{res}          1        0.12       20.60
+{txt} 00A68E4E90 {c |}{res}          1        0.12       20.71
+{txt} 00A8FD32EF {c |}{res}          1        0.12       20.83
+{txt}   00AB5849 {c |}{res}          1        0.12       20.95
+{txt} 00AD6EC382 {c |}{res}          1        0.12       21.07
+{txt} 00AE406ADB {c |}{res}          1        0.12       21.19
+{txt} 00AEC17A12 {c |}{res}          1        0.12       21.31
+{txt} 00AFB3F84A {c |}{res}          1        0.12       21.43
+{txt}   00B015AA {c |}{res}          1        0.12       21.55
+{txt} 00B0F62EFB {c |}{res}          1        0.12       21.67
+{txt}   00B14A38 {c |}{res}          1        0.12       21.79
+{txt} 00B1AB043B {c |}{res}          1        0.12       21.90
+{txt}   00B2B715 {c |}{res}          1        0.12       22.02
+{txt}   00B2D66A {c |}{res}          1        0.12       22.14
+{txt} 00B490BEEB {c |}{res}          1        0.12       22.26
+{txt} 00B7162BB0 {c |}{res}          1        0.12       22.38
+{txt} 00B89B3443 {c |}{res}          1        0.12       22.50
+{txt} 00BB52BDBD {c |}{res}          1        0.12       22.62
+{txt} 00BE179F70 {c |}{res}          1        0.12       22.74
+{txt} 00BE4BB86E {c |}{res}          1        0.12       22.86
+{txt} 00BE6983A1 {c |}{res}          1        0.12       22.98
+{txt} 00C10CF660 {c |}{res}          1        0.12       23.10
+{txt} 00C1731A70 {c |}{res}          1        0.12       23.21
+{txt} 00C43E8FC8 {c |}{res}          1        0.12       23.33
+{txt} 00C5B093F7 {c |}{res}          1        0.12       23.45
+{txt} 00C7452340 {c |}{res}          1        0.12       23.57
+{txt} 00C76AAC98 {c |}{res}          1        0.12       23.69
+{txt} 00C809DD38 {c |}{res}          1        0.12       23.81
+{txt} 00C922936F {c |}{res}          1        0.12       23.93
+{txt} 00CABA7882 {c |}{res}          1        0.12       24.05
+{txt}   00CC9759 {c |}{res}          1        0.12       24.17
+{txt} 00CDA8DF9B {c |}{res}          1        0.12       24.29
+{txt} 00CE363F7B {c |}{res}          1        0.12       24.40
+{txt} 00CE36CFEC {c |}{res}          1        0.12       24.52
+{txt} 00CF320816 {c |}{res}          1        0.12       24.64
+{txt} 00D2011B23 {c |}{res}          1        0.12       24.76
+{txt} 00D21444DA {c |}{res}          1        0.12       24.88
+{txt} 00D23B6074 {c |}{res}          1        0.12       25.00
+{txt} 00D324B32D {c |}{res}          1        0.12       25.12
+{txt} 00D3447689 {c |}{res}          1        0.12       25.24
+{txt} 00D4315988 {c |}{res}          1        0.12       25.36
+{txt} 00D4697EEA {c |}{res}          1        0.12       25.48
+{txt} 00D4F1378B {c |}{res}          1        0.12       25.60
+{txt} 00D5645163 {c |}{res}          1        0.12       25.71
+{txt} 00D59E3E16 {c |}{res}          1        0.12       25.83
+{txt} 00D5AB7445 {c |}{res}          1        0.12       25.95
+{txt} 00D647DEF3 {c |}{res}          1        0.12       26.07
+{txt} 00D80AE7C6 {c |}{res}          1        0.12       26.19
+{txt}   00D88777 {c |}{res}          1        0.12       26.31
+{txt} 00D9E9B5ED {c |}{res}          1        0.12       26.43
+{txt}   00DA2CCD {c |}{res}          1        0.12       26.55
+{txt} 00DAA4ED06 {c |}{res}          1        0.12       26.67
+{txt}   00DB807F {c |}{res}          1        0.12       26.79
+{txt} 00DBBE6C09 {c |}{res}          1        0.12       26.90
+{txt} 00DF0B5883 {c |}{res}          1        0.12       27.02
+{txt} 00DF25240F {c |}{res}          1        0.12       27.14
+{txt} 00DF6BC7E0 {c |}{res}          1        0.12       27.26
+{txt} 00E225E1BE {c |}{res}          1        0.12       27.38
+{txt} 00E257FE3A {c |}{res}          1        0.12       27.50
+{txt} 00E2FA0EFC {c |}{res}          1        0.12       27.62
+{txt} 00E42E744F {c |}{res}          1        0.12       27.74
+{txt}   00E49DB8 {c |}{res}          1        0.12       27.86
+{txt} 00E5235E5E {c |}{res}          1        0.12       27.98
+{txt} 00E53B6A10 {c |}{res}          1        0.12       28.10
+{txt} 00E60A269C {c |}{res}          1        0.12       28.21
+{txt} 00E7CC7E51 {c |}{res}          1        0.12       28.33
+{txt} 00E8F6FF6E {c |}{res}          1        0.12       28.45
+{txt} 00EA248A8F {c |}{res}          1        0.12       28.57
+{txt} 00EC88C18E {c |}{res}          1        0.12       28.69
+{txt} 00EE9FBEEC {c |}{res}          1        0.12       28.81
+{txt}   00EFFB46 {c |}{res}          1        0.12       28.93
+{txt} 00F0E9C757 {c |}{res}          1        0.12       29.05
+{txt} 00F20EAC01 {c |}{res}          1        0.12       29.17
+{txt} 00F265977F {c |}{res}          1        0.12       29.29
+{txt} 00F2D58EB3 {c |}{res}          1        0.12       29.40
+{txt} 00F2F2C7E6 {c |}{res}          1        0.12       29.52
+{txt}   00F6F9D6 {c |}{res}          1        0.12       29.64
+{txt} 00F7D70FF1 {c |}{res}          1        0.12       29.76
+{txt} 00FE8AEAF5 {c |}{res}          1        0.12       29.88
+{txt} 00FEAE098C {c |}{res}          1        0.12       30.00
+{txt}   00FF09AA {c |}{res}          1        0.12       30.12
+{txt}  00FFC561C {c |}{res}          1        0.12       30.24
+{txt}   01020AA2 {c |}{res}          1        0.12       30.36
+{txt}   010357FC {c |}{res}          1        0.12       30.48
+{txt}  01054A2FD {c |}{res}          1        0.12       30.60
+{txt}    0106D2C {c |}{res}          1        0.12       30.71
+{txt}   0107BEE3 {c |}{res}          1        0.12       30.83
+{txt}   010825C2 {c |}{res}          1        0.12       30.95
+{txt}   010C9612 {c |}{res}          1        0.12       31.07
+{txt}   01101EFE {c |}{res}          1        0.12       31.19
+{txt}   0118B04F {c |}{res}          1        0.12       31.31
+{txt}  01219D560 {c |}{res}          1        0.12       31.43
+{txt}   01248BC7 {c |}{res}          1        0.12       31.55
+{txt}   0126D643 {c |}{res}          1        0.12       31.67
+{txt}   012757F7 {c |}{res}          1        0.12       31.79
+{txt}   012842B7 {c |}{res}          1        0.12       31.90
+{txt}   0129E21A {c |}{res}          1        0.12       32.02
+{txt}   012B6646 {c |}{res}          1        0.12       32.14
+{txt}   012C6E6F {c |}{res}          1        0.12       32.26
+{txt}   012D1996 {c |}{res}          1        0.12       32.38
+{txt}   0135130E {c |}{res}          1        0.12       32.50
+{txt}  0136BF859 {c |}{res}          1        0.12       32.62
+{txt}   013A5AD3 {c |}{res}          1        0.12       32.74
+{txt}   013B720F {c |}{res}          1        0.12       32.86
+{txt}   013D30DA {c |}{res}          1        0.12       32.98
+{txt}   013DDE58 {c |}{res}          1        0.12       33.10
+{txt}  013DF6FB3 {c |}{res}          1        0.12       33.21
+{txt}  014D0F772 {c |}{res}          1        0.12       33.33
+{txt}  014F7DB75 {c |}{res}          1        0.12       33.45
+{txt}   0152153A {c |}{res}          1        0.12       33.57
+{txt}  0156C48D8 {c |}{res}          1        0.12       33.69
+{txt}   015EE635 {c |}{res}          1        0.12       33.81
+{txt}  0164C3C67 {c |}{res}          1        0.12       33.93
+{txt}   016E9AED {c |}{res}          1        0.12       34.05
+{txt}   016F80B8 {c |}{res}          1        0.12       34.17
+{txt}  0173CED9D {c |}{res}          1        0.12       34.29
+{txt}   01878F24 {c |}{res}          1        0.12       34.40
+{txt}   0189B995 {c |}{res}          1        0.12       34.52
+{txt}   018A36B8 {c |}{res}          1        0.12       34.64
+{txt}  0190ABD91 {c |}{res}          1        0.12       34.76
+{txt}   019649CF {c |}{res}          1        0.12       34.88
+{txt}   01A0BF86 {c |}{res}          1        0.12       35.00
+{txt}   01A46282 {c |}{res}          1        0.12       35.12
+{txt}   01A59A70 {c |}{res}          1        0.12       35.24
+{txt}   01A70892 {c |}{res}          1        0.12       35.36
+{txt}   01AAF0CB {c |}{res}          1        0.12       35.48
+{txt}   01B1123F {c |}{res}          1        0.12       35.60
+{txt}   01B5108E {c |}{res}          1        0.12       35.71
+{txt}   01BBB398 {c |}{res}          1        0.12       35.83
+{txt}   01C559E2 {c |}{res}          1        0.12       35.95
+{txt}   01C5D7FB {c |}{res}          1        0.12       36.07
+{txt}   01CC8A8D {c |}{res}          1        0.12       36.19
+{txt}    01D5A5E {c |}{res}          1        0.12       36.31
+{txt}   01D87EF2 {c |}{res}          1        0.12       36.43
+{txt}   01D9CCA4 {c |}{res}          1        0.12       36.55
+{txt}   01DAA032 {c |}{res}          1        0.12       36.67
+{txt}   01E6F9F3 {c |}{res}          1        0.12       36.79
+{txt}  01E9D431F {c |}{res}          1        0.12       36.90
+{txt}   01F0B159 {c |}{res}          1        0.12       37.02
+{txt}   01F8A08B {c |}{res}          1        0.12       37.14
+{txt}  01F977E57 {c |}{res}          1        0.12       37.26
+{txt}   020D7013 {c |}{res}          1        0.12       37.38
+{txt}  021347C21 {c |}{res}          1        0.12       37.50
+{txt}   0218DAE6 {c |}{res}          1        0.12       37.62
+{txt}  021F91292 {c |}{res}          1        0.12       37.74
+{txt}  02224D786 {c |}{res}          1        0.12       37.86
+{txt}   02364DBF {c |}{res}          1        0.12       37.98
+{txt}   024502CE {c |}{res}          1        0.12       38.10
+{txt}   024A58D4 {c |}{res}          1        0.12       38.21
+{txt}   024E0349 {c |}{res}          1        0.12       38.33
+{txt}   02507CEF {c |}{res}          1        0.12       38.45
+{txt}  0255A408D {c |}{res}          1        0.12       38.57
+{txt}   0257A163 {c |}{res}          1        0.12       38.69
+{txt}   0264DC6A {c |}{res}          1        0.12       38.81
+{txt}   0267EDFF {c |}{res}          1        0.12       38.93
+{txt}  026B0B425 {c |}{res}          1        0.12       39.05
+{txt}  026DF3A30 {c |}{res}          1        0.12       39.17
+{txt}   0275959C {c |}{res}          1        0.12       39.29
+{txt}   0279A9C3 {c |}{res}          1        0.12       39.40
+{txt}   027ADA1B {c |}{res}          1        0.12       39.52
+{txt}   027F2E26 {c |}{res}          1        0.12       39.64
+{txt}   02824DDD {c |}{res}          1        0.12       39.76
+{txt}   02859AF7 {c |}{res}          1        0.12       39.88
+{txt}   0288D6A5 {c |}{res}          1        0.12       40.00
+{txt}   028E22B9 {c |}{res}          1        0.12       40.12
+{txt}   0291E9BC {c |}{res}          1        0.12       40.24
+{txt}   029254EA {c |}{res}          1        0.12       40.36
+{txt}   0292D3FE {c |}{res}          1        0.12       40.48
+{txt}   02A63888 {c |}{res}          1        0.12       40.60
+{txt}  02A75DA52 {c |}{res}          1        0.12       40.71
+{txt}   02A994B8 {c |}{res}          1        0.12       40.83
+{txt}   02A9AD1A {c |}{res}          1        0.12       40.95
+{txt}   02AA20DB {c |}{res}          1        0.12       41.07
+{txt}   02AA8696 {c |}{res}          1        0.12       41.19
+{txt}  02AD8A18C {c |}{res}          1        0.12       41.31
+{txt}   02B61EB4 {c |}{res}          1        0.12       41.43
+{txt}    02B838D {c |}{res}          1        0.12       41.55
+{txt}  02BAEE45D {c |}{res}          1        0.12       41.67
+{txt}   02C42495 {c |}{res}          1        0.12       41.79
+{txt}   02CE6C0C {c |}{res}          1        0.12       41.90
+{txt}   02D082CB {c |}{res}          1        0.12       42.02
+{txt}   02D4D16C {c |}{res}          1        0.12       42.14
+{txt}   02D6B0A4 {c |}{res}          1        0.12       42.26
+{txt}   02DC274F {c |}{res}          1        0.12       42.38
+{txt}   02DECD8F {c |}{res}          1        0.12       42.50
+{txt}   02E58FD3 {c |}{res}          1        0.12       42.62
+{txt}  02E8DD981 {c |}{res}          1        0.12       42.74
+{txt}   02E9FE23 {c |}{res}          1        0.12       42.86
+{txt}   02EAF9C4 {c |}{res}          1        0.12       42.98
+{txt}  02ED8406D {c |}{res}          1        0.12       43.10
+{txt}   02F58AC7 {c |}{res}          1        0.12       43.21
+{txt}   02F62A6B {c |}{res}          1        0.12       43.33
+{txt}  02F6AC7E0 {c |}{res}          1        0.12       43.45
+{txt}   02FCBFD3 {c |}{res}          1        0.12       43.57
+{txt}   03046E4A {c |}{res}          1        0.12       43.69
+{txt}   031325F2 {c |}{res}          1        0.12       43.81
+{txt}   031585AF {c |}{res}          1        0.12       43.93
+{txt}    03164D8 {c |}{res}          1        0.12       44.05
+{txt}  031F6BB81 {c |}{res}          1        0.12       44.17
+{txt}   031F722A {c |}{res}          1        0.12       44.29
+{txt}   0323E08A {c |}{res}          1        0.12       44.40
+{txt}   0324662F {c |}{res}          1        0.12       44.52
+{txt}  0325F7C8D {c |}{res}          1        0.12       44.64
+{txt}   03269A50 {c |}{res}          1        0.12       44.76
+{txt}   032BC76A {c |}{res}          1        0.12       44.88
+{txt}   0334DA93 {c |}{res}          1        0.12       45.00
+{txt}   03443E0A {c |}{res}          1        0.12       45.12
+{txt}  034CF71AE {c |}{res}          1        0.12       45.24
+{txt}  0350F0BC8 {c |}{res}          1        0.12       45.36
+{txt}  0355F3056 {c |}{res}          1        0.12       45.48
+{txt}   03569DAA {c |}{res}          1        0.12       45.60
+{txt}  0357602AF {c |}{res}          1        0.12       45.71
+{txt}   035760FC {c |}{res}          1        0.12       45.83
+{txt}   035764AA {c |}{res}          1        0.12       45.95
+{txt}   035AF2CE {c |}{res}          1        0.12       46.07
+{txt}  035FDDDB2 {c |}{res}          1        0.12       46.19
+{txt}   0361F54D {c |}{res}          1        0.12       46.31
+{txt}   0365E88E {c |}{res}          1        0.12       46.43
+{txt}   036F9CE0 {c |}{res}          1        0.12       46.55
+{txt}   03715A59 {c |}{res}          1        0.12       46.67
+{txt}   037F8E4B {c |}{res}          1        0.12       46.79
+{txt}   038F28AF {c |}{res}          1        0.12       46.90
+{txt}   039199F6 {c |}{res}          1        0.12       47.02
+{txt}  0395E68E1 {c |}{res}          1        0.12       47.14
+{txt}  039903E1B {c |}{res}          1        0.12       47.26
+{txt}    039E1E3 {c |}{res}          1        0.12       47.38
+{txt}   03A585D7 {c |}{res}          1        0.12       47.50
+{txt}   03B91B0C {c |}{res}          1        0.12       47.62
+{txt}   03BF4C46 {c |}{res}          1        0.12       47.74
+{txt}  03C42511C {c |}{res}          1        0.12       47.86
+{txt}   03CF48E2 {c |}{res}          1        0.12       47.98
+{txt}   03D2C2CB {c |}{res}          1        0.12       48.10
+{txt}   03D56470 {c |}{res}          1        0.12       48.21
+{txt}   03DF4802 {c |}{res}          1        0.12       48.33
+{txt}   03E98960 {c |}{res}          1        0.12       48.45
+{txt}   03EBE995 {c |}{res}          1        0.12       48.57
+{txt}  03ECCCF75 {c |}{res}          1        0.12       48.69
+{txt}   03EE91BA {c |}{res}          1        0.12       48.81
+{txt}   03F1965F {c |}{res}          1        0.12       48.93
+{txt}   03F72780 {c |}{res}          1        0.12       49.05
+{txt}   03FA19C7 {c |}{res}          1        0.12       49.17
+{txt}   04000BDC {c |}{res}          1        0.12       49.29
+{txt}   0411BF3C {c |}{res}          1        0.12       49.40
+{txt}   0411D9B6 {c |}{res}          1        0.12       49.52
+{txt}   04287C15 {c |}{res}          1        0.12       49.64
+{txt}   04291A4E {c |}{res}          1        0.12       49.76
+{txt}   042D0C92 {c |}{res}          1        0.12       49.88
+{txt}  042EFD5C0 {c |}{res}          1        0.12       50.00
+{txt}  042FE9883 {c |}{res}          1        0.12       50.12
+{txt}   0435433C {c |}{res}          1        0.12       50.24
+{txt}   043F0AC2 {c |}{res}          1        0.12       50.36
+{txt}   044675D1 {c |}{res}          1        0.12       50.48
+{txt}   044DA6B2 {c |}{res}          1        0.12       50.60
+{txt}   046046F3 {c |}{res}          1        0.12       50.71
+{txt}   04638EAF {c |}{res}          1        0.12       50.83
+{txt}    046420A {c |}{res}          1        0.12       50.95
+{txt}   0475178E {c |}{res}          1        0.12       51.07
+{txt}    047BB21 {c |}{res}          1        0.12       51.19
+{txt}  0487C9CA4 {c |}{res}          1        0.12       51.31
+{txt}   0487E9BD {c |}{res}          1        0.12       51.43
+{txt}   048F21B8 {c |}{res}          1        0.12       51.55
+{txt}   048FDBCC {c |}{res}          1        0.12       51.67
+{txt}   0491ADC8 {c |}{res}          1        0.12       51.79
+{txt}   0499A577 {c |}{res}          1        0.12       51.90
+{txt}   049C89A6 {c |}{res}          1        0.12       52.02
+{txt}   049EA87F {c |}{res}          1        0.12       52.14
+{txt}    04B65C7 {c |}{res}          1        0.12       52.26
+{txt}   04B6C8FD {c |}{res}          1        0.12       52.38
+{txt}  04BAE620B {c |}{res}          1        0.12       52.50
+{txt}   04BE81E0 {c |}{res}          1        0.12       52.62
+{txt}   04BF2C66 {c |}{res}          1        0.12       52.74
+{txt}    04C4565 {c |}{res}          1        0.12       52.86
+{txt}   04C52AC6 {c |}{res}          1        0.12       52.98
+{txt}   04C57350 {c |}{res}          1        0.12       53.10
+{txt}   04CAF6DD {c |}{res}          1        0.12       53.21
+{txt}   04CD72DE {c |}{res}          1        0.12       53.33
+{txt}   04D13382 {c |}{res}          1        0.12       53.45
+{txt}  04D78FF7E {c |}{res}          1        0.12       53.57
+{txt}  04DEA1AD4 {c |}{res}          1        0.12       53.69
+{txt}   04E519AE {c |}{res}          1        0.12       53.81
+{txt}   04EF6A4E {c |}{res}          1        0.12       53.93
+{txt}   04F3B455 {c |}{res}          1        0.12       54.05
+{txt}  04F4BEA6F {c |}{res}          1        0.12       54.17
+{txt}   04FDB094 {c |}{res}          1        0.12       54.29
+{txt}   0506363A {c |}{res}          1        0.12       54.40
+{txt}   0507D7EB {c |}{res}          1        0.12       54.52
+{txt}  050FEAD63 {c |}{res}          1        0.12       54.64
+{txt}   05167B01 {c |}{res}          1        0.12       54.76
+{txt}   05201F04 {c |}{res}          1        0.12       54.88
+{txt}   0524967D {c |}{res}          1        0.12       55.00
+{txt}   0525D9DE {c |}{res}          1        0.12       55.12
+{txt}   0527A317 {c |}{res}          1        0.12       55.24
+{txt}  0527E2425 {c |}{res}          1        0.12       55.36
+{txt}   05376C94 {c |}{res}          1        0.12       55.48
+{txt}  053E83AFF {c |}{res}          1        0.12       55.60
+{txt}   054D0699 {c |}{res}          1        0.12       55.71
+{txt}   0551C612 {c |}{res}          1        0.12       55.83
+{txt}   0552B75D {c |}{res}          1        0.12       55.95
+{txt}   055CA378 {c |}{res}          1        0.12       56.07
+{txt}   0564C6BF {c |}{res}          1        0.12       56.19
+{txt}  05657D493 {c |}{res}          1        0.12       56.31
+{txt}   0566D793 {c |}{res}          1        0.12       56.43
+{txt}  05672C019 {c |}{res}          1        0.12       56.55
+{txt}   056A6946 {c |}{res}          1        0.12       56.67
+{txt}   0575585B {c |}{res}          1        0.12       56.79
+{txt}   05799BED {c |}{res}          1        0.12       56.90
+{txt}  058A18B94 {c |}{res}          1        0.12       57.02
+{txt}  058D1E3ED {c |}{res}          1        0.12       57.14
+{txt}    058D28A {c |}{res}          1        0.12       57.26
+{txt}   058FD872 {c |}{res}          1        0.12       57.38
+{txt}  05997D444 {c |}{res}          1        0.12       57.50
+{txt}   05A346A6 {c |}{res}          1        0.12       57.62
+{txt}   05A866C1 {c |}{res}          1        0.12       57.74
+{txt}  05BA70245 {c |}{res}          1        0.12       57.86
+{txt}  05CF381F3 {c |}{res}          1        0.12       57.98
+{txt}  05D1400BC {c |}{res}          1        0.12       58.10
+{txt}   05D497D9 {c |}{res}          1        0.12       58.21
+{txt}  05D858AFF {c |}{res}          1        0.12       58.33
+{txt}   05E614D7 {c |}{res}          1        0.12       58.45
+{txt}  05E6C399D {c |}{res}          1        0.12       58.57
+{txt}  05F2AD20D {c |}{res}          1        0.12       58.69
+{txt}    0624B2C {c |}{res}          1        0.12       58.81
+{txt}  064FFFA15 {c |}{res}          1        0.12       58.93
+{txt}  065008F84 {c |}{res}          1        0.12       59.05
+{txt}  066F10AB0 {c |}{res}          1        0.12       59.17
+{txt}  06710DB21 {c |}{res}          1        0.12       59.29
+{txt}    0681B59 {c |}{res}          1        0.12       59.40
+{txt}  06929428A {c |}{res}          1        0.12       59.52
+{txt}  06ACEAEBA {c |}{res}          1        0.12       59.64
+{txt}  06B0F3748 {c |}{res}          1        0.12       59.76
+{txt}  06C023405 {c |}{res}          1        0.12       59.88
+{txt}  06CC00C43 {c |}{res}          1        0.12       60.00
+{txt}  06E08E804 {c |}{res}          1        0.12       60.12
+{txt}    06E9C13 {c |}{res}          1        0.12       60.24
+{txt}  070510D18 {c |}{res}          1        0.12       60.36
+{txt}  070D25F02 {c |}{res}          1        0.12       60.48
+{txt}  0714EF2D0 {c |}{res}          1        0.12       60.60
+{txt}  0742C9DFC {c |}{res}          1        0.12       60.71
+{txt}  075CF963B {c |}{res}          1        0.12       60.83
+{txt}  076399BA8 {c |}{res}          1        0.12       60.95
+{txt}    07739C9 {c |}{res}          1        0.12       61.07
+{txt}    07898BD {c |}{res}          1        0.12       61.19
+{txt}  07938D184 {c |}{res}          1        0.12       61.31
+{txt}    0797F70 {c |}{res}          1        0.12       61.43
+{txt}    07993B3 {c |}{res}          1        0.12       61.55
+{txt}  07ABBCE91 {c |}{res}          1        0.12       61.67
+{txt}  07B9804FD {c |}{res}          1        0.12       61.79
+{txt}  07BBBC8AF {c |}{res}          1        0.12       61.90
+{txt}  07CBFA926 {c |}{res}          1        0.12       62.02
+{txt}  07D2348E7 {c |}{res}          1        0.12       62.14
+{txt}  07DB4CF0C {c |}{res}          1        0.12       62.26
+{txt}  07E4BB1C9 {c |}{res}          1        0.12       62.38
+{txt}  07FE2D528 {c |}{res}          1        0.12       62.50
+{txt}  0802E9423 {c |}{res}          1        0.12       62.62
+{txt}  0804EC575 {c |}{res}          1        0.12       62.74
+{txt}  08123FF76 {c |}{res}          1        0.12       62.86
+{txt}  083009A35 {c |}{res}          1        0.12       62.98
+{txt}  0847EA6FD {c |}{res}          1        0.12       63.10
+{txt}  0857EAFB6 {c |}{res}          1        0.12       63.21
+{txt}  085EE1E10 {c |}{res}          1        0.12       63.33
+{txt}  0861501BF {c |}{res}          1        0.12       63.45
+{txt}  08A848B99 {c |}{res}          1        0.12       63.57
+{txt}  08D57BFC4 {c |}{res}          1        0.12       63.69
+{txt}  08DF12845 {c |}{res}          1        0.12       63.81
+{txt}  08E0F4BA0 {c |}{res}          1        0.12       63.93
+{txt}  08E1A1930 {c |}{res}          1        0.12       64.05
+{txt}  08EF930D4 {c |}{res}          1        0.12       64.17
+{txt}  08F30D31D {c |}{res}          1        0.12       64.29
+{txt}  08FAF3060 {c |}{res}          1        0.12       64.40
+{txt}  09002CECF {c |}{res}          1        0.12       64.52
+{txt}  090D835EB {c |}{res}          1        0.12       64.64
+{txt}  091574B84 {c |}{res}          1        0.12       64.76
+{txt}  0918023A8 {c |}{res}          1        0.12       64.88
+{txt}  091A847E5 {c |}{res}          1        0.12       65.00
+{txt}  0932A90D2 {c |}{res}          1        0.12       65.12
+{txt}    09382F5 {c |}{res}          1        0.12       65.24
+{txt}  093D0542B {c |}{res}          1        0.12       65.36
+{txt}    094245C {c |}{res}          1        0.12       65.48
+{txt}  094A8000E {c |}{res}          1        0.12       65.60
+{txt}  094F224F8 {c |}{res}          1        0.12       65.71
+{txt}    0959FD2 {c |}{res}          1        0.12       65.83
+{txt}  0960A99EB {c |}{res}          1        0.12       65.95
+{txt}  0965FA4C6 {c |}{res}          1        0.12       66.07
+{txt}  097E2A041 {c |}{res}          1        0.12       66.19
+{txt}  098D8F079 {c |}{res}          1        0.12       66.31
+{txt}  09B733211 {c |}{res}          1        0.12       66.43
+{txt}  09CAD6EF7 {c |}{res}          1        0.12       66.55
+{txt}  09CC0C2A5 {c |}{res}          1        0.12       66.67
+{txt}  09DA62F9D {c |}{res}          1        0.12       66.79
+{txt}  09DFEDD02 {c |}{res}          1        0.12       66.90
+{txt}  09FAFA72F {c |}{res}          1        0.12       67.02
+{txt}  0A0D38BD0 {c |}{res}          1        0.12       67.14
+{txt}  0A1DCA62A {c |}{res}          1        0.12       67.26
+{txt}  0A3A3C8E8 {c |}{res}          1        0.12       67.38
+{txt}    0A3AA3E {c |}{res}          1        0.12       67.50
+{txt}  0A52314D2 {c |}{res}          1        0.12       67.62
+{txt}  0A71C47BA {c |}{res}          1        0.12       67.74
+{txt}  0A8D6CC87 {c |}{res}          1        0.12       67.86
+{txt}  0A92800FE {c |}{res}          1        0.12       67.98
+{txt}    0A9C1AF {c |}{res}          1        0.12       68.10
+{txt}  0AA1C2FE6 {c |}{res}          1        0.12       68.21
+{txt}    0AB0268 {c |}{res}          1        0.12       68.33
+{txt}  0AE377AA6 {c |}{res}          1        0.12       68.45
+{txt}  0B2AAFC48 {c |}{res}          1        0.12       68.57
+{txt}    0B2EF37 {c |}{res}          1        0.12       68.69
+{txt}  0B30BA02C {c |}{res}          1        0.12       68.81
+{txt}    0B38B8A {c |}{res}          1        0.12       68.93
+{txt}  0B3A7EA6A {c |}{res}          1        0.12       69.05
+{txt}    0B3D6FF {c |}{res}          1        0.12       69.17
+{txt}    0B47B06 {c |}{res}          1        0.12       69.29
+{txt}  0B57BA7E6 {c |}{res}          1        0.12       69.40
+{txt}  0B58A0597 {c |}{res}          1        0.12       69.52
+{txt}  0B66FDCDD {c |}{res}          1        0.12       69.64
+{txt}    0B80CCC {c |}{res}          1        0.12       69.76
+{txt}  0B836CA23 {c |}{res}          1        0.12       69.88
+{txt}  0B8F0C1E3 {c |}{res}          1        0.12       70.00
+{txt}  0B9F9B983 {c |}{res}          1        0.12       70.12
+{txt}  0BBB56CAF {c |}{res}          1        0.12       70.24
+{txt}  0C07E4AA2 {c |}{res}          1        0.12       70.36
+{txt}    0C10D09 {c |}{res}          1        0.12       70.48
+{txt}  0C1209E8F {c |}{res}          1        0.12       70.60
+{txt}    0C1C885 {c |}{res}          1        0.12       70.71
+{txt}    0C58B53 {c |}{res}          1        0.12       70.83
+{txt}  0C6419F05 {c |}{res}          1        0.12       70.95
+{txt}  0C78EC915 {c |}{res}          1        0.12       71.07
+{txt}  0C7C5EFD0 {c |}{res}          1        0.12       71.19
+{txt}  0CB4FE3AE {c |}{res}          1        0.12       71.31
+{txt}  0CC1C01C9 {c |}{res}          1        0.12       71.43
+{txt}  0CC7A1F99 {c |}{res}          1        0.12       71.55
+{txt}    0CCEB4B {c |}{res}          1        0.12       71.67
+{txt}  0CE669963 {c |}{res}          1        0.12       71.79
+{txt}  0CE6DFF84 {c |}{res}          1        0.12       71.90
+{txt}  0CEC016D3 {c |}{res}          1        0.12       72.02
+{txt}  0CF34987E {c |}{res}          1        0.12       72.14
+{txt}  0CF411D98 {c |}{res}          1        0.12       72.26
+{txt}    0D12AF5 {c |}{res}          1        0.12       72.38
+{txt}  0D20B6E78 {c |}{res}          1        0.12       72.50
+{txt}  0D2CA5C8F {c |}{res}          1        0.12       72.62
+{txt}  0D302E8A9 {c |}{res}          1        0.12       72.74
+{txt}    0D34381 {c |}{res}          1        0.12       72.86
+{txt}  0D59DA884 {c |}{res}          1        0.12       72.98
+{txt}    0D60A85 {c |}{res}          1        0.12       73.10
+{txt}  0D75FBACC {c |}{res}          1        0.12       73.21
+{txt}  0D90D4D06 {c |}{res}          1        0.12       73.33
+{txt}    0D9D7EB {c |}{res}          1        0.12       73.45
+{txt}  0DB5E22AE {c |}{res}          1        0.12       73.57
+{txt}  0DD33752E {c |}{res}          1        0.12       73.69
+{txt}  0DE5B7406 {c |}{res}          1        0.12       73.81
+{txt}    0DFB184 {c |}{res}          1        0.12       73.93
+{txt}  0E090AF16 {c |}{res}          1        0.12       74.05
+{txt}  0E10EB3A7 {c |}{res}          1        0.12       74.17
+{txt}  0E116E9FA {c |}{res}          1        0.12       74.29
+{txt}  0E1C366BA {c |}{res}          1        0.12       74.40
+{txt}  0E34F1748 {c |}{res}          1        0.12       74.52
+{txt}  0E385AE55 {c |}{res}          1        0.12       74.64
+{txt}  0E592B8FC {c |}{res}          1        0.12       74.76
+{txt}  0E5D003AC {c |}{res}          1        0.12       74.88
+{txt}  0E635F7A2 {c |}{res}          1        0.12       75.00
+{txt}  0E642CB08 {c |}{res}          1        0.12       75.12
+{txt}    0E6AE7B {c |}{res}          1        0.12       75.24
+{txt}  0EAE860DF {c |}{res}          1        0.12       75.36
+{txt}    0EB2B39 {c |}{res}          1        0.12       75.48
+{txt}  0EB8E5815 {c |}{res}          1        0.12       75.60
+{txt}  0EB956C00 {c |}{res}          1        0.12       75.71
+{txt}  0EC7AF88D {c |}{res}          1        0.12       75.83
+{txt}    0EC932B {c |}{res}          1        0.12       75.95
+{txt}  0ECD426C1 {c |}{res}          1        0.12       76.07
+{txt}  0EF57FC27 {c |}{res}          1        0.12       76.19
+{txt}  0F0ADE0B9 {c |}{res}          1        0.12       76.31
+{txt}  0F0B3B882 {c |}{res}          1        0.12       76.43
+{txt}  0F16635A5 {c |}{res}          1        0.12       76.55
+{txt}  0F2CAD35D {c |}{res}          1        0.12       76.67
+{txt}  0F41E30CA {c |}{res}          1        0.12       76.79
+{txt}  0F53CF85D {c |}{res}          1        0.12       76.90
+{txt}    0F73239 {c |}{res}          1        0.12       77.02
+{txt}  0F783F414 {c |}{res}          1        0.12       77.14
+{txt}  0F7D949D5 {c |}{res}          1        0.12       77.26
+{txt}  0F98C2513 {c |}{res}          1        0.12       77.38
+{txt}  0FA88197A {c |}{res}          1        0.12       77.50
+{txt}  0FC65F5DA {c |}{res}          1        0.12       77.62
+{txt}  0FC7CB9DF {c |}{res}          1        0.12       77.74
+{txt}    1049EFF {c |}{res}          1        0.12       77.86
+{txt}    10A7E37 {c |}{res}          1        0.12       77.98
+{txt}    10DD9FB {c |}{res}          1        0.12       78.10
+{txt}    111537F {c |}{res}          1        0.12       78.21
+{txt}    1140BF5 {c |}{res}          1        0.12       78.33
+{txt}    1153EFE {c |}{res}          1        0.12       78.45
+{txt}    122720A {c |}{res}          1        0.12       78.57
+{txt}    125FA4C {c |}{res}          1        0.12       78.69
+{txt}    12AA443 {c |}{res}          1        0.12       78.81
+{txt}    130FD6D {c |}{res}          1        0.12       78.93
+{txt}    135B0D5 {c |}{res}          1        0.12       79.05
+{txt}    137806C {c |}{res}          1        0.12       79.17
+{txt}    1409C75 {c |}{res}          1        0.12       79.29
+{txt}    140FD38 {c |}{res}          1        0.12       79.40
+{txt}    1416D13 {c |}{res}          1        0.12       79.52
+{txt}    1451B24 {c |}{res}          1        0.12       79.64
+{txt}    14CEB00 {c |}{res}          1        0.12       79.76
+{txt}    150667E {c |}{res}          1        0.12       79.88
+{txt}    15072F6 {c |}{res}          1        0.12       80.00
+{txt}    153C2D9 {c |}{res}          1        0.12       80.12
+{txt}    15860F6 {c |}{res}          1        0.12       80.24
+{txt}    1686DD9 {c |}{res}          1        0.12       80.36
+{txt}    16A96E6 {c |}{res}          1        0.12       80.48
+{txt}    173A751 {c |}{res}          1        0.12       80.60
+{txt}    178511E {c |}{res}          1        0.12       80.71
+{txt}    17ADA72 {c |}{res}          1        0.12       80.83
+{txt}    185EFB7 {c |}{res}          1        0.12       80.95
+{txt}    1918C52 {c |}{res}          1        0.12       81.07
+{txt}    19D77EC {c |}{res}          1        0.12       81.19
+{txt}    1A153C6 {c |}{res}          1        0.12       81.31
+{txt}    1AE43E5 {c |}{res}          1        0.12       81.43
+{txt}    1B11622 {c |}{res}          1        0.12       81.55
+{txt}    1BB3347 {c |}{res}          1        0.12       81.67
+{txt}    1BBE296 {c |}{res}          1        0.12       81.79
+{txt}    1BEB86A {c |}{res}          1        0.12       81.90
+{txt}    1C1FDB0 {c |}{res}          1        0.12       82.02
+{txt}    1D879C6 {c |}{res}          1        0.12       82.14
+{txt}    1D95784 {c |}{res}          1        0.12       82.26
+{txt}    1D96ED4 {c |}{res}          1        0.12       82.38
+{txt}    1DB60E0 {c |}{res}          1        0.12       82.50
+{txt}    1E78A18 {c |}{res}          1        0.12       82.62
+{txt}    1E96439 {c |}{res}          1        0.12       82.74
+{txt}    1F14B07 {c |}{res}          1        0.12       82.86
+{txt}    1F4FFF7 {c |}{res}          1        0.12       82.98
+{txt}    1FBEC3D {c |}{res}          1        0.12       83.10
+{txt}    2064FD1 {c |}{res}          1        0.12       83.21
+{txt}    20A9542 {c |}{res}          1        0.12       83.33
+{txt}    21059B3 {c |}{res}          1        0.12       83.45
+{txt}    2153CB0 {c |}{res}          1        0.12       83.57
+{txt}    21D27C5 {c |}{res}          1        0.12       83.69
+{txt}    22F9156 {c |}{res}          1        0.12       83.81
+{txt}    23EDA5B {c |}{res}          1        0.12       83.93
+{txt}    243B23E {c |}{res}          1        0.12       84.05
+{txt}    243F8A2 {c |}{res}          1        0.12       84.17
+{txt}    254D0F8 {c |}{res}          1        0.12       84.29
+{txt}    2591C85 {c |}{res}          1        0.12       84.40
+{txt}    25A4F2C {c |}{res}          1        0.12       84.52
+{txt}    25AF5A7 {c |}{res}          1        0.12       84.64
+{txt}    25E39D1 {c |}{res}          1        0.12       84.76
+{txt}    26911B4 {c |}{res}          1        0.12       84.88
+{txt}    26AC616 {c |}{res}          1        0.12       85.00
+{txt}    2701E55 {c |}{res}          1        0.12       85.12
+{txt}    274A362 {c |}{res}          1        0.12       85.24
+{txt}    275D779 {c |}{res}          1        0.12       85.36
+{txt}    279A8AE {c |}{res}          1        0.12       85.48
+{txt}    27DC017 {c |}{res}          1        0.12       85.60
+{txt}    2829AFA {c |}{res}          1        0.12       85.71
+{txt}    287CED5 {c |}{res}          1        0.12       85.83
+{txt}    28DA296 {c |}{res}          1        0.12       85.95
+{txt}    290DD9A {c |}{res}          1        0.12       86.07
+{txt}    291C52D {c |}{res}          1        0.12       86.19
+{txt}    2928A7F {c |}{res}          1        0.12       86.31
+{txt}    297593F {c |}{res}          1        0.12       86.43
+{txt}    29D44AD {c |}{res}          1        0.12       86.55
+{txt}    2A3D228 {c |}{res}          1        0.12       86.67
+{txt}    2A82831 {c |}{res}          1        0.12       86.79
+{txt}    2AAC660 {c |}{res}          1        0.12       86.90
+{txt}    2B1DF8F {c |}{res}          1        0.12       87.02
+{txt}    2BA7F7D {c |}{res}          1        0.12       87.14
+{txt}    2C30BE0 {c |}{res}          1        0.12       87.26
+{txt}    2C32BC8 {c |}{res}          1        0.12       87.38
+{txt}    2CB273C {c |}{res}          1        0.12       87.50
+{txt}    2CF481A {c |}{res}          1        0.12       87.62
+{txt}    2D1F9A1 {c |}{res}          1        0.12       87.74
+{txt}    2D2E1E0 {c |}{res}          1        0.12       87.86
+{txt}    2D56E02 {c |}{res}          1        0.12       87.98
+{txt}    2E2F428 {c |}{res}          1        0.12       88.10
+{txt}    2E8A048 {c |}{res}          1        0.12       88.21
+{txt}    2EA1532 {c |}{res}          1        0.12       88.33
+{txt}    2F49C0C {c |}{res}          1        0.12       88.45
+{txt}    2F75AE3 {c |}{res}          1        0.12       88.57
+{txt}    2FF2801 {c |}{res}          1        0.12       88.69
+{txt}    3010B7C {c |}{res}          1        0.12       88.81
+{txt}    310A950 {c |}{res}          1        0.12       88.93
+{txt}    320423B {c |}{res}          1        0.12       89.05
+{txt}    323B236 {c |}{res}          1        0.12       89.17
+{txt}    32FA8F6 {c |}{res}          1        0.12       89.29
+{txt}    33386D5 {c |}{res}          1        0.12       89.40
+{txt}    3347F45 {c |}{res}          1        0.12       89.52
+{txt}    33A2E47 {c |}{res}          1        0.12       89.64
+{txt}    33E2E06 {c |}{res}          1        0.12       89.76
+{txt}    342A22D {c |}{res}          1        0.12       89.88
+{txt}    3465DDA {c |}{res}          1        0.12       90.00
+{txt}    34D31A9 {c |}{res}          1        0.12       90.12
+{txt}    34DC45E {c |}{res}          1        0.12       90.24
+{txt}    34E03B0 {c |}{res}          1        0.12       90.36
+{txt}    351F560 {c |}{res}          1        0.12       90.48
+{txt}    3521B65 {c |}{res}          1        0.12       90.60
+{txt}    35F0355 {c |}{res}          1        0.12       90.71
+{txt}    3604CDA {c |}{res}          1        0.12       90.83
+{txt}    369E427 {c |}{res}          1        0.12       90.95
+{txt}    36DA27C {c |}{res}          1        0.12       91.07
+{txt}    3793D30 {c |}{res}          1        0.12       91.19
+{txt}    391DD5B {c |}{res}          1        0.12       91.31
+{txt}    3950F64 {c |}{res}          1        0.12       91.43
+{txt}    3968E9C {c |}{res}          1        0.12       91.55
+{txt}    3A2F50E {c |}{res}          1        0.12       91.67
+{txt}    3A91F8D {c |}{res}          1        0.12       91.79
+{txt}    3AC5FBC {c |}{res}          1        0.12       91.90
+{txt}    3B67192 {c |}{res}          1        0.12       92.02
+{txt}    3C14BE5 {c |}{res}          1        0.12       92.14
+{txt}    3D30957 {c |}{res}          1        0.12       92.26
+{txt}    3D3304D {c |}{res}          1        0.12       92.38
+{txt}    3DB5044 {c |}{res}          1        0.12       92.50
+{txt}    3DCC123 {c |}{res}          1        0.12       92.62
+{txt}    3E217D4 {c |}{res}          1        0.12       92.74
+{txt}    3EFFCDD {c |}{res}          1        0.12       92.86
+{txt}    3F0B83B {c |}{res}          1        0.12       92.98
+{txt}    3F726B7 {c |}{res}          1        0.12       93.10
+{txt}    3F86A1F {c |}{res}          1        0.12       93.21
+{txt}    40E1535 {c |}{res}          1        0.12       93.33
+{txt}    4103F04 {c |}{res}          1        0.12       93.45
+{txt}    413880E {c |}{res}          1        0.12       93.57
+{txt}    425D63D {c |}{res}          1        0.12       93.69
+{txt}    431B855 {c |}{res}          1        0.12       93.81
+{txt}    432F7F2 {c |}{res}          1        0.12       93.93
+{txt}    44AD048 {c |}{res}          1        0.12       94.05
+{txt}    44CCE4D {c |}{res}          1        0.12       94.17
+{txt}    44E8522 {c |}{res}          1        0.12       94.29
+{txt}    456745F {c |}{res}          1        0.12       94.40
+{txt}    45AA8B5 {c |}{res}          1        0.12       94.52
+{txt}    45B5285 {c |}{res}          1        0.12       94.64
+{txt}    45B610A {c |}{res}          1        0.12       94.76
+{txt}    45BC3F9 {c |}{res}          1        0.12       94.88
+{txt}    462FA05 {c |}{res}          1        0.12       95.00
+{txt}    4685633 {c |}{res}          1        0.12       95.12
+{txt}    46B54D6 {c |}{res}          1        0.12       95.24
+{txt}    4723B38 {c |}{res}          1        0.12       95.36
+{txt}    47A55AD {c |}{res}          1        0.12       95.48
+{txt}    481025B {c |}{res}          1        0.12       95.60
+{txt}    48B68D3 {c |}{res}          1        0.12       95.71
+{txt}    48B6B8A {c |}{res}          1        0.12       95.83
+{txt}    48CDCD5 {c |}{res}          1        0.12       95.95
+{txt}    493A4DE {c |}{res}          1        0.12       96.07
+{txt}    4A1980E {c |}{res}          1        0.12       96.19
+{txt}    4A40E84 {c |}{res}          1        0.12       96.31
+{txt}    4AC6865 {c |}{res}          1        0.12       96.43
+{txt}    4B12D99 {c |}{res}          1        0.12       96.55
+{txt}    4B57C3C {c |}{res}          1        0.12       96.67
+{txt}    4C1713F {c |}{res}          1        0.12       96.79
+{txt}    4C5C727 {c |}{res}          1        0.12       96.90
+{txt}    4D7B249 {c |}{res}          1        0.12       97.02
+{txt}    4DD9DE9 {c |}{res}          1        0.12       97.14
+{txt}    4EA324B {c |}{res}          1        0.12       97.26
+{txt}    503B74D {c |}{res}          1        0.12       97.38
+{txt}    51630BA {c |}{res}          1        0.12       97.50
+{txt}    519AFA9 {c |}{res}          1        0.12       97.62
+{txt}    51D2ABB {c |}{res}          1        0.12       97.74
+{txt}    53BE917 {c |}{res}          1        0.12       97.86
+{txt}    5407FC0 {c |}{res}          1        0.12       97.98
+{txt}    54867AE {c |}{res}          1        0.12       98.10
+{txt}    5488EC9 {c |}{res}          1        0.12       98.21
+{txt}    5498A18 {c |}{res}          1        0.12       98.33
+{txt}    54EB29D {c |}{res}          1        0.12       98.45
+{txt}    5538AC1 {c |}{res}          1        0.12       98.57
+{txt}    558D627 {c |}{res}          1        0.12       98.69
+{txt}    55CCC0D {c |}{res}          1        0.12       98.81
+{txt}    55ED453 {c |}{res}          1        0.12       98.93
+{txt}    5607EC5 {c |}{res}          1        0.12       99.05
+{txt}    562DF41 {c |}{res}          1        0.12       99.17
+{txt}    5698C15 {c |}{res}          1        0.12       99.29
+{txt}    58762CD {c |}{res}          1        0.12       99.40
+{txt}    58B88B0 {c |}{res}          1        0.12       99.52
+{txt}    58E5B54 {c |}{res}          1        0.12       99.64
+{txt}    5948A68 {c |}{res}          1        0.12       99.76
+{txt}    59B3C7A {c |}{res}          1        0.12       99.88
+{txt}    5A66AC8 {c |}{res}          1        0.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        840      100.00
+
+{com}. tab RESPAge
+
+ {txt}Respondent {c |}
+        Age {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         16 {c |}{res}          1        0.12        0.12
+{txt}         17 {c |}{res}          2        0.24        0.36
+{txt}         18 {c |}{res}         13        1.55        1.90
+{txt}         19 {c |}{res}         14        1.67        3.57
+{txt}         20 {c |}{res}         16        1.90        5.48
+{txt}         21 {c |}{res}         13        1.55        7.02
+{txt}         22 {c |}{res}         20        2.38        9.40
+{txt}         23 {c |}{res}         22        2.62       12.02
+{txt}         24 {c |}{res}         25        2.98       15.00
+{txt}         25 {c |}{res}         15        1.79       16.79
+{txt}         26 {c |}{res}         19        2.26       19.05
+{txt}         27 {c |}{res}          7        0.83       19.88
+{txt}         28 {c |}{res}         20        2.38       22.26
+{txt}         29 {c |}{res}         19        2.26       24.52
+{txt}         30 {c |}{res}         32        3.81       28.33
+{txt}         31 {c |}{res}         19        2.26       30.60
+{txt}         32 {c |}{res}         21        2.50       33.10
+{txt}         33 {c |}{res}         23        2.74       35.83
+{txt}         34 {c |}{res}         17        2.02       37.86
+{txt}         35 {c |}{res}         23        2.74       40.60
+{txt}         36 {c |}{res}         30        3.57       44.17
+{txt}         37 {c |}{res}         27        3.21       47.38
+{txt}         38 {c |}{res}         32        3.81       51.19
+{txt}         39 {c |}{res}         22        2.62       53.81
+{txt}         40 {c |}{res}         27        3.21       57.02
+{txt}         41 {c |}{res}         21        2.50       59.52
+{txt}         42 {c |}{res}         24        2.86       62.38
+{txt}         43 {c |}{res}         28        3.33       65.71
+{txt}         44 {c |}{res}         20        2.38       68.10
+{txt}         45 {c |}{res}         15        1.79       69.88
+{txt}         46 {c |}{res}         11        1.31       71.19
+{txt}         47 {c |}{res}          9        1.07       72.26
+{txt}         48 {c |}{res}         17        2.02       74.29
+{txt}         49 {c |}{res}         14        1.67       75.95
+{txt}         50 {c |}{res}         27        3.21       79.17
+{txt}         51 {c |}{res}         10        1.19       80.36
+{txt}         52 {c |}{res}         13        1.55       81.90
+{txt}         53 {c |}{res}          9        1.07       82.98
+{txt}         54 {c |}{res}         13        1.55       84.52
+{txt}         55 {c |}{res}         14        1.67       86.19
+{txt}         56 {c |}{res}          6        0.71       86.90
+{txt}         57 {c |}{res}          9        1.07       87.98
+{txt}         58 {c |}{res}          9        1.07       89.05
+{txt}         59 {c |}{res}          6        0.71       89.76
+{txt}         60 {c |}{res}         10        1.19       90.95
+{txt}         61 {c |}{res}          4        0.48       91.43
+{txt}         62 {c |}{res}          8        0.95       92.38
+{txt}         63 {c |}{res}         14        1.67       94.05
+{txt}         64 {c |}{res}          6        0.71       94.76
+{txt}         65 {c |}{res}         10        1.19       95.95
+{txt}         66 {c |}{res}          5        0.60       96.55
+{txt}         67 {c |}{res}          9        1.07       97.62
+{txt}         68 {c |}{res}          5        0.60       98.21
+{txt}         69 {c |}{res}          3        0.36       98.57
+{txt}         70 {c |}{res}          2        0.24       98.81
+{txt}         71 {c |}{res}          1        0.12       98.93
+{txt}         73 {c |}{res}          3        0.36       99.29
+{txt}         75 {c |}{res}          1        0.12       99.40
+{txt}         78 {c |}{res}          2        0.24       99.64
+{txt}         80 {c |}{res}          2        0.24       99.88
+{txt}         85 {c |}{res}          1        0.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        840      100.00
+
+{com}. tab RESPSex
+
+  {txt}k. Sex of {c |}
+        the {c |}
+ respondent {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}        686       81.67       81.67
+{txt}       Male {c |}{res}        154       18.33      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        840      100.00
+
+{com}. bysort Modality: tab RESPSex
+
+{txt}{hline}
+-> Modality = Face-to-Face
+
+  k. Sex of {c |}
+        the {c |}
+ respondent {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}        326       82.74       82.74
+{txt}       Male {c |}{res}         68       17.26      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{txt}{hline}
+-> Modality = Remote
+
+  k. Sex of {c |}
+        the {c |}
+ respondent {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}        360       80.72       80.72
+{txt}       Male {c |}{res}         86       19.28      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        446      100.00
+
+
+{com}. tab RESPStatus
+
+    {txt}l. What is the {c |}
+ marital status of {c |}
+   the respondent? {c |}      Freq.     Percent        Cum.
+{hline 19}{c +}{hline 35}
+            Single {c |}{res}         34        8.63        8.63
+{txt}      Cohabitating {c |}{res}          7        1.78       10.41
+{txt}           Married {c |}{res}        269       68.27       78.68
+{txt}Divorced/Separated {c |}{res}         15        3.81       82.49
+{txt}           Widowed {c |}{res}         69       17.51      100.00
+{txt}{hline 19}{c +}{hline 35}
+             Total {c |}{res}        394      100.00
+
+{com}. tab ConsentYN
+
+     {txt}Do you {c |}
+   agree to {c |}
+    proceed {c |}
+  with this {c |}
+ interview? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        Yes {c |}{res}        394      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab ConsentRsn
+{txt}no observations
+
+{com}. tab HHStatus
+
+   {txt}1. What is your {c |}
+       household's {c |}
+ residence status? {c |}      Freq.     Percent        Cum.
+{hline 19}{c +}{hline 35}
+Permanent resident {c |}{res}        110       27.92       27.92
+{txt}         Displaced {c |}{res}        276       70.05       97.97
+{txt}          Returnee {c |}{res}          8        2.03      100.00
+{txt}{hline 19}{c +}{hline 35}
+             Total {c |}{res}        394      100.00
+
+{com}. tab HHStatusOth
+{txt}no observations
+
+{com}. tab MDDIHHHDisplArrive
+
+{txt}2. When did {c |}
+        the {c |}
+  household {c |}
+head arrive {c |}
+      here? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+  01 Dec 10 {c |}{res}          2        0.70        0.70
+{txt}  01 Jan 11 {c |}{res}          4        1.41        2.11
+{txt}  01 Feb 11 {c |}{res}          2        0.70        2.82
+{txt}  01 Mar 11 {c |}{res}          1        0.35        3.17
+{txt}  01 Apr 11 {c |}{res}          3        1.06        4.23
+{txt}  01 Jun 11 {c |}{res}         19        6.69       10.92
+{txt}  01 Jul 11 {c |}{res}          9        3.17       14.08
+{txt}  01 Aug 11 {c |}{res}          1        0.35       14.44
+{txt}  01 Sep 11 {c |}{res}          1        0.35       14.79
+{txt}  01 Oct 11 {c |}{res}          6        2.11       16.90
+{txt}  01 Nov 11 {c |}{res}         15        5.28       22.18
+{txt}  01 Dec 11 {c |}{res}         25        8.80       30.99
+{txt}  01 Jan 12 {c |}{res}          3        1.06       32.04
+{txt}  01 Mar 12 {c |}{res}          4        1.41       33.45
+{txt}  01 May 12 {c |}{res}          2        0.70       34.15
+{txt}  01 Jun 12 {c |}{res}         11        3.87       38.03
+{txt}  01 Jul 12 {c |}{res}          2        0.70       38.73
+{txt}  01 Aug 12 {c |}{res}          1        0.35       39.08
+{txt}  01 Sep 12 {c |}{res}          1        0.35       39.44
+{txt}  01 Oct 12 {c |}{res}          2        0.70       40.14
+{txt}  01 Nov 12 {c |}{res}          1        0.35       40.49
+{txt}  01 Dec 12 {c |}{res}          4        1.41       41.90
+{txt}  01 Jan 13 {c |}{res}          1        0.35       42.25
+{txt}  01 Feb 13 {c |}{res}          2        0.70       42.96
+{txt}  01 Mar 13 {c |}{res}          3        1.06       44.01
+{txt}  01 May 13 {c |}{res}          1        0.35       44.37
+{txt}  01 Jun 13 {c |}{res}          2        0.70       45.07
+{txt}  01 Jul 13 {c |}{res}          3        1.06       46.13
+{txt}  01 Oct 13 {c |}{res}          1        0.35       46.48
+{txt}  01 Dec 13 {c |}{res}          2        0.70       47.18
+{txt}  01 Jan 14 {c |}{res}          1        0.35       47.54
+{txt}  01 Feb 14 {c |}{res}          2        0.70       48.24
+{txt}  01 Mar 14 {c |}{res}          1        0.35       48.59
+{txt}  01 Apr 14 {c |}{res}         11        3.87       52.46
+{txt}  01 May 14 {c |}{res}          2        0.70       53.17
+{txt}  01 Jun 14 {c |}{res}          2        0.70       53.87
+{txt}  01 Jul 14 {c |}{res}          1        0.35       54.23
+{txt}  01 Sep 14 {c |}{res}          1        0.35       54.58
+{txt}  01 Oct 14 {c |}{res}          1        0.35       54.93
+{txt}  01 Nov 14 {c |}{res}          4        1.41       56.34
+{txt}  01 Dec 14 {c |}{res}          1        0.35       56.69
+{txt}  01 Feb 15 {c |}{res}          2        0.70       57.39
+{txt}  01 May 15 {c |}{res}          1        0.35       57.75
+{txt}  01 Jun 15 {c |}{res}          1        0.35       58.10
+{txt}  01 Nov 15 {c |}{res}          1        0.35       58.45
+{txt}  01 Jan 16 {c |}{res}          2        0.70       59.15
+{txt}  01 Jun 16 {c |}{res}          1        0.35       59.51
+{txt}  01 Nov 16 {c |}{res}          2        0.70       60.21
+{txt}  01 Jan 17 {c |}{res}          7        2.46       62.68
+{txt}  01 Mar 17 {c |}{res}          1        0.35       63.03
+{txt}  01 Apr 17 {c |}{res}          2        0.70       63.73
+{txt}  01 May 17 {c |}{res}          1        0.35       64.08
+{txt}  01 Jun 17 {c |}{res}          1        0.35       64.44
+{txt}  01 Nov 17 {c |}{res}          1        0.35       64.79
+{txt}  01 Jan 18 {c |}{res}          1        0.35       65.14
+{txt}  01 Feb 18 {c |}{res}          1        0.35       65.49
+{txt}  01 Mar 18 {c |}{res}          2        0.70       66.20
+{txt}  01 Apr 18 {c |}{res}         50       17.61       83.80
+{txt}  01 May 18 {c |}{res}          7        2.46       86.27
+{txt}  01 Jun 18 {c |}{res}          1        0.35       86.62
+{txt}  01 Jan 19 {c |}{res}          1        0.35       86.97
+{txt}  01 Apr 19 {c |}{res}          3        1.06       88.03
+{txt}  01 May 19 {c |}{res}          1        0.35       88.38
+{txt}  01 Jun 19 {c |}{res}          6        2.11       90.49
+{txt}  01 Nov 19 {c |}{res}          1        0.35       90.85
+{txt}  01 Jan 20 {c |}{res}          1        0.35       91.20
+{txt}  01 Mar 20 {c |}{res}          1        0.35       91.55
+{txt}  01 Apr 20 {c |}{res}          4        1.41       92.96
+{txt}  01 Jun 20 {c |}{res}          2        0.70       93.66
+{txt}  01 Nov 20 {c |}{res}          1        0.35       94.01
+{txt}  01 Mar 21 {c |}{res}          2        0.70       94.72
+{txt}  01 Jun 21 {c |}{res}          1        0.35       95.07
+{txt}  01 Nov 21 {c |}{res}          2        0.70       95.77
+{txt}  01 Dec 21 {c |}{res}          1        0.35       96.13
+{txt}  01 Feb 22 {c |}{res}          1        0.35       96.48
+{txt}  01 Apr 22 {c |}{res}          1        0.35       96.83
+{txt}  01 Jul 22 {c |}{res}          1        0.35       97.18
+{txt}  01 Dec 22 {c |}{res}          1        0.35       97.54
+{txt}  01 Jan 23 {c |}{res}          2        0.70       98.24
+{txt}  01 Jun 23 {c |}{res}          5        1.76      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        284      100.00
+
+{com}. tab MDDIHHDisplChoice
+
+ {txt}3. Did you {c |}
+   have the {c |}
+  choice to {c |}
+     leave? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}        206       72.54       72.54
+{txt}        Yes {c |}{res}         78       27.46      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        284      100.00
+
+{com}. tab HHStatus
+
+   {txt}1. What is your {c |}
+       household's {c |}
+ residence status? {c |}      Freq.     Percent        Cum.
+{hline 19}{c +}{hline 35}
+Permanent resident {c |}{res}        110       27.92       27.92
+{txt}         Displaced {c |}{res}        276       70.05       97.97
+{txt}          Returnee {c |}{res}          8        2.03      100.00
+{txt}{hline 19}{c +}{hline 35}
+             Total {c |}{res}        394      100.00
+
+{com}. tab HHhostDisp
+
+  {txt}Household {c |}
+  currently {c |}
+hosting IDP {c |}
+ or Refugee {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}        332       84.26       84.26
+{txt}        Yes {c |}{res}         62       15.74      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab MDDIHHIdDoc
+
+{txt}5. Do members of {c |}
+  this household {c |}
+            have {c |}
+  identification {c |}
+  documents such {c |}
+   as [PROVIDE E {c |}      Freq.     Percent        Cum.
+{hline 17}{c +}{hline 35}
+              No {c |}{res}         28        7.11        7.11
+{txt}Yes some of them {c |}{res}         94       23.86       30.96
+{txt} Yes all of them {c |}{res}        272       69.04      100.00
+{txt}{hline 17}{c +}{hline 35}
+           Total {c |}{res}        394      100.00
+
+{com}. tab HHSize
+
+  {txt}Household {c |}
+       Size {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         15        1.79        1.79
+{txt}          2 {c |}{res}         49        5.83        7.62
+{txt}          3 {c |}{res}         78        9.29       16.90
+{txt}          4 {c |}{res}        123       14.64       31.55
+{txt}          5 {c |}{res}        176       20.95       52.50
+{txt}          6 {c |}{res}        150       17.86       70.36
+{txt}          7 {c |}{res}        110       13.10       83.45
+{txt}          8 {c |}{res}         66        7.86       91.31
+{txt}          9 {c |}{res}         37        4.40       95.71
+{txt}         10 {c |}{res}         21        2.50       98.21
+{txt}         11 {c |}{res}          5        0.60       98.81
+{txt}         12 {c |}{res}          6        0.71       99.52
+{txt}         13 {c |}{res}          2        0.24       99.76
+{txt}         14 {c |}{res}          1        0.12       99.88
+{txt}         15 {c |}{res}          1        0.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        840      100.00
+
+{com}. tab RepeatPID_count
+
+{txt}RepeatPID_c {c |}
+       ount {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}          5        1.27        1.27
+{txt}         10 {c |}{res}         13        3.30        4.57
+{txt}         11 {c |}{res}          2        0.51        5.08
+{txt}         12 {c |}{res}          3        0.76        5.84
+{txt}         13 {c |}{res}          1        0.25        6.09
+{txt}          2 {c |}{res}         25        6.35       12.44
+{txt}          3 {c |}{res}         35        8.88       21.32
+{txt}          4 {c |}{res}         65       16.50       37.82
+{txt}          5 {c |}{res}         79       20.05       57.87
+{txt}          6 {c |}{res}         67       17.01       74.87
+{txt}          7 {c |}{res}         53       13.45       88.32
+{txt}          8 {c |}{res}         27        6.85       95.18
+{txt}          9 {c |}{res}         19        4.82      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab R_Err_Resp
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+ respondent {c |}
+  in roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        366       92.89       92.89
+{txt}          1 {c |}{res}         28        7.11      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab R_Err_Head
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+  household {c |}
+    head in {c |}
+     roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        380       96.45       96.45
+{txt}          1 {c |}{res}         14        3.55      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab R_Err_Spouse
+
+  {txt}Error: no {c |}
+    or more {c |}
+     than 1 {c |}
+  spouse in {c |}
+     roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        257       65.23       65.23
+{txt}          1 {c |}{res}        137       34.77      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab R_Err_SpouseAge
+
+ {txt}Error: age {c |}
+     of the {c |}
+ spouse < 9 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        261      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        261      100.00
+
+{com}. tab R_Err_ChildAge
+
+ {txt}Error: age {c |}
+       diff {c |}
+    between {c |}
+   head and {c |}
+     oldest {c |}
+  child < 9 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        162       46.82       46.82
+{txt}          1 {c |}{res}        184       53.18      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        346      100.00
+
+{com}. tab R_Err_ParentAge
+
+ {txt}Error: age {c |}
+       diff {c |}
+    between {c |}
+   head and {c |}
+   youngest {c |}
+ parent < 9 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         24      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         24      100.00
+
+{com}. tab R_Err_ParentMinor
+
+ {txt}Error: age {c |}
+of parent < {c |}
+         18 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        367      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        367      100.00
+
+{com}. tab R_Err_SameSex
+
+{txt}Error: head {c |}
+ and spouse {c |}
+of same sex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        394      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab R_Num_Resp
+
+      {txt}Total {c |}
+  number of {c |}
+ respondent {c |}
+  in roster {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}          5        1.27        1.27
+{txt}          1 {c |}{res}        366       92.89       94.16
+{txt}          2 {c |}{res}          2        0.51       94.67
+{txt}          3 {c |}{res}          5        1.27       95.94
+{txt}          4 {c |}{res}          2        0.51       96.45
+{txt}          5 {c |}{res}          5        1.27       97.72
+{txt}          6 {c |}{res}          2        0.51       98.22
+{txt}          7 {c |}{res}          3        0.76       98.98
+{txt}          8 {c |}{res}          1        0.25       99.24
+{txt}          9 {c |}{res}          2        0.51       99.75
+{txt}         10 {c |}{res}          1        0.25      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        394      100.00
+
+{com}. tab R_RESPSex
+
+ {txt}Respondent {c |}
+        Sex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}        133       34.73       34.73
+{txt}       Male {c |}{res}        250       65.27      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        383      100.00
+
+{com}. tab HHID if R_Num_Resp == 0
+
+         {txt}i. {c |}
+  Household {c |}
+         ID {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+ 0056C6469F {c |}{res}          1       20.00       20.00
+{txt} 007EAC639D {c |}{res}          1       20.00       40.00
+{txt} 00D324B32D {c |}{res}          1       20.00       60.00
+{txt}  01219D560 {c |}{res}          1       20.00       80.00
+{txt}  02AD8A18C {c |}{res}          1       20.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}          5      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD10018.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 12, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   correct                 1       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   1       // Set up datasets
+{txt}
+{com}.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   append                  1       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 1       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}myanmar{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}myanmar{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}myanmar{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}myanmar{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}myanmar{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}. 
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.0 Correct field errors
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.csv
+. *                                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_F2F_Roster_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_RM_Household_Correct_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `correct'            do "${c -(}d_dofile{c )-}/md00a_f2f_correct.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Myanmar                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for F2F Household                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 11, 2023                                                                               *
+> *  LATEST UPDATE:               May 15, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

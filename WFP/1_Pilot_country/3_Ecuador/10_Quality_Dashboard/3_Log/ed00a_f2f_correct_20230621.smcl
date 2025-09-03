@@ -1,0 +1,252 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/3_Log/ed00a_f2f_correct_20230621.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}21 Jun 2023, 15:24:28
+{txt}
+{com}.         di `cdate'
+{res}20230621
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/Ecuador_F2F_Household_Raw_`cdate'.dta", clear
+{err}{p 0 4 2}
+file {bf:{err}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/1_Raw/Ecuador_F2F_Household_Raw_20230621.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+{search r(601), local:r(601);}
+{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_RM_Household_Analysis_20230620.dta"
+
+. tab RESPpart
+
+  {txt}Did the respondent agree {c |}
+        to be interviewed? {c |}      Freq.     Percent        Cum.
+{hline 27}{c +}{hline 35}
+Didn't pick up / no answer {c |}{res}         82       65.08       65.08
+{txt}  Agreed to be interviewed {c |}{res}         37       29.37       94.44
+{txt} Refused to be interviewed {c |}{res}          2        1.59       96.03
+{txt}                     Other {c |}{res}          5        3.97      100.00
+{txt}{hline 27}{c +}{hline 35}
+                     Total {c |}{res}        126      100.00
+
+{com}. tab RESPpart EnuName_Display
+
+   {txt}Did the respondent {c |}
+          agree to be {c |}        Name of interviewer (or ID) for display
+         interviewed? {c |} ANTONY ..  DANIEL ..  DAYANAR..  MELISSA..  STEPHAN.. {c |}     Total
+{hline 22}{c +}{hline 55}{c +}{hline 10}
+Didn't pick up / no a {c |}{res}        51         12          0          1         18 {txt}{c |}{res}        82 
+{txt}Agreed to be intervie {c |}{res}        14          7         11          1          4 {txt}{c |}{res}        37 
+{txt}Refused to be intervi {c |}{res}         1          0          0          0          1 {txt}{c |}{res}         2 
+{txt}                Other {c |}{res}         1          2          0          1          1 {txt}{c |}{res}         5 
+{txt}{hline 22}{c +}{hline 55}{c +}{hline 10}
+                Total {c |}{res}        67         21         11          3         24 {txt}{c |}{res}       126 
+
+{com}. help dtable
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD24284.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 12, 2023                                                                               *
+> *  LATEST UPDATE:               Jun  8, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   correct                 1       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   1       // Set up datasets
+{txt}
+{com}.         local   organize                1       // Organize variables
+{txt}
+{com}.         local   append                  1       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 1       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}myanmar{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}myanmar{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}myanmar{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}myanmar{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}myanmar{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}. 
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.0 Correct field errors
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw_`cdate'.csv
+. *                               ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.csv
+. *                                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_F2F_Roster_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Myanmar_RM_Household_Correct_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `correct'            do "${c -(}d_dofile{c )-}/md00a_f2f_correct.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Myanmar                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for F2F Household                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 11, 2023                                                                               *
+> *  LATEST UPDATE:               May 15, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_F2F_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Myanmar_F2F_Household_Correct_`cdate'.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

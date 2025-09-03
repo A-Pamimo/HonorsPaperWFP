@@ -1,0 +1,1351 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed02b_rm_organize_20230920.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}20 Sep 2023, 10:51:41
+{txt}
+{com}.         di `cdate'
+{res}20230920
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct.dta", clear 
+{txt}
+{com}.         
+.         ** rename ___variables
+.         ren ___* Sys_*
+{res}{txt}
+{com}.         
+.         * survey duration variable
+.         destring Sys_duration, replace
+{txt}Sys_duration: all characters numeric; {res}replaced {txt}as {res}long
+{txt}
+{com}.         gen     Duration_Min = Sys_duration/60
+{txt}
+{com}.         
+.         * survey modality
+.         gen     Modality        = 2             // remote
+{txt}
+{com}.         
+.         * form version long vs. short
+.         gen     ID_Length = length(HHID)
+{txt}
+{com}.         replace ID_Length = length(HHID_manual) if !mi(HHID_manual)
+{txt}(0 real changes made)
+
+{com}.         
+.         gen             Form = 1 if ID_Length == 8   // Long
+{txt}(332 missing values generated)
+
+{com}.         replace Form = 2 if ID_Length == 7   // Short
+{txt}(332 real changes made)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 2: Create and Define Variables
+. ********************************************************************************
+.         
+. ** Demongraphics and basic respondents/household information
+. 
+.         gen RESPFemale  = (RESPSex                              == 0)
+{txt}
+{com}.         gen RESPHHH     = (RESPRelationHHH              == 100)
+{txt}
+{com}.         
+. ** Outcome: [FCS] Food consumption score 
+.         sum FCS*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}FCSStap {c |}{res}        656    4.925305    2.316005          0          7
+{txt}{space 4}FCSPulse {c |}{res}        656    2.496951    2.244584          0          7
+{txt}{space 4}FCSDairy {c |}{res}        656    2.030488    2.318657          0          7
+{txt}{space 7}FCSPr {c |}{res}        656    3.477134    2.391351          0          7
+{txt}{space 6}FCSVeg {c |}{res}        656    4.748476    2.564436          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 4}FCSFruit {c |}{res}        656    2.897866    2.614743          0          7
+{txt}{space 6}FCSFat {c |}{res}        656     5.39939     2.33505          0          7
+{txt}{space 4}FCSSugar {c |}{res}        656     5.63872    2.245734          0          7
+{txt}
+{com}.         gen FCS = FCSStap * 2 + FCSPulse * 3 + FCSDairy * 4 + FCSPr * 4 +                ///
+>                           FCSVeg  * 1 + FCSFruit * 1 + FCSFat * 0.5 + FCSSugar * 0.5
+{txt}
+{com}.         gen FCSCat28 = cond(FCS <= 28, 1, cond(FCS <= 42, 2, 3))
+{txt}
+{com}. 
+. ** Outcome: [rCSI] Reduced Coping Strategies 
+.         gen rCSI         = rCSILessQlty * 1 + rCSIBorrow * 2 + rCSIMealNb * 1 +         ///
+>                                    rCSIMealSize * 1 + rCSIMealAdult * 3
+{txt}
+{com}.         tab rCSIGenderMealAdult
+
+  {txt}During the last 7 {c |}
+ days, mainly which {c |}
+      adult in your {c |}
+          household {c |}
+restricted their co {c |}      Freq.     Percent        Cum.
+{hline 20}{c +}{hline 35}
+  Mainly adult male {c |}{res}         35       12.46       12.46
+{txt}Mainly adult female {c |}{res}        106       37.72       50.18
+{txt} All adults equally {c |}{res}        140       49.82      100.00
+{txt}{hline 20}{c +}{hline 35}
+              Total {c |}{res}        281      100.00
+{txt}
+{com}.         
+. ** LCS 
+.         ren LcsEN_em_ChildWork  Lcs_em_ChildWork
+{res}{txt}
+{com}.         gen Lcs_Stress_Coping    = (Lcs_stress_DomAsset   == 20 | Lcs_stress_DomAsset   == 30 | ///
+>                                                                 Lcs_stress_CrdtFood   == 20 | Lcs_stress_CrdtFood   == 30 | ///
+>                                                                 Lcs_stress_Saving     == 20 | Lcs_stress_Saving     == 30 | ///
+>                                                                 Lcs_stress_BorrowCash == 20 | Lcs_stress_BorrowCash == 30 )
+{txt}
+{com}.         gen Lcs_Crisis_Coping    = (Lcs_crisis_ProdAssets == 20 | Lcs_crisis_ProdAssets == 30 | ///
+>                                                                 Lcs_crisis_HealthEdu  == 20 | Lcs_crisis_HealthEdu      == 30 | ///
+>                                                                 Lcs_crisis_OutSchool  == 20 | Lcs_crisis_OutSchool  == 30 )                     
+{txt}
+{com}.         gen Lcs_Emergency_Coping = (Lcs_em_ChildWork      == 20 | Lcs_em_ChildWork      == 30 | ///
+>                                                                 Lcs_em_Begged             == 20 | Lcs_em_Begged         == 30 | ///
+>                                                                 Lcs_em_IllegalAct         == 20 | Lcs_em_IllegalAct     == 30 )
+{txt}
+{com}.                                                                 
+.         gen     LCS_Cat = 1
+{txt}
+{com}.         replace LCS_Cat = 2 if Lcs_Stress_Coping == 1
+{txt}(573 real changes made)
+
+{com}.         replace LCS_Cat = 3 if Lcs_Crisis_Coping == 1 
+{txt}(428 real changes made)
+
+{com}.         replace LCS_Cat = 4 if Lcs_Emergency_Coping == 1
+{txt}(461 real changes made)
+
+{com}.         
+.         tab LCS_Cat, gen(LCS_)
+
+    {txt}LCS_Cat {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         14        2.13        2.13
+{txt}          2 {c |}{res}         55        8.38       10.52
+{txt}          3 {c |}{res}        126       19.21       29.73
+{txt}          4 {c |}{res}        461       70.27      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+{txt}
+{com}.         ren LCS_1        LCS_None
+{res}{txt}
+{com}.         ren LCS_2        LCS_Stress
+{res}{txt}
+{com}.         ren LCS_3        LCS_Crisis
+{res}{txt}
+{com}.         ren LCS_4        LCS_Emergency
+{res}{txt}
+{com}.         
+. ** Economic vulnerability: Income
+.         ren HHIncFirst_Oth HHIncFirst_oth
+{res}{txt}
+{com}.         replace HHIncFirst_oth = strproper(strtrim(HHIncFirst_oth))
+{txt}(56 real changes made)
+
+{com}.         
+.         tab HHIncFirst_SRi
+
+  {txt}What is the main source of income for {c |}
+                         the household? {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+              Wage Labor - Professional {c |}{res}         13        2.01        2.01
+{txt}                   Wage Labor - Skilled {c |}{res}         24        3.72        5.73
+{txt}Wage Labor - Unskilled/Casual/Agricultu {c |}{res}        184       28.48       34.21
+{txt}Wage Labor - Unskilled/Casual/non-agric {c |}{res}         61        9.44       43.65
+{txt}                                Pension {c |}{res}         34        5.26       48.92
+{txt}                              Aid/gifts {c |}{res}         30        4.64       53.56
+{txt}        Borrowing money/Living off debt {c |}{res}          1        0.15       53.72
+{txt}High risk activity (e.g. begging, scave {c |}{res}          1        0.15       53.87
+{txt}                  Saving/selling assets {c |}{res}          1        0.15       54.02
+{txt}         Petty trade/selling on streets {c |}{res}         29        4.49       58.51
+{txt}             Small trade (own business) {c |}{res}         86       13.31       71.83
+{txt}Small Agriculture production including  {c |}{res}         55        8.51       80.34
+{txt}Medium/large agriculture production inc {c |}{res}         10        1.55       81.89
+{txt}                        Other (specify) {c |}{res}        117       18.11      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        646      100.00
+{txt}
+{com}.         gen     HHIncFirst_Accept = inlist(HHIncFirst_SRi, 1, 2, 5, 12, 13, 14, 15)
+{txt}
+{com}.         replace HHIncFirst_Accept = 1 if HHIncFirst_oth == "Agricultor" | ///
+>                         HHIncFirst_oth == "Agricultura" | ///
+>                         HHIncFirst_oth == "AtencióN Al Cliente En Tienda Ajena" | ///
+>                         HHIncFirst_oth == "Auxiliar De Bodega" | ///
+>                         HHIncFirst_oth == "Ayudante En Una Tienda" | ///
+>                         HHIncFirst_oth == "Camarero" | ///
+>                         HHIncFirst_oth == "Conecta Llaves De Agua" | ///
+>                         HHIncFirst_oth == "Dinero De La JubilacióN" | ///
+>                         HHIncFirst_oth == "Enfermera De Adulto Mayor" | ///
+>                         HHIncFirst_oth == "Floresteria" | ///
+>                         HHIncFirst_oth == "Ganadero" | ///
+>                         HHIncFirst_oth == "Limpia BañOs En Un Colegio" | ///
+>                         HHIncFirst_oth == "Limpieza" | ///
+>                         HHIncFirst_oth == "Limpieza De BañOs" | ///
+>                         HHIncFirst_oth == "Oficios Varios" | ///
+>                         HHIncFirst_oth == "Pescador" | ///
+>                         HHIncFirst_oth == "Plomero" | ///
+>                         HHIncFirst_oth == "Trabaja En Orquesta" | ///
+>                         HHIncFirst_oth == "Varios Oficios" 
+{txt}(48 real changes made)
+
+{com}.         
+.         gen             HHIncFirst_Border = inlist(HHIncFirst_SRi, 3, 4, 6, 11)
+{txt}
+{com}.         replace HHIncFirst_Border = 1 if strpos(HHIncFirst_oth, "AlbañIl")     | ///
+>                         HHIncFirst_oth == "Ahorros De Bicicletas" | ///
+>                         HHIncFirst_oth == "Arregla Bicicletas" | ///
+>                         HHIncFirst_oth == "Ayudante De ConstruccióN" | ///
+>                         HHIncFirst_oth == "Cocer SastreríA" | ///
+>                         HHIncFirst_oth == "Comedor" | ///
+>                         HHIncFirst_oth == "ConstruccióN" | ///
+>                         HHIncFirst_oth == "Contratista" | ///
+>                         HHIncFirst_oth == "ContruccióN" | ///
+>                         HHIncFirst_oth == "Cose Ropa" | ///
+>                         strpos(HHIncFirst_oth, "Costur") | ///
+>                         HHIncFirst_oth == "Cuida Carros En Estacionamiento" | ///
+>                         HHIncFirst_oth == "Cuidado De Adulto Mayor" | ///
+>                         HHIncFirst_oth == "Dj Y Pinta La Escuela" | ///
+>                         HHIncFirst_oth == "Embalsamor" | ///
+>                         HHIncFirst_oth == "Estribady" | ///
+>                         HHIncFirst_oth == "Jornalero" | ///
+>                         HHIncFirst_oth == "Lava Ropa Ajena" | ///
+>                         HHIncFirst_oth == "Lavadora De Ropa" | ///
+>                         HHIncFirst_oth == "Lavandera" | ///
+>                         HHIncFirst_oth == "SastreríA" | ///
+>                         HHIncFirst_oth == "SastreríA." | ///
+>                         HHIncFirst_oth == "Teje Sacos Y SuéTeres Para Escuelas" | ///
+>                         HHIncFirst_oth == "Tejedor" | ///
+>                         HHIncFirst_oth == "Tricimoto"   
+{txt}(51 real changes made)
+
+{com}.         
+.         gen     HHIncFirst_Poor   = inlist(HHIncFirst_SRi, 7, 8, 9, 10)
+{txt}
+{com}.         replace HHIncFirst_Poor   = 1 if HHIncFirst_oth == "Ama De Casa" | ///
+>                         strpos(HHIncFirst_oth, "Bono")  | ///
+>                         HHIncFirst_oth == "Ayudante De Hotel Sin Sueldo" | ///
+>                         HHIncFirst_oth == "El Papá Le Ayuda EconóMicamente A Su Hogar" | ///
+>                         HHIncFirst_oth == "En Casa" | ///
+>                         HHIncFirst_oth == "No Trabaja" | ///
+>                         HHIncFirst_oth == "No Trabaja, Lo Mantienen Sus Hijas" 
+{txt}(18 real changes made)
+
+{com}.                         
+.         gen CARI_Inc = .         
+{txt}(656 missing values generated)
+
+{com}.         replace CARI_Inc = 1 if HHIncFirst_Accept == 1 & inlist(HHIncChg, 0, 1, 5)
+{txt}(166 real changes made)
+
+{com}.         replace CARI_Inc = 2 if HHIncFirst_Accept == 1 & inlist(HHIncChg, 2, 3, 4)
+{txt}(104 real changes made)
+
+{com}.         replace CARI_Inc = 2 if HHIncFirst_Border == 1 & inlist(HHIncChg, 0, 1, 5)
+{txt}(165 real changes made)
+
+{com}.         replace CARI_Inc = 3 if HHIncFirst_Border == 1 & inlist(HHIncChg, 2, 3, 4)
+{txt}(160 real changes made)
+
+{com}.         replace CARI_Inc = 4 if HHIncNb == 0 | HHIncFirst_Poor == 1
+{txt}(61 real changes made)
+
+{com}.         
+.         tab CARI_Inc, gen(CARI_Inc_)
+
+   {txt}CARI_Inc {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        166       25.30       25.30
+{txt}          2 {c |}{res}        269       41.01       66.31
+{txt}          3 {c |}{res}        160       24.39       90.70
+{txt}          4 {c |}{res}         61        9.30      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+{txt}
+{com}.         
+.         ** Question relevant when: ${c -(}HHIncNb{c )-} >0
+.         gen HHInc_None                  = mi(HHIncFirst_SRi)
+{txt}
+{com}.         gen HHInc_WageSkill     = (HHIncFirst_SRi == 1  | HHIncFirst_SRi == 2)
+{txt}
+{com}.         gen HHInc_WageUnskill   = (HHIncFirst_SRi == 3  | HHIncFirst_SRi == 4)
+{txt}
+{com}.         gen HHInc_Trade                 = (HHIncFirst_SRi == 11 | HHIncFirst_SRi == 12 | ///
+>                                                            HHIncFirst_SRi == 13)
+{txt}
+{com}.         gen HHInc_AgProduction  = (HHIncFirst_SRi == 14 | HHIncFirst_SRi == 15)
+{txt}
+{com}.         
+.         tab HHIncChg, gen(HHInc_)
+
+  {txt}Was there a change in income over the {c |}
+    last year? (Please do not take into {c |}
+                                 accoun {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                              No change {c |}{res}        341       51.98       51.98
+{txt}                              Increased {c |}{res}         25        3.81       55.79
+{txt}               Reduced by less than 25% {c |}{res}         86       13.11       68.90
+{txt}Reduced by more than 25% and less than  {c |}{res}         83       12.65       81.55
+{txt}               Reduced by more than 50% {c |}{res}        121       18.45      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        656      100.00
+{txt}
+{com}.         ren HHInc_1     HHInc_Change_None
+{res}{txt}
+{com}.         ren HHInc_2     HHInc_Increase
+{res}{txt}
+{com}.         ren HHInc_3     HHInc_Reduce25
+{res}{txt}
+{com}.         ren HHInc_4     HHInc_Reduce50
+{res}{txt}
+{com}.         ren HHInc_5     HHInc_Reduce50More
+{res}{txt}
+{com}.         
+. ** Outcome: [CARI] COMBINING CURRENT STATUS AND COPING CAPACITY
+.         recode  FCSCat28 (1 = 4) (2 = 3) (3 = 1), gen(FCS_4pt_CARI)
+{txt}(656 differences between {bf:FCSCat28} and {bf:FCS_4pt_CARI})
+
+{com}.         replace FCS_4pt_CARI = 2 if FCSCat28 == 3 & rCSI >= 4
+{txt}(382 real changes made)
+
+{com}.         
+.         gen CC_Inc_Cat   = (CARI_Inc + LCS_Cat)/2       // no round here
+{txt}
+{com}.         gen CARI_Inc_Raw = (FCS_4pt_CARI + CC_Inc_Cat)/2
+{txt}
+{com}.         gen CARI_Inc_Cat = round(CARI_Inc_Raw)
+{txt}
+{com}.         
+.         gen HH_Vul_Income = (CARI_Inc_Cat == 3 | CARI_Inc_Cat == 4) if !mi(CARI_Inc_Cat)
+{txt}
+{com}.         
+. ** Outcome: [FES] Food Expenditure Share: Long vs. Short
+. 
+.         * 7 days food purchase in cash/credit 
+. egen HHExp_Food_Purch_MN_7D = rowtotal(HHExpStap_MNCRD_7D HHExpPro_MNCRD_7D     ///
+>          HHExpFruVeg_MNCRD_7D HHExpFOther_MNCRD_7D HHExpF_MNCRD_7D)
+{txt}
+{com}. 
+.         * 7 days food gift/aid value
+. egen HHExp_Food_GiftAid_MN_7D = rowtotal(HHExpStap_GiftAid_7D HHExpPro_GiftAid_7D ///
+>          HHExpFruVeg_GiftAid_7D HHExpFOther_GiftAid_7D HHExpF_GiftAid_7D)
+{txt}
+{com}. 
+.         * 7 days food own-production value
+. egen HHExp_Food_Own_MN_7D = rowtotal(HHExpStap_Own_7D HHExpPro_Own_7D HHExpFruVeg_Own_7D  ///
+>          HHExpFOther_Own_7D HHExpF_Own_7D)
+{txt}
+{com}. 
+.         * 7 days food values in total and 1 month average 
+.         gen HHExpFoodTotal_7D = HHExp_Food_Purch_MN_7D + HHExp_Food_GiftAid_MN_7D + ///
+>                 HHExp_Food_Own_MN_7D
+{txt}
+{com}.         gen HHExpFoodTotal_1M = (HHExpFoodTotal_7D/7) * 30
+{txt}
+{com}.         
+. ***** NON-FOOD EXPENDITURE *****************************************************
+.         
+.         **** 6 MONTH ****
+.         gen HHExpNFEduMedCloth_MNCRD_1M    = HHExpNFEduMedCloth_MNCRD_6M/6
+{txt}(332 missing values generated)
+
+{com}.         gen HHExpNFEduMedCloth_GiftAid_1M  = HHExpNFEduMedCloth_GiftAid_6M/6
+{txt}(552 missing values generated)
+
+{com}.         
+.         **** 1 MONTH ****
+.         * Monthly non food expenditure in cash/credit
+. egen HHExpNFTotal_Purch_MN_1M = rowtotal(HHExpNFHyg_MNCRD_1M HHExpNFTranspPh_MNCRD_1M  ///
+>          HHExpNFUtilities_MNCRD_1M HHExpNFAlcTobac_MNCRD_1M HHExpNFEduMedCloth_MNCRD_1M    ///
+>          HHExpNF_MNCRD_1M)
+{txt}
+{com}. 
+.          * Monthly non food gift/aid value
+. egen HHExpNFTotal_GiftAid_MN_1M = rowtotal(HHExpNFHyg_GiftAid_1M HHExpNFTranspPh_GiftAid_1M ///
+>          HHExpNFUtilities_GiftAid_1M HHExpNFAlcTobac_GiftAid_1M HHExpNFEduMedCloth_GiftAid_1M   ///
+>          HHExpNF_GiftAid_1M)
+{txt}
+{com}.          
+.         **** TOTAL 1 MONTH AVERAGE ****
+.         * Total monthly non-food
+.         gen HHExpNFTotal_1M = HHExpNFTotal_Purch_MN_1M + HHExpNFTotal_GiftAid_MN_1M
+{txt}
+{com}.         
+.         **** TOTAL **** 
+.         gen HHExpTotal = HHExpFoodTotal_1M + HHExpNFTotal_1M
+{txt}
+{com}.         gen PCExpTotal = HHExpTotal/HHSize
+{txt}
+{com}. 
+.         * FES // household level
+.         gen     FES = HHExpFoodTotal_1M/HHExpTotal
+{txt}(2 missing values generated)
+
+{com}.         count if HHExpFoodTotal_1M == 0 //  missing
+  {res}3
+{txt}
+{com}.         
+.         replace FES = 0          if mi(FES)
+{txt}(2 real changes made)
+
+{com}.         
+.         gen byte FES_Cat = 1 if FES <  0.5
+{txt}(622 missing values generated)
+
+{com}.         replace  FES_Cat = 2 if FES >= 0.5  & FES < 0.65
+{txt}(61 real changes made)
+
+{com}.         replace  FES_Cat = 3 if FES >= 0.65 & FES < 0.75
+{txt}(116 real changes made)
+
+{com}.         replace  FES_Cat = 4 if FES >= 0.75
+{txt}(445 real changes made)
+
+{com}. 
+.         ** CARI based on FES
+.         gen CC_FES_Cat   = (FES_Cat + LCS_Cat)/2        // no round here
+{txt}
+{com}.         gen CARI_FES_Raw = (FCS_4pt_CARI + CC_FES_Cat)/2
+{txt}
+{com}.         gen CARI_FES_Cat = round(CARI_FES_Raw)
+{txt}
+{com}.         
+.         gen HH_Vul_FES   = (CARI_FES_Cat == 3 | CARI_FES_Cat == 4)
+{txt}
+{com}. 
+. ********************************************************************************
+. *                                                       PART 3: Label Variables
+. *******************************************************************************/        
+. 
+.         label def YesNo                 0 "No"   1 "Yes"
+{txt}
+{com}.         label val Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping HH_Vul_FES  ///
+>                           HH_Vul_Income YesNo
+{txt}
+{com}.         
+.         label def FCSCat                1 "Poor" 2 "Borderline" 3 "Acceptable"
+{txt}
+{com}.         label val FCSCat28 FCSCat
+{txt}
+{com}. 
+.         label def CARI_Inc_lbl  1 "Regular employment – no change or increase" ///
+>                                                         2 "Regular employment but reduced income or informal labour/remittances no change/increase" ///
+>                                                         3 "Informal labour/remittances but reduced income" ///
+>                                                         4 "No income, dependent on assistance or support"
+{txt}
+{com}.         label val CARI_Inc CARI_Inc_lbl
+{txt}
+{com}.         
+.         
+.         label def LCS_l                 1 "Not adopting coping strategies"      ///
+>                                                         2 "Stress coping strategies"            ///
+>                                                         3 "Crisis coping strategies"            ///
+>                                                         4 "Emergencies coping strategies" 
+{txt}
+{com}.         label val LCS_Cat       LCS_l
+{txt}
+{com}.                 
+.         label def FS_CARI               1 "Food Secure"  2 "Marginally Food Secure"  ///
+>                                                         3 "Moderately Food Insecure" 4 "Severely Food Insecure"
+{txt}
+{com}.         label val FCS_4pt_CARI CARI_Inc_Cat FES_Cat CARI_FES_Cat CARI_Inc FS_CARI
+{txt}
+{com}.         
+.         label var Modality                                      "Survey Modality: F2F vs. Remote"
+{txt}
+{com}.         label var ID_Length                                     "Household ID Length"
+{txt}
+{com}.         label var Form                                          "Form Type: Long vs. Short"
+{txt}
+{com}.         
+.         label var RESPHHH                                       "Head of Household Respondent"
+{txt}
+{com}.         label var RESPAge                                       "Respondent Age"
+{txt}
+{com}.         label var RESPFemale                            "Female Respondent"
+{txt}
+{com}.         label var HHSize                                        "Household Size"
+{txt}
+{com}.         label var FCSStap                                       "Consumption over the past 7 days (cereals and tubers)"
+{txt}
+{com}.         label var FCSVeg                                        "Consumption over the past 7 days (vegetables)"
+{txt}
+{com}.         label var FCSFruit                                      "Consumption over the past 7 days (fruit)"
+{txt}
+{com}.         label var FCSPr                                         "Consumption over the past 7 days (protein-rich foods)"
+{txt}
+{com}.         label var FCSPulse                                      "Consumption over the past 7 days (pulses)"
+{txt}
+{com}.         label var FCSDairy                                      "Consumption over the past 7 days (dairy products)"
+{txt}
+{com}.         label var FCSFat                                        "Consumption over the past 7 days (oil)"
+{txt}
+{com}.         label var FCSSugar                                      "Consumption over the past 7 days (sugar)"
+{txt}
+{com}.         label var FCS                                           "Food Consumption Score"
+{txt}
+{com}.         label var FCSCat28                                      "FCS Categories, thresholds 28-42"
+{txt}
+{com}.         label var FCS_4pt_CARI                          "CARI: Current Status of FCS and rCSI"  
+{txt}
+{com}.         label var rCSILessQlty                          "Relied on less preferred, less expensive food"
+{txt}
+{com}.         label var rCSIBorrow                            "Borrowed food or relied on help from friends or relatives"
+{txt}
+{com}.         label var rCSIMealSize                          "Reduced portion size of meals at meals time"
+{txt}
+{com}.         label var rCSIMealAdult                         "Restricted consumption by adults for young-children to eat"
+{txt}
+{com}.         label var rCSIMealNb                            "Reduced the number of meals eaten per day"
+{txt}
+{com}.         label var rCSI                                          "Reduced Consumption Strategies Index (rCSI)"
+{txt}
+{com}.         label var Lcs_stress_DomAsset           "Stress coping: Sold household assets/goods"
+{txt}
+{com}.         label var Lcs_stress_CrdtFood           "Stress coping: Purchased food/non-food on credit (incur debts)"
+{txt}
+{com}.         label var Lcs_stress_Saving                     "Stress coping: Spent savings"
+{txt}
+{com}.         label var Lcs_stress_BorrowCash         "Stress coping: Borrowed money"
+{txt}
+{com}.         label var Lcs_crisis_ProdAssets         "Crisis coping: Sold productive assets or means of transport"
+{txt}
+{com}.         label var Lcs_crisis_HealthEdu          "Crisis coping: Reduced expenses on health and education"
+{txt}
+{com}.         label var Lcs_crisis_OutSchool          "Crisis coping: Withdrew children from school"
+{txt}
+{com}.         label var Lcs_em_ChildWork                      "Emergency coping: Send children to work for household income"
+{txt}
+{com}.         label var Lcs_em_Begged                         "Emergency coping: Begged and/or scavenged"
+{txt}
+{com}.         label var Lcs_em_IllegalAct                     "Emergency coping: Engaged in illegal income activities"
+{txt}
+{com}.         label var Lcs_Stress_Coping             "Household engaged in stress coping strategies" 
+{txt}
+{com}.         label var Lcs_Crisis_Coping             "Household engaged in crisis coping strategies" 
+{txt}
+{com}.         label var Lcs_Emergency_Coping          "Household engaged in emergency coping strategies" 
+{txt}
+{com}.         label var LCS_Cat                                       "Livelihood Coping Strategies Cateory"
+{txt}
+{com}.         label var LCS_None                                      "Maximum Livelihood Coping: None"
+{txt}
+{com}.         label var LCS_Stress                            "Maximum Livelihood Coping: Stress level"
+{txt}
+{com}.         label var LCS_Crisis                            "Maximum Livelihood Coping: Crisis level"
+{txt}
+{com}.         label var LCS_Emergency                         "Maximum Livelihood Coping: Emergency level"
+{txt}
+{com}.         
+.         lab var HHExp_Food_Purch_MN_7D          "Total weekly food expenditure on cash/credit"
+{txt}
+{com}.         lab var HHExp_Food_GiftAid_MN_7D        "Total weekly food expenditure from gift aid"
+{txt}
+{com}.         lab var HHExp_Food_Own_MN_7D            "Total weekly food expenditure from own production"
+{txt}
+{com}.         lab var HHExpFoodTotal_7D                       "Total weekly food expenditure" 
+{txt}
+{com}.         lab var HHExpFoodTotal_1M                       "Total monthly food expenditure (average)"
+{txt}
+{com}.         lab var HHExpNFTotal_Purch_MN_1M        "Total monthly non-food exp on cash/credit (average)"
+{txt}
+{com}.         lab var HHExpNFTotal_GiftAid_MN_1M      "Total monthly non-food exp from aid (average)"
+{txt}
+{com}.         lab var HHExpNFTotal_1M                         "Total monthly non-food expenditure (average)"  
+{txt}
+{com}.         lab var HHExpNFEduMedCloth_MNCRD_1M "Total monthly edu, med and clothes exp on cash/credit (average)"
+{txt}
+{com}.         lab var HHExpNFEduMedCloth_GiftAid_1M "Total monthly edu, med and clothes exp on aid (average)"
+{txt}
+{com}.         label var HHExpTotal                            "Monthly total household expenditure"
+{txt}
+{com}.         label var PCExpTotal                            "Monthly total household expenditure per capita"
+{txt}
+{com}.         label var FES                                           "Food Expenditure Share"
+{txt}
+{com}.         label var FES_Cat                                       "Food Security Category based on FES"
+{txt}
+{com}.         label var CARI_Inc                                      "Household Economic Vulnerability Based on Income"
+{txt}
+{com}.         label var HHIncFirst_Accept                     "Income Source: Skilled waged labor, pension, business and ag production"
+{txt}
+{com}.         label var HHIncFirst_Border                     "Income Source: Unskilled waged labor, remittances, and street selling"
+{txt}
+{com}.         label var HHIncFirst_Poor                       "Income Source: None, aid, borrowing, begging, and high-risk activities, etc."
+{txt}
+{com}.         label var CARI_Inc_1                            "Income: Food Secure"
+{txt}
+{com}.         label var CARI_Inc_2                            "Income: Marginally Food Secure"
+{txt}
+{com}.         label var CARI_Inc_3                            "Income: Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_Inc_4                            "Income: Severely Food Insecure"
+{txt}
+{com}.         
+.         label var CC_Inc_Cat                            "Coping Capacity Combined Category using Income"
+{txt}
+{com}.         label var CARI_Inc_Raw                          "Raw CARI Category based on Income"
+{txt}
+{com}.         label var CARI_Inc_Cat                          "CARI Category using Income"
+{txt}
+{com}.         label var HH_Vul_Income                         "Household being vulnerable using Income rCARI"
+{txt}
+{com}.         label var HHInc_None                            "Income Source: None"
+{txt}
+{com}.         label var HHInc_WageSkill                       "Income Source: Skilled Waged Labor"
+{txt}
+{com}.         label var HHInc_WageUnskill                     "Income Source: Unskilled Waged Labor"
+{txt}
+{com}.         label var HHInc_Trade                           "Income Source: Trade"
+{txt}
+{com}.         label var HHInc_AgProduction            "Income Source: Agricultural Production"
+{txt}
+{com}.         label var HHInc_Change_None                     "Income Change: None"
+{txt}
+{com}.         label var HHInc_Increase                        "Income Change: Increase"
+{txt}
+{com}.         label var HHInc_Reduce25                        "Income Change: Reduced < 25%"
+{txt}
+{com}.         label var HHInc_Reduce50                        "Income Change: Reduced 25% - 50%"
+{txt}
+{com}.         label var HHInc_Reduce50More            "Income Change: Reduced 50+%"
+{txt}
+{com}.         
+.         label var CC_FES_Cat                            "Coping Capacity Combined Category using FES"
+{txt}
+{com}.         label var CARI_FES_Raw                          "Raw CARI Category based on FES"
+{txt}
+{com}.         label var CARI_FES_Cat                          "CARI Category using FES"
+{txt}
+{com}.         label var HH_Vul_FES                            "Household being vulnerable using FES CARI"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 4: Save RM Analysis Dataset
+. *******************************************************************************/
+. 
+.         compress        
+  {txt}variable {bf}{res}Attrition{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Modality{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ID_Length{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Form{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFemale{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPHHH{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSCat28{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Stress_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Crisis_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Emergency_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LCS_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Accept{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Border{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_Poor{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_None{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_WageSkill{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_WageUnskill{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_Trade{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_AgProduction{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCS_4pt_CARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_Income{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_FES{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}str10{sf}{txt} now {bf}{res}str8{sf}
+  {bf}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (53,642 bytes saved)
+
+{com}. *       iecodebook export using "${c -(}d_out{c )-}/Ecuador_RM_Codebook.xlsx", replace
+.         
+.         save "${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis.dta", replace     
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_RM_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. tab rCSI
+
+    {txt}Reduced {c |}
+Consumption {c |}
+ Strategies {c |}
+      Index {c |}
+     (rCSI) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         14        2.13        2.13
+{txt}          1 {c |}{res}          3        0.46        2.59
+{txt}          2 {c |}{res}         12        1.83        4.42
+{txt}          3 {c |}{res}         10        1.52        5.95
+{txt}          4 {c |}{res}         13        1.98        7.93
+{txt}          5 {c |}{res}          8        1.22        9.15
+{txt}          6 {c |}{res}         13        1.98       11.13
+{txt}          7 {c |}{res}         53        8.08       19.21
+{txt}          8 {c |}{res}         11        1.68       20.88
+{txt}          9 {c |}{res}         26        3.96       24.85
+{txt}         10 {c |}{res}         25        3.81       28.66
+{txt}         11 {c |}{res}         24        3.66       32.32
+{txt}         12 {c |}{res}         21        3.20       35.52
+{txt}         13 {c |}{res}         21        3.20       38.72
+{txt}         14 {c |}{res}         38        5.79       44.51
+{txt}         15 {c |}{res}         10        1.52       46.04
+{txt}         16 {c |}{res}         21        3.20       49.24
+{txt}         17 {c |}{res}         21        3.20       52.44
+{txt}         18 {c |}{res}         31        4.73       57.16
+{txt}         19 {c |}{res}         18        2.74       59.91
+{txt}         20 {c |}{res}         24        3.66       63.57
+{txt}         21 {c |}{res}         26        3.96       67.53
+{txt}         22 {c |}{res}         15        2.29       69.82
+{txt}         23 {c |}{res}         10        1.52       71.34
+{txt}         24 {c |}{res}         13        1.98       73.32
+{txt}         25 {c |}{res}          9        1.37       74.70
+{txt}         26 {c |}{res}         12        1.83       76.52
+{txt}         27 {c |}{res}         14        2.13       78.66
+{txt}         28 {c |}{res}         14        2.13       80.79
+{txt}         29 {c |}{res}         11        1.68       82.47
+{txt}         30 {c |}{res}         12        1.83       84.30
+{txt}         31 {c |}{res}         11        1.68       85.98
+{txt}         32 {c |}{res}          6        0.91       86.89
+{txt}         33 {c |}{res}          7        1.07       87.96
+{txt}         34 {c |}{res}          9        1.37       89.33
+{txt}         35 {c |}{res}         10        1.52       90.85
+{txt}         36 {c |}{res}          5        0.76       91.62
+{txt}         37 {c |}{res}          6        0.91       92.53
+{txt}         38 {c |}{res}          6        0.91       93.45
+{txt}         39 {c |}{res}          3        0.46       93.90
+{txt}         40 {c |}{res}          5        0.76       94.66
+{txt}         41 {c |}{res}          1        0.15       94.82
+{txt}         42 {c |}{res}          6        0.91       95.73
+{txt}         43 {c |}{res}          3        0.46       96.19
+{txt}         44 {c |}{res}          8        1.22       97.41
+{txt}         45 {c |}{res}          1        0.15       97.56
+{txt}         48 {c |}{res}          2        0.30       97.87
+{txt}         49 {c |}{res}          3        0.46       98.32
+{txt}         50 {c |}{res}          4        0.61       98.93
+{txt}         54 {c |}{res}          1        0.15       99.09
+{txt}         56 {c |}{res}          6        0.91      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+
+{com}. sum rCSI
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}rCSI {c |}{res}        656    18.50152    11.68205          0         56
+
+{com}. tab LCS_Cat
+
+  {txt}Livelihood Coping Strategies {c |}
+                       Cateory {c |}      Freq.     Percent        Cum.
+{hline 31}{c +}{hline 35}
+Not adopting coping strategies {c |}{res}         14        2.13        2.13
+{txt}      Stress coping strategies {c |}{res}         55        8.38       10.52
+{txt}      Crisis coping strategies {c |}{res}        126       19.21       29.73
+{txt} Emergencies coping strategies {c |}{res}        461       70.27      100.00
+{txt}{hline 31}{c +}{hline 35}
+                         Total {c |}{res}        656      100.00
+
+{com}. tab CARI_Inc
+
+      {txt}Household Economic {c |}
+  Vulnerability Based on {c |}
+                  Income {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        166       25.30       25.30
+{txt}  Marginally Food Secure {c |}{res}        269       41.01       66.31
+{txt}Moderately Food Insecure {c |}{res}        160       24.39       90.70
+{txt}  Severely Food Insecure {c |}{res}         61        9.30      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}        656      100.00
+
+{com}. tab FCS_4pt_CARI
+
+ {txt}CARI: Current Status of {c |}
+            FCS and rCSI {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}         26        3.96        3.96
+{txt}  Marginally Food Secure {c |}{res}        382       58.23       62.20
+{txt}Moderately Food Insecure {c |}{res}        145       22.10       84.30
+{txt}  Severely Food Insecure {c |}{res}        103       15.70      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}        656      100.00
+
+{com}. tab CC_Inc_Cat
+
+     {txt}Coping {c |}
+   Capacity {c |}
+   Combined {c |}
+   Category {c |}
+      using {c |}
+     Income {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}          4        0.61        0.61
+{txt}        1.5 {c |}{res}         20        3.05        3.66
+{txt}          2 {c |}{res}         71       10.82       14.48
+{txt}        2.5 {c |}{res}        168       25.61       40.09
+{txt}          3 {c |}{res}        218       33.23       73.32
+{txt}        3.5 {c |}{res}        126       19.21       92.53
+{txt}          4 {c |}{res}         49        7.47      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+
+{com}. tab CARI_Inc_Cat
+
+     {txt}CARI Category using {c |}
+                  Income {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}          3        0.46        0.46
+{txt}  Marginally Food Secure {c |}{res}        174       26.52       26.98
+{txt}Moderately Food Insecure {c |}{res}        410       62.50       89.48
+{txt}  Severely Food Insecure {c |}{res}         69       10.52      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}        656      100.00
+
+{com}. tab HH_Vul_Income
+
+  {txt}Household {c |}
+      being {c |}
+ vulnerable {c |}
+      using {c |}
+     Income {c |}
+      rCARI {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}        177       26.98       26.98
+{txt}        Yes {c |}{res}        479       73.02      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+
+{com}. tab FES_Cat
+
+  {txt}Food Security Category {c |}
+            based on FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}         34        5.18        5.18
+{txt}  Marginally Food Secure {c |}{res}         61        9.30       14.48
+{txt}Moderately Food Insecure {c |}{res}        116       17.68       32.16
+{txt}  Severely Food Insecure {c |}{res}        445       67.84      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}        656      100.00
+
+{com}. tab HH_Vul_FES
+
+  {txt}Household {c |}
+      being {c |}
+ vulnerable {c |}
+  using FES {c |}
+       CARI {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}         50        7.62        7.62
+{txt}        Yes {c |}{res}        606       92.38      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+
+{com}. tab CARI_FES_Cat
+
+ {txt}CARI Category using FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}          1        0.15        0.15
+{txt}  Marginally Food Secure {c |}{res}         49        7.47        7.62
+{txt}Moderately Food Insecure {c |}{res}        455       69.36       76.98
+{txt}  Severely Food Insecure {c |}{res}        151       23.02      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}        656      100.00
+
+{com}. tab HHExpNFEduMedCloth_GiftAid_1M
+
+      {txt}Total {c |}
+    monthly {c |}
+   edu, med {c |}
+and clothes {c |}
+ exp on aid {c |}
+  (average) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         79       75.96       75.96
+{txt}   1.666667 {c |}{res}          1        0.96       76.92
+{txt}        2.5 {c |}{res}          1        0.96       77.88
+{txt}   3.166667 {c |}{res}          1        0.96       78.85
+{txt}   3.333333 {c |}{res}          3        2.88       81.73
+{txt}        3.5 {c |}{res}          1        0.96       82.69
+{txt}   4.166667 {c |}{res}          4        3.85       86.54
+{txt}   4.666667 {c |}{res}          1        0.96       87.50
+{txt}          5 {c |}{res}          3        2.88       90.38
+{txt}   5.833333 {c |}{res}          1        0.96       91.35
+{txt}   6.666667 {c |}{res}          1        0.96       92.31
+{txt}   8.333333 {c |}{res}          4        3.85       96.15
+{txt}         10 {c |}{res}          1        0.96       97.12
+{txt}   16.66667 {c |}{res}          1        0.96       98.08
+{txt}   33.33333 {c |}{res}          1        0.96       99.04
+{txt}         55 {c |}{res}          1        0.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        104      100.00
+
+{com}. sum
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}start {c |}{res}          0
+{txt}{space 9}end {c |}{res}          0
+{txt}{space 7}today {c |}{res}        656     23192.4    9.824223      23177      23209
+{txt}{space 4}deviceid {c |}{res}          0
+{txt}{space 5}SvyDate {c |}{res}        656     23192.4    9.824223      23177      23209
+{txt}{hline 13}{c +}{hline 57}
+{space 5}EnuName {c |}{res}        656    3.756098    2.013305          1          7
+{txt}EnuName_Di~y {c |}{res}          0
+{txt}{space 6}EnuSex {c |}{res}        656    .4176829    .4935537          0          1
+{txt}{space 2}ADMIN1Name {c |}{res}        656    1.926829    .7459691          1          3
+{txt}{space 2}ADMIN3Name {c |}{res}        656    3.778963    2.104503          1          8
+{txt}{hline 13}{c +}{hline 57}
+{space 2}ADMIN5Name {c |}{res}        656    11.44817    6.838401          1         23
+{txt}{space 4}sampleYN {c |}{res}        656    .9893293     .102825          0          1
+{txt}{space 1}HHID_manual {c |}{res}          0
+{txt}{space 8}HHID {c |}{res}          0
+{txt}{space 5}calc_ID {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 1}HHID_digits {c |}{res}          0
+{txt}{space 5}HHPhNmb {c |}{res}          0
+{txt}{space 4}RESPpart {c |}{res}        656           1           0          1          1
+{txt}RESPpart_oth {c |}{res}          0
+{txt}RESPAvaila~e {c |}{res}        656           1           0          1          1
+{txt}{hline 13}{c +}{hline 57}
+RESPcallback {c |}{res}          0
+{txt}{space 3}RESPvoice {c |}{res}          0
+{txt}{space 5}RESPAge {c |}{res}        656          43    16.84124         16         92
+{txt}{space 5}RESPSex {c |}{res}        656     .242378    .4288488          0          1
+{txt}{space 6}HHSize {c |}{res}        656    4.568598    2.348595          1         27
+{txt}{hline 13}{c +}{hline 57}
+RESPRelati~H {c |}{res}        656    173.0473    101.6556        100        602
+{txt}RESPRelati~h {c |}{res}          0
+{txt}{space 5}FCSStap {c |}{res}        656    4.925305    2.316005          0          7
+{txt}{space 4}FCSPulse {c |}{res}        656    2.496951    2.244584          0          7
+{txt}{space 4}FCSDairy {c |}{res}        656    2.030488    2.318657          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 7}FCSPr {c |}{res}        656    3.477134    2.391351          0          7
+{txt}{space 6}FCSVeg {c |}{res}        656    4.748476    2.564436          0          7
+{txt}{space 4}FCSFruit {c |}{res}        656    2.897866    2.614743          0          7
+{txt}{space 6}FCSFat {c |}{res}        656     5.39939     2.33505          0          7
+{txt}{space 4}FCSSugar {c |}{res}        656     5.63872    2.245734          0          7
+{txt}{hline 13}{c +}{hline 57}
+rCSILessQlty {c |}{res}        656    4.557927    2.707016          0          7
+{txt}{space 2}rCSIBorrow {c |}{res}        656    1.745427    2.126706          0          7
+{txt}rCSIMealSize {c |}{res}        656    3.269817    2.854016          0          7
+{txt}rCSIMealAd~t {c |}{res}        656    1.507622    2.237079          0          7
+{txt}rCSIGender~t {c |}{res}        281    2.373665      .69633          1          3
+{txt}{hline 13}{c +}{hline 57}
+{space 2}rCSIMealNb {c |}{res}        656    2.660061    2.698938          0          7
+{txt}Lcs_stress~t {c |}{res}        656    5174.925    4992.475         10       9999
+{txt}Lcs_stress~d {c |}{res}        656    1995.625    3981.844         10       9999
+{txt}Lcs_stress~g {c |}{res}        656    2307.058    4191.198         10       9999
+{txt}Lcs_stress~h {c |}{res}        656    814.6311    2696.908         10       9999
+{txt}{hline 13}{c +}{hline 57}
+Lcs_crisis~s {c |}{res}        656    7031.264    4566.568         10       9999
+{txt}Lcs_crisis~u {c |}{res}        656    22.04268    9.718386         10         30
+{txt}Lcs_crisis~l {c |}{res}        656    2539.762    4344.923         10       9999
+{txt}Lcs_em_Chi~k {c |}{res}        656    2767.834    4467.169         10       9999
+{txt}Lcs_em_Beg~d {c |}{res}        656    14.42073    8.231375         10         30
+{txt}{hline 13}{c +}{hline 57}
+Lcs_em_Ill~t {c |}{res}        656    16.79878    6.523877         10         30
+{txt}HHExpSt~D_7D {c |}{res}        324    31.57608    32.22879          0        300
+{txt}HHExpSt~d_7D {c |}{res}        324    3.179167    8.070481          0         60
+{txt}HHExpSt~n_7D {c |}{res}        324    5.456481    22.54533          0        300
+{txt}HHExpPro_M~D {c |}{res}        324    15.56065    15.22458          0        100
+{txt}{hline 13}{c +}{hline 57}
+HHExpPro_G~D {c |}{res}        324    1.758951     6.19537          0         70
+{txt}HHExpPro_O~D {c |}{res}        324      2.4625    7.531157          0         50
+{txt}HHExpFr~D_7D {c |}{res}        324     10.3642     11.4807          0         70
+{txt}HHExpFr~d_7D {c |}{res}        324    .9097222    3.206235          0         40
+{txt}HHExpFr~n_7D {c |}{res}        324    1.804012    5.644473          0         50
+{txt}{hline 13}{c +}{hline 57}
+HHExpFO~D_7D {c |}{res}        324    15.86404    15.87044          0        110
+{txt}HHExpFO~d_7D {c |}{res}        324    1.342593    6.791333          0         70
+{txt}HHExpFO~n_7D {c |}{res}        324    .9804012    4.415003          0         40
+{txt}HHExpNF_~N1M {c |}{res}        324    .3209877    .4675782          0          1
+{txt}H~g_MNCRD_1M {c |}{res}        324    19.61019    21.62919          0        195
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHyg.. {c |}{res}        104    1.346154    5.656458          0         40
+{txt}~Ph_MNCRD_1M {c |}{res}        324    17.86991    26.37117          0        200
+{txt}HHExpNFTra.. {c |}{res}        104    .7884615    4.213762          0         35
+{txt}H~s_MNCRD_1M {c |}{res}        324    25.19707    30.51929          0        207
+{txt}HHExpNFUti.. {c |}{res}        104    2.045673    7.324878          0         50
+{txt}{hline 13}{c +}{hline 57}
+H~c_MNCRD_1M {c |}{res}        324    .4768519    2.780169          0         30
+{txt}HHExpNFAlc.. {c |}{res}        104    .4182692     1.82766          0         10
+{txt}HHExpNF~D_6M {c |}{res}        324    139.6926    212.3994          0       1500
+{txt}HHExpNF~d_6M {c |}{res}        104    12.57692    40.28845          0        330
+{txt}HHExpF_MN~7D {c |}{res}        332    38.13554    32.15986          0        240
+{txt}{hline 13}{c +}{hline 57}
+HHExpF_Gi~7D {c |}{res}        332    3.620482    9.327894          0         60
+{txt}HHExpF_Ow~7D {c |}{res}        332    5.325301    11.59785          0         70
+{txt}HHExpNF_M~1M {c |}{res}        332    51.68675    94.07546          0       1300
+{txt}HHExpNF_Gi.. {c |}{res}        332    4.225904    15.58953          0        100
+{txt}HHHOccupat~n {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 3}HHInc_PCT {c |}{res}        655    1.454962    .8017769          0          6
+{txt}{space 5}HHIncNb {c |}{res}        656    1.503049    .7969349          0          7
+{txt}HHIncFirst~i {c |}{res}        646    186.4056    382.4721          1        999
+{txt}HHIncFirst~h {c |}{res}          0
+{txt}{space 4}HHIncChg {c |}{res}        656    1.417683    1.626852          0          4
+{txt}{hline 13}{c +}{hline 57}
+RESPPhNmbAlt {c |}{res}          0
+{txt}RESPPhNmbAl2 {c |}{res}          0
+{txt}{space 5}remarks {c |}{res}          0
+{txt}{space 7}audit {c |}{res}          0
+{txt}{space 2}instanceID {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}Sys_id {c |}{res}        656    3.77e+07    492491.8   3.70e+07   3.86e+07
+{txt}{space 4}Sys_uuid {c |}{res}          0
+{txt}Sys_submis~e {c |}{res}        656    23192.65    9.914324      23177      23209
+{txt}{space 4}HH_Index {c |}{res}        656    1229.851    780.8053          1       2395
+{txt}Sys_parent~e {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+Sys_parent~x {c |}{res}        656          -1           0         -1         -1
+{txt}{space 4}Sys_tags {c |}{res}          0
+{txt}{space 3}Sys_notes {c |}{res}          0
+{txt}{space 1}Sys_version {c |}{res}          0
+{txt}Sys_duration {c |}{res}        656    2298.712    8772.269        275     126711
+{txt}{hline 13}{c +}{hline 57}
+Sys_submit~y {c |}{res}          0
+{txt}Sys_xform_id {c |}{res}          0
+{txt}{space 9}Dup {c |}{res}        656    1.056402    1.295272          0          7
+{txt}Outcome_Or~r {c |}{res}        656           1           0          1          1
+{txt}Survey_Out~e {c |}{res}        605           1           0          1          1
+{txt}{hline 13}{c +}{hline 57}
+{space 4}HH_Final {c |}{res}        656           1           0          1          1
+{txt}{space 6}HH_TAG {c |}{res}        656    .9222561    .2679725          0          1
+{txt}Temp_Compl~e {c |}{res}        656           1           0          1          1
+{txt}{space 5}Consent {c |}{res}        656    .9222561    .2679725          0          1
+{txt}{space 5}S_Phase {c |}{res}        656    1.341463    .4745624          1          2
+{txt}{hline 13}{c +}{hline 57}
+S_Assign_M~y {c |}{res}        656           2           0          2          2
+{txt}S_Assign_L~h {c |}{res}        656    1.506098    .5003443          1          2
+{txt}S_Geo_Admin1 {c |}{res}        656    2.144817    .8095257          1          3
+{txt}S_Geo_Admin3 {c |}{res}        656    4.920732    2.197805          1          8
+{txt}S_Geo_Admin5 {c |}{res}        656    11.43902     6.70417          1         23
+{txt}{hline 13}{c +}{hline 57}
+{space 4}S_Gender {c |}{res}        224    1.191964    .3947272          1          2
+{txt}{space 7}S_Age {c |}{res}        223    41.64126    15.95536         14         87
+{txt}S_Marital_~s {c |}{res}        191    2.308901    1.144265          1          6
+{txt}{space 4}S_HHSize {c |}{res}        191    4.591623    2.205432          1         15
+{txt}S_Num_Und~15 {c |}{res}        191    1.659686    1.543884          0          8
+{txt}{hline 13}{c +}{hline 57}
+S_Num_Over60 {c |}{res}        191    .3298429    .6165263          0          2
+{txt}{space 1}S_Education {c |}{res}        191     2.39267    .6865234          1          4
+{txt}{space 1}S_HHDisable {c |}{res}        191    1.240838    .4287157          1          2
+{txt}{space 6}_merge {c |}{res}        656           3           0          3          3
+{txt}{space 3}Attrition {c |}{res}        656           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+Duration_Min {c |}{res}        656    38.31186    146.2045   4.583333    2111.85
+{txt}{space 4}Modality {c |}{res}        656           2           0          2          2
+{txt}{space 3}ID_Length {c |}{res}        656    7.493902    .5003443          7          8
+{txt}{space 8}Form {c |}{res}        656    1.506098    .5003443          1          2
+{txt}{space 2}RESPFemale {c |}{res}        656     .757622    .4288488          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 5}RESPHHH {c |}{res}        656    .5320122    .4993549          0          1
+{txt}{space 9}FCS {c |}{res}        656    52.53735    24.11788        3.5        112
+{txt}{space 4}FCSCat28 {c |}{res}        656    2.464939    .7507692          1          3
+{txt}{space 8}rCSI {c |}{res}        656    18.50152    11.68205          0         56
+{txt}Lcs_Stress~g {c |}{res}        656    .8734756    .3326931          0          1
+{txt}{hline 13}{c +}{hline 57}
+Lcs_Crisis~g {c |}{res}        656     .652439    .4765591          0          1
+{txt}Lcs_Emerge~g {c |}{res}        656    .7027439     .457399          0          1
+{txt}{space 5}LCS_Cat {c |}{res}        656     3.57622    .7353547          1          4
+{txt}{space 4}LCS_None {c |}{res}        656    .0213415    .1446302          0          1
+{txt}{space 2}LCS_Stress {c |}{res}        656    .0838415    .2773614          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}LCS_Crisis {c |}{res}        656    .1920732    .3942309          0          1
+{txt}LCS_Emerge~y {c |}{res}        656    .7027439     .457399          0          1
+{txt}HHIncFirst~t {c |}{res}        656    .4115854    .4924963          0          1
+{txt}HHIncFirs~er {c |}{res}        656    .4954268    .5003606          0          1
+{txt}HHIncFirs~or {c |}{res}        656    .0777439    .2679725          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 4}CARI_Inc {c |}{res}        656    2.176829    .9159218          1          4
+{txt}{space 2}CARI_Inc_1 {c |}{res}        656    .2530488    .4350904          0          1
+{txt}{space 2}CARI_Inc_2 {c |}{res}        656     .410061    .4922198          0          1
+{txt}{space 2}CARI_Inc_3 {c |}{res}        656    .2439024    .4297622          0          1
+{txt}{space 2}CARI_Inc_4 {c |}{res}        656    .0929878     .290637          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}HHInc_None {c |}{res}        656    .0152439     .122615          0          1
+{txt}HHInc_~Skill {c |}{res}        656    .0564024    .2308733          0          1
+{txt}HHInc_~skill {c |}{res}        656    .3734756    .4840959          0          1
+{txt}{space 1}HHInc_Trade {c |}{res}        656    .1753049    .3805178          0          1
+{txt}HHInc_AgPr~n {c |}{res}        656    .0990854    .2990046          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHInc_Chan~e {c |}{res}        656    .5198171    .4999884          0          1
+{txt}HHInc_Incr~e {c |}{res}        656    .0381098    .1916073          0          1
+{txt}HHInc_Red~25 {c |}{res}        656    .1310976    .3377646          0          1
+{txt}HHInc_Red~50 {c |}{res}        656    .1265244    .3326931          0          1
+{txt}HHInc_Redu~e {c |}{res}        656    .1844512    .3881477          0          1
+{txt}{hline 13}{c +}{hline 57}
+FCS_4pt_CARI {c |}{res}        656    2.495427    .8026543          1          4
+{txt}{space 2}CC_Inc_Cat {c |}{res}        656    2.876524    .6109665          1          4
+{txt}CARI_Inc_Raw {c |}{res}        656    2.685976    .5006652       1.25          4
+{txt}CARI_Inc_Cat {c |}{res}        656    2.830793    .6005316          1          4
+{txt}HH_Vul_Inc~e {c |}{res}        656    .7301829    .4442033          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHEx~h_MN_7D {c |}{res}        656    55.53544    49.65908          0        340
+{txt}HHEx~d_MN_7D {c |}{res}        656    5.383689    14.51133          0        210
+{txt}HHEx~n_MN_7D {c |}{res}        656    7.981555    24.13594          0        400
+{txt}HHExpFood~7D {c |}{res}        656    68.90069    61.43464          0        545
+{txt}HHExpFood~1M {c |}{res}        656    295.2887    263.2913          0   2335.714
+{txt}{hline 13}{c +}{hline 57}
+~th_MNCRD_1M {c |}{res}        324     23.2821     35.3999          0        250
+{txt}HHExpNFEdu.. {c |}{res}        104    2.096154    6.714741          0         55
+{txt}HHEx~h_MN_1M {c |}{res}        656    68.84954    88.78045          0       1300
+{txt}HHEx~d_MN_1M {c |}{res}        656    3.200076    13.44345          0        125
+{txt}HHExpNF~l_1M {c |}{res}        656    72.04962    89.89869          0       1300
+{txt}{hline 13}{c +}{hline 57}
+{space 2}HHExpTotal {c |}{res}        656    367.3383    300.9111          0   2352.381
+{txt}{space 2}PCExpTotal {c |}{res}        656     97.9426    95.22263          0   998.6904
+{txt}{space 9}FES {c |}{res}        656    .7921266    .1608041          0          1
+{txt}{space 5}FES_Cat {c |}{res}        656    3.481707    .8647291          1          4
+{txt}{space 2}CC_FES_Cat {c |}{res}        656    3.528963    .5708567          1          4
+{txt}{hline 13}{c +}{hline 57}
+CARI_FES_Raw {c |}{res}        656    3.012195    .4863047       1.25          4
+{txt}CARI_FES_Cat {c |}{res}        656    3.152439    .5368214          1          4
+{txt}{space 2}HH_Vul_FES {c |}{res}        656    .9237805    .2655515          0          1
+
+{com}. sum
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}start {c |}{res}          0
+{txt}{space 9}end {c |}{res}          0
+{txt}{space 7}today {c |}{res}        656     23192.4    9.824223      23177      23209
+{txt}{space 4}deviceid {c |}{res}          0
+{txt}{space 5}SvyDate {c |}{res}        656     23192.4    9.824223      23177      23209
+{txt}{hline 13}{c +}{hline 57}
+{space 5}EnuName {c |}{res}        656    3.756098    2.013305          1          7
+{txt}EnuName_Di~y {c |}{res}          0
+{txt}{space 6}EnuSex {c |}{res}        656    .4176829    .4935537          0          1
+{txt}{space 2}ADMIN1Name {c |}{res}        656    1.926829    .7459691          1          3
+{txt}{space 2}ADMIN3Name {c |}{res}        656    3.778963    2.104503          1          8
+{txt}{hline 13}{c +}{hline 57}
+{space 2}ADMIN5Name {c |}{res}        656    11.44817    6.838401          1         23
+{txt}{space 4}sampleYN {c |}{res}        656    .9893293     .102825          0          1
+{txt}{space 1}HHID_manual {c |}{res}          0
+{txt}{space 8}HHID {c |}{res}          0
+{txt}{space 5}calc_ID {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 1}HHID_digits {c |}{res}          0
+{txt}{space 5}HHPhNmb {c |}{res}          0
+{txt}{space 4}RESPpart {c |}{res}        656           1           0          1          1
+{txt}RESPpart_oth {c |}{res}          0
+{txt}RESPAvaila~e {c |}{res}        656           1           0          1          1
+{txt}{hline 13}{c +}{hline 57}
+RESPcallback {c |}{res}          0
+{txt}{space 3}RESPvoice {c |}{res}          0
+{txt}{space 5}RESPAge {c |}{res}        656          43    16.84124         16         92
+{txt}{space 5}RESPSex {c |}{res}        656     .242378    .4288488          0          1
+{txt}{space 6}HHSize {c |}{res}        656    4.568598    2.348595          1         27
+{txt}{hline 13}{c +}{hline 57}
+RESPRelati~H {c |}{res}        656    173.0473    101.6556        100        602
+{txt}RESPRelati~h {c |}{res}          0
+{txt}{space 5}FCSStap {c |}{res}        656    4.925305    2.316005          0          7
+{txt}{space 4}FCSPulse {c |}{res}        656    2.496951    2.244584          0          7
+{txt}{space 4}FCSDairy {c |}{res}        656    2.030488    2.318657          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 7}FCSPr {c |}{res}        656    3.477134    2.391351          0          7
+{txt}{space 6}FCSVeg {c |}{res}        656    4.748476    2.564436          0          7
+{txt}{space 4}FCSFruit {c |}{res}        656    2.897866    2.614743          0          7
+{txt}{space 6}FCSFat {c |}{res}        656     5.39939     2.33505          0          7
+{txt}{space 4}FCSSugar {c |}{res}        656     5.63872    2.245734          0          7
+{txt}{hline 13}{c +}{hline 57}
+rCSILessQlty {c |}{res}        656    4.557927    2.707016          0          7
+{txt}{space 2}rCSIBorrow {c |}{res}        656    1.745427    2.126706          0          7
+{txt}rCSIMealSize {c |}{res}        656    3.269817    2.854016          0          7
+{txt}rCSIMealAd~t {c |}{res}        656    1.507622    2.237079          0          7
+{txt}rCSIGender~t {c |}{res}        281    2.373665      .69633          1          3
+{txt}{hline 13}{c +}{hline 57}
+{space 2}rCSIMealNb {c |}{res}        656    2.660061    2.698938          0          7
+{txt}Lcs_stress~t {c |}{res}        656    5174.925    4992.475         10       9999
+{txt}Lcs_stress~d {c |}{res}        656    1995.625    3981.844         10       9999
+{txt}Lcs_stress~g {c |}{res}        656    2307.058    4191.198         10       9999
+{txt}Lcs_stress~h {c |}{res}        656    814.6311    2696.908         10       9999
+{txt}{hline 13}{c +}{hline 57}
+Lcs_crisis~s {c |}{res}        656    7031.264    4566.568         10       9999
+{txt}Lcs_crisis~u {c |}{res}        656    22.04268    9.718386         10         30
+{txt}Lcs_crisis~l {c |}{res}        656    2539.762    4344.923         10       9999
+{txt}Lcs_em_Chi~k {c |}{res}        656    2767.834    4467.169         10       9999
+{txt}Lcs_em_Beg~d {c |}{res}        656    14.42073    8.231375         10         30
+{txt}{hline 13}{c +}{hline 57}
+Lcs_em_Ill~t {c |}{res}        656    16.79878    6.523877         10         30
+{txt}HHExpSt~D_7D {c |}{res}        324    31.57608    32.22879          0        300
+{txt}HHExpSt~d_7D {c |}{res}        324    3.179167    8.070481          0         60
+{txt}HHExpSt~n_7D {c |}{res}        324    5.456481    22.54533          0        300
+{txt}HHExpPro_M~D {c |}{res}        324    15.56065    15.22458          0        100
+{txt}{hline 13}{c +}{hline 57}
+HHExpPro_G~D {c |}{res}        324    1.758951     6.19537          0         70
+{txt}HHExpPro_O~D {c |}{res}        324      2.4625    7.531157          0         50
+{txt}HHExpFr~D_7D {c |}{res}        324     10.3642     11.4807          0         70
+{txt}HHExpFr~d_7D {c |}{res}        324    .9097222    3.206235          0         40
+{txt}HHExpFr~n_7D {c |}{res}        324    1.804012    5.644473          0         50
+{txt}{hline 13}{c +}{hline 57}
+HHExpFO~D_7D {c |}{res}        324    15.86404    15.87044          0        110
+{txt}HHExpFO~d_7D {c |}{res}        324    1.342593    6.791333          0         70
+{txt}HHExpFO~n_7D {c |}{res}        324    .9804012    4.415003          0         40
+{txt}HHExpNF_~N1M {c |}{res}        324    .3209877    .4675782          0          1
+{txt}H~g_MNCRD_1M {c |}{res}        324    19.61019    21.62919          0        195
+{txt}{hline 13}{c +}{hline 57}
+HHExpNFHyg.. {c |}{res}        104    1.346154    5.656458          0         40
+{txt}~Ph_MNCRD_1M {c |}{res}        324    17.86991    26.37117          0        200
+{txt}HHExpNFTra.. {c |}{res}        104    .7884615    4.213762          0         35
+{txt}H~s_MNCRD_1M {c |}{res}        324    25.19707    30.51929          0        207
+{txt}HHExpNFUti.. {c |}{res}        104    2.045673    7.324878          0         50
+{txt}{hline 13}{c +}{hline 57}
+H~c_MNCRD_1M {c |}{res}        324    .4768519    2.780169          0         30
+{txt}HHExpNFAlc.. {c |}{res}        104    .4182692     1.82766          0         10
+{txt}HHExpNF~D_6M {c |}{res}        324    139.6926    212.3994          0       1500
+{txt}HHExpNF~d_6M {c |}{res}        104    12.57692    40.28845          0        330
+{txt}HHExpF_MN~7D {c |}{res}        332    38.13554    32.15986          0        240
+{txt}{hline 13}{c +}{hline 57}
+HHExpF_Gi~7D {c |}{res}        332    3.620482    9.327894          0         60
+{txt}HHExpF_Ow~7D {c |}{res}        332    5.325301    11.59785          0         70
+{txt}HHExpNF_M~1M {c |}{res}        332    51.68675    94.07546          0       1300
+{txt}HHExpNF_Gi.. {c |}{res}        332    4.225904    15.58953          0        100
+{txt}HHHOccupat~n {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 3}HHInc_PCT {c |}{res}        655    1.454962    .8017769          0          6
+{txt}{space 5}HHIncNb {c |}{res}        656    1.503049    .7969349          0          7
+{txt}HHIncFirst~i {c |}{res}        646    186.4056    382.4721          1        999
+{txt}HHIncFirst~h {c |}{res}          0
+{txt}{space 4}HHIncChg {c |}{res}        656    1.417683    1.626852          0          4
+{txt}{hline 13}{c +}{hline 57}
+RESPPhNmbAlt {c |}{res}          0
+{txt}RESPPhNmbAl2 {c |}{res}          0
+{txt}{space 5}remarks {c |}{res}          0
+{txt}{space 7}audit {c |}{res}          0
+{txt}{space 2}instanceID {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 6}Sys_id {c |}{res}        656    3.77e+07    492491.8   3.70e+07   3.86e+07
+{txt}{space 4}Sys_uuid {c |}{res}          0
+{txt}Sys_submis~e {c |}{res}        656    23192.65    9.914324      23177      23209
+{txt}{space 4}HH_Index {c |}{res}        656    1229.851    780.8053          1       2395
+{txt}Sys_parent~e {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+Sys_parent~x {c |}{res}        656          -1           0         -1         -1
+{txt}{space 4}Sys_tags {c |}{res}          0
+{txt}{space 3}Sys_notes {c |}{res}          0
+{txt}{space 1}Sys_version {c |}{res}          0
+{txt}Sys_duration {c |}{res}        656    2298.712    8772.269        275     126711
+{txt}{hline 13}{c +}{hline 57}
+Sys_submit~y {c |}{res}          0
+{txt}Sys_xform_id {c |}{res}          0
+{txt}{space 9}Dup {c |}{res}        656    1.056402    1.295272          0          7
+{txt}Outcome_Or~r {c |}{res}        656           1           0          1          1
+{txt}Survey_Out~e {c |}{res}        605           1           0          1          1
+{txt}{hline 13}{c +}{hline 57}
+{space 4}HH_Final {c |}{res}        656           1           0          1          1
+{txt}{space 6}HH_TAG {c |}{res}        656    .9222561    .2679725          0          1
+{txt}Temp_Compl~e {c |}{res}        656           1           0          1          1
+{txt}{space 5}Consent {c |}{res}        656    .9222561    .2679725          0          1
+{txt}{space 5}S_Phase {c |}{res}        656    1.341463    .4745624          1          2
+{txt}{hline 13}{c +}{hline 57}
+S_Assign_M~y {c |}{res}        656           2           0          2          2
+{txt}S_Assign_L~h {c |}{res}        656    1.506098    .5003443          1          2
+{txt}S_Geo_Admin1 {c |}{res}        656    2.144817    .8095257          1          3
+{txt}S_Geo_Admin3 {c |}{res}        656    4.920732    2.197805          1          8
+{txt}S_Geo_Admin5 {c |}{res}        656    11.43902     6.70417          1         23
+{txt}{hline 13}{c +}{hline 57}
+{space 4}S_Gender {c |}{res}        224    1.191964    .3947272          1          2
+{txt}{space 7}S_Age {c |}{res}        223    41.64126    15.95536         14         87
+{txt}S_Marital_~s {c |}{res}        191    2.308901    1.144265          1          6
+{txt}{space 4}S_HHSize {c |}{res}        191    4.591623    2.205432          1         15
+{txt}S_Num_Und~15 {c |}{res}        191    1.659686    1.543884          0          8
+{txt}{hline 13}{c +}{hline 57}
+S_Num_Over60 {c |}{res}        191    .3298429    .6165263          0          2
+{txt}{space 1}S_Education {c |}{res}        191     2.39267    .6865234          1          4
+{txt}{space 1}S_HHDisable {c |}{res}        191    1.240838    .4287157          1          2
+{txt}{space 6}_merge {c |}{res}        656           3           0          3          3
+{txt}{space 3}Attrition {c |}{res}        656           0           0          0          0
+{txt}{hline 13}{c +}{hline 57}
+Duration_Min {c |}{res}        656    38.31186    146.2045   4.583333    2111.85
+{txt}{space 4}Modality {c |}{res}        656           2           0          2          2
+{txt}{space 3}ID_Length {c |}{res}        656    7.493902    .5003443          7          8
+{txt}{space 8}Form {c |}{res}        656    1.506098    .5003443          1          2
+{txt}{space 2}RESPFemale {c |}{res}        656     .757622    .4288488          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 5}RESPHHH {c |}{res}        656    .5320122    .4993549          0          1
+{txt}{space 9}FCS {c |}{res}        656    52.53735    24.11788        3.5        112
+{txt}{space 4}FCSCat28 {c |}{res}        656    2.464939    .7507692          1          3
+{txt}{space 8}rCSI {c |}{res}        656    18.50152    11.68205          0         56
+{txt}Lcs_Stress~g {c |}{res}        656    .8734756    .3326931          0          1
+{txt}{hline 13}{c +}{hline 57}
+Lcs_Crisis~g {c |}{res}        656     .652439    .4765591          0          1
+{txt}Lcs_Emerge~g {c |}{res}        656    .7027439     .457399          0          1
+{txt}{space 5}LCS_Cat {c |}{res}        656     3.57622    .7353547          1          4
+{txt}{space 4}LCS_None {c |}{res}        656    .0213415    .1446302          0          1
+{txt}{space 2}LCS_Stress {c |}{res}        656    .0838415    .2773614          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}LCS_Crisis {c |}{res}        656    .1920732    .3942309          0          1
+{txt}LCS_Emerge~y {c |}{res}        656    .7027439     .457399          0          1
+{txt}HHIncFirst~t {c |}{res}        656    .4115854    .4924963          0          1
+{txt}HHIncFirs~er {c |}{res}        656    .4954268    .5003606          0          1
+{txt}HHIncFirs~or {c |}{res}        656    .0777439    .2679725          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 4}CARI_Inc {c |}{res}        656    2.176829    .9159218          1          4
+{txt}{space 2}CARI_Inc_1 {c |}{res}        656    .2530488    .4350904          0          1
+{txt}{space 2}CARI_Inc_2 {c |}{res}        656     .410061    .4922198          0          1
+{txt}{space 2}CARI_Inc_3 {c |}{res}        656    .2439024    .4297622          0          1
+{txt}{space 2}CARI_Inc_4 {c |}{res}        656    .0929878     .290637          0          1
+{txt}{hline 13}{c +}{hline 57}
+{space 2}HHInc_None {c |}{res}        656    .0152439     .122615          0          1
+{txt}HHInc_~Skill {c |}{res}        656    .0564024    .2308733          0          1
+{txt}HHInc_~skill {c |}{res}        656    .3734756    .4840959          0          1
+{txt}{space 1}HHInc_Trade {c |}{res}        656    .1753049    .3805178          0          1
+{txt}HHInc_AgPr~n {c |}{res}        656    .0990854    .2990046          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHInc_Chan~e {c |}{res}        656    .5198171    .4999884          0          1
+{txt}HHInc_Incr~e {c |}{res}        656    .0381098    .1916073          0          1
+{txt}HHInc_Red~25 {c |}{res}        656    .1310976    .3377646          0          1
+{txt}HHInc_Red~50 {c |}{res}        656    .1265244    .3326931          0          1
+{txt}HHInc_Redu~e {c |}{res}        656    .1844512    .3881477          0          1
+{txt}{hline 13}{c +}{hline 57}
+FCS_4pt_CARI {c |}{res}        656    2.495427    .8026543          1          4
+{txt}{space 2}CC_Inc_Cat {c |}{res}        656    2.876524    .6109665          1          4
+{txt}CARI_Inc_Raw {c |}{res}        656    2.685976    .5006652       1.25          4
+{txt}CARI_Inc_Cat {c |}{res}        656    2.830793    .6005316          1          4
+{txt}HH_Vul_Inc~e {c |}{res}        656    .7301829    .4442033          0          1
+{txt}{hline 13}{c +}{hline 57}
+HHEx~h_MN_7D {c |}{res}        656    55.53544    49.65908          0        340
+{txt}HHEx~d_MN_7D {c |}{res}        656    5.383689    14.51133          0        210
+{txt}HHEx~n_MN_7D {c |}{res}        656    7.981555    24.13594          0        400
+{txt}HHExpFood~7D {c |}{res}        656    68.90069    61.43464          0        545
+{txt}HHExpFood~1M {c |}{res}        656    295.2887    263.2913          0   2335.714
+{txt}{hline 13}{c +}{hline 57}
+~th_MNCRD_1M {c |}{res}        324     23.2821     35.3999          0        250
+{txt}HHExpNFEdu.. {c |}{res}        104    2.096154    6.714741          0         55
+{txt}HHEx~h_MN_1M {c |}{res}        656    68.84954    88.78045          0       1300
+{txt}HHEx~d_MN_1M {c |}{res}        656    3.200076    13.44345          0        125
+{txt}HHExpNF~l_1M {c |}{res}        656    72.04962    89.89869          0       1300
+{txt}{hline 13}{c +}{hline 57}
+{space 2}HHExpTotal {c |}{res}        656    367.3383    300.9111          0   2352.381
+{txt}{space 2}PCExpTotal {c |}{res}        656     97.9426    95.22263          0   998.6904
+{txt}{space 9}FES {c |}{res}        656    .7921266    .1608041          0          1
+{txt}{space 5}FES_Cat {c |}{res}        656    3.481707    .8647291          1          4
+{txt}{space 2}CC_FES_Cat {c |}{res}        656    3.528963    .5708567          1          4
+{txt}{hline 13}{c +}{hline 57}
+CARI_FES_Raw {c |}{res}        656    3.012195    .4863047       1.25          4
+{txt}CARI_FES_Cat {c |}{res}        656    3.152439    .5368214          1          4
+{txt}{space 2}HH_Vul_FES {c |}{res}        656    .9237805    .2655515          0          1
+
+{com}. tab HHInc_Trade
+
+     {txt}Income {c |}
+    Source: {c |}
+      Trade {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        541       82.47       82.47
+{txt}          1 {c |}{res}        115       17.53      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        656      100.00
+
+{com}. 

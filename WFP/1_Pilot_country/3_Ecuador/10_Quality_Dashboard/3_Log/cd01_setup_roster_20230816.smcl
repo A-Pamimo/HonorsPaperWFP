@@ -1,0 +1,315 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/cd01_setup_roster_20230816.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}16 Aug 2023, 10:29:33
+{txt}
+{com}.         di `cdate'
+{res}20230816
+{txt}
+{com}.         
+. * load dataset
+. * ------------
+.         use "${c -(}d_temp{c )-}/CAR_F2F_Roster_Correct_`cdate'.dta", clear 
+{err}{p 0 4 2}
+file {bf:{err}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/CAR_F2F_Roster_Correct_20230816.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_Roster_Household_Prep_20230816.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_Roster_Prep_20230816.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/4_Data/CAR_Full_Household_Analysis_20230816.dta", clear
+
+. tab R_HHH_Sex
+
+    {txt}Head of {c |}
+  Household {c |}
+        Sex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}          1        3.33        3.33
+{txt}       Male {c |}{res}         29       96.67      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         30      100.00
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_Roster_Prep_20230816.dta"
+
+. tab HHH_Literate
+
+  {txt}Household {c |}
+   head has {c |}
+   attended {c |}
+     school {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}         38       20.32       20.32
+{txt}        Yes {c |}{res}        149       79.68      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        187      100.00
+
+{com}. ttab HHH_Education
+{err}command {bf}ttab{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+{com}. tab HHH_Education
+
+      {txt}Education level of household head {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                                Primary {c |}{res}         34       22.82       22.82
+{txt}                          Middle School {c |}{res}         63       42.28       65.10
+{txt}                              Secondary {c |}{res}         34       22.82       87.92
+{txt}                                 Higher {c |}{res}         18       12.08      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        149      100.00
+
+{com}. tab HHH_Age
+
+    {txt}Head of {c |}
+  Household {c |}
+        Age {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         27 {c |}{res}         10        5.35        5.35
+{txt}         30 {c |}{res}         15        8.02       13.37
+{txt}         32 {c |}{res}         10        5.35       18.72
+{txt}         33 {c |}{res}          5        2.67       21.39
+{txt}         34 {c |}{res}          5        2.67       24.06
+{txt}         35 {c |}{res}         27       14.44       38.50
+{txt}         36 {c |}{res}          6        3.21       41.71
+{txt}         38 {c |}{res}         12        6.42       48.13
+{txt}         40 {c |}{res}          4        2.14       50.27
+{txt}         42 {c |}{res}         21       11.23       61.50
+{txt}         43 {c |}{res}         10        5.35       66.84
+{txt}         45 {c |}{res}         13        6.95       73.80
+{txt}         50 {c |}{res}         14        7.49       81.28
+{txt}         52 {c |}{res}          6        3.21       84.49
+{txt}         54 {c |}{res}          6        3.21       87.70
+{txt}         60 {c |}{res}         16        8.56       96.26
+{txt}         69 {c |}{res}          7        3.74      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        187      100.00
+
+{com}. tab HHH_Literate
+
+  {txt}Household {c |}
+   head has {c |}
+   attended {c |}
+     school {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}         38       20.32       20.32
+{txt}        Yes {c |}{res}        149       79.68      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        187      100.00
+
+{com}. tab Num_Male
+
+      {txt}Total {c |}
+  number of {c |}
+       male {c |}
+  household {c |}
+     member {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         95       13.75       13.75
+{txt}          1 {c |}{res}         91       13.17       26.92
+{txt}          2 {c |}{res}        182       26.34       53.26
+{txt}          3 {c |}{res}        111       16.06       69.32
+{txt}          4 {c |}{res}        146       21.13       90.45
+{txt}          5 {c |}{res}         50        7.24       97.68
+{txt}          6 {c |}{res}          7        1.01       98.70
+{txt}          7 {c |}{res}          9        1.30      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        691      100.00
+
+{com}. tab Num_Female
+
+      {txt}Total {c |}
+  number of {c |}
+     female {c |}
+  household {c |}
+     member {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        103       14.91       14.91
+{txt}          1 {c |}{res}         92       13.31       28.22
+{txt}          2 {c |}{res}        171       24.75       52.97
+{txt}          3 {c |}{res}        131       18.96       71.92
+{txt}          4 {c |}{res}        125       18.09       90.01
+{txt}          5 {c |}{res}         24        3.47       93.49
+{txt}          6 {c |}{res}         45        6.51      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        691      100.00
+
+{com}. tab HH_Tag
+
+{txt}tag(HH_Inde {c |}
+         x) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        576       83.36       83.36
+{txt}          1 {c |}{res}        115       16.64      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        691      100.00
+
+{com}. keep if HH_Tag == 1
+{txt}(576 observations deleted)
+
+{com}. tab HHH_Sex
+
+    {txt}Head of {c |}
+  Household {c |}
+        Sex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}          1        3.33        3.33
+{txt}       Male {c |}{res}         29       96.67      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         30      100.00
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_Roster_Prep_20230816.dta", clear
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_Roster_Household_Prep_20230816.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_F2F_Household_Prep_20230816.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_F2F_Household_Analysis_20230816.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_Roster_Prep_20230816.dta"
+
+. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD37794.000000"
+{txt}
+{com}. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today:       display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+. if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl CAR                  "${c -(}rcari{c )-}/4_CAR"
+{txt}
+{com}.         
+.         gl sample               "${c -(}CAR{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}CAR{c )-}/5_Field_notes"
+{txt}
+{com}.         gl analysis     "${c -(}CAR{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}CAR{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD37794.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Prepare overall sample list                                                *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Aug 12, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}sample{c )-}/CAR_Sample_Merge.xlsx
+>                                         
+>         ** CREATES:             ${c -(}sample{c )-}/CAR_Sample_Merge.dta
+> 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                       PART 1: Prepare Sample List
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

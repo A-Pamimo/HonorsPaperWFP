@@ -1,0 +1,791 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/3_Log/ed03_append_20230626.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Jun 2023, 23:46:04
+{txt}
+{com}.         di `cdate'      
+{res}20230626
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2: Create master dataset for full sample
+. *******************************************************************************/
+.         
+.         tempfile sample
+{txt}
+{com}.         
+.         * merge assignment record back to check implementation
+.         import excel "${c -(}sample{c )-}/Ecuador_Sample_Merge.xlsx", sheet("Sheet1")     ///
+>                                  firstrow clear
+{res}{text}(6 vars, 1,489 obs)
+
+{com}.         
+.         encode Modality_Type, gen(Assign_Modality)
+{txt}
+{com}.         encode Length_Type, gen(Assign_Length)
+{txt}
+{com}.         drop   Modality_Type Length_Type
+{txt}
+{com}.         ren        Uid HHID 
+{res}{txt}
+{com}.         
+.         save `sample'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_36323.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         * load dataset
+.         * ------------
+.         use "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis_`cdate'.dta", clear
+{txt}
+{com}.         
+.         * merge Remote Answers to F2F Answers
+.         append using "${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis_`cdate'.dta"
+{txt}(label {bf:{txt}HHIncChg} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}LcsEN_em_ChildWork} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}sampleYN} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FS_CARI} already defined)
+
+{com}.         compress
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (12,819 bytes saved)
+
+{com}. 
+.         drop if mi(HHID)
+{txt}(0 observations deleted)
+
+{com}.         mmerge HHID using `sample', type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis_20230626.dta
+{txt}{ralign 20:obs} {c |} {res}   663
+{txt}{ralign 20:vars} {c |} {res}   704
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_36323.000001
+{txt}{ralign 20:obs} {c |} {res}  1489{txt}
+{txt}{ralign 20:vars} {c |} {res}     6{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis_20230626.dta
+{txt}{ralign 20:obs} {c |} {res}  1489
+{txt}{ralign 20:vars} {c |} {res}   711{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}    826{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    663{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+.         gen Completion = (_merge == 3)
+{txt}
+{com}.         drop if _merge == 1
+{txt}(0 observations deleted)
+
+{com}.         
+.         drop _merge 
+{txt}
+{com}.         
+. *       label def com_list 1 "Completed Out-Sample" 2 "To Complete" 3 "Completed In-Sample"
+. 
+.         label def com_list 1 "Completed" 0 "To Complete"
+{txt}
+{com}.         label val Completion com_list
+{txt}
+{com}.         label var Completion "Survey Progress"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Organize Dataset and Labels
+. *******************************************************************************/
+. 
+.         ** Define and Format Strings
+. gl other_specify HHHOccupation HHHOccupation_S HHStatusOth HHHealthAcMildWhy_oth   ///
+>    HHHealthAcSevereWhy_oth HHHealthChronWhy_oth HHHealthEmergWhy_oth                       ///
+>    LhCSIEnAccess_stress_oth LhCSIEnAccess_crisis_oth LhCSIEnAccess_em_oth                  ///
+>    HHIncFirst_oth HHIncFirst_oth_S HHDwellType_oth HHTenureType_oth HHWallType_oth ///
+>    HHRoofType_oth HHFloorType_oth HHToiletType_oth HHEnerCookStove_oth                     ///
+>    HHEnerCookSRC_oth HHEnerLightSRC_oth HHWaterSRC_oth S_ADMIN1 S_ADMIN3Name S_ADMIN5Name
+{txt}
+{com}.         
+.         ** remove unnecessary blanks in string and adjust the proper cases
+. foreach var of global other_specify {c -(}
+{txt}  2{com}.     replace `var' = strproper(strtrim(`var'))
+{txt}  3{com}.     {c )-}
+{txt}(308 real changes made)
+(114 real changes made)
+(0 real changes made)
+(25 real changes made)
+(9 real changes made)
+(10 real changes made)
+(2 real changes made)
+(11 real changes made)
+(5 real changes made)
+(3 real changes made)
+(64 real changes made)
+(27 real changes made)
+(15 real changes made)
+(17 real changes made)
+(17 real changes made)
+(8 real changes made)
+(7 real changes made)
+(5 real changes made)
+(18 real changes made)
+(0 real changes made)
+(6 real changes made)
+(13 real changes made)
+(1,489 real changes made)
+(1,489 real changes made)
+(1,489 real changes made)
+
+{com}. 
+. *       missings dropvars, force        // remove extra vars
+. *       missings dropobs , force        // remove empty observations
+.         
+.         ** check duplicated labels
+.         labeldup
+
+{txt}14 sets of duplicate value labels found:
+
+{p 0 11}{txt}Dupset {space 1}1: {res:{ul:HHSBedHung_FR}  HHSBedHung_FR_S HHSNoFood_FR HHSNoFood_FR_S HHSNotEat_FR HHSNotEat_FR_S}{p_end}
+{p 0 11}{txt}Dupset {space 1}2: {res:{ul:EnuSex}  PSex RESPSex}{p_end}
+{p 0 11}{txt}Dupset {space 1}3: {res:{ul:Assign_Modality}  survey_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}4: {res:{ul:Assign_Length}  length_l}{p_end}
+{p 0 11}{txt}Dupset {space 1}5: {res:{ul:ConsentYN}  HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN HHExpFAnimFish_GiftAid_7D HHExpFAnimFish_Own_7D HHExpFAnimFish_Purch_7D HHExpFAnimMeat_GiftAid_7D HHExpFAnimMeat_Own_7D HHExpFAnimMeat_Purch_7D HHExpFBev_GiftAid_7D HHExpFBev_GiftAid_7D_S HHExpFBev_Own_7D HHExpFBev_Own_7D_S HHExpFBev_Purch_7D HHExpFBev_Purch_7D_S HHExpFCer_GiftAid_7D HHExpFCer_GiftAid_7D_S HHExpFCer_Own_7D HHExpFCer_Own_7D_S HHExpFCer_Purch_7D HHExpFCer_Purch_7D_S HHExpFCond_GiftAid_7D HHExpFCond_Own_7D HHExpFCond_Purch_7D HHExpFDairy_GiftAid_7D HHExpFDairy_Own_7D HHExpFDairy_Purch_7D HHExpFEgg_GiftAid_7D HHExpFEgg_Own_7D HHExpFEgg_Purch_7D HHExpFFatsDairy_GiftAid_7D_S HHExpFFatsDairy_Own_7D_S HHExpFFatsDairy_Purch_7D_S HHExpFFats_GiftAid_7D HHExpFFats_Own_7D HHExpFFats_Purch_7D HHExpFFrt_GiftAid_7D HHExpFFrt_Own_7D HHExpFFrt_Purch_7D HHExpFOut_GiftAid_7D HHExpFOut_GiftAid_7D_S HHExpFOut_Own_7D HHExpFOut_Own_7D_S HHExpFOut_Purch_7D HHExpFOut_Purch_7D_S HHExpFPro_GiftAid_7D HHExpFPro_Own_7D_S HHExpFPro_Purch_7D_S HHExpFPuls_GiftAid_7D HHExpFPuls_GiftAid_7D_S HHExpFPuls_Own_7D HHExpFPuls_Own_7D_S HHExpFPuls_Purch_7D HHExpFPuls_Purch_7D_S HHExpFSgrCond_GiftAid_7D_S HHExpFSgrCond_Own_7D_S HHExpFSgrCond_Purch_7D_S HHExpFSgr_GiftAid_7D HHExpFSgr_Own_7D HHExpFSgr_Purch_7D HHExpFTub_GiftAid_7D HHExpFTub_GiftAid_7D_S HHExpFTub_Own_7D HHExpFTub_Own_7D_S HHExpFTub_Purch_7D HHExpFTub_Purch_7D_S HHExpFVegFrt_GiftAid_7D_S HHExpFVegFrt_Own_7D_S HHExpFVegFrt_Purch_7D_S HHExpFVeg_GiftAid_7D HHExpFVeg_Own_7D HHExpFVeg_Purch_7D HHExpNFAlcTobac_GiftAid_1M HHExpNFAlcTobac_GiftAid_1M_S HHExpNFAlcTobac_Purch_1M HHExpNFAlcTobac_Purch_1M_S HHExpNFCloth_GiftAid_6M HHExpNFCloth_GiftAid_6M_S HHExpNFCloth_Purch_6M HHExpNFCloth_Purch_6M_S HHExpNFDwelSer_GiftAid_1M HHExpNFDwelSer_GiftAid_1M_S HHExpNFDwelSer_Purch_1M HHExpNFDwelSer_Purch_1M_S HHExpNFEduFeeGood_Purch_6M_S HHExpNFEduFee_GiftAid_6M HHExpNFEduFee_Purch_6M HHExpNFEduGood_GiftAid_6M HHExpNFEduGood_Purch_6M HHExpNFEdu_GiftAid_6M_S HHExpNFEnerg_GiftAid_1M HHExpNFEnerg_GiftAid_1M_S HHExpNFEnerg_Purch_1M HHExpNFEnerg_Purch_1M_S HHExpNFFuel_GiftAid_1M HHExpNFFuel_Purch_1M HHExpNFHHMaint_GiftAid_6M HHExpNFHHMaint_Purch_6M HHExpNFHHSoftMaint_Purch_6M_S HHExpNFHHSoft_GiftAid_6M HHExpNFHHSoft_GiftAid_6M_S HHExpNFHHSoft_Purch_6M HHExpNFHyg_GiftAid_1M HHExpNFHyg_GiftAid_1M_S HHExpNFHyg_Purch_1M HHExpNFHyg_Purch_1M_S HHExpNFMedGood_GiftAid_6M HHExpNFMedGood_Purch_6M HHExpNFMedServGood_Purch_6M_S HHExpNFMedServ_GiftAid_6M HHExpNFMedServ_Purch_6M HHExpNFMed_GiftAid_6M_S HHExpNFPhone_GiftAid_1M HHExpNFPhone_GiftAid_1M_S HHExpNFPhone_Purch_1M HHExpNFPhone_Purch_1M_S HHExpNFRecr_GiftAid_1M HHExpNFRecr_GiftAid_1M_S HHExpNFRecr_Purch_1M HHExpNFRecr_Purch_1M_S HHExpNFRent_GiftAid_6M HHExpNFRent_GiftAid_6M_S HHExpNFRent_Purch_6M HHExpNFRent_Purch_6M_S HHExpNFTrans_GiftAid_1M_S HHExpNFTranspFuel_Purch_1M_S HHExpNFTransp_GiftAid_1M HHExpNFTransp_Purch_1M HHExpNFWat_GiftAid_1M HHExpNFWat_GiftAid_1M_S HHExpNFWat_Purch_1M HHExpNFWat_Purch_1M_S HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M MMDIHHHealthFac PSchoolEver PWMDDWDairy PWMDDWFruitOrg PWMDDWFruitOth PWMDDWMilk PWMDDWNuts PWMDDWPrEgg PWMDDWPrFish PWMDDWPrMeatF PWMDDWPrMeatO PWMDDWPrMeatPro PWMDDWPrMeatWhite PWMDDWPulse PWMDDWStapCer PWMDDWStapRoo PWMDDWVegGre PWMDDWVegOrg PWMDDWVegOth RESPFoodWorry_YN sampleYN}{p_end}
+{p 0 11}{txt}Dupset {space 1}6: {res:{ul:HHExpNF_GiftAid_YN1M}  RESPvoice YesNo}{p_end}
+{p 0 11}{txt}Dupset {space 1}7: {res:{ul:LcsEN_crisis_HealthEdu}  LcsEN_em_Begged}{p_end}
+{p 0 11}{txt}Dupset {space 1}8: {res:{ul:Lcs_crisis_HealthEdu}  Lcs_em_Begged}{p_end}
+{p 0 11}{txt}Dupset {space 1}9: {res:{ul:HHHealthAcMildTreat}  HHHealthAcSevereTreat HHHealthChronTreat HHHealthEmergTreat}{p_end}
+{p 0 11}{txt}Dupset 10: {res:{ul:FIESHHAteLess}  FIESHHAteLess_S FIESHHFewFoods FIESHHFewFoods_S FIESHHHealthy FIESHHHealthy_S FIESHHHungry FIESHHHungry_S FIESHHRanOut FIESHHRanOut_S FIESHHSkipped FIESHHSkipped_S FIESHHWholeDay FIESHHWholeDay_S FIESHHWorried FIESHHWorried_S HHHealthAcMildNeed HHHealthAcSevereNeed HHHealthChronNeed HHHealthEmergNeed Harm Housework_Prevent_Education Housework_Prevented_Work Own_Decisions_Medical Own_Decisions_Money Own_Mobile Own_Property Permission_Local_Event Permission_Market}{p_end}
+{p 0 11}{txt}Dupset 11: {res:{ul:HHHealthAcMildWhy}  HHHealthAcSevereWhy HHHealthChronWhy HHHealthEmergWhy}{p_end}
+{p 0 11}{txt}Dupset 12: {res:{ul:Decide_Prevent_Pregnancy}  Have_Money_Saved Income_No_Permission Own_Bank_Account Own_Decisions_Friends Own_Decisions_Relatives Took_Money_No_Permission}{p_end}
+{p 0 11}{txt}Dupset 13: {res:{ul:HHIncChg}  HHIncChg_S}{p_end}
+{p 0 11}{txt}Dupset 14: {res:{ul:HHIncFirst_SRi}  HHIncFirst_SRi_S HHIncSec_SRi HHIncThird_SRi}{p_end}
+
+Specify option {cmd:select} to compress value labels using underlined labels
+Specify option {cmd:names()} to select other value names to be retained
+
+{com}.         
+.         * rename value labels
+.         labelrename EnuSex gender_label
+
+{txt}Value label {res:EnuSex} renamed to {res:gender_label}
+{p 0 8 2}{txt}value label {res:EnuSex} was attached to variables {res}EnuSex{p_end}
+{txt}
+{com}.         
+.         * add value labels
+.         label values RESPSex R_Resp_Sex gender_label
+{txt}
+{com}.         label values ConsentYN HHAsstOthCBTRecYN HHAsstUNNGOCBTRecYN HHAsstWFPCBTRecYN ///
+>                                  HHExp*_Purch_7D* HHExp*_GiftAid_7D* HHExp*_Own_7D*                        ///  
+>                                  HHExp*_Purch_1M* HHExp*_GiftAid_1M*                                                       ///
+>                                  HHExp*_Purch_6M* HHExp*_GiftAid_6M*                                                       ///
+>                                  HHSBedHung HHSNoFood HHSNotEat HHToiletWho HHhostDisp                     ///
+>                                  MDDIHHDiscrim MDDIHHDisplChoice MDDIHHPercSafe MDDIHHShInsec6M    ///
+>                                  MMDIHHHealthFac PWMDDW* RESPFoodWorry_YN sampleYN RESPFemale      ///
+>                                  RESPHHH YesNo
+{txt}
+{com}. 
+.         * adjust start and end time
+.         
+.         * save dataset
+.         compress
+  {txt}variable {bf}{res}Completion{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {bf}HHHealthAcMildWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHealthAcSevereWhy_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHHOccupation_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth_S{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHFloorType_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHEnerCookStove_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHWaterSRC_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (20,181 bytes saved)
+
+{com}. *       iecodebook export using "${c -(}d_out{c )-}/Ecuador_Full_Codebook.xlsx", replace
+.         
+.         save     "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/4_Data/Ecuador_Full_Household_Analysis_20230626.dta{rm}
+saved
+{p_end}
+
+{com}.         
+.         // not date specific for tableau import consistency
+.         savespss "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis.sav", replace
+{res} {break}{text}Saving {result:1489} observations of {result:710} variables into {result:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/4_Data/Ecuador_Full_Household_Analysis.sav}{break}{text} {break}{text}Export of Stata's volatile string variables will be using the following SPSS types:{break}{text}{hline}{break}{text}Variable name {col 34}Content length{col 56}Export{col 67}{text}Variable label{break}{text}{col 34}Stata{col 45}SPSS{col 56}notes{break}{hline}{break}{text}HHHealthAcMildWhy_oth{result}{col 34}67{col 45}67{col 67}{text}Otros (especifique){break}{text}HHHealthAcSevereWhy_oth{result}{col 34}86{col 45}86{col 67}{text}Otro (especificar){break}{text}HHHealthChronWhy_oth{result}{col 34}82{col 45}82{col 67}{text}Otros (especifique){break}{text}HHHealthEmergWhy_oth{result}{col 34}38{col 45}38{col 67}{text}Otro (especificar){break}{text}LhCSIEnAccess_stress_oth{result}{col 34}53{col 45}53{col 67}{text}Otros (Especifique){break}{text}LhCSIEnAccess_em_oth{result}{col 34}83{col 45}83{col 67}{text}Otros (Especifique){break}{text}HHHOccupation{result}{col 34}71{col 45}71{col 67}{text}¿A qué se dedica el cabeza de familia?{break}{text}HHIncFirst_oth{result}{col 34}71{col 45}71{col 67}{text}Especifique{break}{text}HHHOccupation_S{result}{col 34}68{col 45}68{col 67}{text}¿Cuál es la ocupación del cabeza de familia?{break}{text}HHIncFirst_oth_S{result}{col 34}71{col 45}71{col 67}{text}Especifique{break}{text}HHWallType_oth{result}{col 34}75{col 45}75{col 67}{text}Otro (especificar){break}{text}HHRoofType_oth{result}{col 34}46{col 45}46{col 67}{text}Otro (especificar){break}{text}HHFloorType_oth{result}{col 34}40{col 45}40{col 67}{text}Otro (especificar){break}{text}HHToiletType_oth{result}{col 34}40{col 45}40{col 67}{text}Otro (especificar){break}{text}HHEnerCookStove_oth{result}{col 34}45{col 45}45{col 67}{text}Otros (especifique){break}{text}HHEnerLightSRC_oth{result}{col 34}55{col 45}55{col 67}{text}Otro (especificar){break}{text}HHWaterSRC_oth{result}{col 34}81{col 45}81{col 67}{text}Otros (especifique){break}{text}comments{result}{col 34}140{col 45}140{col 67}{text}¿Tiene algún comentario?{break}{text}remarks{result}{col 34}108{col 45}108{col 67}{text}Enumerator's remarks.{break}{text}{hline}{break}{browse "http://www.radyakin.org/transfer/savespss/kb/kb_00004.htm":What is this table?}{break}{text} {break} {break}{text}Saved {result:1489} observations of {result:710} variables into {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/4_Data/Ecuador_Full_Household_Analysis.sav":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/4_Data/Ecuador_Full_Household_Analysis.sav}{break}
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         tostring today, g(Date_Str) format(%tdd_m_CY) force
+{txt}Date_Str generated as {res:str11}
+Date_Str was forced to string; some loss of information
+
+{com}.         replace Date_Str = "" if Date_Str == "."
+{txt}(826 real changes made)
+
+{com}.         encode  Date_Str, gen(Data_Cat)
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab Data_Cat
+
+      {txt}today {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+16 Jun 2023 {c |}{res}         33        4.98        4.98
+{txt}17 Jun 2023 {c |}{res}         57        8.60       13.57
+{txt}18 Jun 2023 {c |}{res}         38        5.73       19.31
+{txt}19 Jun 2023 {c |}{res}         73       11.01       30.32
+{txt}20 Jun 2023 {c |}{res}         82       12.37       42.68
+{txt}21 Jun 2023 {c |}{res}         58        8.75       51.43
+{txt}22 Jun 2023 {c |}{res}         70       10.56       61.99
+{txt}23 Jun 2023 {c |}{res}         80       12.07       74.06
+{txt}24 Jun 2023 {c |}{res}         87       13.12       87.18
+{txt}25 Jun 2023 {c |}{res}         62        9.35       96.53
+{txt}26 Jun 2023 {c |}{res}         23        3.47      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        663      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         catplot Modality, asyvars stack recast(bar)                     ///
+>                         over(Data_Cat_C, label(labsize(2.5) angle(45))) ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(30)150, nogrid labsize(2))                             ///
+>                         legend(ring(4) pos(6) rows(1) size(3))                  ///
+>                         ytitle("") blabel(bar, pos(center) size(2)      ///
+>                         gap(1)) b1title("")             
+{err}variable {bf}Data_Cat_C{sf} not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         catplot Modality, asyvars stack recast(bar)                     ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45))) ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(30)150, nogrid labsize(2))                             ///
+>                         legend(ring(4) pos(6) rows(1) size(3))                  ///
+>                         ytitle("") blabel(bar, pos(center) size(2)      ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Day.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Day.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         catplot Modality, asyvars stack recast(bar)                     ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45))) ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(10)90, nogrid labsize(2))                              ///
+>                         legend(ring(4) pos(6) rows(1) size(3))                  ///
+>                         ytitle("") blabel(bar, pos(center) size(2)      ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Day.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Day.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         codebook ${c -(}other_specify{c )-}
+
+{txt}{hline}
+{p 0 39}{res}HHHOccupation{space 26}¿A qué se dedica el cabeza de familia?{p_end}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}232{col 51}{txt}Missing "": {res}826{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}"Agricultor"
+{col 25}"Carpinteria"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{p 0 39}{res}HHHOccupation_S{space 24}¿Cuál es la ocupación del cabeza de familia?{p_end}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}91{col 51}{txt}Missing "": {res}1,284{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHStatusOth{right:Especifique}
+{txt}{hline}
+
+{col 19}Type: String ({res}str1{txt}), but longest is str0
+
+{col 10}Unique values: {res}0{col 51}{txt}Missing "": {res}1,489{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,489{col 32}""
+
+{txt}{hline}
+{res}HHHealthAcMildWhy_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}24{col 51}{txt}Missing "": {res}1,464{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthAcSevereWhy_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}9{col 51}{txt}Missing "": {res}1,479{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,479{col 32}""
+{col 20}         1{col 32}"AutomedicacióN"
+{col 20}         1{col 32}"Fue Reciente Y No Atiende Los Fines De
+{col 32}Semana"
+{col 20}         1{col 32}"No Atienden A Mayores"
+{col 20}         1{col 32}"No Fue"
+{col 20}         2{col 32}"No Se Hizo Atender"
+{col 20}         1{col 32}"No Se Le Atiende En El Momento Que Es
+{col 32}Le Agendan DespuéS De Que Ya Pasa La
+{col 32}Enfermedad"
+{col 20}         1{col 32}"No Tienen Los Recursos Necesarios"
+{col 20}         1{col 32}"Nunca Hay Medicamentos En El Dentro De
+{col 32}Salud"
+{col 20}         1{col 32}"Pastillas"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthChronWhy_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}10{col 51}{txt}Missing "": {res}1,479{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthEmergWhy_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}2{col 51}{txt}Missing "": {res}1,487{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,487{col 32}""
+{col 20}         1{col 32}"La CirugíA No Realizaba El Ministerio"
+{col 20}         1{col 32}"No Le Atienden"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_stress_oth{right:Otros (Especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}12{col 51}{txt}Missing "": {res}1,477{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_crisis_oth{right:Otros (Especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str29{txt})
+
+{col 10}Unique values: {res}5{col 51}{txt}Missing "": {res}1,484{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,484{col 32}""
+{col 20}         1{col 32}"No Hubo Necesidad"
+{col 20}         1{col 32}"No Tiene Esa Necesidad"
+{col 20}         1{col 32}"No Tuvo Que Usar Esta OpcióN"
+{col 20}         1{col 32}"Para Vender Alimento"
+{col 20}         1{col 32}"Sobre Un CréDito"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_em_oth{right:Otros (Especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}3{col 51}{txt}Missing "": {res}1,486{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,486{col 32}""
+{col 20}         1{col 32}"Manda Al NiñO A Trabajar Con Su Padre
+{col 32}Para Recoger MáS Café Para Sacar A
+{col 32}Vender."
+{col 20}         1{col 32}"Pagar Arriendo"
+{col 20}         1{col 32}"Trabajo De Alto Riesgo Es Por Las
+{col 32}Fumigaciones A Las Plantas"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHIncFirst_oth{right:Especifique}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}58{col 51}{txt}Missing "": {res}1,414{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHIncFirst_oth_S{right:Especifique}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}22{col 51}{txt}Missing "": {res}1,460{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHDwellType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str30{txt})
+
+{col 10}Unique values: {res}4{col 51}{txt}Missing "": {res}1,474{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,474{col 32}""
+{col 20}         9{col 32}"Casa De Madera"
+{col 20}         4{col 32}"Casa De Tabla"
+{col 20}         1{col 32}"Casa De Tablas"
+{col 20}         1{col 32}"Media Agua De Ayuda Del Miduvi"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHTenureType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str32{txt})
+
+{col 10}Unique values: {res}20{col 51}{txt}Missing "": {res}1,464{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHWallType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}22{col 51}{txt}Missing "": {res}1,440{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHRoofType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}13{col 51}{txt}Missing "": {res}1,446{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHFloorType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}8{col 51}{txt}Missing "": {res}1,480{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,480{col 32}""
+{col 20}         1{col 32}"Cala Y Tierra"
+{col 20}         1{col 32}"Cemento Una Parte Y La Otra Es De
+{col 32}Tierra"
+{col 20}         1{col 32}"Cemento Y Tierra"
+{col 20}         1{col 32}"Ceramica"
+{col 20}         2{col 32}"Madera Y Cemento"
+{col 20}         1{col 32}"Tabla Y CañAs"
+{col 20}         1{col 32}"Tierra"
+{col 20}         1{col 32}"Tierra Y Madera"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHToiletType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}5{col 51}{txt}Missing "": {res}1,484{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,484{col 32}""
+{col 20}         1{col 32}"Bota AtráS Del Patio Lo De La
+{col 32}Basenilla"
+{col 20}         1{col 32}"No Hay"
+{col 20}         1{col 32}"No Tiene BañO"
+{col 20}         1{col 32}"Piden Prestado El BañO"
+{col 20}         1{col 32}"Sin BañO"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHEnerCookStove_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}10{col 51}{txt}Missing "": {res}1,471{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHEnerCookSRC_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str3{txt})
+
+{col 10}Unique values: {res}1{col 51}{txt}Missing "": {res}1,462{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,462{col 32}""
+{col 20}        27{col 32}"Gas"
+
+{txt}{hline}
+{res}HHEnerLightSRC_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}7{col 51}{txt}Missing "": {res}1,482{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}     1,482{col 32}""
+{col 20}         1{col 32}"Cogen De Contrabando"
+{col 20}         1{col 32}"El Vecino Le Comparte"
+{col 20}         1{col 32}"Electricidad Pero No Paga Porque Ya Es
+{col 32}De Edad Avanzada"
+{col 20}         1{col 32}"Generador De Luz"
+{col 20}         1{col 32}"La Luz Viene Gratis."
+{col 20}         1{col 32}"Lamparas"
+{col 20}         1{col 32}"Tienes Luz De Contrabando"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHWaterSRC_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}13{col 51}{txt}Missing "": {res}1,475{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}S_ADMIN1{right:ADMIN1}
+{txt}{hline}
+
+{col 19}Type: String ({res}str8{txt})
+
+{col 10}Unique values: {res}3{col 51}{txt}Missing "": {res}0{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       420{col 32}"Amazonia"
+{col 20}       440{col 32}"Costa"
+{col 20}       629{col 32}"Sierra"
+
+{txt}{hline}
+{res}S_ADMIN3Name{right:ADMIN3Name}
+{txt}{hline}
+
+{col 19}Type: String ({res}str11{txt})
+
+{col 10}Unique values: {res}6{col 51}{txt}Missing "": {res}0{txt}/{res}1,489
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       100{col 32}"Arajuno"
+{col 20}       404{col 32}"Cotacachi"
+{col 20}       225{col 32}"Guamote"
+{col 20}       320{col 32}"Loreto"
+{col 20}       223{col 32}"Salitre"
+{col 20}       217{col 32}"Santa Elena"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}S_ADMIN5Name{right:ADMIN5Name}
+{txt}{hline}
+
+{col 19}Type: String ({res}str25{txt})
+
+{col 10}Unique values: {res}20{col 51}{txt}Missing "": {res}0{txt}/{res}1,489
+
+{txt}{col 15}Examples: {res}"Colonche"
+{col 25}"Imantag"
+{col 25}"Manglaralto"
+{col 25}"Quiroga"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{com}.         export excel  using "${c -(}note{c )-}/Ecuador_other_specify_`cdate'.xlsx",       ///
+>                    firstrow(variables) replace     
+{res}{txt}file {bf:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/5_Ecuador/5_Field_notes/Ecuador_other_specify_.xlsx} saved
+
+{com}. 
+.         keep EnuName HHID HHHOccupation HHHOccupation_S HHStatusOth                             ///
+>                    HHHealthAcMildWhy_oth HHHealthAcSevereWhy_oth HHHealthChronWhy_oth                   ///
+>                    HHHealthEmergWhy_oth LhCSIEnAccess_stress_oth LhCSIEnAccess_crisis_oth               ///
+>                    LhCSIEnAccess_em_oth HHIncFirst_oth HHIncFirst_oth_S HHDwellType_oth                 ///
+>                    HHTenureType_oth HHWallType_oth HHRoofType_oth HHFloorType_oth                               ///
+>                    HHToiletType_oth HHEnerCookStove_oth HHEnerCookSRC_oth HHEnerLightSRC_oth    ///
+>                    HHWaterSRC_oth Sys_uuid
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Ecuador                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create HFC and Summary Stats                                               *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun  20, 2023                                                                              *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+.         
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

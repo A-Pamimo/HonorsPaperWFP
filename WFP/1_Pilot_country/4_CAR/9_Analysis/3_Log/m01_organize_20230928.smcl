@@ -1,0 +1,240 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/3_Log/m01_organize_20230928.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}28 Sep 2023, 13:40:18
+{txt}
+{com}.         di `cdate'      
+{res}20230928
+{txt}
+{com}. 
+.         use "${c -(}dta{c )-}/CAR_Full_Household_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         ** 1 Survey Completion  
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Not Comple~d}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      295}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.89899}}}{space 1}{space 1}{ralign 9:{res:{sf: 28.33814}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.33861}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      746}}}{space 1}{space 1}{ralign 9:{res:{sf: 32.61915}}}{space 1}{space 1}{ralign 9:{res:{sf: 71.66186}}}{space 1}{space 1}{ralign 9:{res:{sf: 72.92278}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1041}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.51815}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.51815}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      969}}}{space 1}{space 1}{ralign 9:{res:{sf: 42.36992}}}{space 1}{space 1}{ralign 9:{res:{sf: 77.76886}}}{space 1}{space 1}{ralign 9:{res:{sf: 76.66139}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      277}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.11194}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.23114}}}{space 1}{space 1}{ralign 9:{res:{sf: 27.07722}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1246}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.48185}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.48185}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-To-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1264}}}{space 1}{space 1}{ralign 9:{res:{sf: 55.26891}}}{space 1}{space 1}{ralign 9:{res:{sf: 55.26891}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1023}}}{space 1}{space 1}{ralign 9:{res:{sf: 44.73109}}}{space 1}{space 1}{ralign 9:{res:{sf: 44.73109}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2287}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}.         esttab using "${c -(}tex_tab{c )-}/CAR_rCARI_Completion.tex",                                     ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_rCARI_Completion.tex"'})
+
+{com}. 
+.         keep if Completion == 1
+{txt}(1,041 observations deleted)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 2: Create variables
+. *******************************************************************************/
+.         
+.         gen     CARI_rCARI = HH_Vul_FES         if Modality == 1
+{txt}(277 missing values generated)
+
+{com}.         replace CARI_rCARI = HH_Vul_Income      if Modality == 2
+{txt}(277 real changes made)
+
+{com}.         
+.         tab FES_Cat, gen(FES_Cat_)
+
+  {txt}Food Security Category {c |}
+            based on FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}        192       15.41       15.41
+{txt}  Marginally Food Secure {c |}{res}        219       17.58       32.99
+{txt}Moderately Food Insecure {c |}{res}        187       15.01       47.99
+{txt}  Severely Food Insecure {c |}{res}        648       52.01      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      1,246      100.00
+{txt}
+{com}.         
+.         tab CARI_FES_Cat, gen(CARI_FES_Cat)
+
+ {txt}CARI Category using FES {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}          4        0.32        0.32
+{txt}  Marginally Food Secure {c |}{res}        202       16.21       16.53
+{txt}Moderately Food Insecure {c |}{res}        833       66.85       83.39
+{txt}  Severely Food Insecure {c |}{res}        207       16.61      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      1,246      100.00
+{txt}
+{com}.         tab CARI_Inc_Cat, gen(rCARI_Inc_Cat)
+
+     {txt}CARI Category using {c |}
+                  Income {c |}      Freq.     Percent        Cum.
+{hline 25}{c +}{hline 35}
+             Food Secure {c |}{res}         10        0.80        0.80
+{txt}  Marginally Food Secure {c |}{res}        411       32.99       33.79
+{txt}Moderately Food Insecure {c |}{res}        774       62.12       95.91
+{txt}  Severely Food Insecure {c |}{res}         51        4.09      100.00
+{txt}{hline 25}{c +}{hline 35}
+                   Total {c |}{res}      1,246      100.00
+{txt}
+{com}.         
+.         * real CARI vs. real rCARI
+. forval i = 1/4 {c -(}
+{txt}  2{com}.         gen     CARI_rCARI_`i' = CARI_FES_Cat`i'  if Modality == 1
+{txt}  3{com}.         replace CARI_rCARI_`i' = rCARI_Inc_Cat`i' if Modality == 2
+{txt}  4{com}. {c )-}
+{txt}(277 missing values generated)
+(277 real changes made)
+(277 missing values generated)
+(277 real changes made)
+(277 missing values generated)
+(277 real changes made)
+(277 missing values generated)
+(277 real changes made)
+
+{com}.         
+.         gen CARI_FES_Bad  = (CARI_FES_Cat3  == 1 | CARI_FES_Cat4  == 1)
+{txt}
+{com}.         gen rCARI_Inc_Bad = (rCARI_Inc_Cat3 == 1 | rCARI_Inc_Cat4 == 1)
+{txt}
+{com}. 
+.         gen FCG_Accept = (FCSCat28 == 3)
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Label variables
+. *******************************************************************************/
+.         
+.         label val CARI_rCARI FCG_Accept YesNo
+{txt}
+{com}.         
+.         label var CARI_Inc_1            "Income: Regular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_2            "Income: Regular and Reduced OR Irregular and Unchanged/Increasing"
+{txt}
+{com}.         label var CARI_Inc_3            "Income: Irregular and Reduced"
+{txt}
+{com}.         label var CARI_Inc_4            "Income: No income sources"
+{txt}
+{com}.         
+.         label var FES_Cat_1                     "FES: <50%"
+{txt}
+{com}.         label var FES_Cat_2                     "FES: 50-65%"
+{txt}
+{com}.         label var FES_Cat_3                     "FES: 65-75%"
+{txt}
+{com}.         label var FES_Cat_4                     "FES: >= 75%"
+{txt}
+{com}.         
+.         label var rCARI_Inc_Cat1        "rCARI: Food Secure"
+{txt}
+{com}.         label var rCARI_Inc_Cat2        "rCARI: Marginally Food Secure"
+{txt}
+{com}.         label var rCARI_Inc_Cat3        "rCARI: Moderately Food Insecure"
+{txt}
+{com}.         label var rCARI_Inc_Cat4        "rCARI: Severely Food Insecure"
+{txt}
+{com}.         label var rCARI_Inc_Bad         "rCARI: Food Insecure"
+{txt}
+{com}.         
+.         label var CARI_FES_Cat1         "CARI: Food Secure"
+{txt}
+{com}.         label var CARI_FES_Cat2         "CARI: Marginally Food Secure"
+{txt}
+{com}.         label var CARI_FES_Cat3         "CARI: Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_FES_Cat4         "CARI: Severely Food Insecure"
+{txt}
+{com}.         label var CARI_FES_Bad          "CARI: Food Insecure"
+{txt}
+{com}.         
+.         label var CARI_rCARI_1          "CARI vs. rCARI: Food Secure"
+{txt}
+{com}.         label var CARI_rCARI_2          "CARI vs. rCARI: Marginally Food Secure"
+{txt}
+{com}.         label var CARI_rCARI_3          "CARI vs. rCARI: Moderately Food Insecure"
+{txt}
+{com}.         label var CARI_rCARI_4          "CARI vs. rCARI: Severely Food Insecure"
+{txt}
+{com}.         label var CARI_rCARI            "CARI vs. rCARI: Food Insecure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         compress
+  {txt}variable {bf}{res}CARI_rCARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_1{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_2{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_3{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_rCARI_4{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Bad{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCARI_Inc_Bad{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCG_Accept{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+{txt}  (29,904 bytes saved)
+
+{com}.         save "${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/1_Data/CAR_Full_Household_rCARI_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.2     Randomization Balance
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/CAR_Full_Household_rCARI_Analysis.dta
+.         
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `balance'            do "${c -(}dofile{c )-}/c02_Balance.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check Randomization Balance                                                        *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Sep 20, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/CAR_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

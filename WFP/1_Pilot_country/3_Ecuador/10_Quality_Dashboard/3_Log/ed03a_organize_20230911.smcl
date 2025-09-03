@@ -1,0 +1,1144 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed03a_organize_20230911.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 Sep 2023, 15:27:04
+{txt}
+{com}.         di `cdate'
+{res}20230911
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Prep.dta", clear 
+{txt}
+{com}.         
+.         * keep if sampleYN == 1 
+. 
+.         ** rename ___variables
+.         ren ___* Sys_*
+{res}{txt}
+{com}.         order R_*, a(RepeatPID_count)
+{txt}
+{com}.         
+.         * survey duration variable
+.         destring Sys_duration, replace
+{txt}Sys_duration: all characters numeric; {res}replaced {txt}as {res}long
+{txt}
+{com}.         gen     Duration_Min = Sys_duration/60
+{txt}
+{com}.         
+.         * survey modality
+.         gen     Modality        = 1                      // f2f
+{txt}
+{com}.         
+.         * form version long vs. short
+.         gen     ID_Length = length(HHID)
+{txt}
+{com}.         
+.         gen             Form = 1 if ID_Length == 10  // Long
+{txt}(383 missing values generated)
+
+{com}.         replace Form = 2 if ID_Length == 9   // Short
+{txt}(383 real changes made)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Create and Define Variables
+. ********************************************************************************
+. 
+. ** Demongraphics and basic respondents/household information
+.         gen RESPHHH     = (R_RESPRelationHHH == 100)
+{txt}
+{com}.         gen RESPFemale  = (RESPSex                       == 0)
+{txt}
+{com}.         gen HHDisplaced = (HHStatus              == 2)
+{txt}
+{com}.         gen RESPSingle  = (RESPStatus            == 100)
+{txt}
+{com}.         gen RESPMarried = (RESPStatus            == 300)
+{txt}
+{com}.         
+. *       assert  == HHSize
+.         tab HHID if R_Num_Household != HHSize & !mi(R_Num_Household)
+
+  {txt}Household {c |}
+         ID {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+  ECU010185 {c |}{res}          1        6.25        6.25
+{txt}  ECU010204 {c |}{res}          1        6.25       12.50
+{txt} ECU0190809 {c |}{res}          1        6.25       18.75
+{txt}  ECU020146 {c |}{res}          1        6.25       25.00
+{txt}  ECU020202 {c |}{res}          1        6.25       31.25
+{txt} ECU0212401 {c |}{res}          1        6.25       37.50
+{txt} ECU0212443 {c |}{res}          1        6.25       43.75
+{txt}  ECU030186 {c |}{res}          1        6.25       50.00
+{txt}  ECU030245 {c |}{res}          1        6.25       56.25
+{txt} ECU0312401 {c |}{res}          1        6.25       62.50
+{txt} ECU0312463 {c |}{res}          1        6.25       68.75
+{txt} ECU0312604 {c |}{res}          1        6.25       75.00
+{txt}  ECU090032 {c |}{res}          1        6.25       81.25
+{txt} ECU1190779 {c |}{res}          1        6.25       87.50
+{txt} ECU2190814 {c |}{res}          1        6.25       93.75
+{txt} ECU2190817 {c |}{res}          1        6.25      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         16      100.00
+{txt}
+{com}.         
+. **# Lorenzo to add outcomes for Health/MMDI releted variables
+.         gen HHDisable = (MDDIHHDisabledNb > 0)
+{txt}
+{com}.          
+. ** Roster Demongraphics
+.         gen     FemaleMale_Ratio         = R_Num_Female/R_Num_Male
+{txt}(59 missing values generated)
+
+{com}.         sum             FemaleMale_Ratio
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+FemaleMale~o {c |}{res}        701    1.269437    1.045986          0          7
+{txt}
+{com}.         replace FemaleMale_Ratio         = `r(max)' if mi(FemaleMale_Ratio)
+{txt}(59 real changes made)
+
+{com}.         gen     FemaleMale_Ratio_1_5 = (FemaleMale_Ratio >= 1.5)
+{txt}
+{com}.         
+.         egen    R_Num_Dependent          = rowtotal(R_Num_Child R_Num_Senior)
+{txt}
+{com}.         gen     Dependency_Ratio         = R_Num_Dependent/R_Num_Adult
+{txt}(87 missing values generated)
+
+{com}.         sum             Dependency_Ratio
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Dependency~o {c |}{res}        673    1.126238    .9113716          0          6
+{txt}
+{com}.         replace Dependency_Ratio = `r(max)' if mi(Dependency_Ratio)
+{txt}(87 real changes made)
+
+{com}.         
+.         gen     Dep_Ratio_Cat = 0
+{txt}
+{com}.         replace Dep_Ratio_Cat = 1 if Dependency_Ratio <= 1
+{txt}(450 real changes made)
+
+{com}.         replace Dep_Ratio_Cat = 2 if Dependency_Ratio >  1       & Dependency_Ratio <= 1.5
+{txt}(71 real changes made)
+
+{com}.         replace Dep_Ratio_Cat = 3 if Dependency_Ratio >  1.5 & Dependency_Ratio <= 2.5
+{txt}(103 real changes made)
+
+{com}.         replace Dep_Ratio_Cat = 4 if Dependency_Ratio >  2.5
+{txt}(136 real changes made)
+
+{com}. 
+.         gen Dep_Ratio_1_5       = (Dependency_Ratio > 1.5)
+{txt}
+{com}.         gen Dep_Ratio_2         = (Dependency_Ratio > 2)
+{txt}
+{com}.         
+. ** Outcome: Household food security status 
+.         sum RESPFoodWorry_YN RESPPercFoodSec*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+RESPFoodWo~N {c |}{res}        760    .9171053    .2759046          0          1
+{txt}RESPPercFo~c {c |}{res}          0
+{txt}RESPPercFo~1 {c |}{res}        760    .1460526    .3533915          0          1
+{txt}RESPPercFo~2 {c |}{res}        760    .5026316    .5003223          0          1
+{txt}RESPPercFo~3 {c |}{res}        760    .6486842    .4776958          0          1
+{txt}{hline 13}{c +}{hline 57}
+RESPPercFo~4 {c |}{res}        760         .15    .3573066          0          1
+{txt}
+{com}.         
+.         gen RESPMeals_3More   = (RESPMeals                      == 3)
+{txt}
+{com}.         gen RESPFoodWorry         = (RESPFoodWorry_YN   == 1)
+{txt}
+{com}.         gen RESPFS_EnoughFood = (RESPPercFoodSec_1      == 1)
+{txt}
+{com}.         gen RESPFS_LessPrefer = (RESPPercFoodSec_2      == 1)
+{txt}
+{com}.         gen RESPFS_LessMeal   = (RESPPercFoodSec_3      == 1)
+{txt}
+{com}.         gen RESPFS_DayNoEat   = (RESPPercFoodSec_4      == 1)
+{txt}
+{com}.         
+.         ** Number of Meals & Worried RESPMeals
+.         gen     CARI_Meals = .
+{txt}(760 missing values generated)
+
+{com}.         replace CARI_Meals = 1 if RESPMeals == 3
+{txt}(384 real changes made)
+
+{com}.         replace CARI_Meals = 2 if RESPMeals == 2
+{txt}(275 real changes made)
+
+{com}.         replace CARI_Meals = 3 if RESPMeals == 1 | RESPMeals == 0
+{txt}(101 real changes made)
+
+{com}.         replace CARI_Meals = 4 if RESPMeals == 0 & RESPPercFoodSec_4 == 1
+{txt}(2 real changes made)
+
+{com}. 
+.         gen     CARI_Worry = .
+{txt}(760 missing values generated)
+
+{com}.         replace CARI_Worry = 1 if RESPFoodWorry_YN == 0
+{txt}(63 real changes made)
+
+{com}.         replace CARI_Worry = 2 if RESPFoodWorry_YN == 1
+{txt}(697 real changes made)
+
+{com}.         replace CARI_Worry = 3 if RESPFoodWorry_YN == 1 & RESPPercFoodSec_3 == 1
+{txt}(481 real changes made)
+
+{com}.         replace CARI_Worry = 4 if RESPFoodWorry_YN == 1 & RESPPercFoodSec_4 == 1
+{txt}(111 real changes made)
+
+{com}.         
+. ** Outcome: [FCS] Food consumption score Short vs. Long
+.         sum FCS*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}FCSStap {c |}{res}        377     5.37931    2.312523          0          7
+{txt}{space 4}FCSPulse {c |}{res}        377    1.907162    2.069119          0          7
+{txt}{space 4}FCSDairy {c |}{res}        377     1.34748    1.955271          0          7
+{txt}{space 7}FCSPr {c |}{res}        377     3.06366    2.454085          0          7
+{txt}{space 1}FCSNPrMeatF {c |}{res}        332    1.539157    1.649399          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 1}FCSNPrMeatO {c |}{res}        332    .1927711    .5542003          0          4
+{txt}{space 2}FCSNPrFish {c |}{res}        332    1.301205    1.692242          0          7
+{txt}{space 2}FCSNPrEggs {c |}{res}        332    2.319277    2.033077          0          7
+{txt}{space 6}FCSVeg {c |}{res}        377    3.997347    2.793894          0          7
+{txt}{space 2}FCSNVegOrg {c |}{res}        316     3.10443    2.735744          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSNVegGre {c |}{res}        316    1.408228    2.058153          0          7
+{txt}{space 4}FCSFruit {c |}{res}        377    2.771883    2.593149          0          7
+{txt}{space 1}FCSNFruiOrg {c |}{res}        283    1.275618    1.866561          0          7
+{txt}{space 6}FCSFat {c |}{res}        377    5.588859     2.42399          0          7
+{txt}{space 4}FCSSugar {c |}{res}        377    5.453581    2.553386          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 5}FCSCond {c |}{res}        377    5.840849    2.379238          0          7
+{txt}{space 9}FCS {c |}{res}          0
+{txt}{space 8}FCSG {c |}{res}          0
+{txt}{space 3}FCSStap_S {c |}{res}        383     5.37859    2.250133          0          7
+{txt}{space 2}FCSPulse_S {c |}{res}        383    2.086162    2.054338          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSDairy_S {c |}{res}        383      1.4047    2.078481          0          7
+{txt}{space 5}FCSPr_S {c |}{res}        383    3.002611    2.387247          0          7
+{txt}{space 4}FCSVeg_S {c |}{res}        383    3.869452    2.855816          0          7
+{txt}{space 2}FCSFruit_S {c |}{res}        383    2.396867     2.53441          0          7
+{txt}{space 4}FCSFat_S {c |}{res}        383    5.172324    2.590067          0          7
+{txt}{hline 13}{c +}{hline 57}
+{space 2}FCSSugar_S {c |}{res}        383    5.318538    2.587292          0          7
+{txt}{space 3}FCSCond_S {c |}{res}        383    5.921671    2.316371          0          7
+{txt}{space 7}FCS_S {c |}{res}          0
+{txt}{space 6}FCSG_S {c |}{res}          0
+{txt}
+{com}. gl  fcs FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCSCond FCS
+{txt}
+{com}.         
+. foreach var of global fcs {c -(}
+{txt}  2{com}.         replace `var' = `var'_S if Form == 2 & mi(`var')
+{txt}  3{com}. {c )-}
+{txt}(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+
+{com}.         destring FCS, replace
+{txt}FCS: all characters numeric; {res}replaced {txt}as {res}double
+{txt}
+{com}.         ren      FCS FCS_check
+{res}{txt}
+{com}.         
+.         gen     FCS = FCSStap * 2 + FCSPulse * 3 + FCSDairy * 4 + FCSPr * 4 +           ///
+>                                   FCSVeg  * 1 + FCSFruit * 1 + FCSFat * 0.5 + FCSSugar * 0.5
+{txt}
+{com}.         
+.         assert  FCS == FCS_check
+{txt}
+{com}.         gen     FCSCat28 = cond(FCS_check <= 28, 1, cond(FCS_check <= 42, 2, 3))
+{txt}
+{com}. 
+. ** Outcome: [rCSI] Reduced Coping Strategies (rCSI - Gendered)
+.         destring rCSI, replace
+{txt}rCSI: all characters numeric; {res}replaced {txt}as {res}byte
+{txt}
+{com}.         ren              rCSI  rCSI_check
+{res}{txt}
+{com}.         gen      rCSI = rCSILessQlty * 1 + rCSIBorrow * 2 + rCSIMealNb * 1 +            ///
+>                                         rCSIMealSize * 1 + rCSIMealAdult * 3                       
+{txt}
+{com}.         tab      rCSIGenderMealAdult
+
+  {txt}During the last 7 {c |}
+ days, mainly which {c |}
+      adult in your {c |}
+          household {c |}
+restricted their co {c |}      Freq.     Percent        Cum.
+{hline 20}{c +}{hline 35}
+  Mainly adult male {c |}{res}         31        8.16        8.16
+{txt}Mainly adult female {c |}{res}        123       32.37       40.53
+{txt} All adults equally {c |}{res}        226       59.47      100.00
+{txt}{hline 20}{c +}{hline 35}
+              Total {c |}{res}        380      100.00
+{txt}
+{com}.         assert   rCSI == rCSI_check
+{txt}
+{com}.         
+. ** LCS: Long (EN) vs. Short (FS)
+. local  lcs  stress_DomAsset stress_CrdtFood stress_Saving                       ///
+>                         stress_BorrowCash crisis_ProdAssets crisis_HealthEdu            ///
+>                         crisis_OutSchool em_ChildWork em_Begged em_IllegalAct
+{txt}
+{com}.                                 
+. foreach item of local lcs{c -(}
+{txt}  2{com}.         replace Lcs_`item' = LcsEN_`item' if mi(Lcs_`item') & Form == 1
+{txt}  3{com}.         sum Lcs_`item'
+{txt}  4{com}.         label val Lcs_`item' LcsEN_`item'
+{txt}  5{com}. {c )-}       
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~t {c |}{res}        760    4704.175     4986.77         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~d {c |}{res}        760     2156.43    4100.636         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~g {c |}{res}        760    2545.839     4336.14         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_stress~h {c |}{res}        760    1021.584    2994.455         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_crisis~s {c |}{res}        760    5794.132    4933.894         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_crisis~u {c |}{res}        760    21.21053    9.866455         10         30
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_crisis~l {c |}{res}        760    2469.346    4304.322         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_em_Chi~k {c |}{res}        760    3008.239    4579.544         10       9999
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_em_Beg~d {c |}{res}        760    11.85526    5.748813         10         30
+{txt}(377 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+Lcs_em_Ill~t {c |}{res}        760    12.36842    6.957128         10         40
+{txt}
+{com}.                                                                 
+.         gen Lcs_Stress_Coping    = (Lcs_stress_DomAsset         == 20 | Lcs_stress_DomAsset     == 30 | ///
+>                                                                 Lcs_stress_CrdtFood     == 20 | Lcs_stress_CrdtFood     == 30 | ///
+>                                                                 Lcs_stress_Saving       == 20 | Lcs_stress_Saving       == 30 | ///
+>                                                                 Lcs_stress_BorrowCash   == 20 | Lcs_stress_BorrowCash   == 30 ) 
+{txt}
+{com}.         gen Lcs_Crisis_Coping    = (Lcs_crisis_ProdAssets       == 20 | Lcs_crisis_ProdAssets   == 30 | ///
+>                                                                 Lcs_crisis_HealthEdu    == 20 | Lcs_crisis_HealthEdu    == 30 | ///
+>                                                                 Lcs_crisis_OutSchool    == 20 | Lcs_crisis_OutSchool    == 30 ) 
+{txt}
+{com}.         gen Lcs_Emergency_Coping = (Lcs_em_ChildWork            == 20 | Lcs_em_ChildWork                == 30 | ///
+>                                                                 Lcs_em_Begged                   == 20 | Lcs_em_Begged                   == 30 | ///
+>                                                                 Lcs_em_IllegalAct               == 20 | Lcs_em_IllegalAct               == 30 ) 
+{txt}
+{com}. 
+.         gen     LCS_Cat = 1
+{txt}
+{com}.         replace LCS_Cat = 2 if Lcs_Stress_Coping        == 1
+{txt}(647 real changes made)
+
+{com}.         replace LCS_Cat = 3 if Lcs_Crisis_Coping        == 1
+{txt}(450 real changes made)
+
+{com}.         replace LCS_Cat = 4 if Lcs_Emergency_Coping == 1
+{txt}(157 real changes made)
+
+{com}.         
+. ** Outcome: [FES] Food Expenditure Share Long vs. Short
+. 
+.         * 7 days food purchase in cash/credit
+. egen HHExp_Food_Purch_MN_7D = rowtotal(HHExpFCer_Purch_MN_7D HHExpFTub_Purch_MN_7D ///
+>          HHExpFPuls_Purch_MN_7D HHExpFVeg_Purch_MN_7D HHExpFFrt_Purch_MN_7D                ///
+>          HHExpFAnimMeat_Purch_MN_7D HHExpFAnimFish_Purch_MN_7D HHExpFFats_Purch_MN_7D  ///
+>          HHExpFDairy_Purch_MN_7D HHExpFEgg_Purch_MN_7D HHExpFSgr_Purch_MN_7D               ///
+>          HHExpFCond_Purch_MN_7D HHExpFBev_Purch_MN_7D HHExpFOut_Purch_MN_7D                        ///
+>          HHExpFCer_Purch_MN_7D_S HHExpFTub_Purch_MN_7D_S HHExpFPuls_Purch_MN_7D_S          ///
+>          HHExpFVegFrt_Purch_MN_7D_S HHExpFAnimMeatFishEgg_Purch_MN_7                               ///
+>          HHExpFFatsDairy_Purch_MN_7D_S HHExpFSgrCond_Purch_MN_7D_S                                         ///
+>          HHExpFBev_Purch_MN_7D_S HHExpFOut_Purch_MN_7D_S)
+{txt}
+{com}.         
+.         * 7 days food gift/aid value 
+. egen HHExp_Food_GiftAid_MN_7D = rowtotal(HHExpFCer_GiftAid_MN_7D HHExpFTub_GiftAid_MN_7D ///
+>          HHExpFPuls_GiftAid_MN_7D HHExpFVeg_GiftAid_MN_7D HHExpFFrt_GiftAid_MN_7D                        ///
+>          HHExpFAnimMeat_GiftAid_MN_7D HHExpFAnimFish_GiftAid_MN_7D HHExpFFats_GiftAid_MN_7D  ///
+>          HHExpFDairy_GiftAid_MN_7D HHExpFEgg_GiftAid_MN_7D HHExpFSgr_GiftAid_MN_7D                       ///
+>          HHExpFCond_GiftAid_MN_7D HHExpFBev_GiftAid_MN_7D HHExpFOut_GiftAid_MN_7D                        ///
+>          HHExpFCer_GiftAid_MN_7D_S HHExpFTub_GiftAid_MN_7D_S HHExpFPuls_GiftAid_MN_7D_S          ///
+>          HHExpFVegFrt_GiftAid_MN_7D_S HHExpFAnimMeatFishEgg_GiftAid_MN                                           ///
+>          HHExpFFatsDairy_GiftAid_MN_7D_S HHExpFSgrCond_GiftAid_MN_7D_S                                           ///
+>          HHExpFBev_GiftAid_MN_7D_S HHExpFOut_GiftAid_MN_7D_S)
+{txt}
+{com}. 
+.         * 7 days food own-production value
+. egen HHExp_Food_Own_MN_7D = rowtotal(HHExpFCer_Own_MN_7D HHExpFTub_Own_MN_7D    ///
+>          HHExpFPuls_Own_MN_7D HHExpFVeg_Own_MN_7D HHExpFFrt_Own_MN_7D                           ///
+>          HHExpFAnimMeat_Own_MN_7D HHExpFAnimFish_Own_MN_7D HHExpFFats_Own_MN_7D         ///
+>          HHExpFDairy_Own_MN_7D HHExpFEgg_Own_MN_7D HHExpFSgr_Own_MN_7D                          ///
+>          HHExpFCond_Own_MN_7D HHExpFBev_Own_MN_7D HHExpFOut_Own_MN_7D                           ///
+>          HHExpFCer_Own_MN_7D_S HHExpFTub_Own_MN_7D_S HHExpFPuls_Own_MN_7D_S                     ///
+>          HHExpFVegFrt_Own_MN_7D_S HHExpFAnimMeatFishEgg_Own_MN_7D_                                      ///
+>          HHExpFFatsDairy_Own_MN_7D_S HHExpFSgrCond_Own_MN_7D_S HHExpFBev_Own_MN_7D_S ///
+>          HHExpFOut_Own_MN_7D_S)
+{txt}
+{com}. 
+.         * 7 days food values in total and 1 month average 
+.         gen HHExpFoodTotal_7D = HHExp_Food_Purch_MN_7D + HHExp_Food_GiftAid_MN_7D + ///
+>                                                         HHExp_Food_Own_MN_7D
+{txt}
+{com}.         gen HHExpFoodTotal_1M = (HHExpFoodTotal_7D/7) * 30
+{txt}
+{com}.         
+. ***** NON-FOOD EXPENDITURE *****************************************************
+.         
+.         **** 1 MONTH ****
+.         * Monthly non food expenditure in cash/credit
+. egen HHExp_NonFood_Purch_MN_1M = rowtotal(HHExpNFHyg_Purch_MN_1M HHExpNFTransp_Purch_MN_1M ///
+>          HHExpNFFuel_Purch_MN_1M HHExpNFWat_Purch_MN_1M HHExpNFEnerg_Purch_MN_1M                           ///
+>          HHExpNFDwelSer_Purch_MN_1M HHExpNFPhone_Purch_MN_1M HHExpNFRecr_Purch_MN_1M               ///
+>          HHExpNFAlcTobac_Purch_MN_1M                                                                                                               ///
+>          HHExpNFHyg_Purch_MN_1M_S HHExpNFTranspFuel_Purch_MN_1M_S HHExpNFEnerg_Purch_MN_1M_S   ///
+>          HHExpNFWat_Purch_MN_1M_S HHExpNFDwelSer_Purch_MN_1M_S HHExpNFPhone_Purch_MN_1M_S          ///
+>          HHExpNFRecr_Purch_MN_1M_S HHExpNFAlcTobac_Purch_MN_1M_S)
+{txt}
+{com}. 
+.          * Monthly non food gift/aid value 
+. egen HHExp_NonFood_GiftAid_MN_1M = rowtotal(HHExpNFHyg_GiftAid_MN_1M                                    ///
+>          HHExpNFTransp_GiftAid_MN_1M HHExpNFFuel_GiftAid_MN_1M HHExpNFWat_GiftAid_MN_1M         ///
+>          HHExpNFEnerg_GiftAid_MN_1M HHExpNFDwelSer_GiftAid_MN_1M HHExpNFPhone_GiftAid_MN_1M     ///
+>          HHExpNFRecr_GiftAid_MN_1M HHExpNFAlcTobac_GiftAid_MN_1M                                                        ///
+>          HHExpNFHyg_GiftAid_MN_1M_S HHExpNFTranspFuel_GiftAid_MN_1M_                                            ///
+>          HHExpNFEnerg_GiftAid_MN_1M_S HHExpNFWat_GiftAid_MN_1M_S                                                        ///
+>          HHExpNFDwelSer_GiftAid_MN_1M_S HHExpNFPhone_GiftAid_MN_1M_S                                            ///
+>          HHExpNFRecr_GiftAid_MN_1M_S HHExpNFAlcTobac_GiftAid_MN_1M_S)
+{txt}
+{com}. 
+.          * Monthly non food own (just energy) 
+. * egen HHExp_NonFood_Own_MN_1M = rowtotal(HHExpNFEnerg_Own_MN_1M HHExpNFEnerg_Own_MN_1M_S)
+. 
+.         **** 6 MONTHS ****
+.         * Non food expenditure in cash/credit in 6 months
+. egen HHExp_NonFood_Purch_MN_6M = rowtotal(HHExpNFMedServ_Purch_MN_6M                            ///
+>          HHExpNFMedGood_Purch_MN_6M HHExpNFCloth_Purch_MN_6M HHExpNFEduFee_Purch_MN_6M  ///
+>          HHExpNFEduGood_Purch_MN_6M HHExpNFRent_Purch_MN_6M HHExpNFHHSoft_Purch_MN_6M   ///
+>          HHExpNFHHMaint_Purch_MN_6M HHExpNFMedServGood_Purch_MN_6M_S                                    ///
+>          HHExpNFCloth_Purch_MN_6M_S HHExpNFEduFeeGood_Purch_MN_6M_S                                     ///
+>          HHExpNFRent_Purch_MN_6M_S HHExpNFHHSoftMaint_Purch_MN_6M_S)
+{txt}
+{com}. 
+.          * Non food expenditure gift/aid value in 6 months
+. egen HHExp_NonFood_GiftAid_MN_6M = rowtotal(HHExpNFMedServ_GiftAid_MN_6M        ///
+>          HHExpNFMedGood_GiftAid_MN_6M HHExpNFCloth_GiftAid_MN_6M                                ///
+>          HHExpNFEduFee_GiftAid_MN_6M HHExpNFEduGood_GiftAid_MN_6M                               ///
+>          HHExpNFRent_GiftAid_MN_6M HHExpNFHHSoft_GiftAid_MN_6M                                  ///
+>          HHExpNFHHMaint_GiftAid_MN_6M HHExpNFMedServGood_GiftAid_MN_6M                  ///
+>          HHExpNFCloth_GiftAid_MN_6M_S HHExpNFEduFeeGood_GiftAid_MN_6M_                  ///
+>          HHExpNFRent_GiftAid_MN_6M_S HHExpNFHHSoftMaint_GiftAid_MN_6M)
+{txt}
+{com}. 
+.         **** TOTAL 1 MONTH AVERAGE ****
+.         * Total monthly non food expenditure in cash/credit 
+.         gen HHExpNFTotal_Purch_MN_1M = HHExp_NonFood_Purch_MN_1M + (HHExp_NonFood_Purch_MN_6M/6)
+{txt}
+{com}.         * Total monthly non-food gift/aid value
+.         gen HHExpNFTotal_GiftAid_MN_1M = HHExp_NonFood_GiftAid_MN_1M + (HHExp_NonFood_GiftAid_MN_6M/6)
+{txt}
+{com}.         * Total monthly non-food
+.         gen HHExpNFTotal_1M = HHExpNFTotal_Purch_MN_1M + HHExpNFTotal_GiftAid_MN_1M 
+{txt}
+{com}.                                                 // + HHExp_NonFood_Own_MN_1M
+.                 
+.         **** TOTAL **** 
+.         gen HHExpTotal = HHExpFoodTotal_1M + HHExpNFTotal_1M
+{txt}
+{com}.         gen PCExpTotal = HHExpTotal/HHSize
+{txt}
+{com}. 
+.         * FES // household level
+.         gen     FES = HHExpFoodTotal_1M/HHExpTotal
+{txt}(1 missing value generated)
+
+{com}.         count if HHExpFoodTotal_1M == 0 //  missing
+  {res}3
+{txt}
+{com}.         
+.         replace FES = 0          if mi(FES)
+{txt}(1 real change made)
+
+{com}.         
+.         gen byte FES_Cat = 1 if FES <  0.5
+{txt}(647 missing values generated)
+
+{com}.         replace  FES_Cat = 2 if FES >= 0.5  & FES < 0.65
+{txt}(133 real changes made)
+
+{com}.         replace  FES_Cat = 3 if FES >= 0.65 & FES < 0.75
+{txt}(144 real changes made)
+
+{com}.         replace  FES_Cat = 4 if FES >= 0.75
+{txt}(370 real changes made)
+
+{com}. 
+.         ** Income
+.         gl income HHHOccupation HHInc_PCT HHIncNb HHIncFirst_SRi HHIncFirst_oth ///
+>                           HHIncF_PCT HHInc017_PCT HHIncChg
+{txt}
+{com}.         
+. foreach var of global income {c -(}
+{txt}  2{com}.         replace `var' = `var'_S if Form == 2 & mi(`var')
+{txt}  3{com}. {c )-}
+{txt}(383 real changes made)
+(383 real changes made)
+(383 real changes made)
+(373 real changes made)
+(74 real changes made)
+(383 real changes made)
+(262 real changes made)
+(383 real changes made)
+
+{com}.         gen CARI_Inc = .
+{txt}(760 missing values generated)
+
+{com}.         replace CARI_Inc = 1 if inlist(HHIncFirst_SRi, 1, 2, 5, 13, 14, 15, 16) & inlist(HHIncChg, 0, 1, 5)
+{txt}(118 real changes made)
+
+{com}.         replace CARI_Inc = 2 if inlist(HHIncFirst_SRi, 1, 2, 5, 13, 14, 15, 16) & inlist(HHIncChg, 2, 3, 4)
+{txt}(68 real changes made)
+
+{com}.         replace CARI_Inc = 2 if inlist(HHIncFirst_SRi, 3, 4, 6, 12) & inlist(HHIncChg, 0, 1, 5)
+{txt}(166 real changes made)
+
+{com}.         replace CARI_Inc = 3 if inlist(HHIncFirst_SRi, 3, 4, 6, 12) & inlist(HHIncChg, 2, 3, 4)
+{txt}(171 real changes made)
+
+{com}.         replace CARI_Inc = 4 if HHIncNb == 0 | inlist(HHIncFirst_SRi, 7, 8, 9, 10, 11)
+{txt}(97 real changes made)
+
+{com}.         replace CARI_Inc = 5 if HHIncFirst_SRi == 999
+{txt}(140 real changes made)
+
+{com}.         * Recode missing values
+.         replace CARI_Inc = . if CARI_Inc == 5
+{txt}(140 real changes made, 140 to missing)
+
+{com}.         
+.         ** Question relevant when: ${c -(}HHIncNb{c )-} >0
+.         tab HHIncFirst_SRi
+
+  {txt}What is the main source of income for {c |}
+                         the household? {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+              Wage Labor - Professional {c |}{res}         13        1.78        1.78
+{txt}                   Wage Labor - Skilled {c |}{res}         45        6.15        7.92
+{txt}Wage Labor - Unskilled/Casual/Agricultu {c |}{res}        176       24.04       31.97
+{txt}Wage Labor - Unskilled/Casual/non-agric {c |}{res}         90       12.30       44.26
+{txt}                                Pension {c |}{res}         20        2.73       46.99
+{txt}                            Remittances {c |}{res}         31        4.23       51.23
+{txt}                              Aid/gifts {c |}{res}         35        4.78       56.01
+{txt}                  Saving/selling assets {c |}{res}          1        0.14       56.15
+{txt}         Petty trade/selling on streets {c |}{res}         33        4.51       60.66
+{txt}             Small trade (own business) {c |}{res}         40        5.46       66.12
+{txt}      Medium/large trade (own business) {c |}{res}          2        0.27       66.39
+{txt}Small Agriculture production including  {c |}{res}         74       10.11       76.50
+{txt}Medium/large agriculture production inc {c |}{res}         32        4.37       80.87
+{txt}                        Other (specify) {c |}{res}        140       19.13      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        732      100.00
+{txt}
+{com}.         gen HHInc_None                  = mi(HHIncFirst_SRi)
+{txt}
+{com}.         gen HHInc_WageSkill     = (HHIncFirst_SRi == 1  | HHIncFirst_SRi == 2)
+{txt}
+{com}.         gen HHInc_WageUnskill   = (HHIncFirst_SRi == 3  | HHIncFirst_SRi == 4)
+{txt}
+{com}.         gen HHInc_Trade                 = (HHIncFirst_SRi == 12 | HHIncFirst_SRi == 13 | ///
+>                                                            HHIncFirst_SRi == 14)
+{txt}
+{com}.         gen HHInc_AgProduction  = (HHIncFirst_SRi == 15 | HHIncFirst_SRi == 16)
+{txt}
+{com}.         
+.         tab HHIncChg, gen(HHInc_)
+
+  {txt}Was there a change in income over the {c |}
+    last year? (Please do not take into {c |}
+                                 accoun {c |}      Freq.     Percent        Cum.
+{hline 40}{c +}{hline 35}
+                              No change {c |}{res}        371       48.82       48.82
+{txt}                              Increased {c |}{res}         25        3.29       52.11
+{txt}               Reduced by less than 25% {c |}{res}        132       17.37       69.47
+{txt}Reduced by more than 25% and less than  {c |}{res}        108       14.21       83.68
+{txt}               Reduced by more than 50% {c |}{res}        124       16.32      100.00
+{txt}{hline 40}{c +}{hline 35}
+                                  Total {c |}{res}        760      100.00
+{txt}
+{com}.         ren HHInc_1     HHInc_Change_None
+{res}{txt}
+{com}.         ren HHInc_2     HHInc_Increase
+{res}{txt}
+{com}.         ren HHInc_3     HHInc_Reduce25
+{res}{txt}
+{com}.         ren HHInc_4     HHInc_Reduce50
+{res}{txt}
+{com}.         ren HHInc_5     HHInc_Reduce50More
+{res}{txt}
+{com}.         
+. ** Outcome: [CARI] COMBINING CURRENT STATUS AND COPING CAPACITY
+.         recode  FCSCat28 (1 = 4) (2 = 3) (3 = 1), gen(FCS_4pt_CARI)
+{txt}(760 differences between {bf:FCSCat28} and {bf:FCS_4pt_CARI})
+
+{com}.         replace FCS_4pt_CARI = 2 if FCSCat28 == 3 & rCSI >= 4
+{txt}(364 real changes made)
+
+{com}.         
+.         gen CC_FES_Cat   = (FES_Cat + LCS_Cat)/2        // no round here
+{txt}
+{com}.         gen CARI_FES_Raw = (FCS_4pt_CARI + CC_FES_Cat)/2
+{txt}
+{com}.         gen CARI_FES_Cat = round(CARI_FES_Raw)
+{txt}
+{com}.         gen HH_Vul_FES   = (CARI_FES_Cat == 3 | CARI_FES_Cat == 4)
+{txt}
+{com}. 
+.         gen CC_Inc_Cat   = (CARI_Inc + LCS_Cat)/2       // no round here
+{txt}(140 missing values generated)
+
+{com}.         gen CARI_Inc_Raw = (FCS_4pt_CARI + CC_Inc_Cat)/2
+{txt}(140 missing values generated)
+
+{com}.         gen CARI_Inc_Cat = round(CARI_Inc_Raw)
+{txt}(140 missing values generated)
+
+{com}.         gen HH_Vul_Income  = (CARI_Inc_Cat == 3 | CARI_Inc_Cat == 4)
+{txt}
+{com}.         
+.         // Standard MDDW method - SNF home group will be grains
+.         gen MDD_Staples          = (PWMDDWStapCer == 1 |  PWMDDWStapRoo == 1)   // | PWMDDWSnf == 1
+{txt}
+{com}.         gen MDD_Pulses           = (PWMDDWPulse == 1)
+{txt}
+{com}.         gen MDD_NutsSeeds        = (PWMDDWNuts == 1)
+{txt}
+{com}.         gen MDD_Dairies          = (PWMDDWDairy == 1 | PWMDDWMilk == 1)
+{txt}
+{com}.         gen MDD_MeatFish         = (PWMDDWPrMeatO == 1 | PWMDDWPrMeatF == 1 | PWMDDWPrMeatPro == 1 | ///
+>                                                         PWMDDWPrMeatWhite == 1 |  PWMDDWPrFish == 1)
+{txt}
+{com}.         gen MDD_Eggs             = (PWMDDWPrEgg == 1)
+{txt}
+{com}.         gen MDD_LeafGVeg         = (PWMDDWVegGre == 1)
+{txt}
+{com}.         gen MDD_VitA             = (PWMDDWVegOrg == 1 | PWMDDWFruitOrg == 1)
+{txt}
+{com}.     gen MDD_OtherVeg     = (PWMDDWVegOth == 1) 
+{txt}
+{com}.     gen MDD_OtherFruits  = (PWMDDWFruitOth == 1)
+{txt}
+{com}.         gen MDD_Index            = MDD_Staples + MDD_Pulses + MDD_NutsSeeds + MDD_Dairies + ///
+>                                                    MDD_MeatFish + MDD_Eggs + MDD_LeafGVeg + MDD_VitA +          ///
+>                                                    MDD_OtherVeg + MDD_OtherFruits
+{txt}
+{com}.         gen MDD_Index_5 = (MDD_Index >= 5)
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 3: Label Variables
+. *******************************************************************************/        
+. 
+.         label def YesNo                                 0 "No"   1 "Yes"
+{txt}
+{com}.         label val Lcs_Stress_Coping Lcs_Crisis_Coping                           ///
+>                           Lcs_Emergency_Coping HH_Vul_FES HH_Vul_Income         ///
+>                           HHDisplaced RESPSingle RESPMarried HHDisable          ///
+>                           RESPMeals_3More RESPFoodWorry RESPFS_EnoughFood       ///
+>                           RESPFS_LessPrefer RESPFS_LessMeal RESPFS_DayNoEat YesNo
+{txt}
+{com}.         
+.         label def FCSCat                                1 "Poor" 2 "Borderline" 3 "Acceptable"
+{txt}
+{com}.         label val FCSCat28 FCSCat
+{txt}
+{com}.         
+.         label def CARI_Meals_lbl                1 "Three meals" ///
+>                                                                         2 "Two meals"   ///
+>                                                                         3 "One meal"   ///
+>                                                                         4 "No meals"
+{txt}
+{com}.         label val CARI_Meals CARI_Meals_lbl
+{txt}
+{com}.         
+.         label def CARI_Worry_lbl                1 "Not worried" ///
+>                                                                         2 "Worried"      ///
+>                                                                         3 "Worried & skipping meals" ///
+>                                                                         4 "Worried & going day/night without eating"
+{txt}
+{com}.         label val CARI_Worry CARI_Worry_lbl
+{txt}
+{com}.         
+.         label def LCS_l                                 1 "Not adopting coping strategies"      ///
+>                                                                         2 "Stress coping strategies"            ///
+>                                                                         3 "Crisis coping strategies"            ///
+>                                                                         4 "Emergencies coping strategies" 
+{txt}
+{com}.         label val LCS_Cat       LCS_l
+{txt}
+{com}.         
+.         label def FS_CARI                               1 "Food Secure"                                 ///
+>                                                                         2 "Marginally Food Secure"              ///
+>                                                                         3 "Moderately Food Insecure"    ///
+>                                                                         4 "Severely Food Insecure"
+{txt}
+{com}.         label val FCS_4pt_CARI CARI_FES_Cat FES_Cat CARI_Inc_Cat CARI_Inc FS_CARI          
+{txt}
+{com}.         
+.         label def survey_l                              1  "Face-to-Face" 2 "Remote"
+{txt}
+{com}.         label val Modality  survey_l
+{txt}
+{com}.         
+.         label def length_l                              1 "Long Form"     2 "Short Form"
+{txt}
+{com}.         label val Form length_l
+{txt}
+{com}.         
+.         label var Modality                              "Survey Modality: F2F vs. Remote"
+{txt}
+{com}.         label var ID_Length                             "Household ID Length"
+{txt}
+{com}.         label var Form                                  "Form Type: Long vs. Short"
+{txt}
+{com}.         label var Duration_Min                  "Survey Duration in Minutes"
+{txt}
+{com}.         label var RESPHHH                               "Head of Household Respondent"
+{txt}
+{com}.         label var RESPAge                               "Respondent Age"
+{txt}
+{com}.         label var RESPFemale                    "Female Respondent"
+{txt}
+{com}.         label var RESPSingle                    "Single Respondent"
+{txt}
+{com}.         label var RESPMarried                   "Married Respondent"
+{txt}
+{com}.         label var HHDisable                             "Household has disabled member"
+{txt}
+{com}.         label var HHDisplaced                   "IDP Household"
+{txt}
+{com}.         label var HHhostDisp                    "Household currently hosting IDP or Refugee"
+{txt}
+{com}.         label var HHSize                                "Household Size"
+{txt}
+{com}.         label var MDDIHHDisabledNb              "Number of disabled household members"
+{txt}
+{com}.         label var FemaleMale_Ratio              "Household Female/Male Ratio"
+{txt}
+{com}.         label var FemaleMale_Ratio_1_5  "Household Female/Male Ratio >= 1.5"
+{txt}
+{com}.         label var Dependency_Ratio              "Household Dependency Ratio"    
+{txt}
+{com}.         label var Dep_Ratio_Cat                 "Household Dependency Ratio Category"
+{txt}
+{com}.         label var Dep_Ratio_1_5                 "Household Dependency Ratio > 1.5"
+{txt}
+{com}.         label var Dep_Ratio_2                   "Household Dependency Ratio > 2"
+{txt}
+{com}.         label var R_Num_Dependent               "Household total number of dependents"
+{txt}
+{com}.         
+.         label var RESPMeals_3More               "Respondent and family ate 3 or more meals yesterday"
+{txt}
+{com}.         label var RESPFoodWorry                 "Respondent and family worried about no enough food in past 30 days"
+{txt}
+{com}.         label var RESPFS_EnoughFood             "Household had no difficulties eating enough food in past 7 days"
+{txt}
+{com}.         label var RESPFS_LessPrefer             "Household ate less preferred foods in past 7 days"
+{txt}
+{com}.         label var RESPFS_LessMeal               "Household skipped meals or ate less than usual in past 7 days"
+{txt}
+{com}.         label var RESPFS_DayNoEat               "Household went one whole day without eating in past 7 days"
+{txt}
+{com}.         label var CARI_Meals                    "CARI based on number of meals per day"
+{txt}
+{com}.         label var CARI_Worry                    "CARI based on worry of food insecurity"
+{txt}
+{com}.         
+.         label var FCSStap                               "Consumption over the past 7 days (cereals and tubers)"
+{txt}
+{com}.         label var FCSVeg                                "Consumption over the past 7 days (vegetables)"
+{txt}
+{com}.         label var FCSFruit                              "Consumption over the past 7 days (fruit)"
+{txt}
+{com}.         label var FCSPr                                 "Consumption over the past 7 days (protein-rich foods)"
+{txt}
+{com}.         label var FCSPulse                              "Consumption over the past 7 days (pulses)"
+{txt}
+{com}.         label var FCSDairy                              "Consumption over the past 7 days (dairy products)"
+{txt}
+{com}.         label var FCSFat                                "Consumption over the past 7 days (oil)"
+{txt}
+{com}.         label var FCSSugar                              "Consumption over the past 7 days (sugar)"
+{txt}
+{com}.         label var FCS                                   "Food Consumption Score"
+{txt}
+{com}.         label var FCSCat28                              "FCS Categories, thresholds 28-42"
+{txt}
+{com}.         label var FCS_4pt_CARI                  "CARI: Current Status of FCS and rCSI"
+{txt}
+{com}.         
+.         label var rCSILessQlty                  "Relied on less preferred, less expensive food"
+{txt}
+{com}.         label var rCSIBorrow                    "Borrowed food or relied on help from friends or relatives"
+{txt}
+{com}.         label var rCSIMealSize                  "Reduced portion size of meals at meals time"
+{txt}
+{com}.         label var rCSIMealAdult                 "Restricted consumption by adults in order for young-children to eat"
+{txt}
+{com}.         label var rCSIMealNb                    "Reduced the number of meals eaten per day"
+{txt}
+{com}.         label var rCSI                                  "Reduced Consumption Strategies Index (rCSI)"
+{txt}
+{com}.         
+.         label var Lcs_stress_DomAsset   "Stress coping: Sold household assets/goods"
+{txt}
+{com}.         label var Lcs_stress_CrdtFood   "Stress coping: Purchased food/non-food on credit (incur debts)"
+{txt}
+{com}.         label var Lcs_stress_Saving             "Stress coping: Spent savings"
+{txt}
+{com}.         label var Lcs_stress_BorrowCash "Stress coping: Borrowed money"
+{txt}
+{com}.         label var Lcs_crisis_ProdAssets "Crisis coping: Sold productive assets or means of transport"
+{txt}
+{com}.         label var Lcs_crisis_HealthEdu  "Crisis coping: Reduced expenses on health and education"
+{txt}
+{com}.         label var Lcs_crisis_OutSchool  "Crisis coping: Withdrew children from school"
+{txt}
+{com}.         label var Lcs_em_ChildWork              "Emergency coping: Send children to work for household income"
+{txt}
+{com}.         label var Lcs_em_Begged                 "Emergency coping: Begged and/or scavenged"
+{txt}
+{com}.         label var Lcs_em_IllegalAct             "Emergency coping: Engaged in illegal income activities"
+{txt}
+{com}.         label var Lcs_Stress_Coping     "Household engaged in stress coping strategies" 
+{txt}
+{com}.         label var Lcs_Crisis_Coping     "Household engaged in crisis coping strategies" 
+{txt}
+{com}.         label var Lcs_Emergency_Coping  "Household engaged in emergency coping strategies" 
+{txt}
+{com}.         label var LCS_Cat                               "Livelihood Coping Strategies Cateory"
+{txt}
+{com}.         
+.         la var HHExp_Food_Purch_MN_7D   "Total weekly food expenditure on cash/credit"
+{txt}
+{com}.         la var HHExp_Food_GiftAid_MN_7D "Total weekly food expenditure from gift aid"
+{txt}
+{com}.         la var HHExp_Food_Own_MN_7D     "Total weekly food expenditure from own production"
+{txt}
+{com}.         la var HHExpFoodTotal_7D                "Total weekly food expenditure" 
+{txt}
+{com}.         la var HHExpFoodTotal_1M                "Total monthly food expenditure (average)"
+{txt}
+{com}.         
+.         la var HHExp_NonFood_Purch_MN_1M        "Total monthly non-food expenditure on cash/credit"
+{txt}
+{com}.         la var HHExp_NonFood_GiftAid_MN_1M      "Total monthly non-food expenditure from gift aid"      
+{txt}
+{com}.         la var HHExp_NonFood_Purch_MN_6M        "Total other non-food expenditure on cash/credit in 6 months"
+{txt}
+{com}.         la var HHExp_NonFood_GiftAid_MN_6M      "Total other non-food expenditure from gift aid in 6 months"    
+{txt}
+{com}.         la var HHExpNFTotal_Purch_MN_1M         "Total monthly non-food exp on cash (average)"
+{txt}
+{com}.         la var HHExpNFTotal_GiftAid_MN_1M       "Total monthly non-food exp from aid (average)"
+{txt}
+{com}.         la var HHExpNFTotal_1M                          "Total monthly non-food expenditure (average)"
+{txt}
+{com}.         
+.         label var HHExpTotal                    "Monthly total household expenditure"
+{txt}
+{com}.         label var PCExpTotal                    "Monthly total household expenditure per capita"
+{txt}
+{com}.         label var FES                                   "Food Expenditure Share"
+{txt}
+{com}.         label var FES_Cat                               "Food Security Category based on FES"
+{txt}
+{com}.         
+.         label var CC_FES_Cat                    "Coping Capacity Combined Category using FES"
+{txt}
+{com}.         label var CARI_FES_Raw                  "Raw CARI Category based on FES"
+{txt}
+{com}.         label var CARI_FES_Cat                  "CARI Category using FES"
+{txt}
+{com}.         label var HH_Vul_FES                    "Household being vulnerable using FES CARI"
+{txt}
+{com}.         label var CARI_Inc                              "Household Economic Vulnerability Based on Income"
+{txt}
+{com}.         label var CC_Inc_Cat                    "Coping Capacity Combined Category using Income"
+{txt}
+{com}.         label var CARI_Inc_Raw                  "Raw CARI Category based on Income"
+{txt}
+{com}.         label var CARI_Inc_Cat                  "CARI Category using Income"
+{txt}
+{com}.         label var HH_Vul_Income                 "Household being vulnerable using Income rCARI"
+{txt}
+{com}. 
+.         label var HHInc_None                    "Income Source: None"
+{txt}
+{com}.         label var HHInc_WageSkill               "Income Source: Skilled Waged Labor"
+{txt}
+{com}.         label var HHInc_WageUnskill             "Income Source: Unskilled Waged Labor"
+{txt}
+{com}.         label var HHInc_Trade                   "Income Source: Trade"
+{txt}
+{com}.         label var HHInc_AgProduction    "Income Source: Agricultural Production"
+{txt}
+{com}.         label var HHInc_Change_None             "Income Change: None"
+{txt}
+{com}.         label var HHInc_Increase                "Income Change: Increase"
+{txt}
+{com}.         label var HHInc_Reduce25                "Income Change: Reduced < 25%"
+{txt}
+{com}.         label var HHInc_Reduce50                "Income Change: Reduced 25% - 50%"
+{txt}
+{com}.         label var HHInc_Reduce50More    "Income Change: Reduced 50+%"
+{txt}
+{com}.         
+.         label var PWMDDWStapCer                 "Foods made from grains"
+{txt}
+{com}.         label var PWMDDWStapRoo                 "White roots and tubers or plantains"
+{txt}
+{com}.         label var PWMDDWPulse                   "Pulses (beans, peas and lentils)"
+{txt}
+{com}.         label var PWMDDWNuts                    "Nuts and seeds"
+{txt}
+{com}.         label var PWMDDWMilk                    "Milk"
+{txt}
+{com}.         label var PWMDDWDairy                   "Milk products"
+{txt}
+{com}.         label var PWMDDWPrMeatO                 "Organ meats"
+{txt}
+{com}.         label var PWMDDWPrMeatF                 "Red flesh meat from mammals"
+{txt}
+{com}.         label var PWMDDWPrMeatPro               "Processed meat"
+{txt}
+{com}.         label var PWMDDWPrMeatWhite             "Poultry and other white meats"
+{txt}
+{com}.         label var PWMDDWPrFish                  "Fish and Seafood"
+{txt}
+{com}.         label var PWMDDWPrEgg                   "Eggs from poultry or any other bird"
+{txt}
+{com}.         label var PWMDDWVegGre                  "Dark green leafy vegetable"
+{txt}
+{com}.         label var PWMDDWVegOrg                  "Vitamin A-rich vegetables, roots and tubers"
+{txt}
+{com}.         label var PWMDDWFruitOrg                "Vitamin A-rich fruits"
+{txt}
+{com}.         label var PWMDDWVegOth                  "Other vegetables"
+{txt}
+{com}.         label var PWMDDWFruitOth                "Other fruits"
+{txt}
+{com}. *       label var PWMDDWSnf                             "Specialized Nutritious Foods (SNF) for women"
+.         label var MDD_Staples                   "Staples"
+{txt}
+{com}.         label var MDD_Pulses                    "Pulses"
+{txt}
+{com}.         label var MDD_NutsSeeds                 "Nuts and seeds"
+{txt}
+{com}.         label var MDD_Dairies                   "Dairy products"
+{txt}
+{com}.         label var MDD_MeatFish                  "Meat, poultry and fish"
+{txt}
+{com}.         label var MDD_Eggs                              "Eggs"
+{txt}
+{com}.         label var MDD_LeafGVeg                  "Dark green leafy vegetables"
+{txt}
+{com}.         label var MDD_VitA                              "Vitamin A-rich vegetables & fruits"
+{txt}
+{com}.         label var MDD_OtherVeg                  "Other vegetables"
+{txt}
+{com}.         label var MDD_OtherFruits               "Other fruits"
+{txt}
+{com}.         label var MDD_Index                             "MDD Index"
+{txt}
+{com}.         label var MDD_Index_5                   "MDD Index >= 5"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 4: Save F2F Analysis Dataset
+. *******************************************************************************/
+.         
+.         compress
+  {txt}variable {bf}{res}Modality{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ID_Length{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Form{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPHHH{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFemale{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisplaced{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSingle{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPMarried{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHDisable{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FemaleMale_Ratio_1_5{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}R_Num_Dependent{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dep_Ratio_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dep_Ratio_1_5{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Dep_Ratio_2{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPMeals_3More{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFoodWorry{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_EnoughFood{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_LessPrefer{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_LessMeal{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPFS_DayNoEat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Meals{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Worry{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSCat28{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Stress_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Crisis_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_Emergency_Coping{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}LCS_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_None{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_WageSkill{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_WageUnskill{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_Trade{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHInc_AgProduction{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCS_4pt_CARI{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_FES_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_FES{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}CARI_Inc_Cat{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HH_Vul_Income{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_Staples{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_Pulses{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_NutsSeeds{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_Dairies{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_MeatFish{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_Eggs{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_LeafGVeg{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_VitA{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_OtherVeg{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_OtherFruits{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_Index{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDD_Index_5{sf}{txt} was {bf}{res}float{sf}{txt} now {bf}{res}byte{sf}
+  {bf}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (142,034 bytes saved)
+
+{com}.         
+.         labelrename HHExpFAnimMeatFishEgg_Purch_7D_S HHExpFPro_Purch_7D_S
+
+{txt}Value label {res:HHExpFAnimMeatFishEgg_Purch_7D_S} renamed to {res:HHExpFPro_Purch_7D_S}
+{p 0 8 2}{txt}value label {res:HHExpFAnimMeatFishEgg_Purch_7D_S} was attached to variables {res}HHExpFAnimMeatFishEgg_Purch_7D_S{p_end}
+{txt}
+{com}.         labelrename HHExpNFHHSoftMaint_GiftAid_6M_S  HHExpNFHHSoft_GiftAid_6M_S
+
+{txt}Value label {res:HHExpNFHHSoftMaint_GiftAid_6M_S} renamed to {res:HHExpNFHHSoft_GiftAid_6M_S}
+{p 0 8 2}{txt}value label {res:HHExpNFHHSoftMaint_GiftAid_6M_S} was attached to variables {res}HHExpNFHHSoftMaint_GiftAid_6M_S{p_end}
+{txt}
+{com}.         labelrename HHExpFAnimMeatFishEgg_GiftAid_7D HHExpFPro_GiftAid_7D
+
+{txt}Value label {res:HHExpFAnimMeatFishEgg_GiftAid_7D} renamed to {res:HHExpFPro_GiftAid_7D}
+{p 0 8 2}{txt}value label {res:HHExpFAnimMeatFishEgg_GiftAid_7D} was attached to variables {res}HHExpFAnimMeatFishEgg_GiftAid_7D{p_end}
+{txt}
+{com}.         labelrename HHExpNFEduFeeGood_GiftAid_6M_S   HHExpNFEdu_GiftAid_6M_S
+
+{txt}Value label {res:HHExpNFEduFeeGood_GiftAid_6M_S} renamed to {res:HHExpNFEdu_GiftAid_6M_S}
+{p 0 8 2}{txt}value label {res:HHExpNFEduFeeGood_GiftAid_6M_S} was attached to variables {res}HHExpNFEduFeeGood_GiftAid_6M_S{p_end}
+{txt}
+{com}.         labelrename HHExpFAnimMeatFishEgg_Own_7D_S       HHExpFPro_Own_7D_S
+
+{txt}Value label {res:HHExpFAnimMeatFishEgg_Own_7D_S} renamed to {res:HHExpFPro_Own_7D_S}
+{p 0 8 2}{txt}value label {res:HHExpFAnimMeatFishEgg_Own_7D_S} was attached to variables {res}HHExpFAnimMeatFishEgg_Own_7D_S{p_end}
+{txt}
+{com}.         labelrename HHExpNFMedServGood_GiftAid_6M_S      HHExpNFMed_GiftAid_6M_S
+
+{txt}Value label {res:HHExpNFMedServGood_GiftAid_6M_S} renamed to {res:HHExpNFMed_GiftAid_6M_S}
+{p 0 8 2}{txt}value label {res:HHExpNFMedServGood_GiftAid_6M_S} was attached to variables {res}HHExpNFMedServGood_GiftAid_6M_S{p_end}
+{txt}
+{com}.         labelrename HHExpNFTranspFuel_GiftAid_1M_S       HHExpNFTrans_GiftAid_1M_S 
+
+{txt}Value label {res:HHExpNFTranspFuel_GiftAid_1M_S} renamed to {res:HHExpNFTrans_GiftAid_1M_S}
+{p 0 8 2}{txt}value label {res:HHExpNFTranspFuel_GiftAid_1M_S} was attached to variables {res}HHExpNFTranspFuel_GiftAid_1M_S{p_end}
+{txt}
+{com}.         
+. *       iecodebook export using "${c -(}d_out{c )-}/Ecuador_F2F_Codebook.xlsx", replace
+.         
+.         save "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis.dta", replace    
+{txt}{p 0 4 2}
+file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}.         if `organize'           do "${c -(}d_dofile{c )-}/ed02b_rm_organize.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Ecuador                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Create clean variables for Dashboard                               *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *                                                                                                                                                          *
+> *  DATE:                                Jun 18, 2023                                                                               *
+> *  LATEST UPDATE:               Jun 19, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:            ${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta
+>                                         
+>         ** CREATES:                     ${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis_`cdate'.dta
+>                                                                 
+>         ** NOTES:                       _`cdate' on Jul 20 when data collection finished
+>                                         
+> ********************************************************************************
+> *                                               PART 1: Set up Log and Load Data
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

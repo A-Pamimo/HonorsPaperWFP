@@ -1,0 +1,367 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd00c_rm_correct_20230911.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 Sep 2023, 15:30:25
+{txt}
+{com}.         di `cdate'
+{res}20230911
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/CAR_RM_Household_Raw_`cdate'.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN2Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}sampleYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPpart{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}RESPAvailable{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPConNo{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPcallback{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPMStatus{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPStatusHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PSchoolEver{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PschoolGrade{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSStap{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSILessQlty{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIBorrow{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIGenderMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_HealthEdu{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_DomMigration{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_ResAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpStap_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpStap_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpStap_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpPro_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpPro_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpPro_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFruVeg_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFruVeg_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFruVeg_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFOther_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFOther_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpFOther_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_YN1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTranspPh_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFTranspPh_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFUtilities_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNFUtilities_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNFAlcTobac_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFAlcTobac_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_MNCRD_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_GiftAid_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpF_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpF_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}HHInc_PCT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_SRi{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHIncChg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHWaterSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHEnerCookSRC{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHRoofType{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}start{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}end{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}HHPhNmb{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHID_manual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}calc_ID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}RESPRelationHHH_oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}HHHOccupation{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str40{sf}
+  {txt}variable {bf}{res}HHIncFirst_Oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}audit{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str13{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (629,932 bytes saved)
+
+{com}.         
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}start{col 15}HHPhNmb{col 29}RESPpart_oth{col 43}comments{col 57}___uuid{col 71}___version
+{col 1}end{col 15}HHID_manual{col 29}RESPRelati~h{col 43}remarks{col 57}___parent_~e{col 71}___duration
+{col 1}deviceid{col 15}HHID{col 29}HHHOccupat~n{col 43}audit{col 57}___tags{col 71}___submitt~y
+{col 1}EnuName_Di~y{col 15}calc_ID{col 29}HHIncFirst~h{col 43}instanceID{col 57}___notes{col 71}___xform_id
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(441 real changes made)
+(0 real changes made)
+(1 real change made)
+(437 real changes made)
+(441 real changes made)
+(156 real changes made)
+(437 real changes made)
+(182 real changes made)
+(221 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(441 real changes made)
+(441 real changes made)
+(441 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+.         ** temp
+.         replace HHID = HHID_manual if mi(HHID)          // this is temporary
+{txt}(0 real changes made)
+
+{com}.         drop if mi(HHID)
+{txt}(0 observations deleted)
+
+{com}.         
+.         ** check duplicates
+.         duplicates tag HHID, generate(Dup)
+
+{p 0 4}{txt}Duplicates in terms of {res} HHID{p_end}
+{txt}
+{com}.         
+.         ** Recode for best outcome - combining the consent and availability
+.         recode RESPpart (0=6) (1=1) (2=7) (3=4) (4=5) (999=8), gen(Outcome_Order)
+{txt}(154 differences between {bf:RESPpart} and {bf:Outcome_Order})
+
+{com}.         replace Outcome_Order = 2 if Outcome_Order == 1 & RESPAvailable == 2
+{txt}(0 real changes made)
+
+{com}.         replace Outcome_Order = 3 if Outcome_Order == 1 & RESPAvailable == 0
+{txt}(0 real changes made)
+
+{com}.         
+.         label def Outcome_L 1 "Agreed & Available" 2 "Agreed & Later" ///
+>                                                 3 "Agreed & Not Available"                                ///
+>                                                 4 "Did not connect/network issues"                ///
+>                                                 5 "Invalid or inactive number"                    ///
+>                                                 6 "Not answer/busy" 7 "Refused" 8 "Other"
+{txt}
+{com}.         label val Outcome_Order Outcome_L
+{txt}
+{com}.         
+.         bysort HHID: egen Survey_Outcome = min(Outcome_Order) if Dup >= 1
+{txt}(399 missing values generated)
+
+{com}.         replace Survey_Outcome = Outcome_Order if Dup == 0
+{txt}(399 real changes made)
+
+{com}.         label val Survey_Outcome Outcome_L
+{txt}
+{com}.         
+.         gen HH_Final = (Outcome_Order == Survey_Outcome)
+{txt}
+{com}.         
+.         egen HH_TAG = tag(HHID) if HH_Final == 1
+{txt}
+{com}.         
+.         replace Survey_Outcome = . if HH_TAG == 0 
+{txt}(21 real changes made, 21 to missing)
+
+{com}.                 
+.         ** create one consent variable 
+.         gen  Temp_Complete = !mi(HHIncChg)
+{txt}
+{com}. 
+.         bysort HHID: gen Consent = (Survey_Outcome == 1) if !mi(Survey_Outcome)
+{txt}(21 missing values generated)
+
+{com}.         label val Consent sampleYN
+{txt}
+{com}.         
+.         keep if Temp_Complete == 1
+{txt}(154 observations deleted)
+
+{com}. *       isid HHID 
+.         
+.         ieduplicates HHID using "${c -(}note{c )-}/CAR_RM_DuplicateID_`cdate'.xlsx",              ///
+>                                           keepvar(today EnuName_Display RESPpart RESPAvailable RESPAge RESPSex HHSize)                  ///
+>                                           uniquevars(___uuid) nodaily force 
+{res}{phang}Excel file created at: {browse "C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/5_Field_notes/CAR_RM_DuplicateID_20230911.xlsx":C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/5_Field_notes/CAR_RM_DuplicateID_20230911.xlsx}.{p_end}
+
+{phang}There are 6 duplicated IDs still unresolved. IDs still containing duplicates: CAR12018 CAR12066 CAR1397 CAR22110 CAR2342 CAR2498. The unresolved duplicate observations were exported in the Excel file. The data set is returned without those duplicates and with HHID uniquely and fully identifying the data set.{p_end}
+{txt}
+{com}.                                   
+. *       isid   HHID
+.         
+.         mmerge HHID using "${c -(}sample{c )-}/CAR_Sample_Merge.dta", type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}C:\Users\ALIRAH~1.WEY\AppData\Local\Temp\ST_68a0_000005.tmp
+{txt}{ralign 20:obs} {c |} {res}   275
+{txt}{ralign 20:vars} {c |} {res}   117
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/3_Sampling/CAR_Sample_Merge.dta
+{txt}{ralign 20:obs} {c |} {res}  2287{txt}
+{txt}{ralign 20:vars} {c |} {res}    23{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{p 0 7 2}
+(variable
+{bf:HHID} was {bf:str8}, now {bf:str10} to accommodate using data's values)
+{p_end}
+{txt}{hi:result}          file {c |} {res}C:\Users\ALIRAH~1.WEY\AppData\Local\Temp\ST_68a0_000005.tmp
+{txt}{ralign 20:obs} {c |} {res}  2287
+{txt}{ralign 20:vars} {c |} {res}   141{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}   2012{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    275{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}.         
+.         tab S_Assign_Modality Temp_Complete
+
+    {txt}Assigned {c |} Temp_Compl
+      Survey {c |}    ete
+    Modality {c |}         1 {c |}     Total
+{hline 13}{c +}{hline 11}{c +}{hline 10}
+      Remote {c |}{res}       275 {txt}{c |}{res}       275 
+{txt}{hline 13}{c +}{hline 11}{c +}{hline 10}
+       Total {c |}{res}       275 {txt}{c |}{res}       275 
+{txt}
+{com}.         
+.         ** keep only Remote sample for attrition analysis
+.         drop if S_Assign_Modality == 1
+{txt}(1,264 observations deleted)
+
+{com}.         gen Attrition = (_merge == 2)
+{txt}
+{com}.         label val Attrition sampleYN
+{txt}
+{com}.         
+.         /*
+>         dtable i.S_Assign_Length i.S_Geo_Admin1 i.S_Geo_Admin2 i.S_Geo_Admin3    ///
+>                    i.S_Geo_Admin5 S_age i.S_relationship i.S_hh_status                           ///
+>                    i.S_hh_head_sex i.S_hh_head_marital S_hh_head_educ S_hh_size          ///
+>                    S_mem_lessthan15 S_mem_greaterthan60 i.S_mem_disability                       ///
+>                    i.S_house_type S_area_house i.S_roofing_material_house                        ///
+>                    i.S_floor_material_house, by(Attrition, tests)                                        ///
+>                    title(CAR rCARI Validation Remote Attrition Analysis)                         ///
+>                    export(${c -(}d_tex_tab{c )-}/CAR_rCARI_RM_Attrition.docx, replace) 
+>         
+>         */
+.         drop if Attrition == 1
+{txt}(748 observations deleted)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         isid HHID                                       // check unique identifier
+{txt}
+{com}.         // check again with the real survey data
+.         ren ___index HH_Index
+{res}{txt}
+{com}.         
+. *************************  ADD CORRECTION LINES HERE ***************************
+.         
+.         save "${c -(}d_temp{c )-}/CAR_RM_Household_Correct_`cdate'.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country/4_CAR/10_Quality_Dashboard/2_Temp/CAR_RM_Household_Correct_20230911.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.1     Set up datasets
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_temp{c )-}/CAR_F2F_Roster_Correct_`cdate'.dta
+.                                         
+. *       CREATES:        ${c -(}d_temp{c )-}/CAR_Roster_Prep_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/CAR_Roster_Household_Prep_`cdate'.dta
+. *                               
+. * ------------------------------------------------------------------------------
+.         
+.         if `setup'                      do "${c -(}d_dofile{c )-}/cd01_setup_roster.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - CAR                             * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Set up appended dataset for full roster sample             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                                                                                                                           *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_temp{c )-}/CAR_F2F_Roster_Correct_`cdate'.dta
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/CAR_Roster_Prep_`cdate'.dta
+>                                         ${c -(}d_temp{c )-}/CAR_Roster_Household_Prep_`cdate'.dta
+>                                                 
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Roster Data and Set codebook
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

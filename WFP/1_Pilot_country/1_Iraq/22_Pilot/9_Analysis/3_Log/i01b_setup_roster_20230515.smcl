@@ -1,0 +1,313 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/3_Log/i01b_setup_roster_20230515.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}15 May 2023, 12:25:25
+{txt}
+{com}.         di `cdate'
+{res}20230515
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+. 
+.         tempfile roster_b resp master 
+{txt}
+{com}.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vB.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str46{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (396,837 bytes saved)
+
+{com}.         gen Group = 2
+{txt}
+{com}.         save `roster_b'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_36134.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use "${c -(}raw_f2f{c )-}/Demographic_module_RepeatPID_vA.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HH_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIntFirstSec{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str47{sf}
+  {txt}variable {bf}{res}PName{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str52{sf}
+  {txt}variable {bf}{res}age_diff{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}age_diff_actual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+{txt}  (388,964 bytes saved)
+
+{com}.         gen Group = 1
+{txt}
+{com}.         
+.         lab def G_l 1 "Group A" 2 "Group B"
+{txt}
+{com}.         lab val Group G_l
+{txt}
+{com}.         
+.         append using `roster_b'
+{txt}(label {bf:{txt}MDDIHHHealthPregFacility} already defined)
+(label {bf:{txt}MDDIHHHealthPregCare} already defined)
+(label {bf:{txt}MDDIHHHealthPreg} already defined)
+(label {bf:{txt}HHPreg} already defined)
+(label {bf:{txt}MDDIHHNoSchoolNb_6M} already defined)
+(label {bf:{txt}MDDIHHImmMeas} already defined)
+(label {bf:{txt}PRelationHHH} already defined)
+(label {bf:{txt}PSex} already defined)
+(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}HHIntFirstSec} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         missings dropvars, force        // remove extra vars
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no variables qualify
+
+{com}.         missings dropobs , force        // remove empty observations
+
+{p 0 4}{txt}Checking missings in {res} HHID RESPName RESPAge RESPSex RESPRelationHHH ADMIN1Name ADMIN5Name PName PSex PAge PRelationHHH MDDIHHImmMeas MDDIHHNoSchoolNb_6M HHPreg MDDIHHHealthPreg MDDIHHHealthPregCare MDDIHHHealthPregFacility age_diff age_diff_actual ___index ___parent_table_name HH_index EnuName EnuSex HHIntFirstSec Group:{txt}{p_end}
+2810 observations with missing values
+
+note: no observations qualify
+
+{com}. 
+.         ** drop irrelevant variables 
+.         drop HH_index EnuName EnuSex HHIntFirstSec ___index ___parent_table_name        ///
+>                  ADMIN1Name ADMIN5Name age_diff_actual
+{txt}
+{com}.         
+.         save `master'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_36134.000003{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         /* Respondent him/herself is not listed as part of the roster, need to split 
+>         and append back - This is strange!!                     */
+.         
+.         keep HHID RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         ren  RESPName PName
+{res}{txt}
+{com}.         ren  RESPAge  PAge
+{res}{txt}
+{com}.         ren  RESPSex  PSex
+{res}{txt}
+{com}.         ren  RESPRelationHHH PRelationHHH
+{res}{txt}
+{com}.         
+.         sort HHID
+{txt}
+{com}.         egen Respondent = tag(HHID)
+{txt}
+{com}.         keep if Respondent == 1 
+{txt}(2,225 observations deleted)
+
+{com}.         
+.         save `resp'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_36134.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         use `master'
+{txt}
+{com}.         drop RESPName RESPAge RESPSex RESPRelationHHH
+{txt}
+{com}.         
+.         append using `resp'
+{txt}(label {bf:{txt}RESPRelationHHH} already defined)
+(label {bf:{txt}RESPSex} already defined)
+
+{com}.         
+.         ** generate individual index within each household
+.         bysort HHID: gen Ind_Index = _n
+{txt}
+{com}.         
+.         save "${c -(}dta{c )-}/Iraq_F2F_Roster_Raw.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_F2F_Roster_Raw.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}. tab Respondent
+
+  {txt}tag(HHID) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        585      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        585      100.00
+
+{com}. codebook HHID
+
+{txt}{hline}
+{res}HHID{right:Household ID}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}10101087{txt},{res}4.200e+09{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}585{col 51}{txt}Missing .: {res}0{txt}/{res}3,395
+
+{txt}{col 19}Mean: {res}{ralign 7:1.4e+09}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.5e+09}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:1.1e+08}{ralign 10: 2.1e+08}{ralign 10: 4.3e+08}{ralign 10: 2.1e+09}{ralign 10: 4.2e+09}
+
+{com}. tab PRelationHHH
+
+ {txt}What is their relationship {c |}
+     to the household head? {c |}      Freq.     Percent        Cum.
+{hline 28}{c +}{hline 35}
+          Head of household {c |}{res}        579       17.05       17.05
+{txt}             Spouse/partner {c |}{res}        464       13.67       30.72
+{txt}               Son/daughter {c |}{res}      2,011       59.23       89.96
+{txt}                     Mother {c |}{res}         53        1.56       91.52
+{txt}                     Father {c |}{res}         24        0.71       92.22
+{txt}             Brother/sister {c |}{res}         89        2.62       94.85
+{txt}   Other relatives by blood {c |}{res}        102        3.00       97.85
+{txt}Other relatives by marriage {c |}{res}         57        1.68       99.53
+{txt}        Other non-relatives {c |}{res}         16        0.47      100.00
+{txt}{hline 28}{c +}{hline 35}
+                      Total {c |}{res}      3,395      100.00
+
+{com}. tab PSex
+
+ {txt}Sex of the {c |}
+ individual {c |}
+     in the {c |}
+  household {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}      1,748       51.49       51.49
+{txt}       Male {c |}{res}      1,647       48.51      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,395      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36134.000000"
+{txt}
+{com}.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}. 
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl myanmar              "${c -(}rcari{c )-}/2_Myanmar"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}myanmar{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}myanmar{c )-}/8_Datasets/Remote"
+.         gl analysis     "${c -(}myanmar{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}myanmar{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}. 
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/3_Code"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/4_Output"
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36134.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,17 @@
+event,node,start,end
+form start,,1686401803069,
+question,/data/Technical_module/TechnicalBasic_submodule/SvyDate,1686401803073,1686401804614
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686401804626,1686401810242
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686401810260,1686401813519
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN1Name,1686401813542,1686401817523
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN3Name,1686401817548,1686401820982
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686401821008,1686401850005
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686401850028,1686401854964
+question,/data/Technical_module/TechnicalBasic_submodule/HHID,1686401854981,1686401884945
+question,/data/Technical_module/TechnicalBasic_submodule/generated_note_name_20,1686401884970,1686401890346
+question,/data/Technical_module/TechnicalBasic_submodule/HHPhNmb,1686401890364,1686401931291
+question,/data/Technical_module/TechnicalBasic_submodule/RESPpart,1686401931312,1686402053127
+end screen,,1686402053147,1686402057797
+form save,,1686402058057,
+form exit,,1686402058057,
+form finalize,,1686402058057,

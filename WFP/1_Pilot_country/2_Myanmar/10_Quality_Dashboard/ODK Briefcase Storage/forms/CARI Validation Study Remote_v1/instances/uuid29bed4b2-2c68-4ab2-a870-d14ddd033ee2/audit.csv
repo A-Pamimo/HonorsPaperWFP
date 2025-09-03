@@ -1,0 +1,42 @@
+event,node,start,end
+form start,,1686297431615,
+question,/data/Technical_module/TechnicalBasic_submodule/SvyDate,1686297431615,1686297433184
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686297433189,1686297436193
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686297436198,1686297437873
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN1Name,1686297437879,1686297440798
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN3Name,1686297440808,1686297443443
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686297443450,1686297446168
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686297446175,1686297505342
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686297505353,1686297506230
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN3Name,1686297506243,1686297507120
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN1Name,1686297507125,1686297507930
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686297507936,1686297508738
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686297508745,1686297509551
+question,/data/Technical_module/TechnicalBasic_submodule/SvyDate,1686297509557,1686297511756
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686297511760,1686297513135
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686297513141,1686297526538
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686297526548,1686297527452
+question,/data/Technical_module/TechnicalBasic_submodule/SvyDate,1686297527459,1686297528594
+question,/data/Technical_module/TechnicalBasic_submodule/EnuName,1686297528601,1686297529290
+question,/data/Technical_module/TechnicalBasic_submodule/EnuSex,1686297529296,1686297531013
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN1Name,1686297531020,1686297532128
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN3Name,1686297532136,1686297533161
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686297533167,1686297534457
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686297534463,1686297536912
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686297536918,1686297537719
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686297537814,1686297538540
+question,/data/Technical_module/TechnicalBasic_submodule/HHID_manual,1686297538546,1686297541577
+question,/data/Technical_module/TechnicalBasic_submodule/HHPhNmb,1686297541583,1686297542633
+question,/data/Technical_module/TechnicalBasic_submodule/HHID_manual,1686297586950,1686297587572
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686297587580,1686297588462
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686297588468,1686297591012
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686297591020,1686297592912
+question,/data/Technical_module/TechnicalBasic_submodule/ADMIN5Name,1686297592919,1686297608644
+question,/data/Technical_module/TechnicalBasic_submodule/sampleYN,1686297608651,1686297609876
+question,/data/Technical_module/TechnicalBasic_submodule/HHID_manual,1686297609884,1686297618220
+question,/data/Technical_module/TechnicalBasic_submodule/HHPhNmb,1686297618229,1686297644144
+question,/data/Technical_module/TechnicalBasic_submodule/RESPpart,1686297644148,1686297648448
+end screen,,1686297648456,1686297667753
+form save,,1686297667828,
+form exit,,1686297667828,
+form finalize,,1686297667828,

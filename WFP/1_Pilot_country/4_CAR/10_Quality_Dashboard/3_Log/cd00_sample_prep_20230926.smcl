@@ -1,0 +1,22 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/10_Quality_Dashboard/3_Log/cd00_sample_prep_20230926.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Sep 2023, 08:42:14
+{txt}
+{com}.         di `cdate'
+{res}20230926
+{txt}
+{com}.         
+.         import delimited "${c -(}sample{c )-}/Full_sample_Uid.csv", case(preserve) clear
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{res}{text}(45 vars, 2,287 obs)
+
+{com}.         compress
+{txt}  (0 bytes saved)
+
+{com}. 
+{txt}end of do-file
+
+{com}. 

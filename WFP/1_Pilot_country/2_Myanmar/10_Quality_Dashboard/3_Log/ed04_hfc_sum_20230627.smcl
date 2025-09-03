@@ -1,0 +1,87 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/ed04_hfc_sum_20230627.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}27 Jun 2023, 17:41:15
+{txt}
+{com}.         di `cdate'      
+{res}20230627
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta", replace
+{err}{p 0 4 2}
+file {bf:{err}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/4_Data/Ecuador_Full_Household_Analysis_20230627.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl Ecuador              "${c -(}rcari{c )-}/3_Ecuador"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}Ecuador{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}Ecuador{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}Ecuador{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}Ecuador{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}Ecuador{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}Ecuador{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36323.000000"
+{txt}
+{com}.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,127 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/3_Log/m01_organize_20230928.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}28 Sep 2023, 13:56:49
+{txt}
+{com}.         di `cdate'      
+{res}20230928
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}dta{c )-}/Myanmar_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl out_mddi MDD_Staples MDD_Pulses MDD_NutsSeeds MDD_Dairies MDD_MeatFish       ///
+>                             MDD_Eggs MDD_LeafGVeg MDD_VitA MDD_OtherVeg MDD_OtherFruits         ///
+>                                 MDD_Index MDD_Index_5
+{txt}
+{com}.                                 
+. ********************************************************************************
+. *                                                       PART 3: Gendered Difference
+. *******************************************************************************/
+. 
+.         iebaltab ${c -(}out_mddi{c )-} if Modality == 1, grpvar(RESPSex)                                          ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(0 Female @ 1 Male)                                               ///
+>              rowvarlabels savetex("${c -(}tex_tab{c )-}/Myanmar_F2F_MDD_Gender.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_F2F_MDD_Gender.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_F2F_MDD_Gender.tex}{p_end}
+{txt}
+{com}.                          
+. ********************************************************************************
+. *                                               PART 2: Create Graphs for MDDI
+. *******************************************************************************/
+.         
+.         betterbar MDD_Index if Modality == 1, by(FCSCat28) over(RESPSex)        ///
+>                           ci n bar v graphregion(color(white))                                          ///
+>               bgcolor(white) ylabel(0(2)6, nogrid labsize(2.5)) 
+{txt}
+{com}.         graph export "${c -(}tex_fig{c )-}/Myanmar_F2F_MDD_Index_FCG_Gender.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/2_figure/Myanmar_F2F_MDD_Index_FCG_Gender.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.                           
+. /*      graph box MDD_Index, over(RESPSex)                                              ///
+>     graphregion(color(white)) bgcolor(white)                                    ///
+>     outergap(70) bargap(100) ylabel(0(1)12, nogrid labsize(3))  ///
+>     ytitle("") yline(5, lwidth(0.25pt) lcolor(grey) lp(shortdash))      ///
+>     legend(ring(4) pos(6) rows(5) size(3))                                              ///
+>     text(5.2 21 "Mean = 4.4", place(ne) size(3) color(white))   ///
+>     text(5.2 67 "Mean = 4.3", place(ne) size(3) color(white))   ///
+>     text(11.5 23 "Female - Male Difference = 0.12 and P = 0.42", place(n c) size(3.5))
+>     graph export "${c -(}figs_tex{c )-}/Myanmar_F2F_MDD_Index_Gender.png", replace
+>     
+>     ttest MDD_Index, by(RESPSex)        
+> */      
+.         betterbar MDD_Staples MDD_Pulses MDD_NutsSeeds MDD_Dairies MDD_MeatFish         ///
+>                           MDD_Eggs MDD_LeafGVeg MDD_VitA MDD_OtherVeg MDD_OtherFruits           ///
+>                           if Modality == 1, over(RESPSex) ylabel(, nogrid labsize(2.5))         ///
+>                           ci n bar graphregion(color(white)) bgcolor(white)       
+{txt}
+{com}.         graph export "${c -(}tex_fig{c )-}/Myanmar_F2F_MDD_Group_Gender.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/2_figure/Myanmar_F2F_MDD_Group_Gender.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         // xlabel(, labsize(2.5) angle(45)) pct ylabel(0(0.2)1, nogrid labsize(2.5))      
+. 
+{txt}end of do-file
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                               3.99 Excel
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}dta{c )-}/Myanmar_Full_Household_rCARI_Analysis.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `excel'                      do "${c -(}dofile{c )-}/m99_Excel.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Myanmar                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Check Balance and Produce Excel Tables                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jul 12, 2023                                                                               *
+> *  LATEST UPDATE:                                                                                                                          *
+> *                                                                                                                                                          *
+> ********************************************************************************
+>                                         
+>         ** REQUIRES:    ${c -(}dta{c )-}/Myanmar_Full_Household_Analysis.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               
+> 
+> ********************************************************************************
+> *                                                               PART 1: Set Log
+> *******************************************************************************/
+. 
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

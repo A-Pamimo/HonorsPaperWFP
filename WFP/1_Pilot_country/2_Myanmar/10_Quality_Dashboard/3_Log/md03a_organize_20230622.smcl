@@ -1,0 +1,79 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md03a_organize_20230622.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Jun 2023, 16:53:01
+{txt}
+{com}.         di `cdate'
+{res}20230622
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/Myanmar_F2F_Household_Prep_`cdate'.dta", clear 
+{txt}
+{com}.         
+.         * keep if sampleYN == 1 
+. 
+.         ** rename ___variables
+.         ren ___* Sys_*
+{res}{txt}
+{com}.         order R_*, a(RepeatPID_count)
+{txt}
+{com}.         
+.         * survey duration variable
+.         destring Sys_duration, replace
+{txt}Sys_duration: all characters numeric; {res}replaced {txt}as {res}long
+{txt}
+{com}.         gen     Duration_Min = Sys_duration/60
+{txt}
+{com}.         
+.         * survey modality
+.         gen     Modality        = 1                      // f2f
+{txt}
+{com}.         
+.         * form version long vs. short
+.         gen     ID_Length = length(HHID)
+{txt}
+{com}.         
+.         gen             Form = 1 if ID_Length == 10  // Long
+{txt}(301 missing values generated)
+
+{com}.         replace Form = 2 if ID_Length == 9   // Short
+{txt}(300 real changes made)
+
+{com}. 
+. ********************************************************************************
+. *                                               PART 2: Create and Define Variables
+. ********************************************************************************
+. 
+. ** Demongraphics and basic respondents/household information
+.         gen RESPHHH     = (R_RESPRelationHHH == 100)
+{txt}
+{com}.         gen RESPFemale  = (RESPSex                       == 0)
+{txt}
+{com}.         gen HHDisplaced = (HHStatus              == 2)
+{txt}
+{com}.         gen HHHSingle   = (RESPStatus            == 100)
+{txt}
+{com}.         gen HHHMarried  = (RESPStatus            == 300)
+{txt}
+{com}.         
+. *       assert R_Num_Household == HHSize
+.         tab HHID if R_Num_Household != HHSize
+{err}R_Num_Household not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+{search r(111), local:r(111);}
+{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/1_IPC_CARI_covergence/3_IPC_CARI_Results/1_Data/Assessment/Afghanistan/AGH_panal.dta", clear
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/1_IPC_CARI_covergence/3_IPC_CARI_Results/1_Data/Assessment/Afghanistan/Afghan PLSA 2020 Household Dataset Final.dta"
+
+. 

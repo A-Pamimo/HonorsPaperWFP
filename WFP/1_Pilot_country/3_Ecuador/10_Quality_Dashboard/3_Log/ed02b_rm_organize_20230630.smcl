@@ -1,0 +1,22 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed02b_rm_organize_20230630.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}30 Jun 2023, 01:01:19
+{txt}
+{com}.         di `cdate'
+{res}20230630
+{txt}
+{com}.         
+.         * load dataset
+.         use "${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta", clear 
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD67300.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

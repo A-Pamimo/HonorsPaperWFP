@@ -1,0 +1,278 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/3_Log/md00b_roster_correct_20230710.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}10 Jul 2023, 17:19:02
+{txt}
+{com}.         di `cdate'
+{res}20230710
+{txt}
+{com}.         
+.         * load dataset
+.         * ---------------       
+.         use "${c -(}d_raw{c )-}/Myanmar_F2F_Roster_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PSchoolEver{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PschoolLevel{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PschoolGrade{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHNoSchoolNb_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthBirth{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPreg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregCare{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHHealthPregFacility{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}MDDIHHImmMeas{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PHealthDiarr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_1{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_2{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_3{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_4{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat_888{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}getP{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str2{sf}
+  {txt}variable {bf}{res}PHealthDiarrTreat{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str3{sf}
+  {txt}variable {bf}{res}tmp_RESP{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}RESP_position{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str3{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str4{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+{txt}  (1,814,678 bytes saved)
+
+{com}.         
+.         ** check ID and drop empty vars and obs
+.         ren ___parent_index      HH_Index
+{res}{txt}
+{com}. 
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}getP{col 15}tmp_RESP{col 29}___parent_~e{col 43}___version{col 57}___xform_id
+{col 1}RESPName{col 15}RESP_posit~n{col 29}___tags{col 43}___duration
+{col 1}PHealthDia~t{col 15}___uuid{col 29}___notes{col 43}___submitt~y
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(2,784 real changes made)
+(3,485 real changes made)
+(2,784 real changes made)
+(0 real changes made)
+(3,519 real changes made)
+(0 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+(3,519 real changes made)
+
+{com}.         
+. *************************  ADD CORRECTION LINES HERE ***************************
+.         
+.         *** 1. 0 or More Than 1 Respondent
+.         replace RESPYN = 1 if inlist(___index,287,568,715,2420,2065,2598,3094,3468) 
+{txt}(8 real changes made)
+
+{com}.         replace RESPName = "Ma Roi Nu"                          if ___index == 715
+{txt}(1 real change made)
+
+{com}.         replace RESPName = "Daw Bawm Wang"                      if ___index == 2065
+{txt}(1 real change made)
+
+{com}.         replace RESPName = "Daw Hpaune Shawng Hoi"      if ___index == 3094
+{txt}(1 real change made)
+
+{com}.         replace RESPName = "Daw Hkawn Pri"                      if ___index == 3468 
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 1 if ___index == 321
+{txt}(1 real change made)
+
+{com}.         
+.         replace RESPYN = 0 if inlist(___index,72,73,75,76,77,78)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,102,103,104,105,106,107)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,109,110,111,112,113,114,115,116,117)
+{txt}(8 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,292,293,294,295,296,297,298,299)
+{txt}(8 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,301,302)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,304,305)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,307,308,309,310,311,312,313)
+{txt}(7 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,745,746,747,748,749,750)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,752,753,754,755)
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,757,758,759,760,761)
+{txt}(5 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,763,764,765,766)
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,768,769,770,771,772,773,774,775,776)
+{txt}(9 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,912,913,914,915,916,917)
+{txt}(6 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1184,1185,1186,1187,1188)
+{txt}(5 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1190,1191,1192)
+{txt}(3 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1194,1195)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1219,1220,1221,1222) 
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1249,1250,1251,1252)
+{txt}(4 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1311,1312)
+{txt}(2 real changes made)
+
+{com}.         replace RESPYN = 0 if inlist(___index,1354,1355,1356)
+{txt}(3 real changes made)
+
+{com}.         replace RESPYN = 0 if ___index == 1233
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if ___index == 2097
+{txt}(1 real change made)
+
+{com}.         replace RESPYN = 0 if ___index == 2597
+{txt}(1 real change made)
+
+{com}.         
+.         replace RESPYN = 0 if ___index == 3093
+{txt}(1 real change made)
+
+{com}.         replace RESPName = ""   if ___index == 3093
+{txt}(1 real change made)
+
+{com}.         
+.         ** 2. 0 or More Than 1 Head of Household
+.         drop if ___index == 2431
+{txt}(1 observation deleted)
+
+{com}.         replace PRelationHHH = 100 if inlist(___index,299,3032,983,1768,480,6,1238, ///
+>                                                                                  1340,667,1079,2302,3032) 
+{txt}(11 real changes made)
+
+{com}.         replace PRelationHHH = 200 if inlist(___index,2162,3088,2923,3316,1132)
+{txt}(5 real changes made)
+
+{com}.         replace PRelationHHH = 300 if inlist(___index,2528,3386,3312) 
+{txt}(3 real changes made)
+
+{com}.         replace PRelationHHH = 400 if inlist(___index,408) 
+{txt}(1 real change made)
+
+{com}.         
+.         ** 3. Households have different respondent gender outside and within 
+.         **    Roster
+.         replace PSex = 0 if inlist(___index,1132,956,2639,2947,356,3381,864,351,352, ///
+>                                                                                 1746,75,78,2517) 
+{txt}(11 real changes made)
+
+{com}.         replace PSex = 1 if inlist(___index,756,72,73,102,103)
+{txt}(5 real changes made)
+
+{com}. 
+.         ** 4. Age difference
+.         replace PAge = 67 if ___index == 880
+{txt}(1 real change made)
+
+{com}.         replace PAge = 38 if ___index == 887
+{txt}(1 real change made)
+
+{com}.         replace PAge = 67 if ___index == 1257
+{txt}(1 real change made)
+
+{com}.         replace PAge = 52 if ___index == 1357
+{txt}(1 real change made)
+
+{com}.         replace PAge = 42 if ___index == 1533
+{txt}(1 real change made)
+
+{com}.         replace PAge = 59 if ___index == 2209
+{txt}(1 real change made)
+
+{com}.         replace PAge = 63 if ___index == 2326
+{txt}(1 real change made)
+
+{com}.         
+.         ** drop PIIs
+.         drop RESPName
+{txt}
+{com}. 
+.         compress
+{txt}  (0 bytes saved)
+
+{com}.         save "${c -(}d_temp{c )-}/Myanmar_F2F_Roster_Correct.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/10_Quality_Dashboard/2_Temp/Myanmar_F2F_Roster_Correct.dta{rm}
+saved
+{p_end}
+
+{com}. 
+{txt}end of do-file
+
+{com}.         if `correct'            do "${c -(}d_dofile{c )-}/md00c_rm_correct.do"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Myanmar                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for Remote sample                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                May 15, 2023                                                                               *
+> *  LATEST UPDATE:               May 16, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Myanmar_RM_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Myanmar_RM_Household_Correct_`cdate'.dta
+>                         
+>         ** NOTES:               _`cdate' was removed after finishing data collection
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,127 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed03_append_20230630.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}30 Jun 2023, 01:00:34
+{txt}
+{com}.         di `cdate'      
+{res}20230630
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2: Create master dataset for full sample
+. *******************************************************************************/
+.         
+.         tempfile sample
+{txt}
+{com}.         
+.         * merge assignment record back to check implementation
+.         import excel "${c -(}sample{c )-}/Ecuador_Sample_Merge.xlsx", sheet("Sheet1")     ///
+>                                  firstrow clear
+{res}{text}(6 vars, 1,489 obs)
+
+{com}.         
+.         encode Modality_Type, gen(Assign_Modality)
+{txt}
+{com}.         encode Length_Type, gen(Assign_Length)
+{txt}
+{com}.         drop   Modality_Type Length_Type
+{txt}
+{com}.         ren        Uid HHID 
+{res}{txt}
+{com}.         
+.         save `sample'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_67300.000001{rm}
+saved
+as .dta format
+{p_end}
+
+{com}.         
+.         * load dataset
+.         * ------------
+.         use "${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis_`cdate'.dta", clear
+{txt}
+{com}.         
+.         * merge Remote Answers to F2F Answers
+.         append using "${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis_`cdate'.dta"
+{txt}{p 0 7 2}
+(variable
+{bf:HHExpNFAlcTobac_GiftAid_1M} was {bf:byte}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:RESPPhNmbAl2} was {bf:str10}, now {bf:str17} to accommodate using data's values)
+{p_end}
+(label {bf:{txt}FS_CARI} already defined)
+(label {bf:{txt}LCS_l} already defined)
+(label {bf:{txt}FCSCat} already defined)
+(label {bf:{txt}YesNo} already defined)
+(label {bf:{txt}EnuName} already defined)
+(label {bf:{txt}EnuSex} already defined)
+(label {bf:{txt}ADMIN1Name} already defined)
+(label {bf:{txt}ADMIN3Name} already defined)
+(label {bf:{txt}ADMIN5Name} already defined)
+(label {bf:{txt}sampleYN} already defined)
+(label {bf:{txt}RESPSex} already defined)
+(label {bf:{txt}rCSIGenderMealAdult} already defined)
+(label {bf:{txt}LcsEN_em_ChildWork} already defined)
+(label {bf:{txt}HHIncFirst_SRi} already defined)
+(label {bf:{txt}HHIncChg} already defined)
+
+{com}.         compress
+  {bf}{res}HHHOccupation{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  {bf}{res}HHIncFirst_oth{sf}{txt} is {bf}{res}strL{sf}{txt} now coalesced
+  (21,538 bytes saved)
+
+{com}. 
+.         drop if mi(HHID)
+{txt}(0 observations deleted)
+
+{com}.         mmerge HHID using `sample', type(1:1) uname(S_)
+
+{txt}{hline 21}{c TT}{hline 57}
+{txt}{hi:merge specs}          {c |}
+{txt}       matching type {c |} {res}1:1
+{txt}  mv's on match vars {c |} {res}none
+{txt}  unmatched obs from {c |} {res}both
+{txt}{hline 21}{c +}{hline 57}
+{txt}  {hi:master}        file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis_20230630.dta
+{txt}{ralign 20:obs} {c |} {res}   811
+{txt}{ralign 20:vars} {c |} {res}   711
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}  {hline 19}{c +}{hline 57}
+{txt}  {hi:using}         file {c |} {res}/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//S_67300.000001
+{txt}{ralign 20:obs} {c |} {res}  1489{txt}
+{txt}{ralign 20:vars} {c |} {res}     6{txt}
+{txt}{ralign 20:match vars} {c |} {res}HHID  {txt}(key)
+{txt}{hline 21}{c +}{hline 57}
+{txt}{hi:result}          file {c |} {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/2_Temp/Ecuador_F2F_Household_Analysis_20230630.dta
+{txt}{ralign 20:obs} {c |} {res}  1489
+{txt}{ralign 20:vars} {c |} {res}   718{txt}  (including _merge)
+{col 10}{txt}{hline 12}{c +}{hline 57}
+{ralign 20:_merge}{txt} {c |}{res}    678{txt}  {lalign 37:obs only in using data} {ralign 10:(code==2)}
+{col 21}{txt} {c |}{res}    811{txt}  {lalign 37:obs both in master and using data} {ralign 10:(code==3)}
+{txt}{hline 21}{c BT}{hline 57}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD67300.000000"
+{txt}
+{com}.         gen Completion = (_merge == 3)
+{txt}
+{com}.         drop if _merge == 1
+{txt}(0 observations deleted)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD67300.000000"
+{txt}
+{com}.         cap log close 
+{smcl}
+{com}{sf}{ul off}

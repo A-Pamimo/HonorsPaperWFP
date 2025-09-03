@@ -1,0 +1,876 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed04_hfc_sum_20230705.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Jul 2023, 17:58:59
+{txt}
+{com}.         di `cdate'      
+{res}20230705
+{txt}
+{com}. 
+.         use "${c -(}d_dta{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+.         tab S_Assign_Modality   Modality
+
+             {txt}{c |} Survey Modality: F2F
+Modality_Typ {c |}      vs. Remote
+           e {c |} Face-to-F     Remote {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Face-to-Face {c |}{res}       461          0 {txt}{c |}{res}       461 
+{txt}      Remote {c |}{res}         0        391 {txt}{c |}{res}       391 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       461        391 {txt}{c |}{res}       852 
+{txt}
+{com}.         tab S_Assign_Length     Form
+
+           {txt}{c |}  Form Type: Long vs.
+Length_Typ {c |}         Short
+         e {c |} Long Form  Short For {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+ Long Form {c |}{res}       431          0 {txt}{c |}{res}       431 
+{txt}Short Form {c |}{res}         0        421 {txt}{c |}{res}       421 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       431        421 {txt}{c |}{res}       852 
+{txt}
+{com}.         
+. *       replace S_Assign_Modality = Modality if mi(S_Assign_Modality)
+. *       replace S_Assign_Length   = Form         if mi(S_Assign_Length)
+.         
+. ********************************************************************************
+. *                                               PART 3: Check and export variables
+. *******************************************************************************/
+.         
+.         ** 1 Survey Completion  
+.         eststo  clear
+{txt}
+{com}.         estpost tabulate S_Assign_Modality Completion
+
+{res}Completion  {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:To Complete}}{c |}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      287}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.27468}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.05495}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      350}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.50571}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.94505}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      637}}}{space 1}{space 1}{ralign 9:{res:{sf: 42.78039}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      461}}}{space 1}{space 1}{ralign 9:{res:{sf: 30.96038}}}{space 1}{space 1}{ralign 9:{res:{sf: 54.10798}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      391}}}{space 1}{space 1}{ralign 9:{res:{sf: 26.25923}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.89202}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      852}}}{space 1}{space 1}{ralign 9:{res:{sf: 57.21961}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      748}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.23506}}}{space 1}{space 1}{ralign 9:{res:{sf: 50.23506}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      741}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.76494}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.76494}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1489}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{space 0}{space 0}{ralign 12:S_Assign_Mod}{space 1}{c |}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}
+{space 0}{res:{lalign 13:To Complete}}{c |}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 38.36898}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 47.23347}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 42.78039}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}
+{space 0}{res:{lalign 13:Completed}}{c |}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 61.63102}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 52.76653}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 57.21961}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}
+{space 0}{space 0}{ralign 12:Face-to-Face}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Remote}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}.         esttab using "${c -(}d_tex_tab{c )-}/Ecuador_rCARI_Completion.tex",                                       ///
+>                    cell("b(fmt(0)) rowpct(fmt(2))") unstack noobs modelwidth(15)                ///
+>                    collabels("Count" "Percent") nonumbers replace 
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_rCARI_Completion.tex"'})
+
+{com}. 
+. /*      dtable i.S_Assign_Modality i.S_Assign_Length i.S_ADMIN1 i.S_ADMIN3Name          ///
+>                    i.S_ADMIN5Name, by(Completion)                                                                               ///
+>                    title(Myanmar rCARI Validation Study Progress)                                               ///
+>                    export(${c -(}d_tex_tab{c )-}/Myanmar_rCARI_Completion_by_Admin.tex, replace)     
+> */
+.         tabout S_Assign_Modality S_Assign_Length S_ADMIN1 S_ADMIN3Name S_ADMIN5Name ///
+>                    Completion  ///
+>         using "${c -(}d_tex_tab{c )-}/Ecuador_rCARI_Completion_by_Admin.docx", ///
+>         replace c(freq row) clab("Count" "Percent") style(docx) f(0c 1p) font(bold) ///
+>         ptotal(single)
+{res}
+{txt}Table output written to: /Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_rCARI_Completion_by_Admin.docx
+
+
+{com}.                 
+.         ** Survey Progress by Date
+.         tostring today, g(Date_Str) format(%tdd_m_CY) force
+{txt}Date_Str generated as {res:str11}
+Date_Str was forced to string; some loss of information
+
+{com}.         replace Date_Str = "" if Date_Str == "."
+{txt}(637 real changes made)
+
+{com}.         encode  Date_Str, gen(Data_Cat)
+{txt}
+{com}.         
+.         catplot Modality, asyvars stack recast(bar)                     ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45))) ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(10)90, nogrid labsize(2))                              ///
+>                         legend(ring(4) pos(6) rows(1) size(3))                  ///
+>                         ytitle("") blabel(bar, pos(center) size(2)      ///
+>                         gap(1)) b1title("") 
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Day.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Day.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** F2F by Date
+.         catplot Modality if Modality == 1, asyvars stack recast(bar)    ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45)))   ///
+>                         by (EnuName_Display)                                                    ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(5)15, nogrid labsize(2))                               ///
+>                         ytitle("") blabel(bar, pos(out) size(2)                 ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Enum_F2F_Date.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Enum_F2F_Date.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         catplot Modality if Modality == 2, asyvars stack recast(bar)    ///
+>                         over(Data_Cat, label(labsize(2.5) angle(45)))   ///
+>                         by (EnuName_Display)                                                    ///
+>                         graphregion(color(white)) bgcolor(white)                ///
+>                         ylabel(0(5)15, nogrid labsize(2))                               ///
+>                         ytitle("") blabel(bar, pos(out) size(2)                 ///
+>                         gap(1)) b1title("")             
+{res}{txt}
+{com}.         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Progress_Enum_RM_Date.png", replace 
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_Progress_Enum_RM_Date.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+.         ** 2 Survey Duration: Doesn't Work and can be ignored for now   
+. /*      tostring today, g(Date_Str) format(%tdd_m_CY) force
+>         replace Date_Str = "" if Date_Str == "."
+>         
+>         gen NewDate = date(Date_Str, "DMY")
+>         format NewDate %tdCCYYNNDD
+> 
+>         graph box Duration_Min if Modality == 1, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)1500, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>         graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Duration_F2F_Date.png", replace
+>          
+>         graph box Duration_Min if Modality == 2, by(Date_Str) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(300)2100, nogrid labsize(3))      ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+>     graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_Duration_RM_Date.png", replace
+> */    
+.         ** 3 Household Size by Enumerator
+.         graph box HHSize, by(Modality) over(EnuName, label(labsize(2) angle(45))) ///
+>     graphregion(color(white)) bgcolor(white)                     ///
+>     outergap(70) bargap(100) ylabel(0(3)15, nogrid labsize(3))  ///
+>     ytitle("") legend(ring(4) pos(6) rows(5) size(3)) 
+{res}{txt}
+{com}.     graph export "${c -(}d_tex_fig{c )-}/Ecuador_rCARI_HHSize_Modality.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/2_figure/Ecuador_rCARI_HHSize_Modality.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}.         
+.         ** 4 Other specify
+.         keep if Completion == 1
+{txt}(637 observations deleted)
+
+{com}.         
+.         gl otherspecify EnuName HHID HHHOccupation HHHOccupation_S HHStatusOth                          ///
+>                    HHHealthAcMildWhy_oth HHHealthAcSevereWhy_oth HHHealthChronWhy_oth                   ///
+>                    HHHealthEmergWhy_oth LhCSIEnAccess_stress_oth LhCSIEnAccess_crisis_oth               ///
+>                    LhCSIEnAccess_em_oth HHIncFirst_oth HHIncFirst_oth_S HHDwellType_oth                 ///
+>                    HHTenureType_oth HHWallType_oth HHRoofType_oth HHFloorType_oth                               ///
+>                    HHToiletType_oth HHEnerCookStove_oth HHEnerCookSRC_oth HHEnerLightSRC_oth    ///
+>                    HHWaterSRC_oth Sys_uuid
+{txt}
+{com}.                    
+.         codebook ${c -(}otherspecify{c )-}
+
+{txt}{hline}
+{res}EnuName{right:Nombre del/de la encuestador/a (o ID)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}byte{txt})
+{ralign 22:Label}: {res:EnuName}
+
+{col 18}Range: [{res}1{txt},{res}11{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}11{col 51}{txt}Missing .: {res}0{txt}/{res}852
+
+{txt}{ralign 23: Examples:}{col 25}{res}2{col 31}{txt}ERICK GUERRA
+{ralign 23: }{col 25}{res}4{col 31}{txt}OMAR ANDRADE
+{ralign 23: }{col 25}{res}5{col 31}{txt}VERÓNICA GUERRERO
+{ralign 23: }{col 25}{res}8{col 31}{txt}KATHERINE CHALA
+
+{txt}{hline}
+{res}HHID{right:ID del hogar}
+{txt}{hline}
+
+{col 19}Type: String ({res}str10{txt})
+
+{col 10}Unique values: {res}852{col 51}{txt}Missing "": {res}0{txt}/{res}852
+
+{txt}{col 15}Examples: {res}"ECU0121"
+{col 25}"ECU020223"
+{col 25}"ECU0249"
+{col 25}"ECU03109"
+
+{txt}{hline}
+{p 0 39}{res}HHHOccupation{space 26}¿A qué se dedica el cabeza de familia?{p_end}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}285{col 51}{txt}Missing "": {res}0{txt}/{res}852
+
+{txt}{col 15}Examples: {res}"Agricultura"
+{col 25}"AgríCola"
+{col 25}"ConstruccióN"
+{col 25}"Local De Comidas RáPidas"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{p 0 39}{res}HHHOccupation_S{space 24}¿Cuál es la ocupación del cabeza de familia?{p_end}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}103{col 51}{txt}Missing "": {res}619{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}"Agricultura"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHStatusOth{right:Especifique}
+{txt}{hline}
+
+{col 19}Type: String ({res}str1{txt}), but longest is str0
+
+{col 10}Unique values: {res}0{col 51}{txt}Missing "": {res}852{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       852{col 32}""
+
+{txt}{hline}
+{res}HHHealthAcMildWhy_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}27{col 51}{txt}Missing "": {res}824{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthAcSevereWhy_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}11{col 51}{txt}Missing "": {res}840{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthChronWhy_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}11{col 51}{txt}Missing "": {res}841{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHHealthEmergWhy_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}3{col 51}{txt}Missing "": {res}849{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       849{col 32}""
+{col 20}         1{col 32}"La CirugíA No Realizaba El Ministerio"
+{col 20}         1{col 32}"No Le Atienden"
+{col 20}         1{col 32}"Solo Servicio Privados"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_stress_oth{right:Otros (Especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}14{col 51}{txt}Missing "": {res}838{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_crisis_oth{right:Otros (Especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str29{txt})
+
+{col 10}Unique values: {res}5{col 51}{txt}Missing "": {res}847{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       847{col 32}""
+{col 20}         1{col 32}"No Hubo Necesidad"
+{col 20}         1{col 32}"No Tiene Esa Necesidad"
+{col 20}         1{col 32}"No Tuvo Que Usar Esta OpcióN"
+{col 20}         1{col 32}"Para Vender Alimento"
+{col 20}         1{col 32}"Sobre Un CréDito"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}LhCSIEnAccess_em_oth{right:Otros (Especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}4{col 51}{txt}Missing "": {res}848{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       848{col 32}""
+{col 20}         1{col 32}"Beneficio Propio"
+{col 20}         1{col 32}"Manda Al NiñO A Trabajar Con Su Padre
+{col 32}Para Recoger MáS Café Para Sacar A
+{col 32}Vender."
+{col 20}         1{col 32}"Pagar Arriendo"
+{col 20}         1{col 32}"Trabajo De Alto Riesgo Es Por Las
+{col 32}Fumigaciones A Las Plantas"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHIncFirst_oth{right:Especifique}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}74{col 51}{txt}Missing "": {res}746{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHIncFirst_oth_S{right:Especifique}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}24{col 51}{txt}Missing "": {res}817{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHDwellType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str30{txt})
+
+{col 10}Unique values: {res}6{col 51}{txt}Missing "": {res}835{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       835{col 32}""
+{col 20}         1{col 32}"Arrendatario En Dos Ciudades"
+{col 20}         9{col 32}"Casa De Madera"
+{col 20}         4{col 32}"Casa De Tabla"
+{col 20}         1{col 32}"Casa De Tablas"
+{col 20}         1{col 32}"Chosa De Tierra"
+{col 20}         1{col 32}"Media Agua De Ayuda Del Miduvi"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHTenureType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str32{txt})
+
+{col 10}Unique values: {res}22{col 51}{txt}Missing "": {res}825{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHWallType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}25{col 51}{txt}Missing "": {res}791{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHRoofType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}12{col 51}{txt}Missing "": {res}810{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHFloorType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}8{col 51}{txt}Missing "": {res}842{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       842{col 32}""
+{col 20}         1{col 32}"Cala Y Tierra"
+{col 20}         1{col 32}"Cemento Una Parte Y La Otra Es De
+{col 32}Tierra"
+{col 20}         1{col 32}"Cemento Y Tierra"
+{col 20}         1{col 32}"Ceramica"
+{col 20}         2{col 32}"Madera Y Cemento"
+{col 20}         1{col 32}"Tabla Y CañAs"
+{col 20}         2{col 32}"Tierra"
+{col 20}         1{col 32}"Tierra Y Madera"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHToiletType_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}5{col 51}{txt}Missing "": {res}847{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       847{col 32}""
+{col 20}         1{col 32}"Bota AtráS Del Patio Lo De La
+{col 32}Basenilla"
+{col 20}         1{col 32}"No Hay"
+{col 20}         1{col 32}"No Tiene BañO"
+{col 20}         1{col 32}"Piden Prestado El BañO"
+{col 20}         1{col 32}"Sin BañO"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHEnerCookStove_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}12{col 51}{txt}Missing "": {res}830{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHEnerCookSRC_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}str3{txt})
+
+{col 10}Unique values: {res}1{col 51}{txt}Missing "": {res}823{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       823{col 32}""
+{col 20}        29{col 32}"Gas"
+
+{txt}{hline}
+{res}HHEnerLightSRC_oth{right:Otro (especificar)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}8{col 51}{txt}Missing "": {res}844{txt}/{res}852
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       844{col 32}""
+{col 20}         1{col 32}"Cogen De Contrabando"
+{col 20}         1{col 32}"El Vecino Le Comparte"
+{col 20}         1{col 32}"Electricidad Pero No Paga Porque Ya Es
+{col 32}De Edad Avanzada"
+{col 20}         1{col 32}"Generador De Luz"
+{col 20}         1{col 32}"La Luz Viene Gratis."
+{col 20}         1{col 32}"Lamparas"
+{col 20}         1{col 32}"Luces Led"
+{col 20}         1{col 32}"Tienes Luz De Contrabando"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}HHWaterSRC_oth{right:Otros (especifique)}
+{txt}{hline}
+
+{col 19}Type: String ({res}strL{txt})
+
+{col 10}Unique values: {res}13{col 51}{txt}Missing "": {res}838{txt}/{res}852
+
+{txt}{col 15}Examples: {res}""
+{col 25}""
+{col 25}""
+{col 25}""
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}Sys_uuid{right:_uuid}
+{txt}{hline}
+
+{col 19}Type: String ({res}str36{txt})
+
+{col 10}Unique values: {res}852{col 51}{txt}Missing "": {res}0{txt}/{res}852
+
+{txt}{col 15}Examples: {res}"36ccab39-7fdf-4b42-9043-103d4652b7c9"
+{col 25}"66e3c1ca-f755-4113-9fb1-48279ce71c6c"
+{col 25}"9da3a13c-9a5f-4e2d-b8c9-da8e7815ea38"
+{col 25}"ce61c2d4-593d-4524-9f4c-bfb0f88a0f2a"
+{txt}
+{com}.         export excel ${c -(}otherspecify{c )-} using "${c -(}note{c )-}/Ecuador_other_specify_`cdate'.xlsx",        ///
+>                    firstrow(variables) replace
+{res}{txt}file {bf:/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/5_Field_notes/Ecuador_other_specify_20230705.xlsx} saved
+
+{com}. 
+.         ** scatter between food security outcomes
+.         scatter FCS rCSI, by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{res}{txt}
+{com}.         scatter FCS FES , by(Modality) graphregion(color(white)) bgcolor(white) colorvar(LCS_Cat)
+{res}{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+. 
+.         gl bal_all      RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_f2f      RESPAge RESPFemale RESPHHH RESPSingle RESPMarried                                ///
+>                                 HHDisplaced HHDisable MDDIHHDisabledNb           ///
+>                                 R_HHH_Literate HHSize R_Num_Male R_Num_Female R_Num_Child                ///
+>                                 R_Num_Senior R_Num_Adult         ///
+>                                 FemaleMale_Ratio Dependency_Ratio HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_rm       RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl outcome  FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS ///
+>                                 rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI  ///
+>                                 Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping                        ///
+>                                 HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES             ///
+>                                 HH_Vul_FES HH_Vul_Income
+{txt}
+{com}.         
+.         * Randomization Balance
+.         iebaltab ${c -(}bal_all{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Ecuador_Demo_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Demo_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Demo_Modality_Balance.tex}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}bal_f2f{c )-} if Modality == 1, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Ecuador_Demo_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Demo_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Demo_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}bal_rm{c )-}  if Modality == 2, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Ecuador_Demo_RM_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Demo_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Demo_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}.                                 
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}outcome{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow                 ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Ecuador_Outcome_Modality_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_Modality_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_Modality_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}outcome{c )-} if Modality == 1, grpvar(Form) nonote total replace ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short) onerow                         ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Ecuador_Outcome_F2F_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_F2F_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_F2F_Length_Balance.tex}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}outcome{c )-} if Modality == 2, grpvar(Form) nonote total replace ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short) onerow                         ///
+>              rowvarlabels savetex("${c -(}d_tex_tab{c )-}/Ecuador_Outcome_RM_Length_Balance.tex")
+
+{res}{phang}Balance table saved in LaTeX format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_RM_Length_Balance.tex":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Ecuador_Outcome_RM_Length_Balance.tex}{p_end}
+{txt}
+{com}. 
+.         // onerow
+.         
+.         gl var_ad       HHID Sys_uuid ADMIN1Name ADMIN3Name ADMIN5Name EnuName EnuName_Display  ///
+>                                 Sys_HHCoord_latitude Sys_HHCoord_longitude Sys_HHCoord_altitude Consent ///
+>                                 Completion Duration_Min Modality Form S_Assign_Modality S_Assign_Length
+{txt}
+{com}.         gl demo RESPAge RESPSex HHSize RESPHHH RESPFemale HHDisplaced HHHSingle                 ///
+>                                 HHHMarried HHDisable R_*        
+{txt}
+{com}.         gl var_dem  RESPAge HHSize
+{txt}
+{com}.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI 
+{txt}
+{com}.         gl var_lcs      Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping
+{txt}
+{com}.         gl var_fes      HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES
+{txt}
+{com}.         gl var_inc      HH_Vul_Income
+{txt}
+{com}.         
+.         eststo  clear
+{txt}
+{com}.     estpost tabstat ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}var_lcs{c )-} ${c -(}var_fes{c )-} ${c -(}var_inc{c )-},            ///
+>                         by(Modality) statistics(mean sd range cv) columns(statistics) nototal
+
+{txt}Summary statistics: mean sd range cv
+     for variables: FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI Lcs_Stress_Coping Lcs_Crisis_Coping Lcs_Emergency_Coping HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES HH_Vul_FES HH_Vul_Income
+  by categories of: Modality
+
+{space 0}{space 0}{ralign 12:Modality}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(range)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Face-to-Face}}{c |}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.362256}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.309952}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.203905}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.195268}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.477223}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.038228}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.147505}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.430767}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.872017}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.859556}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.691974}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.575917}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.401302}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.527569}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.338395}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.605684}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 47.76898}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.46885}}}{space 1}{space 1}{ralign 9:{res:{sf:      112}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.383948}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.53799}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.696312}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.967941}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   3.9718}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.720547}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.032538}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.492821}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  2.73102}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.54808}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 20.57701}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.03294}}}{space 1}{space 1}{ralign 9:{res:{sf:       56}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .867679}}}{space 1}{space 1}{ralign 9:{res:{sf: .3392076}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5856833}}}{space 1}{space 1}{ralign 9:{res:{sf: .4931388}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2321041}}}{space 1}{space 1}{ralign 9:{res:{sf: .4226337}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 259.3361}}}{space 1}{space 1}{ralign 9:{res:{sf: 227.2763}}}{space 1}{space 1}{ralign 9:{res:{sf: 1670.357}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 108.3309}}}{space 1}{space 1}{ralign 9:{res:{sf: 141.0911}}}{space 1}{space 1}{ralign 9:{res:{sf: 1250.167}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  367.667}}}{space 1}{space 1}{ralign 9:{res:{sf:  304.024}}}{space 1}{space 1}{ralign 9:{res:{sf: 1827.762}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 104.8061}}}{space 1}{space 1}{ralign 9:{res:{sf:    102.7}}}{space 1}{space 1}{ralign 9:{res:{sf: 741.0893}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7106549}}}{space 1}{space 1}{ralign 9:{res:{sf: .1907807}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7548807}}}{space 1}{space 1}{ralign 9:{res:{sf: .4306252}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4425163}}}{space 1}{space 1}{ralign 9:{res:{sf: .4972242}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Remote}}{c |}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.959079}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.327839}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.580563}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.269764}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.920716}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.198217}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.526854}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.39201}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.506394}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.616385}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.805627}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.540557}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.429668}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.325894}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.531969}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.313478}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 52.24297}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.91445}}}{space 1}{space 1}{ralign 9:{res:{sf:      108}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.570332}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.683194}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.851662}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.189366}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.265985}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.858338}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.452685}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.226228}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.634271}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.691249}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 18.53197}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.69718}}}{space 1}{space 1}{ralign 9:{res:{sf:       56}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8849105}}}{space 1}{space 1}{ralign 9:{res:{sf: .3195388}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6700767}}}{space 1}{space 1}{ralign 9:{res:{sf: .4707874}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6598465}}}{space 1}{space 1}{ralign 9:{res:{sf: .4743676}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 329.7424}}}{space 1}{space 1}{ralign 9:{res:{sf: 287.1395}}}{space 1}{space 1}{ralign 9:{res:{sf: 2335.714}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 73.56829}}}{space 1}{space 1}{ralign 9:{res:{sf:  98.3731}}}{space 1}{space 1}{ralign 9:{res:{sf:     1300}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 403.3107}}}{space 1}{space 1}{ralign 9:{res:{sf: 324.6652}}}{space 1}{space 1}{ralign 9:{res:{sf: 2352.381}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 109.0096}}}{space 1}{space 1}{ralign 9:{res:{sf:  108.059}}}{space 1}{space 1}{ralign 9:{res:{sf: 998.6904}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8073308}}}{space 1}{space 1}{ralign 9:{res:{sf: .1551506}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9258312}}}{space 1}{space 1}{ralign 9:{res:{sf: .2623811}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6112532}}}{space 1}{space 1}{ralign 9:{res:{sf: .4880902}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+
+{space 0}{space 0}{ralign 12:Modality}{space 1}{c |}{space 1}{ralign 9:e(cv)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}
+{space 0}{res:{lalign 13:Face-to-Face}}{c |}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4307798}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9960813}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.379769}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7722838}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7385185}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9568878}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4679556}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4881025}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4703649}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .578928}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.160129}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6849657}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.226457}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9330141}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6333742}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3909367}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8419889}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  1.82088}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8763774}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.302408}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8269003}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9799055}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2684575}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5704547}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.123629}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}
+{space 0}{res:{lalign 13:Remote}}{c |}{space 11}
+{space 0}{space 0}{ralign 12:FCSStap}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4694095}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPulse}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8795615}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSDairy}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.144478}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSPr}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6782277}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSVeg}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .580594}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFruit}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9055221}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSFat}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4283677}}}{space 1}
+{space 0}{space 0}{ralign 12:FCSSugar}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4182015}}}{space 1}
+{space 0}{space 0}{ralign 12:FCS}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4577545}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSILessQlty}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5870894}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIBorrow}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.182379}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealSize}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8751842}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealAd~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.532491}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSIMealNb}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  1.02163}}}{space 1}
+{space 0}{space 0}{ralign 12:rCSI}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6311892}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Stress~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3610973}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Crisis~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7025873}}}{space 1}
+{space 0}{space 0}{ralign 12:Lcs_Emerge~g}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7189059}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpFood~1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8707994}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpNF~l_1M}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.337167}}}{space 1}
+{space 0}{space 0}{ralign 12:HHExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .8050001}}}{space 1}
+{space 0}{space 0}{ralign 12:PCExpTotal}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9912794}}}{space 1}
+{space 0}{space 0}{ralign 12:FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .1921772}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_FES}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2834006}}}{space 1}
+{space 0}{space 0}{ralign 12:HH_Vul_Inc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7985074}}}{space 1}
+
+{com}.     esttab  using "${c -(}d_tex_tab{c )-}/Summary_Stats_Outlier.tex", replace style(tex)          ///
+>             cell("mean(fmt(2)) sd(fmt(2)) range(fmt(0)) cv(fmt(2))")  ///
+>             nolabel nonumbers noobs nomtitles unstack                             ///
+>                         collabels("Mean" "SD" "Range" "Coef of Variation")                ///
+>             refcat(RESPAge                       "      \textbf{c -(}\textit{c -(}Respondent Characteristics:{c )-}{c )-}"    ///
+>                    FCSStap                       "      \textbf{c -(}\textit{c -(}Food Consumption Score:{c )-}{c )-}"        ///
+>                    rCSILessQlty          "      \textbf{c -(}\textit{c -(}Reduced Coping Strategy Index:{c )-}{c )-}" ///
+>                                    Lcs_Stress_Coping "  \textbf{c -(}\textit{c -(}Livelihood Coping Strategies:{c )-}{c )-}"  ///
+>                                    HHExpFoodTotal_1M "  \textbf{c -(}\textit{c -(}Expenditure:{c )-}{c )-}"                                   ///
+>                                    HH_Vul_Income         "      \textbf{c -(}\textit{c -(}Income:{c )-}{c )-}", nolabel)
+{res}{txt}(output written to {browse  `"/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/6_Report/1_table/Summary_Stats_Outlier.tex"'})
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. 

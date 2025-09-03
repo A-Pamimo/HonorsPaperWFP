@@ -1,0 +1,48 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50 HHInc_Reduce50More if Modality == 2, grpvar(Form) nonote nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow rowvarlabels savetex("/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/2_Myanmar/9_Analysis/8_Manuscript/1_table/Myanmar_Demo_RM_Length_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{1}{c}{(1)}  & \multicolumn{1}{c}{(2)}  & \multicolumn{1}{c}{(1)-(2)} \\
+ & \multicolumn{1}{c}{F2F}  & \multicolumn{1}{c}{Remote}  & \multicolumn{1}{c}{Pairwise t-test}  \\
+Variable & Mean/(SE) & Mean/(SE) & Mean difference \\ \hline \\[-1.8ex] 
+Respondent Age   & 37.41    & 39.05    & -1.64   \\
+ & (0.83)  & (0.91)  &  \\ [1ex]
+Female Respondent   & 0.82    & 0.78    & 0.03   \\
+ & (0.03)  & (0.03)  &  \\ [1ex]
+Head of Household Respondent   & 0.35    & 0.35    & -0.00   \\
+ & (0.03)  & (0.03)  &  \\ [1ex]
+Household Size   & 5.58    & 5.41    & 0.17   \\
+ & (0.15)  & (0.13)  &  \\ [1ex]
+Number of household members contributing to income   & 1.41    & 1.41    & 0.00   \\
+ & (0.05)  & (0.06)  &  \\ [1ex]
+Number of household income sources   & 1.26    & 1.23    & 0.03   \\
+ & (0.04)  & (0.04)  &  \\ [1ex]
+Income Source: None   & 0.03    & 0.06    & -0.03*   \\
+ & (0.01)  & (0.01)  &  \\ [1ex]
+Income Source: Skilled Waged Labor   & 0.06    & 0.09    & -0.02   \\
+ & (0.02)  & (0.02)  &  \\ [1ex]
+Income Source: Unskilled Waged Labor   & 0.60    & 0.54    & 0.06   \\
+ & (0.03)  & (0.03)  &  \\ [1ex]
+Income Source: Trade   & 0.03    & 0.04    & -0.00   \\
+ & (0.01)  & (0.01)  &  \\ [1ex]
+Income Source: Agricultural Production   & 0.18    & 0.17    & 0.01   \\
+ & (0.03)  & (0.02)  &  \\ [1ex]
+Income Change: None   & 0.39    & 0.43    & -0.04   \\
+ & (0.03)  & (0.03)  &  \\ [1ex]
+Income Change: Increase   & 0.15    & 0.14    & 0.01   \\
+ & (0.02)  & (0.02)  &  \\ [1ex]
+Income Change: Reduced < 25\%   & 0.20    & 0.17    & 0.03   \\
+ & (0.03)  & (0.02)  &  \\ [1ex]
+Income Change: Reduced 25\% - 50\%   & 0.20    & 0.15    & 0.05   \\
+ & (0.03)  & (0.02)  &  \\ [1ex]
+Income Change: Reduced 50+\%   & 0.06    & 0.11    & -0.05**   \\
+ & (0.02)  & (0.02)  &  \\ [1ex]
+\hline \\[-1.8ex]
+Number of observations  & 233   & 250  & 483  \\
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

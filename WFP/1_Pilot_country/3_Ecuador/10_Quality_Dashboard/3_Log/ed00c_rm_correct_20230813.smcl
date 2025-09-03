@@ -1,0 +1,568 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed00c_rm_correct_20230813.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}13 Aug 2023, 22:49:17
+{txt}
+{com}.         di `cdate'
+{res}20230813
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}sampleYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPpart{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}RESPAvailable{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPcallback{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPvoice{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}FCSStap{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSILessQlty{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIBorrow{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIGenderMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_CrdtFood{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_HealthEdu{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}LcsEN_em_ChildWork{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_YN1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_GiftAid_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpF_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNF_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHInc_PCT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_SRi{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHIncChg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}start{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}end{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str18{sf}
+  {txt}variable {bf}{res}HHID_manual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}calc_ID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str56{sf}
+  {txt}variable {bf}{res}HHID_digits{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHPhNmb{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}RESPRelationHHH_oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}RESPPhNmbAlt{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}RESPPhNmbAl2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str17{sf}
+  {txt}variable {bf}{res}audit{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str14{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,004,643 bytes saved)
+
+{com}.         
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}start{col 15}RESPpart_oth{col 29}___uuid
+{col 1}end{col 15}RESPRelati~h{col 29}___parent_~e
+{col 1}deviceid{col 15}HHHOccupat~n{col 29}___tags
+{col 1}EnuName_Di~y{col 15}HHIncFirst~h{col 29}___notes
+{col 1}HHID_manual{col 15}RESPPhNmbAlt{col 29}___version
+{col 1}HHID{col 15}RESPPhNmbAl2{col 29}___duration
+{col 1}calc_ID{col 15}remarks{col 29}___submitt~y
+{col 1}HHID_digits{col 15}audit{col 29}___xform_id
+{col 1}HHPhNmb{col 15}instanceID
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,363 real changes made)
+(34 real changes made)
+(34 real changes made)
+(34 real changes made)
+(0 real changes made)
+(1,558 real changes made)
+(2,395 real changes made)
+(1,711 real changes made)
+(2,273 real changes made)
+(1,711 real changes made)
+(1,724 real changes made)
+(2,178 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,395 real changes made)
+(2,395 real changes made)
+(2,395 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+.         ** temp
+.         replace HHID = HHID_manual if mi(HHID)          // this is temporary
+{txt}(32 real changes made)
+
+{com}.         drop if mi(HHID)
+{txt}(2 observations deleted)
+
+{com}.         
+.         ** check duplicates
+.         duplicates tag HHID, generate(Dup)
+
+{p 0 4}{txt}Duplicates in terms of {res} HHID{p_end}
+{txt}
+{com}.         
+.         ** Recode for best outcome - combining the consent and availability
+.         recode RESPpart (0=4) (1=1) (2=5) (999=6), gen(Outcome_Order)
+{txt}(1,700 differences between {bf:RESPpart} and {bf:Outcome_Order})
+
+{com}.         replace Outcome_Order = 2 if Outcome_Order == 1 & RESPAvailable == 2
+{txt}(8 real changes made)
+
+{com}.         replace Outcome_Order = 3 if Outcome_Order == 1 & RESPAvailable == 0
+{txt}(2 real changes made)
+
+{com}.         
+.         label def Outcome_L 1 "Agreed & Available" 2 "Agreed & Later" ///
+>                                                 3 "Agreed & Not Available" 4 "Not answer" ///
+>                                                 5 "Refused" 6 "Other"
+{txt}
+{com}.         label val Outcome_Order Outcome_L
+{txt}
+{com}.         
+.         bysort HHID: egen Survey_Outcome = min(Outcome_Order) if Dup >= 1
+{txt}(388 missing values generated)
+
+{com}.         replace Survey_Outcome = Outcome_Order if Dup == 0
+{txt}(388 real changes made)
+
+{com}.         
+.         gen HH_Final = (Outcome_Order == Survey_Outcome)
+{txt}
+{com}.         
+.         egen HH_TAG = tag(HHID) if HH_Final == 1
+{txt}
+{com}.         
+.         replace Survey_Outcome = . if HH_TAG == 0 
+{txt}(1,369 real changes made, 1,369 to missing)
+
+{com}.         label val Survey_Outcome Outcome_L
+{txt}
+{com}.                 
+.         ** create one consent variable 
+.         gen  Temp_Complete = !mi(HHIncChg)
+{txt}
+{com}. 
+.         bysort HHID: gen Consent = inlist(Survey_Outcome,1,2,3)
+{txt}
+{com}.         label val Consent sampleYN
+{txt}
+{com}.         
+.         keep if Temp_Complete == 1
+{txt}(1,710 observations deleted)
+
+{com}.         
+.         ** Dup 12
+.         drop if ___uuid == "9a887a11-4a44-413b-ac49-31a59b4125a8"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 13 
+.         drop if ___uuid == "de5b4569-41c8-4cc1-99e7-79e39fc89c49"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 14
+.         drop if ___uuid == "584143cf-e450-4e50-a97f-e1fb6657d6f5"
+{txt}(1 observation deleted)
+
+{com}.         
+.         
+.         ** Dup 25
+.         drop if ___uuid == "126188eb-13c6-40b1-833e-9838dbe07bde"
+{txt}(1 observation deleted)
+
+{com}.         
+.         
+.         ** Dup 27
+.         drop if ___uuid == "fcf8430b-cc54-4a47-937b-9327e58af103"
+{txt}(1 observation deleted)
+
+{com}.         
+.         ** Dup 37
+.         drop if ___uuid == "d99c3b1a-52da-40e7-8d24-5f336ff607ec"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "5af5e02a-e479-4e58-a88f-d7f52ce1eb39"
+{txt}(1 observation deleted)
+
+{com}.         
+.         ** Dup 41
+.         drop if ___uuid == "8aae6694-dc33-4b83-9d1d-a091d4828d22"
+{txt}(1 observation deleted)
+
+{com}.         
+.         
+.         ** Dup 51 
+.         drop if ___uuid == "541beaf8-8822-4649-93cc-ffb5770c9f5b"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 52
+.         drop if ___uuid == "f8473b6b-a3d5-48b2-acbb-19f96afd1745"
+{txt}(1 observation deleted)
+
+{com}.         ** Dup 53
+.         drop if ___uuid == "ef412da3-15b9-4b11-b9a2-61235e11fac0"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "85195c11-14e7-43c3-8565-42a778d58802"
+{txt}(1 observation deleted)
+
+{com}.         
+.         ** Dup 57 
+.         drop if ___uuid == "3cabe55e-d0ff-4d83-83bf-a14b16c5571f"
+{txt}(1 observation deleted)
+
+{com}.         
+.         ** Dup 64
+.         drop if ___uuid == "45263464-f11b-48e0-ba51-1973be133912"
+{txt}(1 observation deleted)
+
+{com}.         drop if ___uuid == "90fada10-23b4-4bc0-b7d8-3d7665ac0084"
+{txt}(1 observation deleted)
+
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/3_Sampling/Iraq_Full_Household_Modality.dta", clear
+
+. tab HH_True_Crossover Modality_First
+
+{txt}HH_True_Cr {c |}    Modality_First
+   ossover {c |} F2F First  Remote Fi {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+         0 {c |}{res}       301        241 {txt}{c |}{res}       542 
+{txt}         1 {c |}{res}        68         66 {txt}{c |}{res}       134 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       369        307 {txt}{c |}{res}       676 
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36254.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                       WFP RAM-N rCARI Validation Study - Ecuador                                 * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Master dofile                                                                              *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 18, 2023                                                                               *
+> *  LATEST UPDATE:               Jun 19, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>         ** OUTLINE:             PART 0: Select parts to run
+>                         PART 1: Install packages and Set directories
+>                                         PART 2: Run selected dofiles
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Ecuador_F2F_Household_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Ecuador_F2F_Roster_Raw_`cdate'.dta
+>                                         ${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw_`cdate'.dta
+>                                         
+>         ** CREATES:             
+>                                         
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+> 
+> *******************************************************************************/
+. *                               PART 0:  SELECT PARTS TO RUN                       *
+. ********************************************************************************
+. 
+. * change 0 to 1 to select do-file to run
+.         local   sample_prep             0       // Prepare sample list
+{txt}
+{com}.         local   correct                 0       // Correct field errors and de-duplcations
+{txt}
+{com}.         local   setup                   0       // Set up datasets
+{txt}
+{com}.         local   organize                0       // Organize variables
+{txt}
+{com}.         local   append                  0       // Append f2f and remote datasets for analysis
+{txt}
+{com}.         local   hfc_sum                 0       // Run high-frequency checks for quality monitoring
+{txt}
+{com}.         
+. ********************************************************************************
+. *                       PART 1:  INSTALL PACKAGES AND SET UP                           *
+. ********************************************************************************
+. 
+. local user_commands ietoolkit iefieldkit sumstats 
+{txt}
+{com}. 
+.         foreach command of local user_commands {c -(}
+{txt}  2{com}.                 cap which `command'
+{txt}  3{com}.                 if _rc == 111 ssc install `command'
+{txt}  4{com}.         {c )-} // Note that this never updates outdated versions of already installed commands, to update commands use adoupdate
+{txt}
+{com}. 
+. *Standardize settings accross users
+.         ieboilstart, version(13.1)  
+
+{res}{phang}{err:DISCLAIMER:} Due to how settings work in Stata, this command can only attempt to harmonize settings as much as possible across users, but no guarantee can be given that all commands will always behave identically unless the exact same version and type of Stata is used, with the same releases of user-contributed commands installed.{p_end}
+
+{col 5}{ul:Settings set by this command:}{break}{col 5}clear all{break}{col 5}set maxvar {col 22}120000{col 28}, permanently{break}{col 5}set matsize {col 22}400{col 28}, permanently{break}{col 5}set niceness{col 22}5{col 28}, permanently{break}{col 5}set min_memory {col 22}0{col 28}, permanently{break}{col 5}set max_memory {col 22}.{col 28}, permanently{break}{col 5}set segmentsize  {col 22}32m{col 28}, permanently{break}{col 5}set more {col 22}off{col 28}, permanently{break}{col 5}pause {col 22}on{break}{col 5}set varabbrev {col 22}off{col 28}, permanently{break}{col 5}set type {col 22}float{col 28}, permanently
+
+{phang}{err:IMPORTANT:} One important setting of this command – the Stata version – cannot be set inside the command due to how this setting works. The setting has been prepared by this command, and you only need to write `r(version)' after this command (include the apostrophes) for the version setting to be applied.{p_end}
+{txt}
+{com}.         `r(version)'  
+{txt}
+{com}. 
+.         *set global for today
+.         gl today :      display %tdCCYYNNDD date(c(current_date),"DMY")
+{res}{txt}
+{com}.         graph set window fontface "Open Sans"
+{txt}
+{com}. 
+. ********************************************************************************
+. *                               PART 2:  PREPARE FOLDER PATHS AND DEFINE PROGRAMS                          *
+. *******************************************************************************/
+. 
+.         * add your directory below
+.         display c(username)     // Get your username and add path to the working folder
+{res}nicolewu
+{txt}
+{com}.         
+.         global nicole    1
+{txt}
+{com}.         global alirah    0
+{txt}
+{com}.         
+.         * set the GD Folder
+. if $nicole {c -(}
+.         global rcari    "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+. if $alirah {c -(}
+.         global rcari    "C:\Users\alirah.weyori\OneDrive - World Food Programme\2_CARI_validation\1_rCARI_study\1_Pilot_country"
+.         {c )-}
+{txt}
+{com}.         
+.         * Subfolder globals
+.         * -----------------
+. 
+.         gl Ecuador              "${c -(}rcari{c )-}/3_Ecuador"
+{txt}
+{com}.         
+. *       gl raw_f2f              "${c -(}Ecuador{c )-}/8_Datasets/F2F"
+. *       gl raw_rm               "${c -(}Ecuador{c )-}/8_Datasets/Remote"
+.         gl sample               "${c -(}Ecuador{c )-}/3_Sampling"
+{txt}
+{com}.         gl note                 "${c -(}Ecuador{c )-}/5_Field_notes"
+{txt}
+{com}.         
+.         gl analysis     "${c -(}Ecuador{c )-}/9_Analysis"
+{txt}
+{com}.         gl dashboard    "${c -(}Ecuador{c )-}/10_Quality_Dashboard"
+{txt}
+{com}. 
+.         gl dta                  "${c -(}analysis{c )-}/1_Data"
+{txt}
+{com}.         gl dofile               "${c -(}analysis{c )-}/2_Dofile"
+{txt}
+{com}.         gl logs                 "${c -(}analysis{c )-}/3_Log"
+{txt}
+{com}.         gl temp                 "${c -(}analysis{c )-}/4_Temp"
+{txt}
+{com}.         gl tabs                 "${c -(}analysis{c )-}/5_Tables"
+{txt}
+{com}.         gl figs                 "${c -(}analysis{c )-}/6_Figures"
+{txt}
+{com}.         gl paper                "${c -(}analysis{c )-}/8_Manuscript"
+{txt}
+{com}.         gl docs                 "${c -(}analysis{c )-}/9_Documentation"
+{txt}
+{com}.         
+.         gl d_raw                "${c -(}dashboard{c )-}/1_Raw"
+{txt}
+{com}.         gl d_temp               "${c -(}dashboard{c )-}/2_Temp"
+{txt}
+{com}.         gl d_log                "${c -(}dashboard{c )-}/3_Log"
+{txt}
+{com}.         gl d_dta                "${c -(}dashboard{c )-}/4_Data"
+{txt}
+{com}.         gl d_dofile             "${c -(}dashboard{c )-}/5_Code"
+{txt}
+{com}.         gl d_report             "${c -(}dashboard{c )-}/6_Report"
+{txt}
+{com}.         gl d_out                "${c -(}dashboard{c )-}/7_Output"
+{txt}
+{com}.         
+.         gl d_tex_tab    "${c -(}d_report{c )-}/1_table"
+{txt}
+{com}.         gl d_tex_fig    "${c -(}d_report{c )-}/2_figure"
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                               PART 3:  RUN SELECTED SECTIONS                                             *
+. ********************************************************************************
+. 
+.         if `sample_prep'        do "${c -(}d_dofile{c )-}/ed00_sample_prep.do"
+{txt}
+{com}.                 
+. * ------------------------------------------------------------------------------
+. *                                                       3.0 Correct field errors
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_raw{c )-}/Ecuador_F2F_Household_Raw_`cdate'.dta
+. *                               ${c -(}d_raw{c )-}/Ecuador_F2F_Roster_Raw_`cdate'.dta
+. *                               ${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw_`cdate'.dta
+. *                                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_F2F_Roster_Correct_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+. 
+.         
+.         if `correct'            do "${c -(}d_dofile{c )-}/ed00a_f2f_correct.do"
+{txt}
+{com}.         if `correct'            do "${c -(}d_dofile{c )-}/ed00b_roster_correct.do"
+{txt}
+{com}.         if `correct'            do "${c -(}d_dofile{c )-}/ed00c_rm_correct.do"
+{txt}
+{com}.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.1     Set up datasets
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_temp{c )-}/Ecuador_F2F_Roster_Correct_`cdate'.dta
+.                                         
+. *       CREATES:        ${c -(}d_temp{c )-}/Ecuador_Roster_Prep_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_Roster_Household_Prep_`cdate'.dta
+. *                               
+. * ------------------------------------------------------------------------------
+.         
+.         if `setup'                      do "${c -(}d_dofile{c )-}/ed01_setup_roster.do"
+{txt}
+{com}.         
+. * ------------------------------------------------------------------------------
+. *                                                       3.2 Organize variables
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Prep_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta
+. *                       
+. *       CREATES:        ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis_`cdate'.dta
+. *
+. * ------------------------------------------------------------------------------
+.         
+.         if `organize'           do "${c -(}d_dofile{c )-}/ed02a_f2f_organize.do"
+{txt}
+{com}.         if `organize'           do "${c -(}d_dofile{c )-}/ed02b_rm_organize.do"
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.3     Organize datasets
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_temp{c )-}/Ecuador_F2F_Household_Analysis_`cdate'.dta
+. *                               ${c -(}d_temp{c )-}/Ecuador_RM_Household_Analysis_`cdate'.dta
+.         
+. *       CREATES:        ${c -(}d_out{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `append'                     do "${c -(}d_dofile{c )-}/ed03_append.do"
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. *                                                       3.4     Run high-frequency checks
+. * ------------------------------------------------------------------------------
+. *
+. *       REQUIRES:       ${c -(}d_out{c )-}/Ecuador_Full_Household_Analysis_`cdate'.dta
+. *       
+. *       CREATES:        
+. *                               
+. * ------------------------------------------------------------------------------        
+.         
+.         if `hfc_sum'            do "${c -(}d_dofile{c )-}/ed04_hfc_sum.do"
+{txt}
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36254.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Ecuador                         * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Correct field errors for Remote sample                             *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Jun 18, 2023                                                                               *
+> *  LATEST UPDATE:               Jun 19, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                                         
+>         ** REQUIRES:    ${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw_`cdate'.csv
+>                                         
+>         ** CREATES:             ${c -(}d_temp{c )-}/Ecuador_RM_Household_Correct_`cdate'.dta
+>                         
+>         ** NOTES:               _`cdate' on Jul 20 when data collection finished
+>                                         
+>                                         Attempt level dataset -> Household level
+>                                         1. Best survey outcome per household
+>                                         2. Keep only the best obs for each household
+>                                         3. Drop duplicates when answered the last survey question
+>                                         4. Attrition analysis (adding listing information? or do it 
+>                                            later)
+> 
+> ********************************************************************************
+> *                                       PART 1: Load Household Data and Correct Errors
+> *******************************************************************************/
+.         
+.         cap log close 
+{smcl}
+{com}{sf}{ul off}

@@ -1,0 +1,1081 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/10_Quality_Dashboard/3_Log/ed00c_rm_correct_20230810.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}10 Aug 2023, 15:09:37
+{txt}
+{com}.         di `cdate'
+{res}20230810
+{txt}
+{com}.         
+. * load dataset
+. * ---------------       
+.         use "${c -(}d_raw{c )-}/Ecuador_RM_Household_Raw.dta", clear
+{txt}
+{com}.         compress
+  {txt}variable {bf}{res}today{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}SvyDate{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___submission_time{sf}{txt} was {bf}{res}long{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}EnuName{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}EnuSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN1Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN3Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}ADMIN5Name{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}sampleYN{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPpart{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}RESPAvailable{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPcallback{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPvoice{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPAge{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPSex{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}RESPRelationHHH{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}FCSStap{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPulse{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSDairy{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSPr{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSVeg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFruit{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSFat{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}FCSSugar{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSILessQlty{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIBorrow{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealSize{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIGenderMealAdult{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}rCSIMealNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_stress_DomAsset{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_CrdtFood{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_Saving{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_stress_BorrowCash{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_ProdAssets{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_crisis_HealthEdu{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_crisis_OutSchool{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}LcsEN_em_ChildWork{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}Lcs_em_Begged{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}Lcs_em_IllegalAct{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_YN1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFHyg_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNFEduMedCloth_GiftAid_6M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_MNCRD_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpF_GiftAid_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpF_Own_7D{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHExpNF_MNCRD_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHExpNF_GiftAid_1M{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHInc_PCT{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncNb{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}HHIncFirst_SRi{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}HHIncChg{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}___id{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}long{sf}
+  {txt}variable {bf}{res}___index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}int{sf}
+  {txt}variable {bf}{res}___parent_index{sf}{txt} was {bf}{res}double{sf}{txt} now {bf}{res}byte{sf}
+  {txt}variable {bf}{res}start{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}end{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str29{sf}
+  {txt}variable {bf}{res}deviceid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str24{sf}
+  {txt}variable {bf}{res}EnuName_Display{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str18{sf}
+  {txt}variable {bf}{res}HHID_manual{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}calc_ID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str56{sf}
+  {txt}variable {bf}{res}HHID_digits{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}HHPhNmb{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}RESPRelationHHH_oth{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}RESPPhNmbAlt{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str10{sf}
+  {txt}variable {bf}{res}RESPPhNmbAl2{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str17{sf}
+  {txt}variable {bf}{res}audit{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str9{sf}
+  {txt}variable {bf}{res}instanceID{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str41{sf}
+  {txt}variable {bf}{res}___uuid{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str36{sf}
+  {txt}variable {bf}{res}___parent_table_name{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___tags{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___notes{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str1{sf}
+  {txt}variable {bf}{res}___version{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str12{sf}
+  {txt}variable {bf}{res}___duration{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str8{sf}
+  {txt}variable {bf}{res}___submitted_by{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str14{sf}
+  {txt}variable {bf}{res}___xform_id{sf}{txt} was {bf}{res}strL{sf}{txt} now {bf}{res}str5{sf}
+{txt}  (3,004,643 bytes saved)
+
+{com}.         
+.         * basic quality checks and formating
+.         ds, has(type string) 
+{txt}{col 1}start{col 15}HHID_digits{col 29}RESPPhNmbAl2{col 43}___notes
+{col 1}end{col 15}HHPhNmb{col 29}remarks{col 43}___version
+{col 1}deviceid{col 15}RESPpart_oth{col 29}audit{col 43}___duration
+{col 1}EnuName_Di~y{col 15}RESPRelati~h{col 29}instanceID{col 43}___submitt~y
+{col 1}HHID_manual{col 15}HHHOccupat~n{col 29}___uuid{col 43}___xform_id
+{col 1}HHID{col 15}HHIncFirst~h{col 29}___parent_~e
+{col 1}calc_ID{col 15}RESPPhNmbAlt{col 29}___tags
+
+{com}.         ** remove unnecessary blanks in string and adjust the proper cases
+.         local strvars "`r(varlist)'"
+{txt}
+{com}. foreach var of local strvars {c -(}
+{txt}  2{com}.     replace `var' = strtrim(`var')
+{txt}  3{com}.     {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,363 real changes made)
+(34 real changes made)
+(34 real changes made)
+(34 real changes made)
+(0 real changes made)
+(1,558 real changes made)
+(2,395 real changes made)
+(1,711 real changes made)
+(2,273 real changes made)
+(1,711 real changes made)
+(1,724 real changes made)
+(2,178 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,395 real changes made)
+(2,395 real changes made)
+(2,395 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+.         ** temp
+.         replace HHID = HHID_manual if mi(HHID)          // this is temporary
+{txt}(32 real changes made)
+
+{com}.         drop if mi(HHID)
+{txt}(2 observations deleted)
+
+{com}.         
+.         ** check duplicates
+.         duplicates tag HHID, generate(Dup)
+
+{p 0 4}{txt}Duplicates in terms of {res} HHID{p_end}
+{txt}
+{com}.         
+.         ** Recode for best outcome - combining the consent and availability
+.         recode RESPpart (0=4) (1=1) (2=5) (999=6), gen(Outcome_Order)
+{txt}(1,700 differences between {bf:RESPpart} and {bf:Outcome_Order})
+
+{com}.         replace Outcome_Order = 2 if Outcome_Order == 1 & RESPAvailable == 2
+{txt}(8 real changes made)
+
+{com}.         replace Outcome_Order = 3 if Outcome_Order == 1 & RESPAvailable == 0
+{txt}(2 real changes made)
+
+{com}.         
+.         label def Outcome_L 1 "Agreed & Available" 2 "Agreed & Later" ///
+>                                                 3 "Agreed & Not Available" 4 "Not answer" ///
+>                                                 5 "Refused" 6 "Other"
+{txt}
+{com}.         label val Outcome_Order Outcome_L
+{txt}
+{com}.         
+.         bysort HHID: egen Survey_Outcome = min(Outcome_Order) if Dup >= 1
+{txt}(388 missing values generated)
+
+{com}.         replace Survey_Outcome = Outcome_Order if Dup == 0
+{txt}(388 real changes made)
+
+{com}.         
+.         gen HH_Final = (Outcome_Order == Survey_Outcome)
+{txt}
+{com}.         
+.         egen HH_TAG = tag(HHID) if HH_Final == 1
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. tab RESPAvailable
+
+       {txt}Is the {c |}
+   respondent {c |}
+ available to {c |}
+  conduct the {c |}
+    interview {c |}
+         now? {c |}      Freq.     Percent        Cum.
+{hline 14}{c +}{hline 35}
+           No {c |}{res}          2        0.29        0.29
+{txt}          Yes {c |}{res}        683       98.56       98.85
+{txt}Yes but later {c |}{res}          8        1.15      100.00
+{txt}{hline 14}{c +}{hline 35}
+        Total {c |}{res}        693      100.00
+
+{com}. tab RESPpart
+
+  {txt}Did the respondent agree {c |}
+        to be interviewed? {c |}      Freq.     Percent        Cum.
+{hline 27}{c +}{hline 35}
+Didn't pick up / no answer {c |}{res}        762       31.84       31.84
+{txt}  Agreed to be interviewed {c |}{res}        693       28.96       60.80
+{txt} Refused to be interviewed {c |}{res}        101        4.22       65.02
+{txt}                     Other {c |}{res}        837       34.98      100.00
+{txt}{hline 27}{c +}{hline 35}
+                     Total {c |}{res}      2,393      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36254.000000"
+{txt}
+{com}.         keep if Temp_Complete == 1
+{err}Temp_Complete not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_F2F_Household_Raw.dta", clear
+
+. isid HHID
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_Full_Household_Analysis.dta"
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_Full_Household_Raw.dta"
+
+. tab end
+
+                          {txt}end {c |}      Freq.     Percent        Cum.
+{hline 30}{c +}{hline 35}
+2022-12-14T11:21:38.773+03:00 {c |}{res}          1        0.17        0.17
+{txt}2022-12-14T12:12:50.339+03:00 {c |}{res}          1        0.17        0.34
+{txt}2022-12-14T12:14:19.948+03:00 {c |}{res}          1        0.17        0.51
+{txt}2022-12-14T12:40:48.896+03:00 {c |}{res}          1        0.17        0.68
+{txt}2022-12-14T13:15:53.725+03:00 {c |}{res}          1        0.17        0.85
+{txt}2022-12-14T14:36:12.820+03:00 {c |}{res}          1        0.17        1.02
+{txt}2022-12-14T14:46:21.758+03:00 {c |}{res}          1        0.17        1.19
+{txt}2022-12-14T14:47:42.208+03:00 {c |}{res}          1        0.17        1.36
+{txt}2022-12-14T15:12:43.622+03:00 {c |}{res}          1        0.17        1.53
+{txt}2022-12-14T15:52:19.616+03:00 {c |}{res}          1        0.17        1.69
+{txt}2022-12-14T15:56:52.320+03:00 {c |}{res}          1        0.17        1.86
+{txt}2022-12-14T15:57:58.832+03:00 {c |}{res}          1        0.17        2.03
+{txt}2022-12-14T16:30:06.828+03:00 {c |}{res}          1        0.17        2.20
+{txt}2022-12-14T16:42:35.845+03:00 {c |}{res}          1        0.17        2.37
+{txt}2022-12-14T17:12:38.018+03:00 {c |}{res}          1        0.17        2.54
+{txt}2022-12-14T17:19:47.377+03:00 {c |}{res}          1        0.17        2.71
+{txt}2022-12-14T18:08:43.668+03:00 {c |}{res}          1        0.17        2.88
+{txt}2022-12-14T18:16:36.942+03:00 {c |}{res}          1        0.17        3.05
+{txt}2022-12-14T18:19:48.482+03:00 {c |}{res}          1        0.17        3.22
+{txt}2022-12-14T18:37:24.973+03:00 {c |}{res}          1        0.17        3.39
+{txt}2022-12-14T20:11:10.642+03:00 {c |}{res}          1        0.17        3.56
+{txt}2022-12-14T20:42:50.300+03:00 {c |}{res}          1        0.17        3.73
+{txt}2022-12-14T21:15:47.253+03:00 {c |}{res}          1        0.17        3.90
+{txt}2022-12-14T21:19:46.381+03:00 {c |}{res}          1        0.17        4.07
+{txt}2022-12-14T21:47:17.590+03:00 {c |}{res}          1        0.17        4.24
+{txt}2022-12-14T22:27:38.539+03:00 {c |}{res}          1        0.17        4.41
+{txt}2022-12-14T22:44:57.257+03:00 {c |}{res}          1        0.17        4.58
+{txt}2022-12-14T23:15:33.501+03:00 {c |}{res}          1        0.17        4.75
+{txt}2022-12-15T09:34:57.203+03:00 {c |}{res}          1        0.17        4.92
+{txt}2022-12-15T09:42:48.232+03:00 {c |}{res}          1        0.17        5.08
+{txt}2022-12-15T10:18:45.517+03:00 {c |}{res}          1        0.17        5.25
+{txt}2022-12-15T11:01:46.921+03:00 {c |}{res}          1        0.17        5.42
+{txt}2022-12-15T11:22:38.131+03:00 {c |}{res}          1        0.17        5.59
+{txt}2022-12-15T11:23:51.847+03:00 {c |}{res}          1        0.17        5.76
+{txt}2022-12-15T11:44:11.500+03:00 {c |}{res}          1        0.17        5.93
+{txt}2022-12-15T12:16:21.082+03:00 {c |}{res}          1        0.17        6.10
+{txt}2022-12-15T13:10:47.021+03:00 {c |}{res}          1        0.17        6.27
+{txt}2022-12-15T13:45:00.169+03:00 {c |}{res}          1        0.17        6.44
+{txt}2022-12-15T14:03:42.380+03:00 {c |}{res}          1        0.17        6.61
+{txt}2022-12-15T14:22:38.056+03:00 {c |}{res}          1        0.17        6.78
+{txt}2022-12-15T15:45:18.172+03:00 {c |}{res}          1        0.17        6.95
+{txt}2022-12-15T15:52:56.440+03:00 {c |}{res}          1        0.17        7.12
+{txt}2022-12-15T15:53:14.615+03:00 {c |}{res}          1        0.17        7.29
+{txt}2022-12-15T16:48:32.071+03:00 {c |}{res}          1        0.17        7.46
+{txt}2022-12-15T17:28:36.726+03:00 {c |}{res}          1        0.17        7.63
+{txt}2022-12-15T17:31:45.015+03:00 {c |}{res}          1        0.17        7.80
+{txt}2022-12-16T09:20:19.603+03:00 {c |}{res}          1        0.17        7.97
+{txt}2022-12-16T09:57:40.837+03:00 {c |}{res}          1        0.17        8.14
+{txt}2022-12-16T10:24:28.656+03:00 {c |}{res}          1        0.17        8.31
+{txt}2022-12-16T10:49:00.789+03:00 {c |}{res}          1        0.17        8.47
+{txt}2022-12-16T11:08:01.601+03:00 {c |}{res}          1        0.17        8.64
+{txt}2022-12-16T11:09:14.097+03:00 {c |}{res}          1        0.17        8.81
+{txt}2022-12-16T11:13:56.281+03:00 {c |}{res}          1        0.17        8.98
+{txt}2022-12-16T11:45:37.615+03:00 {c |}{res}          1        0.17        9.15
+{txt}2022-12-16T11:45:37.640+03:00 {c |}{res}          1        0.17        9.32
+{txt}2022-12-16T11:48:01.257+03:00 {c |}{res}          1        0.17        9.49
+{txt}2022-12-16T11:48:18.345+03:00 {c |}{res}          1        0.17        9.66
+{txt}2022-12-16T11:50:42.322+03:00 {c |}{res}          1        0.17        9.83
+{txt}2022-12-16T11:54:07.122+03:00 {c |}{res}          1        0.17       10.00
+{txt}2022-12-16T12:22:58.293+03:00 {c |}{res}          1        0.17       10.17
+{txt}2022-12-16T12:32:36.022+03:00 {c |}{res}          1        0.17       10.34
+{txt}2022-12-16T13:31:20.541+03:00 {c |}{res}          1        0.17       10.51
+{txt}2022-12-16T13:38:42.240+03:00 {c |}{res}          1        0.17       10.68
+{txt}2022-12-16T13:46:19.598+03:00 {c |}{res}          1        0.17       10.85
+{txt}2022-12-16T13:54:30.082+03:00 {c |}{res}          1        0.17       11.02
+{txt}2022-12-16T14:30:50.371+03:00 {c |}{res}          1        0.17       11.19
+{txt}2022-12-16T14:47:30.434+03:00 {c |}{res}          1        0.17       11.36
+{txt}2022-12-16T14:51:39.280+03:00 {c |}{res}          1        0.17       11.53
+{txt}2022-12-16T14:56:59.697+03:00 {c |}{res}          1        0.17       11.69
+{txt}2022-12-16T14:57:50.806+03:00 {c |}{res}          1        0.17       11.86
+{txt}2022-12-16T15:07:05.954+03:00 {c |}{res}          1        0.17       12.03
+{txt}2022-12-16T15:07:45.967+03:00 {c |}{res}          1        0.17       12.20
+{txt}2022-12-16T15:08:28.637+03:00 {c |}{res}          1        0.17       12.37
+{txt}2022-12-16T15:19:47.701+03:00 {c |}{res}          1        0.17       12.54
+{txt}2022-12-16T16:03:33.400+03:00 {c |}{res}          1        0.17       12.71
+{txt}2022-12-16T17:51:31.830+03:00 {c |}{res}          1        0.17       12.88
+{txt}2022-12-16T21:43:23.846+03:00 {c |}{res}          1        0.17       13.05
+{txt}2022-12-16T23:04:05.736+03:00 {c |}{res}          1        0.17       13.22
+{txt}2022-12-17T01:32:21.881+03:00 {c |}{res}          1        0.17       13.39
+{txt}2022-12-17T09:45:27.320+03:00 {c |}{res}          1        0.17       13.56
+{txt}2022-12-17T10:04:30.791+03:00 {c |}{res}          1        0.17       13.73
+{txt}2022-12-17T10:11:40.023+03:00 {c |}{res}          1        0.17       13.90
+{txt}2022-12-17T10:17:06.668+03:00 {c |}{res}          1        0.17       14.07
+{txt}2022-12-17T10:47:19.040+03:00 {c |}{res}          1        0.17       14.24
+{txt}2022-12-17T10:52:46.142+03:00 {c |}{res}          1        0.17       14.41
+{txt}2022-12-17T11:11:41.846+03:00 {c |}{res}          1        0.17       14.58
+{txt}2022-12-17T11:27:42.494+03:00 {c |}{res}          1        0.17       14.75
+{txt}2022-12-17T11:32:32.755+03:00 {c |}{res}          1        0.17       14.92
+{txt}2022-12-17T11:37:22.389+03:00 {c |}{res}          1        0.17       15.08
+{txt}2022-12-17T11:43:39.360+03:00 {c |}{res}          1        0.17       15.25
+{txt}2022-12-17T11:44:58.490+03:00 {c |}{res}          1        0.17       15.42
+{txt}2022-12-17T11:52:03.758+03:00 {c |}{res}          1        0.17       15.59
+{txt}2022-12-17T12:22:06.162+03:00 {c |}{res}          1        0.17       15.76
+{txt}2022-12-17T12:34:10.609+03:00 {c |}{res}          1        0.17       15.93
+{txt}2022-12-17T13:58:31.682+03:00 {c |}{res}          1        0.17       16.10
+{txt}2022-12-17T14:26:58.071+03:00 {c |}{res}          1        0.17       16.27
+{txt}2022-12-17T14:38:32.228+03:00 {c |}{res}          1        0.17       16.44
+{txt}2022-12-17T14:43:33.190+03:00 {c |}{res}          1        0.17       16.61
+{txt}2022-12-17T17:28:11.538+03:00 {c |}{res}          1        0.17       16.78
+{txt}2022-12-17T18:48:40.524+03:00 {c |}{res}          1        0.17       16.95
+{txt}2022-12-17T20:50:51.690+03:00 {c |}{res}          1        0.17       17.12
+{txt}2022-12-18T10:08:28.505+03:00 {c |}{res}          1        0.17       17.29
+{txt}2022-12-18T10:08:59.478+03:00 {c |}{res}          1        0.17       17.46
+{txt}2022-12-18T10:23:25.714+03:00 {c |}{res}          1        0.17       17.63
+{txt}2022-12-18T10:37:04.633+03:00 {c |}{res}          1        0.17       17.80
+{txt}2022-12-18T10:54:44.244+03:00 {c |}{res}          1        0.17       17.97
+{txt}2022-12-18T10:57:16.257+03:00 {c |}{res}          1        0.17       18.14
+{txt}2022-12-18T11:07:08.762+03:00 {c |}{res}          1        0.17       18.31
+{txt}2022-12-18T11:25:03.769+03:00 {c |}{res}          1        0.17       18.47
+{txt}2022-12-18T11:25:16.294+03:00 {c |}{res}          1        0.17       18.64
+{txt}2022-12-18T11:32:50.370+03:00 {c |}{res}          1        0.17       18.81
+{txt}2022-12-18T11:36:06.945+03:00 {c |}{res}          1        0.17       18.98
+{txt}2022-12-18T11:58:33.281+03:00 {c |}{res}          1        0.17       19.15
+{txt}2022-12-18T12:00:49.581+03:00 {c |}{res}          1        0.17       19.32
+{txt}2022-12-18T12:06:29.205+03:00 {c |}{res}          1        0.17       19.49
+{txt}2022-12-18T13:05:48.345+03:00 {c |}{res}          1        0.17       19.66
+{txt}2022-12-18T13:11:31.679+03:00 {c |}{res}          1        0.17       19.83
+{txt}2022-12-18T13:20:29.034+03:00 {c |}{res}          1        0.17       20.00
+{txt}2022-12-18T13:22:29.149+03:00 {c |}{res}          1        0.17       20.17
+{txt}2022-12-18T14:04:08.304+03:00 {c |}{res}          1        0.17       20.34
+{txt}2022-12-18T14:05:30.307+03:00 {c |}{res}          1        0.17       20.51
+{txt}2022-12-18T14:32:00.334+03:00 {c |}{res}          1        0.17       20.68
+{txt}2022-12-18T14:36:24.467+03:00 {c |}{res}          1        0.17       20.85
+{txt}2022-12-18T14:46:25.107+03:00 {c |}{res}          1        0.17       21.02
+{txt}2022-12-18T14:47:13.610+03:00 {c |}{res}          1        0.17       21.19
+{txt}2022-12-18T15:22:11.310+03:00 {c |}{res}          1        0.17       21.36
+{txt}2022-12-18T15:25:34.824+03:00 {c |}{res}          1        0.17       21.53
+{txt}2022-12-18T15:31:05.806+03:00 {c |}{res}          1        0.17       21.69
+{txt}2022-12-18T15:32:52.160+03:00 {c |}{res}          1        0.17       21.86
+{txt}2022-12-18T15:49:24.742+03:00 {c |}{res}          1        0.17       22.03
+{txt}2022-12-18T16:36:28.755+03:00 {c |}{res}          1        0.17       22.20
+{txt}2022-12-18T16:49:41.191+03:00 {c |}{res}          1        0.17       22.37
+{txt}2022-12-18T18:28:08.819+03:00 {c |}{res}          1        0.17       22.54
+{txt}2022-12-19T09:37:57.001+03:00 {c |}{res}          1        0.17       22.71
+{txt}2022-12-19T10:23:12.473+03:00 {c |}{res}          1        0.17       22.88
+{txt}2022-12-19T10:32:33.556+03:00 {c |}{res}          1        0.17       23.05
+{txt}2022-12-19T10:34:41.497+03:00 {c |}{res}          1        0.17       23.22
+{txt}2022-12-19T11:12:52.868+03:00 {c |}{res}          1        0.17       23.39
+{txt}2022-12-19T11:13:01.717+03:00 {c |}{res}          1        0.17       23.56
+{txt}2022-12-19T11:14:54.544+03:00 {c |}{res}          1        0.17       23.73
+{txt}2022-12-19T11:28:39.823+03:00 {c |}{res}          1        0.17       23.90
+{txt}2022-12-19T11:28:57.597+03:00 {c |}{res}          1        0.17       24.07
+{txt}2022-12-19T11:41:26.875+03:00 {c |}{res}          1        0.17       24.24
+{txt}2022-12-19T11:48:20.162+03:00 {c |}{res}          1        0.17       24.41
+{txt}2022-12-19T11:58:59.382+03:00 {c |}{res}          1        0.17       24.58
+{txt}2022-12-19T11:59:18.783+03:00 {c |}{res}          1        0.17       24.75
+{txt}2022-12-19T12:06:55.911+03:00 {c |}{res}          1        0.17       24.92
+{txt}2022-12-19T12:30:10.286+03:00 {c |}{res}          1        0.17       25.08
+{txt}2022-12-19T12:31:11.611+03:00 {c |}{res}          1        0.17       25.25
+{txt}2022-12-19T12:32:24.549+03:00 {c |}{res}          1        0.17       25.42
+{txt}2022-12-19T12:34:46.863+03:00 {c |}{res}          1        0.17       25.59
+{txt}2022-12-19T12:44:10.749+03:00 {c |}{res}          1        0.17       25.76
+{txt}2022-12-19T12:45:19.149+03:00 {c |}{res}          1        0.17       25.93
+{txt}2022-12-19T12:52:38.521+03:00 {c |}{res}          1        0.17       26.10
+{txt}2022-12-19T13:08:59.484+03:00 {c |}{res}          1        0.17       26.27
+{txt}2022-12-19T13:16:40.957+03:00 {c |}{res}          1        0.17       26.44
+{txt}2022-12-19T13:43:21.663+03:00 {c |}{res}          1        0.17       26.61
+{txt}2022-12-19T13:45:41.690+03:00 {c |}{res}          1        0.17       26.78
+{txt}2022-12-19T14:52:55.930+03:00 {c |}{res}          1        0.17       26.95
+{txt}2022-12-19T15:58:31.410+03:00 {c |}{res}          1        0.17       27.12
+{txt}2022-12-19T19:21:36.866+03:00 {c |}{res}          1        0.17       27.29
+{txt}2022-12-20T09:36:20.404+03:00 {c |}{res}          1        0.17       27.46
+{txt}2022-12-20T09:55:40.975+03:00 {c |}{res}          1        0.17       27.63
+{txt}2022-12-20T09:59:09.904+03:00 {c |}{res}          1        0.17       27.80
+{txt}2022-12-20T10:24:39.082+03:00 {c |}{res}          1        0.17       27.97
+{txt}2022-12-20T10:48:01.937+03:00 {c |}{res}          1        0.17       28.14
+{txt}2022-12-20T11:08:21.590+03:00 {c |}{res}          1        0.17       28.31
+{txt}2022-12-20T11:28:16.546+03:00 {c |}{res}          1        0.17       28.47
+{txt}2022-12-20T11:30:22.536+03:00 {c |}{res}          1        0.17       28.64
+{txt}2022-12-20T11:50:35.221+03:00 {c |}{res}          1        0.17       28.81
+{txt}2022-12-20T11:59:41.144+03:00 {c |}{res}          1        0.17       28.98
+{txt}2022-12-20T12:39:03.396+03:00 {c |}{res}          1        0.17       29.15
+{txt}2022-12-20T12:41:57.690+03:00 {c |}{res}          1        0.17       29.32
+{txt}2022-12-20T13:40:59.841+03:00 {c |}{res}          1        0.17       29.49
+{txt}2022-12-20T14:00:33.347+03:00 {c |}{res}          1        0.17       29.66
+{txt}2022-12-20T14:14:32.181+03:00 {c |}{res}          1        0.17       29.83
+{txt}2022-12-20T14:15:42.725+03:00 {c |}{res}          1        0.17       30.00
+{txt}2022-12-20T14:36:15.072+03:00 {c |}{res}          1        0.17       30.17
+{txt}2022-12-20T15:07:25.824+03:00 {c |}{res}          1        0.17       30.34
+{txt}2022-12-20T15:11:26.792+03:00 {c |}{res}          1        0.17       30.51
+{txt}2022-12-20T15:11:44.925+03:00 {c |}{res}          1        0.17       30.68
+{txt}2022-12-20T15:56:53.306+03:00 {c |}{res}          1        0.17       30.85
+{txt}2022-12-20T16:10:41.461+03:00 {c |}{res}          1        0.17       31.02
+{txt}2022-12-20T16:13:06.045+03:00 {c |}{res}          1        0.17       31.19
+{txt}2022-12-20T16:22:27.687+03:00 {c |}{res}          1        0.17       31.36
+{txt}2022-12-20T16:33:18.259+03:00 {c |}{res}          1        0.17       31.53
+{txt}2022-12-20T16:33:29.838+03:00 {c |}{res}          1        0.17       31.69
+{txt}2022-12-20T16:33:49.462+03:00 {c |}{res}          1        0.17       31.86
+{txt}2022-12-20T17:10:02.705+03:00 {c |}{res}          1        0.17       32.03
+{txt}2022-12-20T18:37:31.852+03:00 {c |}{res}          1        0.17       32.20
+{txt}2022-12-20T18:38:02.224+03:00 {c |}{res}          1        0.17       32.37
+{txt}2022-12-21T10:01:22.330+03:00 {c |}{res}          1        0.17       32.54
+{txt}2022-12-21T10:04:44.945+03:00 {c |}{res}          1        0.17       32.71
+{txt}2022-12-21T10:56:54.627+03:00 {c |}{res}          1        0.17       32.88
+{txt}2022-12-21T10:58:33.007+03:00 {c |}{res}          1        0.17       33.05
+{txt}2022-12-21T11:00:19.711+03:00 {c |}{res}          1        0.17       33.22
+{txt}2022-12-21T11:24:08.214+03:00 {c |}{res}          1        0.17       33.39
+{txt}2022-12-21T11:40:39.165+03:00 {c |}{res}          1        0.17       33.56
+{txt}2022-12-21T11:55:43.088+03:00 {c |}{res}          1        0.17       33.73
+{txt}2022-12-21T12:05:58.232+03:00 {c |}{res}          1        0.17       33.90
+{txt}2022-12-21T12:13:24.089+03:00 {c |}{res}          1        0.17       34.07
+{txt}2022-12-21T12:25:07.502+03:00 {c |}{res}          1        0.17       34.24
+{txt}2022-12-21T12:30:20.514+03:00 {c |}{res}          1        0.17       34.41
+{txt}2022-12-21T12:39:37.994+03:00 {c |}{res}          1        0.17       34.58
+{txt}2022-12-21T13:01:25.223+03:00 {c |}{res}          1        0.17       34.75
+{txt}2022-12-21T13:15:18.694+03:00 {c |}{res}          1        0.17       34.92
+{txt}2022-12-21T13:22:45.037+03:00 {c |}{res}          1        0.17       35.08
+{txt}2022-12-21T13:49:53.891+03:00 {c |}{res}          1        0.17       35.25
+{txt}2022-12-21T14:03:57.637+03:00 {c |}{res}          1        0.17       35.42
+{txt}2022-12-21T14:24:48.974+03:00 {c |}{res}          1        0.17       35.59
+{txt}2022-12-21T14:29:34.468+03:00 {c |}{res}          1        0.17       35.76
+{txt}2022-12-21T14:40:02.225+03:00 {c |}{res}          1        0.17       35.93
+{txt}2022-12-21T14:40:13.371+03:00 {c |}{res}          1        0.17       36.10
+{txt}2022-12-21T14:40:24.545+03:00 {c |}{res}          1        0.17       36.27
+{txt}2022-12-21T15:02:48.368+03:00 {c |}{res}          1        0.17       36.44
+{txt}2022-12-21T15:06:03.980+03:00 {c |}{res}          1        0.17       36.61
+{txt}2022-12-21T15:43:27.029+03:00 {c |}{res}          1        0.17       36.78
+{txt}2022-12-21T16:01:54.162+03:00 {c |}{res}          1        0.17       36.95
+{txt}2022-12-22T09:45:43.889+03:00 {c |}{res}          1        0.17       37.12
+{txt}2022-12-22T09:52:01.753+03:00 {c |}{res}          1        0.17       37.29
+{txt}2022-12-22T10:08:56.713+03:00 {c |}{res}          1        0.17       37.46
+{txt}2022-12-22T10:20:22.226+03:00 {c |}{res}          1        0.17       37.63
+{txt}2022-12-22T10:46:09.590+03:00 {c |}{res}          1        0.17       37.80
+{txt}2022-12-22T10:47:05.114+03:00 {c |}{res}          1        0.17       37.97
+{txt}2022-12-22T10:55:08.647+03:00 {c |}{res}          1        0.17       38.14
+{txt}2022-12-22T10:59:29.550+03:00 {c |}{res}          1        0.17       38.31
+{txt}2022-12-22T11:19:53.787+03:00 {c |}{res}          1        0.17       38.47
+{txt}2022-12-22T11:25:47.795+03:00 {c |}{res}          1        0.17       38.64
+{txt}2022-12-22T11:26:05.080+03:00 {c |}{res}          1        0.17       38.81
+{txt}2022-12-22T11:29:09.187+03:00 {c |}{res}          1        0.17       38.98
+{txt}2022-12-22T11:35:24.636+03:00 {c |}{res}          1        0.17       39.15
+{txt}2022-12-22T11:59:34.561+03:00 {c |}{res}          1        0.17       39.32
+{txt}2022-12-22T12:08:05.259+03:00 {c |}{res}          1        0.17       39.49
+{txt}2022-12-22T12:11:21.839+03:00 {c |}{res}          1        0.17       39.66
+{txt}2022-12-22T12:11:32.419+03:00 {c |}{res}          1        0.17       39.83
+{txt}2022-12-22T12:15:34.130+03:00 {c |}{res}          1        0.17       40.00
+{txt}2022-12-22T12:17:21.469+03:00 {c |}{res}          1        0.17       40.17
+{txt}2022-12-22T12:28:07.639+03:00 {c |}{res}          1        0.17       40.34
+{txt}2022-12-22T12:29:12.546+03:00 {c |}{res}          1        0.17       40.51
+{txt}2022-12-22T12:33:00.402+03:00 {c |}{res}          1        0.17       40.68
+{txt}2022-12-22T13:04:19.764+03:00 {c |}{res}          1        0.17       40.85
+{txt}2022-12-22T13:36:50.568+03:00 {c |}{res}          1        0.17       41.02
+{txt}2022-12-22T13:53:21.460+03:00 {c |}{res}          1        0.17       41.19
+{txt}2022-12-22T14:35:53.997+03:00 {c |}{res}          1        0.17       41.36
+{txt}2022-12-22T14:46:59.431+03:00 {c |}{res}          1        0.17       41.53
+{txt}2022-12-22T15:11:43.727+03:00 {c |}{res}          1        0.17       41.69
+{txt}2022-12-22T16:25:03.645+03:00 {c |}{res}          1        0.17       41.86
+{txt}2022-12-22T16:44:21.335+03:00 {c |}{res}          1        0.17       42.03
+{txt}2022-12-23T10:02:15.966+03:00 {c |}{res}          1        0.17       42.20
+{txt}2022-12-23T10:16:25.055+03:00 {c |}{res}          1        0.17       42.37
+{txt}2022-12-23T10:23:29.624+03:00 {c |}{res}          1        0.17       42.54
+{txt}2022-12-23T10:53:52.011+03:00 {c |}{res}          1        0.17       42.71
+{txt}2022-12-23T11:00:12.039+03:00 {c |}{res}          1        0.17       42.88
+{txt}2022-12-23T11:17:19.973+03:00 {c |}{res}          1        0.17       43.05
+{txt}2022-12-23T11:17:53.999+03:00 {c |}{res}          1        0.17       43.22
+{txt}2022-12-23T11:28:17.489+03:00 {c |}{res}          1        0.17       43.39
+{txt}2022-12-23T11:28:46.455+03:00 {c |}{res}          1        0.17       43.56
+{txt}2022-12-23T11:32:05.900+03:00 {c |}{res}          1        0.17       43.73
+{txt}2022-12-23T11:32:17.530+03:00 {c |}{res}          1        0.17       43.90
+{txt}2022-12-23T11:45:39.388+03:00 {c |}{res}          1        0.17       44.07
+{txt}2022-12-23T12:18:44.003+03:00 {c |}{res}          1        0.17       44.24
+{txt}2022-12-23T13:18:34.535+03:00 {c |}{res}          1        0.17       44.41
+{txt}2022-12-23T13:28:49.484+03:00 {c |}{res}          1        0.17       44.58
+{txt}2022-12-23T13:37:49.655+03:00 {c |}{res}          1        0.17       44.75
+{txt}2022-12-23T14:15:32.389+03:00 {c |}{res}          1        0.17       44.92
+{txt}2022-12-23T14:16:21.516+03:00 {c |}{res}          1        0.17       45.08
+{txt}2022-12-23T14:36:43.871+03:00 {c |}{res}          1        0.17       45.25
+{txt}2022-12-23T15:05:53.410+03:00 {c |}{res}          1        0.17       45.42
+{txt}2022-12-23T16:22:22.518+03:00 {c |}{res}          1        0.17       45.59
+{txt}2022-12-23T16:23:43.320+03:00 {c |}{res}          1        0.17       45.76
+{txt}2022-12-23T16:33:32.875+03:00 {c |}{res}          1        0.17       45.93
+{txt}2022-12-24T09:10:33.676+03:00 {c |}{res}          1        0.17       46.10
+{txt}2022-12-24T10:03:08.167+03:00 {c |}{res}          1        0.17       46.27
+{txt}2022-12-24T10:06:43.679+03:00 {c |}{res}          1        0.17       46.44
+{txt}2022-12-24T10:25:04.411+03:00 {c |}{res}          1        0.17       46.61
+{txt}2022-12-24T10:38:38.992+03:00 {c |}{res}          1        0.17       46.78
+{txt}2022-12-24T10:57:11.729+03:00 {c |}{res}          1        0.17       46.95
+{txt}2022-12-24T11:20:18.231+03:00 {c |}{res}          1        0.17       47.12
+{txt}2022-12-24T11:23:55.159+03:00 {c |}{res}          1        0.17       47.29
+{txt}2022-12-24T11:28:54.645+03:00 {c |}{res}          1        0.17       47.46
+{txt}2022-12-24T11:37:03.422+03:00 {c |}{res}          1        0.17       47.63
+{txt}2022-12-24T11:57:00.326+03:00 {c |}{res}          1        0.17       47.80
+{txt}2022-12-24T11:58:26.730+03:00 {c |}{res}          1        0.17       47.97
+{txt}2022-12-24T12:05:31.583+03:00 {c |}{res}          1        0.17       48.14
+{txt}2022-12-24T12:07:48.817+03:00 {c |}{res}          1        0.17       48.31
+{txt}2022-12-24T12:11:27.324+03:00 {c |}{res}          1        0.17       48.47
+{txt}2022-12-24T12:19:13.079+03:00 {c |}{res}          1        0.17       48.64
+{txt}2022-12-24T12:22:59.422+03:00 {c |}{res}          1        0.17       48.81
+{txt}2022-12-24T12:31:22.308+03:00 {c |}{res}          1        0.17       48.98
+{txt}2022-12-24T12:37:35.087+03:00 {c |}{res}          1        0.17       49.15
+{txt}2022-12-24T12:45:07.759+03:00 {c |}{res}          1        0.17       49.32
+{txt}2022-12-24T12:54:17.444+03:00 {c |}{res}          1        0.17       49.49
+{txt}2022-12-24T13:40:01.407+03:00 {c |}{res}          1        0.17       49.66
+{txt}2022-12-24T13:42:05.804+03:00 {c |}{res}          1        0.17       49.83
+{txt}2022-12-24T13:50:40.254+03:00 {c |}{res}          1        0.17       50.00
+{txt}2022-12-24T13:52:34.266+03:00 {c |}{res}          1        0.17       50.17
+{txt}2022-12-24T13:55:39.081+03:00 {c |}{res}          1        0.17       50.34
+{txt}2022-12-24T14:10:02.309+03:00 {c |}{res}          1        0.17       50.51
+{txt}2022-12-24T14:10:28.383+03:00 {c |}{res}          1        0.17       50.68
+{txt}2022-12-24T14:23:43.740+03:00 {c |}{res}          1        0.17       50.85
+{txt}2022-12-24T14:34:58.387+03:00 {c |}{res}          1        0.17       51.02
+{txt}2022-12-24T14:42:25.276+03:00 {c |}{res}          1        0.17       51.19
+{txt}2022-12-24T14:59:57.763+03:00 {c |}{res}          1        0.17       51.36
+{txt}2022-12-24T15:47:22.514+03:00 {c |}{res}          1        0.17       51.53
+{txt}2022-12-24T16:41:31.876+03:00 {c |}{res}          1        0.17       51.69
+{txt}2022-12-25T08:35:39.318+03:00 {c |}{res}          1        0.17       51.86
+{txt}2022-12-25T08:36:16.017+03:00 {c |}{res}          1        0.17       52.03
+{txt}2022-12-25T08:36:37.140+03:00 {c |}{res}          1        0.17       52.20
+{txt}2022-12-25T10:00:31.346+03:00 {c |}{res}          1        0.17       52.37
+{txt}2022-12-25T10:07:05.994+03:00 {c |}{res}          1        0.17       52.54
+{txt}2022-12-25T10:56:33.568+03:00 {c |}{res}          1        0.17       52.71
+{txt}2022-12-25T11:03:14.295+03:00 {c |}{res}          1        0.17       52.88
+{txt}2022-12-25T11:09:34.750+03:00 {c |}{res}          1        0.17       53.05
+{txt}2022-12-25T11:10:30.475+03:00 {c |}{res}          1        0.17       53.22
+{txt}2022-12-25T11:23:17.903+03:00 {c |}{res}          1        0.17       53.39
+{txt}2022-12-25T11:26:30.498+03:00 {c |}{res}          1        0.17       53.56
+{txt}2022-12-25T11:30:35.488+03:00 {c |}{res}          1        0.17       53.73
+{txt}2022-12-25T11:51:51.240+03:00 {c |}{res}          1        0.17       53.90
+{txt}2022-12-25T11:54:10.102+03:00 {c |}{res}          1        0.17       54.07
+{txt}2022-12-25T12:04:31.820+03:00 {c |}{res}          1        0.17       54.24
+{txt}2022-12-25T12:10:40.782+03:00 {c |}{res}          1        0.17       54.41
+{txt}2022-12-25T12:16:12.629+03:00 {c |}{res}          1        0.17       54.58
+{txt}2022-12-25T12:19:41.159+03:00 {c |}{res}          1        0.17       54.75
+{txt}2022-12-25T12:43:08.905+03:00 {c |}{res}          1        0.17       54.92
+{txt}2022-12-25T12:54:22.853+03:00 {c |}{res}          1        0.17       55.08
+{txt}2022-12-25T12:54:39.992+03:00 {c |}{res}          1        0.17       55.25
+{txt}2022-12-25T13:05:21.566+03:00 {c |}{res}          1        0.17       55.42
+{txt}2022-12-25T13:09:30.896+03:00 {c |}{res}          1        0.17       55.59
+{txt}2022-12-25T13:35:24.057+03:00 {c |}{res}          1        0.17       55.76
+{txt}2022-12-25T13:45:29.558+03:00 {c |}{res}          1        0.17       55.93
+{txt}2022-12-25T13:49:30.264+03:00 {c |}{res}          1        0.17       56.10
+{txt}2022-12-25T15:32:48.495+03:00 {c |}{res}          1        0.17       56.27
+{txt}2022-12-25T16:05:25.713+03:00 {c |}{res}          1        0.17       56.44
+{txt}2022-12-25T16:43:17.224+03:00 {c |}{res}          1        0.17       56.61
+{txt}2022-12-25T18:14:02.382+03:00 {c |}{res}          1        0.17       56.78
+{txt}2022-12-25T18:20:42.801+03:00 {c |}{res}          1        0.17       56.95
+{txt}2022-12-25T18:21:24.339+03:00 {c |}{res}          1        0.17       57.12
+{txt}2022-12-26T09:15:08.566+03:00 {c |}{res}          1        0.17       57.29
+{txt}2022-12-26T09:45:37.554+03:00 {c |}{res}          1        0.17       57.46
+{txt}2022-12-26T09:50:07.357+03:00 {c |}{res}          1        0.17       57.63
+{txt}2022-12-26T10:01:42.071+03:00 {c |}{res}          1        0.17       57.80
+{txt}2022-12-26T10:03:45.259+03:00 {c |}{res}          1        0.17       57.97
+{txt}2022-12-26T10:23:09.574+03:00 {c |}{res}          1        0.17       58.14
+{txt}2022-12-26T10:45:36.163+03:00 {c |}{res}          1        0.17       58.31
+{txt}2022-12-26T10:46:04.669+03:00 {c |}{res}          1        0.17       58.47
+{txt}2022-12-26T10:54:39.416+03:00 {c |}{res}          1        0.17       58.64
+{txt}2022-12-26T11:04:26.842+03:00 {c |}{res}          1        0.17       58.81
+{txt}2022-12-26T11:10:27.816+03:00 {c |}{res}          1        0.17       58.98
+{txt}2022-12-26T11:30:50.780+03:00 {c |}{res}          1        0.17       59.15
+{txt}2022-12-26T11:32:32.604+03:00 {c |}{res}          1        0.17       59.32
+{txt}2022-12-26T11:39:57.035+03:00 {c |}{res}          1        0.17       59.49
+{txt}2022-12-26T12:00:01.330+03:00 {c |}{res}          1        0.17       59.66
+{txt}2022-12-26T12:11:12.502+03:00 {c |}{res}          1        0.17       59.83
+{txt}2022-12-26T12:15:53.628+03:00 {c |}{res}          1        0.17       60.00
+{txt}2022-12-26T12:18:56.813+03:00 {c |}{res}          1        0.17       60.17
+{txt}2022-12-26T12:20:36.005+03:00 {c |}{res}          1        0.17       60.34
+{txt}2022-12-26T12:26:09.760+03:00 {c |}{res}          1        0.17       60.51
+{txt}2022-12-26T12:49:10.326+03:00 {c |}{res}          1        0.17       60.68
+{txt}2022-12-26T12:58:11.122+03:00 {c |}{res}          1        0.17       60.85
+{txt}2022-12-26T12:58:11.324+03:00 {c |}{res}          1        0.17       61.02
+{txt}2022-12-26T14:19:57.356+03:00 {c |}{res}          1        0.17       61.19
+{txt}2022-12-26T15:03:00.948+03:00 {c |}{res}          1        0.17       61.36
+{txt}2022-12-26T15:32:56.897+03:00 {c |}{res}          1        0.17       61.53
+{txt}2022-12-26T15:37:55.278+03:00 {c |}{res}          1        0.17       61.69
+{txt}2022-12-26T17:06:01.784+03:00 {c |}{res}          1        0.17       61.86
+{txt}2022-12-26T17:37:07.615+03:00 {c |}{res}          1        0.17       62.03
+{txt}2022-12-26T17:48:17.442+03:00 {c |}{res}          1        0.17       62.20
+{txt}2022-12-27T09:38:18.853+03:00 {c |}{res}          1        0.17       62.37
+{txt}2022-12-27T10:27:43.137+03:00 {c |}{res}          1        0.17       62.54
+{txt}2022-12-27T10:32:35.024+03:00 {c |}{res}          1        0.17       62.71
+{txt}2022-12-27T10:35:37.028+03:00 {c |}{res}          1        0.17       62.88
+{txt}2022-12-27T10:49:19.742+03:00 {c |}{res}          1        0.17       63.05
+{txt}2022-12-27T10:59:11.238+03:00 {c |}{res}          1        0.17       63.22
+{txt}2022-12-27T11:02:02.456+03:00 {c |}{res}          1        0.17       63.39
+{txt}2022-12-27T11:32:09.162+03:00 {c |}{res}          1        0.17       63.56
+{txt}2022-12-27T11:39:53.690+03:00 {c |}{res}          1        0.17       63.73
+{txt}2022-12-27T11:50:55.134+03:00 {c |}{res}          1        0.17       63.90
+{txt}2022-12-27T11:52:20.279+03:00 {c |}{res}          1        0.17       64.07
+{txt}2022-12-27T11:56:47.458+03:00 {c |}{res}          1        0.17       64.24
+{txt}2022-12-27T11:57:25.470+03:00 {c |}{res}          1        0.17       64.41
+{txt}2022-12-27T12:04:30.207+03:00 {c |}{res}          1        0.17       64.58
+{txt}2022-12-27T12:07:37.625+03:00 {c |}{res}          1        0.17       64.75
+{txt}2022-12-27T12:13:05.898+03:00 {c |}{res}          1        0.17       64.92
+{txt}2022-12-27T12:18:51.372+03:00 {c |}{res}          1        0.17       65.08
+{txt}2022-12-27T12:22:55.341+03:00 {c |}{res}          1        0.17       65.25
+{txt}2022-12-27T12:23:22.085+03:00 {c |}{res}          1        0.17       65.42
+{txt}2022-12-27T12:23:47.562+03:00 {c |}{res}          1        0.17       65.59
+{txt}2022-12-27T12:51:13.616+03:00 {c |}{res}          1        0.17       65.76
+{txt}2022-12-27T12:51:47.488+03:00 {c |}{res}          1        0.17       65.93
+{txt}2022-12-27T13:23:27.755+03:00 {c |}{res}          1        0.17       66.10
+{txt}2022-12-27T14:14:28.206+03:00 {c |}{res}          1        0.17       66.27
+{txt}2022-12-27T14:23:34.571+03:00 {c |}{res}          1        0.17       66.44
+{txt}2022-12-27T14:52:22.079+03:00 {c |}{res}          1        0.17       66.61
+{txt}2022-12-27T15:31:31.263+03:00 {c |}{res}          1        0.17       66.78
+{txt}2022-12-27T16:01:01.649+03:00 {c |}{res}          1        0.17       66.95
+{txt}2022-12-27T19:13:31.394+03:00 {c |}{res}          1        0.17       67.12
+{txt}2022-12-27T19:14:59.191+03:00 {c |}{res}          1        0.17       67.29
+{txt}2022-12-28T09:36:21.709+03:00 {c |}{res}          1        0.17       67.46
+{txt}2022-12-28T09:49:21.213+03:00 {c |}{res}          1        0.17       67.63
+{txt}2022-12-28T10:05:51.681+03:00 {c |}{res}          1        0.17       67.80
+{txt}2022-12-28T10:19:21.733+03:00 {c |}{res}          1        0.17       67.97
+{txt}2022-12-28T10:25:45.637+03:00 {c |}{res}          1        0.17       68.14
+{txt}2022-12-28T10:52:42.579+03:00 {c |}{res}          1        0.17       68.31
+{txt}2022-12-28T10:56:37.304+03:00 {c |}{res}          1        0.17       68.47
+{txt}2022-12-28T11:08:56.376+03:00 {c |}{res}          1        0.17       68.64
+{txt}2022-12-28T11:27:03.611+03:00 {c |}{res}          1        0.17       68.81
+{txt}2022-12-28T11:33:42.897+03:00 {c |}{res}          1        0.17       68.98
+{txt}2022-12-28T11:35:15.818+03:00 {c |}{res}          1        0.17       69.15
+{txt}2022-12-28T11:39:44.805+03:00 {c |}{res}          1        0.17       69.32
+{txt}2022-12-28T11:43:20.142+03:00 {c |}{res}          1        0.17       69.49
+{txt}2022-12-28T11:48:41.437+03:00 {c |}{res}          1        0.17       69.66
+{txt}2022-12-28T11:49:04.450+03:00 {c |}{res}          1        0.17       69.83
+{txt}2022-12-28T11:57:03.121+03:00 {c |}{res}          1        0.17       70.00
+{txt}2022-12-28T12:01:18.043+03:00 {c |}{res}          1        0.17       70.17
+{txt}2022-12-28T12:01:33.186+03:00 {c |}{res}          1        0.17       70.34
+{txt}2022-12-28T12:18:53.671+03:00 {c |}{res}          1        0.17       70.51
+{txt}2022-12-28T12:30:15.707+03:00 {c |}{res}          1        0.17       70.68
+{txt}2022-12-28T12:32:21.007+03:00 {c |}{res}          1        0.17       70.85
+{txt}2022-12-28T12:36:57.484+03:00 {c |}{res}          1        0.17       71.02
+{txt}2022-12-28T13:07:00.845+03:00 {c |}{res}          1        0.17       71.19
+{txt}2022-12-28T13:09:35.765+03:00 {c |}{res}          1        0.17       71.36
+{txt}2022-12-28T13:18:13.760+03:00 {c |}{res}          1        0.17       71.53
+{txt}2022-12-28T13:48:29.409+03:00 {c |}{res}          1        0.17       71.69
+{txt}2022-12-28T13:49:11.207+03:00 {c |}{res}          1        0.17       71.86
+{txt}2022-12-28T13:51:55.218+03:00 {c |}{res}          1        0.17       72.03
+{txt}2022-12-28T14:35:11.578+03:00 {c |}{res}          1        0.17       72.20
+{txt}2022-12-28T15:16:53.649+03:00 {c |}{res}          1        0.17       72.37
+{txt}2022-12-28T15:20:26.724+03:00 {c |}{res}          1        0.17       72.54
+{txt}2022-12-28T17:40:58.852+03:00 {c |}{res}          1        0.17       72.71
+{txt}2022-12-28T17:49:15.778+03:00 {c |}{res}          1        0.17       72.88
+{txt}2022-12-28T17:57:46.454+03:00 {c |}{res}          1        0.17       73.05
+{txt}2022-12-29T09:50:07.928+03:00 {c |}{res}          1        0.17       73.22
+{txt}2022-12-29T09:55:19.144+03:00 {c |}{res}          1        0.17       73.39
+{txt}2022-12-29T10:06:01.230+03:00 {c |}{res}          1        0.17       73.56
+{txt}2022-12-29T10:06:40.692+03:00 {c |}{res}          1        0.17       73.73
+{txt}2022-12-29T10:15:40.530+03:00 {c |}{res}          1        0.17       73.90
+{txt}2022-12-29T10:42:30.988+03:00 {c |}{res}          1        0.17       74.07
+{txt}2022-12-29T10:54:59.514+03:00 {c |}{res}          1        0.17       74.24
+{txt}2022-12-29T11:04:43.415+03:00 {c |}{res}          1        0.17       74.41
+{txt}2022-12-29T11:08:43.821+03:00 {c |}{res}          1        0.17       74.58
+{txt}2022-12-29T11:26:15.870+03:00 {c |}{res}          1        0.17       74.75
+{txt}2022-12-29T11:28:06.752+03:00 {c |}{res}          1        0.17       74.92
+{txt}2022-12-29T11:34:14.696+03:00 {c |}{res}          1        0.17       75.08
+{txt}2022-12-29T11:34:25.234+03:00 {c |}{res}          1        0.17       75.25
+{txt}2022-12-29T11:36:59.408+03:00 {c |}{res}          1        0.17       75.42
+{txt}2022-12-29T11:44:48.282+03:00 {c |}{res}          1        0.17       75.59
+{txt}2022-12-29T12:06:03.064+03:00 {c |}{res}          1        0.17       75.76
+{txt}2022-12-29T12:26:53.318+03:00 {c |}{res}          1        0.17       75.93
+{txt}2022-12-29T12:27:24.283+03:00 {c |}{res}          1        0.17       76.10
+{txt}2022-12-29T12:29:58.080+03:00 {c |}{res}          1        0.17       76.27
+{txt}2022-12-29T12:31:00.250+03:00 {c |}{res}          1        0.17       76.44
+{txt}2022-12-29T12:31:12.492+03:00 {c |}{res}          1        0.17       76.61
+{txt}2022-12-29T12:44:12.026+03:00 {c |}{res}          1        0.17       76.78
+{txt}2022-12-29T12:47:05.275+03:00 {c |}{res}          1        0.17       76.95
+{txt}2022-12-29T12:57:54.025+03:00 {c |}{res}          1        0.17       77.12
+{txt}2022-12-29T13:01:25.282+03:00 {c |}{res}          1        0.17       77.29
+{txt}2022-12-29T13:04:52.709+03:00 {c |}{res}          1        0.17       77.46
+{txt}2022-12-29T13:12:10.872+03:00 {c |}{res}          1        0.17       77.63
+{txt}2022-12-29T14:16:26.731+03:00 {c |}{res}          1        0.17       77.80
+{txt}2022-12-29T21:10:14.223+03:00 {c |}{res}          1        0.17       77.97
+{txt}2022-12-30T09:49:54.547+03:00 {c |}{res}          1        0.17       78.14
+{txt}2022-12-30T10:36:31.124+03:00 {c |}{res}          1        0.17       78.31
+{txt}2022-12-30T10:38:14.910+03:00 {c |}{res}          1        0.17       78.47
+{txt}2022-12-30T10:39:18.621+03:00 {c |}{res}          1        0.17       78.64
+{txt}2022-12-30T10:46:55.955+03:00 {c |}{res}          1        0.17       78.81
+{txt}2022-12-30T11:20:23.668+03:00 {c |}{res}          1        0.17       78.98
+{txt}2022-12-30T11:23:38.260+03:00 {c |}{res}          1        0.17       79.15
+{txt}2022-12-30T11:34:44.288+03:00 {c |}{res}          1        0.17       79.32
+{txt}2022-12-30T11:39:34.206+03:00 {c |}{res}          1        0.17       79.49
+{txt}2022-12-30T11:41:26.721+03:00 {c |}{res}          1        0.17       79.66
+{txt}2022-12-30T12:04:09.281+03:00 {c |}{res}          1        0.17       79.83
+{txt}2022-12-30T12:28:08.431+03:00 {c |}{res}          1        0.17       80.00
+{txt}2022-12-30T12:52:16.486+03:00 {c |}{res}          1        0.17       80.17
+{txt}2022-12-30T12:54:57.910+03:00 {c |}{res}          1        0.17       80.34
+{txt}2022-12-30T13:24:26.639+03:00 {c |}{res}          1        0.17       80.51
+{txt}2022-12-30T13:30:39.204+03:00 {c |}{res}          1        0.17       80.68
+{txt}2022-12-30T13:41:08.554+03:00 {c |}{res}          1        0.17       80.85
+{txt}2022-12-30T13:56:01.528+03:00 {c |}{res}          1        0.17       81.02
+{txt}2022-12-30T14:17:05.905+03:00 {c |}{res}          1        0.17       81.19
+{txt}2022-12-30T14:24:51.270+03:00 {c |}{res}          1        0.17       81.36
+{txt}2022-12-30T14:37:49.787+03:00 {c |}{res}          1        0.17       81.53
+{txt}2022-12-30T15:14:34.844+03:00 {c |}{res}          1        0.17       81.69
+{txt}2022-12-30T15:17:16.454+03:00 {c |}{res}          1        0.17       81.86
+{txt}2022-12-30T15:39:48.301+03:00 {c |}{res}          1        0.17       82.03
+{txt}2022-12-30T17:04:50.410+03:00 {c |}{res}          1        0.17       82.20
+{txt}2022-12-30T17:22:12.139+03:00 {c |}{res}          1        0.17       82.37
+{txt}2022-12-30T18:12:59.906+03:00 {c |}{res}          1        0.17       82.54
+{txt}2023-01-02T11:19:20.657+03:00 {c |}{res}          1        0.17       82.71
+{txt}2023-01-02T12:03:45.942+03:00 {c |}{res}          1        0.17       82.88
+{txt}2023-01-02T12:39:29.224+03:00 {c |}{res}          1        0.17       83.05
+{txt}2023-01-02T12:51:14.812+03:00 {c |}{res}          1        0.17       83.22
+{txt}2023-01-02T13:12:29.046+03:00 {c |}{res}          1        0.17       83.39
+{txt}2023-01-02T13:20:22.136+03:00 {c |}{res}          1        0.17       83.56
+{txt}2023-01-02T13:20:58.400+03:00 {c |}{res}          1        0.17       83.73
+{txt}2023-01-02T13:21:25.369+03:00 {c |}{res}          1        0.17       83.90
+{txt}2023-01-02T13:39:53.595+03:00 {c |}{res}          1        0.17       84.07
+{txt}2023-01-02T13:49:01.174+03:00 {c |}{res}          1        0.17       84.24
+{txt}2023-01-02T14:36:07.180+03:00 {c |}{res}          1        0.17       84.41
+{txt}2023-01-02T14:48:26.426+03:00 {c |}{res}          1        0.17       84.58
+{txt}2023-01-02T15:32:23.569+03:00 {c |}{res}          1        0.17       84.75
+{txt}2023-01-02T15:39:02.822+03:00 {c |}{res}          1        0.17       84.92
+{txt}2023-01-02T15:44:22.742+03:00 {c |}{res}          1        0.17       85.08
+{txt}2023-01-02T16:02:05.919+03:00 {c |}{res}          1        0.17       85.25
+{txt}2023-01-02T16:03:33.960+03:00 {c |}{res}          1        0.17       85.42
+{txt}2023-01-02T16:03:59.045+03:00 {c |}{res}          1        0.17       85.59
+{txt}2023-01-02T16:05:56.928+03:00 {c |}{res}          1        0.17       85.76
+{txt}2023-01-03T09:38:30.194+03:00 {c |}{res}          1        0.17       85.93
+{txt}2023-01-03T10:12:06.321+03:00 {c |}{res}          1        0.17       86.10
+{txt}2023-01-03T10:49:04.130+03:00 {c |}{res}          1        0.17       86.27
+{txt}2023-01-03T10:50:28.546+03:00 {c |}{res}          1        0.17       86.44
+{txt}2023-01-03T11:08:07.985+03:00 {c |}{res}          1        0.17       86.61
+{txt}2023-01-03T11:41:14.547+03:00 {c |}{res}          1        0.17       86.78
+{txt}2023-01-03T11:45:24.592+03:00 {c |}{res}          1        0.17       86.95
+{txt}2023-01-03T12:14:58.637+03:00 {c |}{res}          1        0.17       87.12
+{txt}2023-01-03T12:43:58.129+03:00 {c |}{res}          1        0.17       87.29
+{txt}2023-01-03T13:04:46.303+03:00 {c |}{res}          1        0.17       87.46
+{txt}2023-01-03T13:09:20.132+03:00 {c |}{res}          1        0.17       87.63
+{txt}2023-01-03T13:19:37.690+03:00 {c |}{res}          1        0.17       87.80
+{txt}2023-01-03T13:21:22.639+03:00 {c |}{res}          1        0.17       87.97
+{txt}2023-01-03T13:42:52.034+03:00 {c |}{res}          1        0.17       88.14
+{txt}2023-01-03T15:15:04.243+03:00 {c |}{res}          1        0.17       88.31
+{txt}2023-01-03T15:20:32.759+03:00 {c |}{res}          1        0.17       88.47
+{txt}2023-01-03T16:30:19.639+03:00 {c |}{res}          1        0.17       88.64
+{txt}2023-01-04T10:52:46.345+03:00 {c |}{res}          1        0.17       88.81
+{txt}2023-01-04T11:32:30.440+03:00 {c |}{res}          1        0.17       88.98
+{txt}2023-01-04T11:37:29.705+03:00 {c |}{res}          1        0.17       89.15
+{txt}2023-01-04T12:28:02.511+03:00 {c |}{res}          1        0.17       89.32
+{txt}2023-01-04T12:30:55.005+03:00 {c |}{res}          1        0.17       89.49
+{txt}2023-01-04T13:13:28.101+03:00 {c |}{res}          1        0.17       89.66
+{txt}2023-01-04T13:33:09.696+03:00 {c |}{res}          1        0.17       89.83
+{txt}2023-01-04T13:37:45.521+03:00 {c |}{res}          1        0.17       90.00
+{txt}2023-01-04T13:47:47.715+03:00 {c |}{res}          1        0.17       90.17
+{txt}2023-01-04T14:19:17.047+03:00 {c |}{res}          1        0.17       90.34
+{txt}2023-01-04T15:05:12.598+03:00 {c |}{res}          1        0.17       90.51
+{txt}2023-01-04T15:38:15.019+03:00 {c |}{res}          1        0.17       90.68
+{txt}2023-01-05T09:21:23.990+03:00 {c |}{res}          1        0.17       90.85
+{txt}2023-01-05T10:10:39.714+03:00 {c |}{res}          1        0.17       91.02
+{txt}2023-01-05T11:08:30.840+03:00 {c |}{res}          1        0.17       91.19
+{txt}2023-01-05T11:29:39.452+03:00 {c |}{res}          1        0.17       91.36
+{txt}2023-01-05T11:45:58.460+03:00 {c |}{res}          1        0.17       91.53
+{txt}2023-01-05T12:13:58.086+03:00 {c |}{res}          1        0.17       91.69
+{txt}2023-01-05T12:36:39.973+03:00 {c |}{res}          1        0.17       91.86
+{txt}2023-01-05T13:01:28.304+03:00 {c |}{res}          1        0.17       92.03
+{txt}2023-01-05T13:12:37.505+03:00 {c |}{res}          1        0.17       92.20
+{txt}2023-01-05T13:41:47.637+03:00 {c |}{res}          1        0.17       92.37
+{txt}2023-01-05T14:07:22.694+03:00 {c |}{res}          1        0.17       92.54
+{txt}2023-01-05T14:13:32.875+03:00 {c |}{res}          1        0.17       92.71
+{txt}2023-01-05T14:28:01.641+03:00 {c |}{res}          1        0.17       92.88
+{txt}2023-01-05T14:39:44.324+03:00 {c |}{res}          1        0.17       93.05
+{txt}2023-01-05T15:13:46.319+03:00 {c |}{res}          1        0.17       93.22
+{txt}2023-01-05T15:18:42.242+03:00 {c |}{res}          1        0.17       93.39
+{txt}2023-01-05T15:55:38.627+03:00 {c |}{res}          1        0.17       93.56
+{txt}2023-01-05T15:56:24.431+03:00 {c |}{res}          1        0.17       93.73
+{txt}2023-01-05T16:58:37.430+03:00 {c |}{res}          1        0.17       93.90
+{txt}2023-01-05T17:52:15.035+03:00 {c |}{res}          1        0.17       94.07
+{txt}2023-01-05T18:01:16.755+03:00 {c |}{res}          1        0.17       94.24
+{txt}2023-01-06T13:56:16.475+03:00 {c |}{res}          1        0.17       94.41
+{txt}2023-01-08T09:37:59.700+03:00 {c |}{res}          1        0.17       94.58
+{txt}2023-01-08T10:09:30.986+03:00 {c |}{res}          1        0.17       94.75
+{txt}2023-01-08T10:40:41.980+03:00 {c |}{res}          1        0.17       94.92
+{txt}2023-01-08T10:45:00.876+03:00 {c |}{res}          1        0.17       95.08
+{txt}2023-01-08T11:23:45.748+03:00 {c |}{res}          1        0.17       95.25
+{txt}2023-01-08T11:54:46.399+03:00 {c |}{res}          1        0.17       95.42
+{txt}2023-01-08T11:55:08.906+03:00 {c |}{res}          1        0.17       95.59
+{txt}2023-01-08T12:50:53.672+03:00 {c |}{res}          1        0.17       95.76
+{txt}2023-01-08T12:51:33.178+03:00 {c |}{res}          1        0.17       95.93
+{txt}2023-01-08T14:06:10.619+03:00 {c |}{res}          1        0.17       96.10
+{txt}2023-01-08T14:18:16.983+03:00 {c |}{res}          1        0.17       96.27
+{txt}2023-01-08T21:18:20.073+03:00 {c |}{res}          1        0.17       96.44
+{txt}2023-01-09T12:32:01.668+03:00 {c |}{res}          1        0.17       96.61
+{txt}2023-01-09T16:26:26.516+03:00 {c |}{res}          1        0.17       96.78
+{txt}2023-01-09T16:32:42.246+03:00 {c |}{res}          1        0.17       96.95
+{txt}2023-01-11T09:18:28.365+03:00 {c |}{res}          1        0.17       97.12
+{txt}2023-01-11T09:37:28.704+03:00 {c |}{res}          1        0.17       97.29
+{txt}2023-01-11T09:50:00.670+03:00 {c |}{res}          1        0.17       97.46
+{txt}2023-01-11T10:08:04.554+03:00 {c |}{res}          1        0.17       97.63
+{txt}2023-01-11T10:15:45.032+03:00 {c |}{res}          1        0.17       97.80
+{txt}2023-01-11T10:21:00.264+03:00 {c |}{res}          1        0.17       97.97
+{txt}2023-01-11T10:51:02.428+03:00 {c |}{res}          1        0.17       98.14
+{txt}2023-01-11T10:55:10.143+03:00 {c |}{res}          1        0.17       98.31
+{txt}2023-01-11T11:27:07.709+03:00 {c |}{res}          1        0.17       98.47
+{txt}2023-01-11T11:35:44.730+03:00 {c |}{res}          1        0.17       98.64
+{txt}2023-01-11T11:59:57.690+03:00 {c |}{res}          1        0.17       98.81
+{txt}2023-01-11T12:08:26.675+03:00 {c |}{res}          1        0.17       98.98
+{txt}2023-01-11T12:36:32.325+03:00 {c |}{res}          1        0.17       99.15
+{txt}2023-01-11T14:58:19.631+03:00 {c |}{res}          1        0.17       99.32
+{txt}2023-01-11T15:00:10.830+03:00 {c |}{res}          1        0.17       99.49
+{txt}2023-01-12T09:59:25.393+03:00 {c |}{res}          1        0.17       99.66
+{txt}2023-01-12T10:52:31.860+03:00 {c |}{res}          1        0.17       99.83
+{txt}2023-01-12T19:08:33.320+03:00 {c |}{res}          1        0.17      100.00
+{txt}{hline 30}{c +}{hline 35}
+                        Total {c |}{res}        590      100.00
+
+{com}. tab _merge
+
+                          {txt}_merge {c |}      Freq.     Percent        Cum.
+{hline 33}{c +}{hline 35}
+             only in master data {c |}{res}        136       20.12       20.12
+{txt}              only in using data {c |}{res}         86       12.72       32.84
+{txt}   both in master and using data {c |}{res}        454       67.16      100.00
+{txt}{hline 33}{c +}{hline 35}
+                           Total {c |}{res}        676      100.00
+
+{com}. tab _merge F2F_Rmt
+
+                      {txt}{c |}        Remote or F2F interview first
+               _merge {c |} Remote fi  F2F first  Remote fi  F2F first {c |}     Total
+{hline 22}{c +}{hline 44}{c +}{hline 10}
+  only in master data {c |}{res}        16         33         26         61 {txt}{c |}{res}       136 
+{txt}both in master and us {c |}{res}       118        119        106        111 {txt}{c |}{res}       454 
+{txt}{hline 22}{c +}{hline 44}{c +}{hline 10}
+                Total {c |}{res}       134        152        132        172 {txt}{c |}{res}       590 
+
+{com}. tab F2F_Rmt Group
+
+   {txt}Remote or {c |}
+         F2F {c |}
+   interview {c |}         Group
+       first {c |}   Group A    Group B {c |}     Total
+{hline 13}{c +}{hline 22}{c +}{hline 10}
+Remote first {c |}{res}        67         67 {txt}{c |}{res}       134 
+{txt}   F2F first {c |}{res}        75         77 {txt}{c |}{res}       152 
+{txt}Remote first {c |}{res}        74         58 {txt}{c |}{res}       132 
+{txt}   F2F first {c |}{res}        89         83 {txt}{c |}{res}       172 
+{txt}{hline 13}{c +}{hline 22}{c +}{hline 10}
+       Total {c |}{res}       305        285 {txt}{c |}{res}       590 
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_Full_Household_Analysis.dta"
+
+. tab Group
+
+{txt}Study Group {c |}
+    A vs. B {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+    Group A {c |}{res}        305       51.69       51.69
+{txt}    Group B {c |}{res}        285       48.31      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        590      100.00
+
+{com}. tab Modality
+
+  {txt}Survey Modality: {c |}
+  Remote first vs. {c |}
+         F2F first {c |}      Freq.     Percent        Cum.
+{hline 19}{c +}{hline 35}
+      Remote first {c |}{res}        266       45.08       45.08
+{txt}Face-to-Face first {c |}{res}        324       54.92      100.00
+{txt}{hline 19}{c +}{hline 35}
+             Total {c |}{res}        590      100.00
+
+{com}. tab Group Modality
+
+           {txt}{c |}   Survey Modality:
+     Study {c |} Remote first vs. F2F
+   Group A {c |}         first
+     vs. B {c |} Remote fi  Face-to-F {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+   Group A {c |}{res}       141        164 {txt}{c |}{res}       305 
+{txt}   Group B {c |}{res}       125        160 {txt}{c |}{res}       285 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}       266        324 {txt}{c |}{res}       590 
+
+{com}. tab Modality Source
+
+  {txt}Survey Modality: {c |}
+  Remote first vs. {c |}        Source
+         F2F first {c |} only in m  both in m {c |}     Total
+{hline 19}{c +}{hline 22}{c +}{hline 10}
+      Remote first {c |}{res}        42        224 {txt}{c |}{res}       266 
+{txt}Face-to-Face first {c |}{res}        94        230 {txt}{c |}{res}       324 
+{txt}{hline 19}{c +}{hline 22}{c +}{hline 10}
+             Total {c |}{res}       136        454 {txt}{c |}{res}       590 
+
+{com}. tab Source Modality 
+
+                      {txt}{c |}   Survey Modality:
+                      {c |} Remote first vs. F2F
+                      {c |}         first
+               Source {c |} Remote fi  Face-to-F {c |}     Total
+{hline 22}{c +}{hline 22}{c +}{hline 10}
+  only in master data {c |}{res}        42         94 {txt}{c |}{res}       136 
+{txt}both in master and us {c |}{res}       224        230 {txt}{c |}{res}       454 
+{txt}{hline 22}{c +}{hline 22}{c +}{hline 10}
+                Total {c |}{res}       266        324 {txt}{c |}{res}       590 
+
+{com}. tab Modality 
+
+  {txt}Survey Modality: {c |}
+  Remote first vs. {c |}
+         F2F first {c |}      Freq.     Percent        Cum.
+{hline 19}{c +}{hline 35}
+      Remote first {c |}{res}        266       45.08       45.08
+{txt}Face-to-Face first {c |}{res}        324       54.92      100.00
+{txt}{hline 19}{c +}{hline 35}
+             Total {c |}{res}        590      100.00
+
+{com}. tab Modality, nol
+
+     {txt}Survey {c |}
+  Modality: {c |}
+     Remote {c |}
+  first vs. {c |}
+  F2F first {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        266       45.08       45.08
+{txt}          2 {c |}{res}        324       54.92      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        590      100.00
+
+{com}. keep HHID Group Modality FCS r_FCS Source Attrition
+
+. tab Group A
+{err}variable {bf}A{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}. tab Group
+
+{txt}Study Group {c |}
+    A vs. B {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+    Group A {c |}{res}        305       51.69       51.69
+{txt}    Group B {c |}{res}        285       48.31      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        590      100.00
+
+{com}. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/8_Datasets/Remote/Remote_version_A_NoDup.dta", clear
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/8_Datasets/Remote/Remote_version_B_NoDup.dta"
+
+. tab followup_visit
+
+ {txt}When would {c |}
+  be a good {c |}
+    time to {c |}
+ visit you? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+    Morning {c |}{res}         53       62.35       62.35
+{txt}  Afternoon {c |}{res}         31       36.47       98.82
+{txt}    Evening {c |}{res}          1        1.18      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         85      100.00
+
+{com}. tab ___submission_time
+
+{txt}_submission {c |}
+      _time {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+  15 Dec 22 {c |}{res}         22        9.05        9.05
+{txt}  17 Dec 22 {c |}{res}         17        7.00       16.05
+{txt}  19 Dec 22 {c |}{res}         13        5.35       21.40
+{txt}  20 Dec 22 {c |}{res}          1        0.41       21.81
+{txt}  21 Dec 22 {c |}{res}         27       11.11       32.92
+{txt}  22 Dec 22 {c |}{res}          2        0.82       33.74
+{txt}  23 Dec 22 {c |}{res}         25       10.29       44.03
+{txt}  24 Dec 22 {c |}{res}          4        1.65       45.68
+{txt}  25 Dec 22 {c |}{res}         24        9.88       55.56
+{txt}  26 Dec 22 {c |}{res}          7        2.88       58.44
+{txt}  27 Dec 22 {c |}{res}         20        8.23       66.67
+{txt}  28 Dec 22 {c |}{res}          5        2.06       68.72
+{txt}  29 Dec 22 {c |}{res}         28       11.52       80.25
+{txt}  30 Dec 22 {c |}{res}          6        2.47       82.72
+{txt}  01 Jan 23 {c |}{res}         15        6.17       88.89
+{txt}  03 Jan 23 {c |}{res}         16        6.58       95.47
+{txt}  05 Jan 23 {c |}{res}          5        2.06       97.53
+{txt}  06 Jan 23 {c |}{res}          1        0.41       97.94
+{txt}  09 Jan 23 {c |}{res}          5        2.06      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        243      100.00
+
+{com}. tab dup
+
+        {txt}dup {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        239       98.35       98.35
+{txt}          1 {c |}{res}          4        1.65      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        243      100.00
+
+{com}. isid HHID
+
+. use "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/1_Iraq/9_Analysis/1_Data/Iraq_Full_Household_Raw.dta"
+
+. tab ___submission_time
+
+{txt}_submission {c |}
+      _time {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+  14 Dec 22 {c |}{res}         28        4.75        4.75
+{txt}  15 Dec 22 {c |}{res}         18        3.05        7.80
+{txt}  16 Dec 22 {c |}{res}         33        5.59       13.39
+{txt}  17 Dec 22 {c |}{res}         21        3.56       16.95
+{txt}  18 Dec 22 {c |}{res}         33        5.59       22.54
+{txt}  19 Dec 22 {c |}{res}         28        4.75       27.29
+{txt}  20 Dec 22 {c |}{res}         26        4.41       31.69
+{txt}  21 Dec 22 {c |}{res}         31        5.25       36.95
+{txt}  22 Dec 22 {c |}{res}         29        4.92       41.86
+{txt}  23 Dec 22 {c |}{res}         24        4.07       45.93
+{txt}  24 Dec 22 {c |}{res}         34        5.76       51.69
+{txt}  25 Dec 22 {c |}{res}         32        5.42       57.12
+{txt}  26 Dec 22 {c |}{res}         30        5.08       62.20
+{txt}  27 Dec 22 {c |}{res}         30        5.08       67.29
+{txt}  28 Dec 22 {c |}{res}         34        5.76       73.05
+{txt}  29 Dec 22 {c |}{res}         29        4.92       77.97
+{txt}  30 Dec 22 {c |}{res}         27        4.58       82.54
+{txt}  02 Jan 23 {c |}{res}         19        3.22       85.76
+{txt}  03 Jan 23 {c |}{res}         17        2.88       88.64
+{txt}  04 Jan 23 {c |}{res}          8        1.36       90.00
+{txt}  05 Jan 23 {c |}{res}         22        3.73       93.73
+{txt}  06 Jan 23 {c |}{res}          1        0.17       93.90
+{txt}  08 Jan 23 {c |}{res}          8        1.36       95.25
+{txt}  09 Jan 23 {c |}{res}          3        0.51       95.76
+{txt}  11 Jan 23 {c |}{res}         19        3.22       98.98
+{txt}  12 Jan 23 {c |}{res}          6        1.02      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        590      100.00
+
+{com}. do "/var/folders/p4/tpy5_7mn71sbyj0zqp9zpb5c0000gn/T//SD36254.000000"
+{txt}
+{com}. /* *************************************************************************** *
+> *                                               WFP RAM-N rCARI Validation Study - Iraq                            * 
+> *                                                                                                                                                          *
+> *  PURPOSE:                     Set up appended dataset for full sample                            *
+> *  AUTHOR:                              Nicole Wu (nicole.wu@wfp.org)                                              *
+> *  DATE:                                Mar 30, 2023                                                                               *
+> *  LATEST UPDATE:               Apr 17, 2023                                                                               *
+> *                                                                                                                                                          *
+> ********************************************************************************
+> 
+>                     
+>     ** REQUIRES:        ${c -(}raw_f2f{c )-}/HH_Data_vA.dta
+>                     ${c -(}raw_f2f{c )-}/HH_Data_vB.dta
+>                     
+>     ** CREATES:         ${c -(}docs{c )-}/Iraq_F2F_Codebook.xlsx
+>                     ${c -(}dta{c )-}/Iraq_F2F_Household_Raw.dta
+>                         
+>     ** NOTES:           
+> 
+> ********************************************************************************
+> *                                       PART 1: Load F2F Data and Set codebook
+> *******************************************************************************/
+.     
+.     cap log close 
+{smcl}
+{com}{sf}{ul off}

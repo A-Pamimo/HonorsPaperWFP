@@ -1,0 +1,78 @@
+%%% Table created in Stata by command iebaltab
+%%% (https://github.com/worldbank/ietoolkit)
+%%% (https://dimewiki.worldbank.org/iebaltab)
+%%% The command was specified exactly like this: 
+%%% iebaltab RESPAge RESPFemale RESPHHH RESPSingle RESPMarried HHDisplaced HHDisable MDDIHHDisabledNb R_HHH_Sex R_HHH_Age R_HHH_Literate HHSize R_Num_Male R_Num_Female R_Num_Child R_Num_Senior R_Num_Adult R_Num_Dependent FemaleMale_Ratio Dependency_Ratio HHInc_PCT HHIncNb HHInc_None HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50 HHInc_Reduce50More if Modality == 1, grpvar(Form) nonote nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) rowvarlabels savetex("C:/Users/alirah.weyori/OneDrive - World Food Programme/2_CARI_validation/1_rCARI_study/1_Pilot_country/4_CAR/9_Analysis/8_Manuscript/1_table/CAR_Demo_F2F_Length_Balance.tex")
+
+\begin{tabular}{@{\extracolsep{5pt}}lcccccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{2}{c}{(1)}  & \multicolumn{2}{c}{(2)}  & \multicolumn{2}{c}{(1)-(2)} \\
+ & \multicolumn{2}{c}{F2F}  & \multicolumn{2}{c}{Remote}  & \multicolumn{2}{c}{Pairwise t-test}  \\
+Variable & N & Mean/(SE) & N & Mean/(SE) & N & Mean difference \\ \hline \\[-1.8ex] 
+Respondent Age   & 466    & 37.30    & 503    & 38.27    & 969    & -0.97   \\
+ &   & (0.60)  &   & (0.64)  &   &  \\ [1ex]
+Female Respondent   & 466    & 0.54    & 503    & 0.53    & 969    & 0.01   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Head of Household Respondent   & 466    & 0.64    & 503    & 0.63    & 969    & 0.01   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Single Respondent   & 466    & 0.22    & 503    & 0.22    & 969    & -0.00   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Married Respondent   & 466    & 0.06    & 503    & 0.09    & 969    & -0.03*   \\
+ &   & (0.01)  &   & (0.01)  &   &  \\ [1ex]
+IDP Household   & 466    & 0.00    & 503    & 0.00    & 969    & -0.00   \\
+ &   & (0.00)  &   & (0.00)  &   &  \\ [1ex]
+Household has disabled member   & 466    & 0.24    & 503    & 0.22    & 969    & 0.02   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Number of disabled household members   & 466    & 0.29    & 503    & 0.27    & 969    & 0.02   \\
+ &   & (0.03)  &   & (0.03)  &   &  \\ [1ex]
+Head of Household Sex   & 374    & 0.81    & 423    & 0.79    & 797    & 0.02   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Head of Household Age   & 374    & 40.00    & 423    & 41.52    & 797    & -1.52*   \\
+ &   & (0.62)  &   & (0.67)  &   &  \\ [1ex]
+Household head has attended school   & 374    & 0.70    & 423    & 0.67    & 797    & 0.03   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Household Size   & 466    & 6.12    & 503    & 6.16    & 969    & -0.04   \\
+ &   & (0.12)  &   & (0.11)  &   &  \\ [1ex]
+Total number of male household member   & 466    & 2.83    & 503    & 2.83    & 969    & -0.00   \\
+ &   & (0.08)  &   & (0.07)  &   &  \\ [1ex]
+Total number of female household member   & 466    & 2.95    & 503    & 2.99    & 969    & -0.05   \\
+ &   & (0.08)  &   & (0.07)  &   &  \\ [1ex]
+Total number of children   & 466    & 3.71    & 503    & 3.71    & 969    & -0.01   \\
+ &   & (0.10)  &   & (0.09)  &   &  \\ [1ex]
+Total number of senior   & 466    & 0.50    & 503    & 0.50    & 969    & 0.00   \\
+ &   & (0.05)  &   & (0.04)  &   &  \\ [1ex]
+Total number of adults   & 466    & 1.94    & 503    & 1.95    & 969    & -0.01   \\
+ &   & (0.06)  &   & (0.05)  &   &  \\ [1ex]
+Household total number of dependents   & 466    & 4.21    & 503    & 4.21    & 969    & -0.00   \\
+ &   & (0.10)  &   & (0.10)  &   &  \\ [1ex]
+Household Female/Male Ratio   & 466    & 1.54    & 503    & 1.61    & 969    & -0.07   \\
+ &   & (0.07)  &   & (0.07)  &   &  \\ [1ex]
+Household Dependency Ratio   & 466    & 3.01    & 503    & 2.97    & 969    & 0.03   \\
+ &   & (0.12)  &   & (0.12)  &   &  \\ [1ex]
+How many household members are contributing to the household income?   & 462    & 1.74    & 493    & 1.78    & 955    & -0.04   \\
+ &   & (0.04)  &   & (0.05)  &   &  \\ [1ex]
+How many income sources does your household have?   & 466    & 1.51    & 503    & 1.49    & 969    & 0.02   \\
+ &   & (0.03)  &   & (0.03)  &   &  \\ [1ex]
+Income Source: None   & 466    & 0.01    & 503    & 0.01    & 969    & 0.00   \\
+ &   & (0.00)  &   & (0.00)  &   &  \\ [1ex]
+Income Source: Skilled Waged Labor   & 466    & 0.05    & 503    & 0.04    & 969    & 0.01   \\
+ &   & (0.01)  &   & (0.01)  &   &  \\ [1ex]
+Income Source: Unskilled Waged Labor   & 466    & 0.12    & 503    & 0.16    & 969    & -0.04*   \\
+ &   & (0.01)  &   & (0.02)  &   &  \\ [1ex]
+Income Source: Trade   & 466    & 0.43    & 503    & 0.38    & 969    & 0.05   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Income Source: Agricultural Production   & 466    & 0.26    & 503    & 0.28    & 969    & -0.02   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Income Change: None   & 466    & 0.55    & 503    & 0.53    & 969    & 0.02   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Income Change: Increase   & 466    & 0.06    & 503    & 0.06    & 969    & 0.00   \\
+ &   & (0.01)  &   & (0.01)  &   &  \\ [1ex]
+Income Change: Reduced < 25\%   & 466    & 0.14    & 503    & 0.15    & 969    & -0.01   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Income Change: Reduced 25\% - 50\%   & 466    & 0.17    & 503    & 0.17    & 969    & 0.00   \\
+ &   & (0.02)  &   & (0.02)  &   &  \\ [1ex]
+Income Change: Reduced 50+\%   & 466    & 0.09    & 503    & 0.10    & 969    & -0.01   \\
+ &   & (0.01)  &   & (0.01)  &   &  \\ [1ex]
+\hline \hline \\[-1.8ex]
+
+\end{tabular}

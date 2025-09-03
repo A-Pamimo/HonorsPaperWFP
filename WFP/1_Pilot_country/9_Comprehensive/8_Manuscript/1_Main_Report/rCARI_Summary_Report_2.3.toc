@@ -1,0 +1,32 @@
+\contentsline {section}{\numberline {1}Executive Summary}{3}{section.1}%
+\contentsline {section}{\numberline {2}Introduction}{5}{section.2}%
+\contentsline {section}{\numberline {3}Study design}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Selection of study areas and participants}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Myanmar}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Ecuador}{9}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Central African Republic}{10}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Overall study implementation}{12}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Sample Completion}{12}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Results and Discussions}{14}{section.4}%
+\contentsline {subsection}{\numberline {4.1}CARI vs. rCARI}{14}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Food Consumption Score (FCS)}{18}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Reduced Coping Strategy Index (rCSI)}{19}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Livelihood Coping Strategy (LCS)}{20}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Food Expenditure Share (FES)}{23}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Income Source and Income Change}{24}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Module Length and Food Security Indicator Reporting}{25}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Standard FCS module vs. Short FCS module}{25}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Standard Expenditure module vs. Short Expenditure module}{25}{subsection.5.2}%
+\contentsline {section}{\numberline {6}LCS for Food Security vs LCS for Essential Needs}{29}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Aggregate LCS-FS/EN (Maximum livelihood coping strategies)}{29}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Specific Coping Strategies Adoption by Country}{30}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Summary and conclusions}{32}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Next Steps...}{33}{subsection.7.1}%
+\contentsline {section}{\numberline {8}Challenges of the study by country}{34}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Myanmar}{34}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Ecuador}{34}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}CAR}{34}{subsection.8.3}%
+\contentsline {section}{\numberline {9}References}{36}{section.9}%
+\contentsline {section}{\numberline {10}Annexes}{37}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Attrition Tables}{37}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Supporting documents}{37}{subsection.10.2}%

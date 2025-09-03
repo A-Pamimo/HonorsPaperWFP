@@ -1,0 +1,38 @@
+\documentclass{article}
+
+% ----- Preamble 
+\usepackage[utf8]{inputenc}
+\usepackage{adjustbox}
+% ----- End of preamble 
+
+ \begin{document}
+
+\begin{table}[!htbp]
+\centering
+\caption{Balance Test for rCSI Variables and Index: IDP vs. Refugee}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{\extracolsep{5pt}}lcccccc}
+\\[-1.8ex]\hline \hline \\[-1.8ex]
+ & \multicolumn{2}{c}{(1)}  & \multicolumn{2}{c}{(2)}  & \multicolumn{2}{c}{(1)-(2)} \\
+ & \multicolumn{2}{c}{Poor and Borderline}  & \multicolumn{2}{c}{Acceptable}  & \multicolumn{2}{c}{Pairwise t-test}  \\
+Variable & N & Mean/(SE) & N & Mean/(SE) & N & Mean difference \\ \hline \\[-1.8ex] 
+Difference between female reported and male Reported rCSILessQlty   & 40    & -0.350    & 357    & 0.034    & 397    & -0.384   \\
+ &   & (0.279)  &   & (0.082)  &   &  \\ [1ex]
+Difference between female reported and male Reported rCSIBorrow   & 40    & -0.175    & 357    & 0.084    & 397    & -0.259   \\
+ &   & (0.156)  &   & (0.059)  &   &  \\ [1ex]
+Difference between female reported and male Reported rCSIMealSize   & 40    & -0.375    & 357    & 0.003    & 397    & -0.378*   \\
+ &   & (0.167)  &   & (0.072)  &   &  \\ [1ex]
+Difference between female reported and male Reported rCSIMealAdult   & 40    & -0.225    & 357    & 0.008    & 397    & -0.233   \\
+ &   & (0.162)  &   & (0.071)  &   &  \\ [1ex]
+Difference between female reported and male Reported rCSIMealNb   & 40    & -0.275    & 357    & -0.048    & 397    & -0.227   \\
+ &   & (0.209)  &   & (0.069)  &   &  \\ [1ex]
+Difference between female reported and male Reported rCSI   & 40    & -2.025    & 357    & 0.182    & 397    & -2.207**   \\
+ &   & (0.916)  &   & (0.338)  &   &  \\ [1ex]
+\hline \hline \\[-1.8ex]
+%%% This is the note. If it does not have the correct margins, use texnotewidth() option or change the number before '\textwidth' in line below to fit it to table size.
+\multicolumn{6}{@{} p{\textwidth}}{If the table includes missing values (.n, .o, .v etc.) see the Missing values section in the help file for the Stata command iebaltab for definitions of these values. Significance: ***=.01, **=.05, *=.1. Full user input as written by user: [iebaltab rCSILessQlty\_g\_diff rCSIBorrow\_g\_diff rCSIMealSize\_g\_diff rCSIMealAdult\_g\_diff rCSIMealNb\_g\_diff rCSI\_g\_diff, grpvar(FCG) grplabels(1 Poor and Borderline @ 2 Acceptable) rowvarlabels savetex("/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2\_CARI\_validation/1\_rCARI\_study/1\_Pilot\_country/1\_Iraq/9\_Analysis/5\_Tables/Balance/Iraq\_rCSI\_F2F\_Balance\_FCG.tex") texdocument texcaption("Balance Test for rCSI Variables and Index: IDP vs. Refugee") replace] }
+
+\end{tabular}
+\end{adjustbox}
+\end{table}
+\end{document}

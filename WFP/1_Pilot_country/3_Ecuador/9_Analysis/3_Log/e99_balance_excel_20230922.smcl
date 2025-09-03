@@ -1,0 +1,205 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/3_Log/e99_balance_excel_20230922.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Sep 2023, 14:36:32
+{txt}
+{com}.         di `cdate'      
+{res}20230922
+{txt}
+{com}. 
+.         graph set window fontface "Times New Roman"
+{txt}
+{com}.         
+.         * Load dataset
+.         use "${c -(}dta{c )-}/Ecuador_Full_Household_rCARI_Analysis.dta", replace
+{txt}
+{com}.         compress 
+{txt}  (0 bytes saved)
+
+{com}.         
+. ********************************************************************************
+. *                                               PART 2: Define variables
+. *******************************************************************************/
+.         
+.         gl bal_all      RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_f2f      RESPAge RESPFemale RESPHHH RESPSingle RESPMarried                                ///
+>                                 HHDisplaced HHDisable MDDIHHDisabledNb R_HHH_Sex R_HHH_Age               ///
+>                                 R_HHH_Literate HHSize R_Num_Male R_Num_Female R_Num_Child                ///
+>                                 R_Num_Senior R_Num_Adult R_Num_Dependent                                                 ///
+>                                 FemaleMale_Ratio Dependency_Ratio HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}.         
+.         gl bal_rm       RESPAge RESPFemale RESPHHH HHSize HHInc_PCT HHIncNb HHInc_None   ///
+>                                 HHInc_WageSkill HHInc_WageUnskill HHInc_Trade HHInc_AgProduction ///
+>                                 HHInc_Change_None HHInc_Increase HHInc_Reduce25 HHInc_Reduce50   /// 
+>                                 HHInc_Reduce50More
+{txt}
+{com}. 
+.         gl out_all  FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency               ///
+>                                 HHExpTotal PCExpTotal FES                                                                       ///
+>                                 CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4                                     ///
+>                                 HH_Vul_FES HH_Vul_Income CARI_rCARI
+{txt}
+{com}.                                 
+.         gl out_oth  FCS rCSI LCS_None LCS_Stress LCS_Crisis LCS_Emergency               ///
+>                                 HHExpTotal PCExpTotal FES 
+{txt}
+{com}.                                 
+.         gl out_f2f  LCS_None LCS_Stress LCS_Crisis LCS_Emergency                                                ///
+>                                 HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES         ///
+>                                 RESPFoodWorry RESPFS_EnoughFood RESPFS_LessPrefer RESPFS_LessMeal   ///
+>                                 RESPFS_DayNoEat HH_Vul_FES HH_Vul_Income 
+{txt}
+{com}.                                 
+.         gl out_rm   LCS_None LCS_Stress LCS_Crisis LCS_Emergency                                                ///
+>                                 HHExpFoodTotal_1M HHExpNFTotal_1M HHExpTotal PCExpTotal FES             ///
+>                                 HH_Vul_FES HH_Vul_Income 
+{txt}
+{com}.                                 
+.         gl var_fcs      FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar FCS                             
+{txt}
+{com}.         gl var_rcsi rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb rCSI
+{txt}
+{com}.         
+.         gl out_fesinc CARI_Inc_1 CARI_Inc_2 CARI_Inc_3 CARI_Inc_4 FES_Cat_1 FES_Cat_2 FES_Cat_3 FES_Cat_4
+{txt}
+{com}.         
+.         gl out_cari CARI_FES_Cat1 CARI_FES_Cat2 CARI_FES_Cat3 CARI_FES_Cat4 CARI_FES_Bad          ///
+>                                 rCARI_Inc_Cat1 rCARI_Inc_Cat2 rCARI_Inc_Cat3 rCARI_Inc_Cat4 rCARI_Inc_Bad ///
+>                                 CARI_rCARI_1 CARI_rCARI_2 CARI_rCARI_3 CARI_rCARI_4 CARI_rCARI
+{txt}
+{com}.         
+. ********************************************************************************
+. *                                                       PART 4: Check Balance
+. *******************************************************************************/
+. 
+.         * Randomization Balance
+.         iebaltab ${c -(}bal_all{c )-}, grpvar(Modality) nonote nototal replace            ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Demo_Modality_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_Modality_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_Modality_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         iebaltab ${c -(}bal_f2f{c )-} if Modality == 1, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Demo_F2F_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_F2F_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_F2F_Length_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}bal_rm{c )-}  if Modality == 2, grpvar(Form) nonote nototal replace       ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Demo_RM_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_RM_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Demo_RM_Length_Balance.xlsx}{p_end}
+{txt}
+{com}.         
+.         * Outcome Balance by Survey Modality
+.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}out_all{c )-}, grpvar(Modality) nonote             ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow     ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Modality_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Modality_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Modality_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}out_all{c )-} if Modality == 1, grpvar(Form)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_F2F_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_F2F_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_F2F_Length_Balance.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}var_fcs{c )-} ${c -(}var_rcsi{c )-} ${c -(}out_all{c )-} if Modality == 2, grpvar(Form)   ///
+>                          nonote nototal replace                                                                                         ///
+>              format(%12.2fc) grplabels(1 Long @ 2 Short)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_RM_Length_Balance.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_RM_Length_Balance.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_RM_Length_Balance.xlsx}{p_end}
+{txt}
+{com}. 
+.         iebaltab ${c -(}out_fesinc{c )-}, grpvar(Modality) nonote                 ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow     ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Modality_Balance_FESINC.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Modality_Balance_FESINC.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Modality_Balance_FESINC.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_cari{c )-}, grpvar(Modality) nonote           ///
+>                          nototal replace format(%12.2fc) grplabels(1 F2F @ 2 Remote) onerow     ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Modality_Balance_Key.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Modality_Balance_Key.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Modality_Balance_Key.xlsx}{p_end}
+{txt}
+{com}.         // onerow
+. 
+. 
+.         iebaltab ${c -(}out_oth{c )-} if HH_Vul_FES == 1, grpvar(Modality)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Balance_Food_Insecure.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Food_Insecure.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Food_Insecure.xlsx}{p_end}
+{txt}
+{com}.                         
+.         iebaltab ${c -(}out_oth{c )-} if HH_Vul_FES == 0, grpvar(Modality)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Balance_Food_Secure.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Food_Secure.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Food_Secure.xlsx}{p_end}
+{txt}
+{com}.                          
+.                          
+.         iebaltab ${c -(}out_oth{c )-} if RESPFemale == 1, grpvar(Modality)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Balance_Female.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Female.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Female.xlsx}{p_end}
+{txt}
+{com}.                         
+.         iebaltab ${c -(}out_oth{c )-} if RESPFemale == 0, grpvar(Modality)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Balance_Male.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Male.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_Male.xlsx}{p_end}
+{txt}
+{com}.                           
+.         iebaltab ${c -(}out_oth{c )-} if FCG_Accept == 0, grpvar(Modality)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Balance_FCG_Bad.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_FCG_Bad.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_FCG_Bad.xlsx}{p_end}
+{txt}
+{com}.                          
+.         iebaltab ${c -(}out_oth{c )-} if FCG_Accept == 1, grpvar(Modality)   ///
+>                          nonote nototal replace onerow                                                                          ///
+>              format(%12.2fc) grplabels(1 F2F @ 2 Remote)                                                ///
+>              rowvarlabels savexlsx("${c -(}tabs{c )-}/Ecuador_Outcome_Balance_FCG_Accept.xlsx")
+
+{res}{phang}Balance table saved in Excel format to: {browse "/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_FCG_Accept.xlsx":/Users/nicolewu/Library/CloudStorage/OneDrive-WorldFoodProgramme/2_CARI_validation/1_rCARI_study/1_Pilot_country/3_Ecuador/9_Analysis/5_Tables/Ecuador_Outcome_Balance_FCG_Accept.xlsx}{p_end}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}.         
+. * ------------- 
+. * End of dofile
+. 
+{txt}end of do-file
+
+{com}. 

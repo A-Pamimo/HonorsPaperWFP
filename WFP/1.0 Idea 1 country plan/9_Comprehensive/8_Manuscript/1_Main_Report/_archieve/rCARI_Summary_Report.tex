@@ -1,0 +1,659 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage[table,xcdraw]{xcolor}
+
+\author{Alirah Weyori*  \and   Nicole Wu  \and  Matthieu Tockert  \and  Mohamed Salem}
+\date{\today}
+\title{Validation and Calibration of the Remote Consolidated Approach of Reporting on Food Security (rCARI) Methodology 
+	\\ {\normalsize Preliminary results from Myanmar, Ecuador, and Central African Republic} 
+	\\{\normalsize{Version 1.0}} | \emph{{\normalsize{To add comments, open the PDF document in MS Word directly}} }}
+	
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{8pt} % Set the desired space before and after paragraphs
+	
+	\tableofcontents
+	\pagebreak
+		
+% ------- 
+\section{Introduction}
+
+The overall goal of this study was to assess the validity of the rCARI module(s) against conventional CARI modules for measuring food security within the same population. The study compares indicators collected through phone surveys with conventional face-to-face survey, considering the latter as the standard standard methodology/gold standard. The following food security indicators were compared: Food Consumption Score (FCS), Livelihood Coping Strategy (LCS), reduced Coping Strategy (rCSAI), Foo Expenditure Share (FES), and income sources and income change. The Economic Capacity to Meet Essetial Needs (ECMEN) indicator which is sometimes used to aggregate CARI will not be tested in this study, as it requires a standard long expenditure module which cannot be collected over the phone. In addition, ECMEN calculation requires having an updated value of the minimum expenditure basket (MEB) of the study population, which is not available for the study areas. In its stead, a shortened version of the standard expenditure module will be used to test the possibility of collecting FES data over the phone.
+
+Studying the validity of using the phone to collect food security indicators is a key step in judging the appropriateness of the rCARI methodology to report food insecurity prevalence. However, Testing the comparability of these indicators through different modalities of data collection (Face-to-Face (F2F) vs. phone) should be read within the wider consideration around phone survey modality of data collection. For example, other factors aside the modules should be considered while reading results of any remote survey.
+
+–	First, mobile phone ownership (mobile phone penetration rate in the study area) could likely exclude the most vulnerable population from the sample. 
+
+–	Second, mobile phone network coverage; Even in countries with high penetration rates, network coverage could be a problem, especially when electricity cuts are frequent and local infrastructure, such as communication masts, are not evenly distributed (World Bank, 2020).
+
+–	Third, response rate: It is well documented that the response rate in phone surveys is usually lower than in face-to-face surveys (L’Engle et al., 2018; World Bank, 2020). Response rate is usually lower among the well-off population which could contribute to sample skewness.
+ 
+These factors could lead to skewed sample from phone surveys especially of the goal to report national representative results/outcomes. Nevertheless, there are several statistical weighting techniques that can adjust the results of phone surveys based baseline variables like using demographics characteristics of the most recent face-to-face surveys (Nagpal et al. 2021; Glazerman et al. 2020; Valliant et al. 2013; Elkasabi, 2015). This allows the final results of such exercises to be aggregated and extrapolated to reflect some level of representativeness. However, this current study remains insulated from these confounding issues since the main idea is not to report results at the national level but rather to compare how the two methods perform within the same population with similar characteristics. For this reason, the study does not focus on weighting techniques to adjust for sampling skewness and response rate. Nonetheless, the study design adopted in Central African Republic (CAR), could allow for testing of sample skewness due to mobile phone ownership and coverage (see CAR sample design in Annex III). CAR has one of the lowest mobile phone penetration rates globally (approximately 70\% of the population do not own/use mobile phones).
+
+\pagebreak
+
+% ------- 
+
+\section{Study design}
+
+The study was implemented in a randomized controlled setup following all the requirements of a Randomized Control Trial (RCT). However, for the current study, we call the study methodology a randomized control study not confused readers with the RCT as used in the medical field. 
+
+Food security data was collected from two statistically comparable groups of households within the same sample. Standardized remote and face-to-face questionnaires were administered to the sampled households randomized to receive either of two modalities: remote or face-to-face. The study is being implemented across six countries: two in Africa, two Latin America, one in Southeast Asia, and one in the Middle East.
+
+After the first round of data collection covering the period March 2023 to August 2023, the study has been implemented in 3 study countries; Myanmar, Ecuador and CAR interviewing a total of 3,755 households. The remaining 3 countries are planned to start soon.
+
+	\subsection{Selection of study areas and participants}
+
+The study areas (Admin1 and Admin5 areas) were randomly selected in collaboration with WFP CO staff based on a common criteria of food insecurity prevalence, mobile network and accessibility.
+After taking the informed consent from potential participants/respondents, they were enlisted to participated in the study. Listing of potential households/respondents was done in each Admin5 area through a random walk in the community and selecting every 3rd house. A minimum of 100 potential participating households were listed per Admin5 area (except for Myanmar where the study was conducted amongst 20 IDP camps and some of the camps had fewer than 100 households) and this served as the sampling frame for randomization process. The initial sample size was 1665 households in Myanmar, 2372 households in Ecuador, and 2500 households in CAR. 
+
+In the listing phase of the study, baseline variables that included demographic characteristics of potential respondents and their households was collected in Ecuador and CAR. This was not possible in Myanmar because of some restrictions by the local authorities. Listed households were then randomly assigned to receive one of two modalities; half of the sample were assigned to receive remote/phone interviews (called the pseudo-treatment group) and the other half assigned to receive face-to-face interviews (called the control group). The study targeted a minimum of 600 completed interviews for each modality.
+
+
+
+\begin{itemize}[label=--, left=1.5em]
+	\item Mobile phone ownership (mobile phone penetration rate) excluded the most vulnerable population from the sample. In some countries where WFP operates, the penetration rate is as low as 30\%, whereas in others, it exceeds 100\%.
+	\item Mobile phone network coverage: Even in countries with high penetration rates, network coverage could be a problem, especially when electricity cuts are frequent and local infrastructure, such as communication masts, are not evenly distributed (World Bank, 2020).
+	\item Response rate: It is well documented that the response rate in phone surveys is usually lower than in face-to-face surveys (L’Engle et al., 2018; World Bank, 2020).
+\end{itemize}
+
+
+
+\pagebreak
+
+% ------- 
+\section{Study design}
+
+The study was implemented in a randomized controlled setup. 
+Food security data were collected from two statistically comparable groups of households within the same sample. Stand-alone standardized remote and face-to-face questionnaires will be administered to sampled households randomized to receive either modalities-remote or face-to-face. The study will be implemented across six countries: two in Africa, two Latin America, one in Southeast Asia, and one in the Middle East. 
+
+	\subsection{Selection of study areas and participants}
+	
+The selection of study villages proceeded as described in (figure 1).Listing of potential households/respondents to form the sampling frame after taking their informed consent (a minimum of 100 households per village/lowest admin area/camp, i.e., 2000hh in total will be listed through a random walk approach). For purposes of statistical comparison, demographic information will collected from all households contacted during the listing phase. Households that agreed to be listed for the study are randomly assigned into one of two modalities (groups) in a pure random assignment; 1000 households receiving the remote/phone interview (called the treatment group) and 1000 households assigned to receive the face-to-face interview (called the control group). 
+The study will aim to achieve a minimum of 600 completed interviews for each modality from the originally assigned groups (i.e., there will be no replacement for non responses).  
+
+	\subsection{Implementation}
+
+Fieldwork was originally planned to take place over a 3 week period (covering 1 week for enumerator training, adjusting questionnaire and 2 weeks for actual household interviews) in each pilot country. However, because of unforeseen challenges as will be discussed later, data collection was extended by between 2 to 3 weeks depending on the country.
+
+\pagebreak
+	
+% ------- 
+\section{Sample Completion}
+Table 1 Shows the total sample and households interviews completed by country and modality in the initial 3 pilot countries of the study. Generally, the figures in Table 1 show that we have lower response rate across countries for the remote modality.
+
+\input{1_table/rCARI_Overall_Completion} 
+\label{tab:rCARI_Overall_Completion}
+
+\pagebreak
+
+% ------- 
+\section{Primary Results: Impact of Survey Modality}
+
+In this section, we present the main results of the study aggregated by the food security indicator. Here, the main objective is to compare the different CARI variations aggregated either using remote or face-to-face modules.
+CARI aggregated using remote modules is referred to us rCARI (remote CARIR). Depending on the indicators used, we have CARI-FES and CARI-Inc which is CARI aggregated using the standard FES (food expenditure share) and income and income change variables respectivey. 
+For the purposes of this interim analysis and report, we restrict the CAR sample to only respondents that owned phones (the complete sample comprising respondents that received phones is available upon request).  
+
+\subsection{CARI vs. rCARI}
+There are four versions of overall indicators we used in the validation study:
+\begin{itemize}[label=--, left=1.5em]
+	\item CARI-FES: Standard CARI using FES module from F2F surveys
+	\item rCARI-FES: CARI using FES module from Remote surveys
+	\item CARI-Inc: CARI using Income \& income change from F2F surveys
+	\item rCARI-Inc: Standard rCARI using Income \& income change module from Remote surveys
+\end{itemize}
+
+From Table 2, we have three different CARI aggregation methods to test against the standard/gold-standard CARI. We will further compare the results of rCARI aggregated using FES with rCARI using the income and income change variables.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Lists the different aggregation methods and indicators used for each methodology}
+			\scriptsize
+			\input{1_table/Aggregation_Table} 
+			\label{tab:Aggregation_Table}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+ 
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: Standard CARI-FES vs. Standard rCARI-Inc}
+			\scriptsize
+			\input{1_table/CARI_rCARI_Modality_All_Country} 
+			\label{tab:CARI_rCARI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+Table 3 presents the first comparison of rCARI (using the income and income change variable) with the standard CARI across the 3 pilot countries. The results from this table show two key findings. First, except for CAR, the calculated food insecurity category (moderately food insecure plus severely food insecure categories) did not differ significantly between the two methods. Second, although the results were not statistically different between the two aggregation methods, rCARI is always the conservative method (reporting lower food insecure numbers) relative to stanadard CARI.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: CARI-FES vs. rCARI-FES}
+			\scriptsize
+			\input{1_table/CARI_FES_rCARI_Modality_All_Country} 
+			\label{tab:CARI_FES_rCARI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+Table 4 shows the results of rCARI aggregated using the FES module collected over the phone, which is a relatively shorter version of the standard FES usually collected in F2F surveys. This version collects the household's aggregate expenditure without going through individual items. 
+The results show that rCARI using FES consistently over-states the number of food insecure across all countries compared to the standard CARI by between 2 and 17 percentage points. This difference was statistically significant in Myanmar and Ecuador.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality: CARI-Inc vs. rCARI-Inc}
+			\scriptsize
+			\input{1_table/Inc_CARI_rCARI_Modality_All_Country} 
+			\label{tab:Inc_CARI_rCARI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+A comparison of results using income and income change modules implemented over the phone (rCARI) and in F2F interviews is presented in Table 5. Aside from CAR, the results show that the module when implemented over the phone produces a significantly higher number of food insecurities compared to when asked in an F2F. This difference was between 9 and 10 percentage points. 
+
+Next, we investigate how CARI aggregated using FES with income and income change variables modules collected in F2F surveys from the same households/respondents. This step allowed the comparison of these two indicators using the same respondents in the same modality. Results for the 3 pilot countries are presented in Table 6. The main conclusion is that CARI aggregated using income and income change variable significantly understates the numbers of food insecure (6\% in Myanmar, 23\% in Ecuador and 22\% in CAR).
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc in F2F Surveys}
+			\scriptsize
+			\input{1_table/Paired_F2F_CARI_FES_INC_All_Country} 
+			\label{tab:Paired_F2F_CARI_FES_INC_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\
+				For CAR, the sample is limited to phone owners only.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+Similar to the comparison between the FES and income variables in the F2F modality, we investigate the performance of these variables (FES and the income and income change variables) in the remote modality. Reported in Table 7, we find that the income and income change variable is conservatively under reporting the number of food insecure by between 12 to 24 percentage points (12 percent in Myanmar, 19 percent in Ecuador and 24 percent in CAR). 
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired rCARI-FES vs. rCARI-Inc in Remote Surveys}
+			\scriptsize
+			\input{1_table/Paired_RM_rCARI_FES_INC_All_Country} 
+			\label{tab:Paired_RM_rCARI_FES_INC_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\
+				For CAR, the sample is limited to phone owners only.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\clearpage
+
+\subsection{FCS}
+
+The results of the FCS analysis show that respondents tend to overestimate their consumption (report better food consumption) over the phone compared to when interviewed in F2F. A comparison of the FCS reported over the 2 modalities show statistical significance in Ecuador and CAR. However, we do not find statistical significance between the two in Myanmar. 
+This is reflected in the 3-phase food consumption classification (acceptable, borderline and poor). The results show that more households in the F2F category significantly classified as having poor food consumption relative to households interviewed in the remote category (see Table 8 for details). 
+
+	\begin{table}[htbp]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{threeparttable}
+				\caption{Impact of Survey Modality on Food Consumption Score and Groups}
+				\scriptsize
+				\input{1_table/FCS_Modality_All_Country} 
+				\label{tab:FCS_Modality_All_Country}
+				\begin{tablenotes}[para,flushleft]
+					\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+				\end{tablenotes}
+			\end{threeparttable}
+		\end{adjustbox}
+	\end{table}
+	
+		\pagebreak
+		
+\subsection{rCSI}
+A comparison of the reduced coping strategy adoption (rCSI) based on F2F and remote interviews is reported in Table 7. The results show that in Myanmar and CAR, households tend to report adopting more reduced coping strategies over the phone compared to F2F while, the opposite is found in Ecuador (where respondents are adopting significantly higher reduced coping strategies in the F2F).
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality on Reduced Coping Strategy Index Classification}
+			\scriptsize
+			\input{1_table/rCSI_Modality_All_Country} 
+			\label{tab:rCSI_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+In terms of categorizing respondents into the 3 classes of rCSI, the remote surveys seem to classify more households in the severe category both in Myanmar and CAR than Ecuador.
+
+	\pagebreak
+
+\subsection{LCS}
+
+The livelihood coping strategy adoption by respondents for none and stress level across countries follows the same trend (higher adoption in F2F than remote), however the results are mixed comparing the crisis and emergency levels. For example, while the result shows a significantly higher adoption of these categories by households taking the remote interviews in Myanmar and CAR, the opposite is observed for crisis level in Ecuador. Worthy of mention is the fact that in Ecuador, there is big jump in the adoption of emergency category strategies between F2F and remote (50\% more households in the remote interview indicated adopted a strategy from this broad category). 
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality on Livelihood Coping Strategy Index}
+			\scriptsize
+			\input{1_table/LCS_Modality_All_Country} 
+			\label{tab:LCS_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Myanmar: Each Coping Strategy Used}
+			\scriptsize
+			\input{1_table/LCS_Ind_Modality_Myanmar} 
+			\label{tab:LCS_Ind_Modality_Myanmar}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Ecaudor: Each Coping Strategy Used}
+			\scriptsize
+			\input{1_table/LCS_Ind_Modality_Ecuador} 
+			\label{tab:LCS_Ind_Modality_Ecuador}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+	
+\end{table}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{CAR: Each Coping Strategy Used}
+			\scriptsize
+			\input{1_table/LCS_Ind_Modality_CAR} 
+			\label{tab:LCS_Ind_Modality_CAR}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+\subsection{FES}
+
+The aggregated FES show that across the 3 pilot countries, respondents over the phone tend to state their FES share on average by between 5\% and 8\% compared to F2F. This is significantly reflected in the 75\% and above category.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality on Expenditure and Food Expenditure Share}
+			\scriptsize
+			\input{1_table/FES_Modality_All_Country} 
+			\label{tab:FES_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\ 
+				In Myanmar, the Short Form in Remote Survey was dropped due to translation issues.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+\subsection{Income}
+
+The income variable captures the respondent/household income source and income change experienced in the last 12 months prior to the interview. The results show that more respondents/households reported more income sources, with stability than when asked in the F2F. The result remains consistent in all 3 pilot countries.   
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality on Income}
+			\scriptsize
+			\input{1_table/INC_Modality_All_Country} 
+			\label{tab:INC_Modality_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+In the next section, we will explore further the individual indicators used as inputs for calculating CARI. The indicators are compared across modalities (F2F and Remote).
+
+\pagebreak
+	
+% ------- 
+\section{Impact of Form Length on FCS and Expenditure/FES}
+
+As a secondary objective, the study also tested a modified version of FCS and FES modules. We test an aggregated version (shortened version) against the standard module (long version). We also tested the performance of LCS-EN against LCS-FS modules. This would allow recommendation for the use of the shorter version of the FES module over the phone or in F2F surveys to reduce interviewee fatigue. The results of this section of the study (comparison of short and long (standard model length). 
+
+\subsection{FCS Full Subgroup vs. FCS Short}
+
+In terms of FCS (see Table 16), the results are not significantly different between short and long modules in Myanmar and Ecuador except for CAR where the short version significantly overstates food consumption by 4.35 points.
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Module Length on FCS Reporting}
+			\scriptsize
+			\input{1_table/FCS_F2F_Form_Length_All_Country} 
+			\label{tab:FCS_F2F_Form_Length_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\subsection{Expenditure Long vs. Short}
+
+The FES however remains stable showing no statistical significance between the short and long modules in all pilot countries (see Tables 17). The results are similar for the two versions used in the remote surveys (showing no significant difference between short and long).
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Module Length on Expenditure and FES in F2F Surveys}
+			\scriptsize
+			\input{1_table/FES_F2F_Form_Length_All_Country} 
+			\label{tab:FES_F2F_Form_Length_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Module Length on Expenditure and FES in Remote Surveys}
+			\scriptsize
+			\input{1_table/FES_RM_Form_Length_ECU_CAR} 
+			\label{tab:FES_RM_Form_Length_ECU_CAR}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\
+						 Myanmar is excluded due to translation issue.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Module Length on Expenditure and FES: F2F vs. Remote Long}
+			\scriptsize
+			\input{1_table/FES_F2F_Long_All_Country} 
+			\label{tab:FES_F2F_Long_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Module Length on Expenditure and FES: F2F vs. Remote Short}
+			\scriptsize
+			\input{1_table/FES_F2F_Short_ECU_CAR} 
+			\label{tab:FES_F2F_Short_ECU_CAR}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\
+				Myanmar is excluded due to translation issue.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\pagebreak
+
+% ------- 
+\section{Impact of LCS for Essential Needs or Food Security}
+
+\subsection{Overall}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Myanmar: LCS for Essential Needs vs. Food Security}
+			\scriptsize
+			\input{1_table/LCS_F2F_EN_FS_All_Country} 
+			\label{tab:LCS_F2F_EN_FS_All_Country}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+\pagebreak
+
+\subsection{Specific Strategy}
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Myanmar: LCS for Essential Needs vs. Food Security}
+			\scriptsize
+			\input{1_table/LCS_F2F_EN_FS_Myanmar} 
+			\label{tab:LCS_F2F_EN_FS_Myanmar}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Ecuador: LCS for Essential Needs vs. Food Security}
+			\scriptsize
+			\input{1_table/LCS_F2F_EN_FS_Ecuador} 
+			\label{tab:LCS_F2F_EN_FS_Ecuador}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{CAR: LCS for Essential Needs vs. Food Security}
+			\scriptsize
+			\input{1_table/LCS_F2F_EN_FS_CAR} 
+			\label{tab:LCS_F2F_EN_FS_CAR}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+\pagebreak
+
+\section{Challenges of the Study by Country}
+
+In this section, the main challenges faced in the 3 pilot countries are listed. 
+
+\subsection{Myanmar}
+
+1.	Outdated listing data
+2.	Poor/unstable network coverage
+3.	Mobility of respondents/households
+4.	Absence of baseline data of the sample 
+5.	Limited coverage of the study population (limited to IDP camps)
+6.	Typhoon season affected the implementation period.
+7.	Restricted access to the field
+8.	Distrust from respondents
+
+
+\subsection{Ecuador}
+
+1.	Issues of security for enumerators in some communities.
+		a.	Some parts of the country were not accessible due to safety concerns for the face-to-face enumerators.
+2.	Misunderstanding with the local authorities preventing field access by F2F team.
+		a.	Dues to political reasons, some local authorities refused enumerators access leading to dropping of these communities.
+		b.	Distrust from local authorities and in some cases respondents.
+3.	Invalid respondent of household contact information (collected during the listing phase)
+4.	Poor phone coverage in remote areas
+5.	Disproportionate ownership of phones between urban and rural areas (low phone ownership in rural areas)
+6.	Low response rate particularly among the remote sample
+		a.	High attrition between the time of receiving consent and actual interview date.
+
+\subsection{CAR}
+
+1.	Restricted access to the field because of deteriorating security situation
+2.	Bad phone network/infrastructure 
+		a.	Most parts of the country do not have phone network coverage.
+		b.	In places where there is coverage, poor infrastructure and constant electricity cuts affected call quality.
+		c.	No access to electricity for charging phones particularly in rural areas.
+3.	Low phone ownership in the population
+		a.	Only 25\% of households had phones (similarly to the national statistic)
+4.	Logistical challenges (Enumerator deployment)
+		a.	Depended on the UNHAS to deploy enumerators this affected how quickly deployment could be done (flights to study areas twice a week)
+		b.	Acquisition and distribution of phones/SIM cards-Challenges with moving them to the field for distribution.
+5.	Low response rate in the remote arm (High Attrition)
+6.	Lack of remote data collection platform by the Vendor (ICASEES) 
+7.	Weather/rainy season
+
+\pagebreak
+
+\section{Summary and conclusions}
+
+	\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Survey Modality on Food Consumption Score and Groups}
+			\scriptsize
+			\input{1_table/FCS_Modality_All_Country_Short} 
+			\label{tab:FCS_Modality_All_Country_Short}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+	\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Myanmar Sample Balance Table}
+			\scriptsize
+			\input{1_table/Myanmar_Modality_Demo_Balance} 
+			\label{tab:Myanmar_Modality_Demo_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Ecuador Sample Balance Table}
+			\scriptsize
+			\input{1_table/Ecuador_Modality_Demo_Balance} 
+			\label{tab:Ecuador_Modality_Demo_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\
+						 Figures might be changed slightly after roster inconsistency corrections.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+	\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{CAR Sample Balance Table}
+			\scriptsize
+			\input{1_table/CAR_Modality_Own_Phone_Demo_Balance} 
+			\label{tab:CAR_Modality_Own_Phone_Demo_Balance}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Significance: * p$<$0.05, ** p$<$0.01, *** p$<$0.001. \\
+						 Listing answers were used in this table.
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\end{document}

@@ -1,0 +1,133 @@
+\documentclass[11pt,harvard]{article}
+\usepackage[letterpaper,top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[sort]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{threeparttable, booktabs}
+\usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{setspace} % Load the setspace package
+\usepackage{parskip} % Load the parskip package
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[table,xcdraw]{xcolor}
+
+\author{Nicole Wu \& Alirah Weyori}
+\date{\today}
+\title{Validation and Calibration of the Remote Consolidated Approach of Reporting on Food Security (rCARI) Methodology 
+	\\ {\normalsize Preliminary results from Central African Republic} 
+	\\{\normalsize{Version 2.0}} }
+
+\begin{document}
+	\maketitle \vspace{-1cm}
+	\onehalfspacing
+	\pagebreak
+	\setlength{\parskip}{6pt} % Set the desired space before and after paragraphs
+	\tableofcontents
+	\pagebreak
+	
+	% -------
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc for Phone Owner in F2F Surveys}
+			\scriptsize
+			\input{1_table/CAR_F2F_Paired_OwnPhone_ttest} 
+			\label{tab:CAR_F2F_Paired_OwnPhone_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc for NoPhone F2F Surveys}
+			\scriptsize
+			\input{1_table/CAR_F2F_Paired_NoPhone_ttest} 
+			\label{tab:CAR_F2F_Paired_NoPhone_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc in F2F Surveys}
+			\scriptsize
+			\input{1_table/CAR_F2F_Paired_ttest} 
+			\label{tab:CAR_F2F_Paired_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc for Phone Owner in Remote Surveys}
+			\scriptsize
+			\input{1_table/CAR_RM_Paired_OwnPhone_ttest} 
+			\label{tab:CAR_RM_Paired_OwnPhone_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc for NoPhone Remote Surveys}
+			\scriptsize
+			\input{1_table/CAR_RM_Paired_NoPhone_ttest} 
+			\label{tab:CAR_RM_Paired_NoPhone_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{threeparttable}
+			\caption{Impact of Indicator Composition: Paired CARI-FES vs. CARI-Inc in Remote Surveys}
+			\scriptsize
+			\input{1_table/CAR_RM_Paired_ttest} 
+			\label{tab:CAR_RM_Paired_ttest}
+			\begin{tablenotes}[para,flushleft]
+				\item Note: Robust standard errors in parentheses; * p$<$0.05, ** p$<$0.01, *** p$<$0.001. 
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\end{document}
+
