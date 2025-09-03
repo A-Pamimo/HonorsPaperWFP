@@ -1,0 +1,29 @@
+# Auto-detect text files and normalize to LF in the repo
+* text=auto
+
+# Force LF for source/markup (good for tooling/CI)
+*.do   text eol=lf
+*.py   text eol=lf
+*.tex  text eol=lf
+*.csv  text eol=lf
+*.html text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.sh   text eol=lf
+
+# Treat these as binary to avoid EOL conversion
+*.doc  -text
+*.docx -text
+*.pdf  -text
+*.png  -text
+*.jpg  -text
+*.zip  -text
+
+# Stata/LaTeX artifacts (either ignore or treat as binary)
+*.smcl -text
+*.aux  -text
+*.log  -text
+*.out  -text
+*.toc  -text
+*.xwm  -text
