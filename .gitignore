@@ -1,0 +1,14 @@
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.xwm
+
+# Stata
+*.smcl
+*.stswp
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
