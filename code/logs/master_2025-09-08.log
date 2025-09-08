@@ -1,0 +1,250 @@
+--------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis\code\logs/m
+> aster_2025-09-08.log
+  log type:  text
+ opened on:   8 Sep 2025, 10:55:14
+
+. * Timestamped log
+. local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
+
+. log using "logs/master_`ts'.log", replace text
+log file already open
+r(604);
+
+end of do-file
+
+r(604);
+
+. do "\\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis\code\master.do"
+
+. *******************************************************
+. * master.do — Orchestrate the full BF pipeline
+. *******************************************************
+. version 17
+
+. clear all
+
+. set more off
+
+. 
+. * Ensure folders exist before opening log
+. cap mkdir "logs"
+
+. cap mkdir "data"
+
+. cap mkdir "data/raw"
+
+. cap mkdir "data/clean"
+
+. cap mkdir "output"
+
+. cap mkdir "output/tables"
+
+. cap mkdir "output/figures"
+
+. 
+. local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
+
+. log using "logs/master_`ts'.log", replace text
+log file already open
+r(604);
+
+end of do-file
+
+r(604);
+
+. cd "\\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis"
+\\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis
+
+. 
+. do "code/master.do"
+
+. *******************************************************
+. * master.do — Orchestrate the full BF pipeline
+. *******************************************************
+. 
+. version 17
+
+. clear all
+
+. set more off
+
+. 
+. *------------------------------------------------------------------
+. * 1) Load config and create folders (setup before opening the log)
+. *------------------------------------------------------------------
+. do "code/00_config.do"
+
+. *******************************************************
+. * 00_config.do — Project configuration (paths, cutoffs)
+. *******************************************************
+. version 17
+
+. 
+. * Project root — default to current working directory
+. global PROJ "`c(pwd)'"
+
+. 
+. * Inputs/Outputs (edit as needed)
+. global IN_ANALYTIC   "data/clean/Complete_BF_Household_Analysis.dta"
+
+. global OUT_CLEAN     "data/clean/bf_analytic_cleaned.dta"
+
+. global IN_FOR_TABLES "data/clean/bf_with_indices.dta"
+
+. global OUT_XLSX      "output/tables/BF_tables.xlsx"
+
+. global LOGDIR        "logs"
+
+. 
+. * Thresholds (switch to 28/42 if your context uses those)
+. global FCS_CUT_POOR   21
+
+. global FCS_CUT_BORDER 35
+
+. 
+. * rCSI bands (0–3 Low, 4–9 Medium, >=10 High as default)
+. global RCSI_CUT1 3
+
+. global RCSI_CUT2 9
+
+. 
+. * Labels for modality
+. label define modlbl 0 "F2F" 1 "Remote", replace
+
+. 
+end of do-file
+
+. do "code/01_setup.do"   // makes data/, output/, logs/, etc.
+
+. *******************************************************
+. * 01_setup.do — Session setup and folders
+. *******************************************************
+. version 17
+
+. clear all
+
+. set more off
+
+. 
+. * Create folders if not present
+. cap mkdir "data"
+
+. cap mkdir "data/raw"
+
+. cap mkdir "data/clean"
+
+. cap mkdir "output"
+
+. cap mkdir "output/tables"
+
+. cap mkdir "output/figures"
+
+. cap mkdir "logs"
+
+. 
+end of do-file
+
+. 
+. *------------------------------------------------------------------
+. * 2) Open timestamped log inside $LOGDIR (created by setup)
+. *------------------------------------------------------------------
+. local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
+
+. log using "$LOGDIR/master_`ts'.log", replace text
+log file already open
+r(604);
+
+end of do-file
+
+r(604);
+
+. do "C:\Users\aet816\AppData\Local\Temp\STD6c98_000000.tmp"
+
+. *******************************************************
+. * master.do — Orchestrate the full BF pipeline
+. *******************************************************
+. version 17
+
+. clear all
+
+. set more off
+
+. 
+. * 1) Config + setup (creates folders)
+. do "code/00_config.do"
+
+. *******************************************************
+. * 00_config.do — Project configuration (paths, cutoffs)
+. *******************************************************
+. version 17
+
+. 
+. * Project root — default to current working directory
+. global PROJ "`c(pwd)'"
+
+. 
+. * Inputs/Outputs (edit as needed)
+. global IN_ANALYTIC   "data/clean/Complete_BF_Household_Analysis.dta"
+
+. global OUT_CLEAN     "data/clean/bf_analytic_cleaned.dta"
+
+. global IN_FOR_TABLES "data/clean/bf_with_indices.dta"
+
+. global OUT_XLSX      "output/tables/BF_tables.xlsx"
+
+. global LOGDIR        "logs"
+
+. 
+. * Thresholds (switch to 28/42 if your context uses those)
+. global FCS_CUT_POOR   21
+
+. global FCS_CUT_BORDER 35
+
+. 
+. * rCSI bands (0–3 Low, 4–9 Medium, >=10 High as default)
+. global RCSI_CUT1 3
+
+. global RCSI_CUT2 9
+
+. 
+. * Labels for modality
+. label define modlbl 0 "F2F" 1 "Remote", replace
+
+. 
+end of do-file
+
+. do "code/01_setup.do"
+
+. *******************************************************
+. * 01_setup.do — Session setup and folders
+. *******************************************************
+. version 17
+
+. clear all
+
+. set more off
+
+. 
+. * Create folders if not present
+. cap mkdir "data"
+
+. cap mkdir "data/raw"
+
+. cap mkdir "data/clean"
+
+. cap mkdir "output"
+
+. cap mkdir "output/tables"
+
+. cap mkdir "output/figures"
+
+. cap mkdir "logs"
+
+. 
+end of do-file
+
+. 
+. * ✅ Close any logs already open (from prior runs / Do-file Editor)
+. capture log close _all

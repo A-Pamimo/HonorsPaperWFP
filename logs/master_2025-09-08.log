@@ -1,0 +1,872 @@
+--------------------------------------------------------------------------------
+      name:  master
+       log:  \\Cabinet.usask.ca\work$\aet816\Desktop\Research\logs/master_2025-0
+> 9-08.log
+  log type:  text
+ opened on:   8 Sep 2025, 13:24:06
+
+. 
+. * 3) Utilities
+. do "code/00_utils.do"
+
+. *******************************************************
+. * 00_utils.do — Utility programs (e.g., _coerce_num)
+. *******************************************************
+. version 17
+
+. 
+. * Coerce variables to numeric when they arrive as strings.
+. * - Handles "yes/no", "oui/non", "0/1/2" numeric strings, commas
+. cap program drop _coerce_num
+
+. program define _coerce_num
+  1.     syntax varlist
+  2.     foreach v of local varlist {
+  3.         capture confirm numeric variable `v'
+  4.         if _rc {
+  5.             * Attempt to destring first (ignore commas/spaces)
+.             capture destring `v', replace ignore(", ")
+  6.             if _rc {
+  7.                 * If still not numeric, map common text to numbers
+.                 gen double __tmp_num = .
+  8.                 replace __tmp_num = 1 if lower(trim(`v'))=="yes" | lower(tr
+> im(`v'))=="oui" | trim(`v')=="1"
+  9.                 replace __tmp_num = 0 if lower(trim(`v'))=="no"  | lower(tr
+> im(`v'))=="non" | trim(`v')=="0"
+ 10.                 replace __tmp_num = real(`v') if missing(__tmp_num) & regex
+> m(`v',"^-?[0-9.]+$")
+ 11.                 drop `v'
+ 12.                 rename __tmp_num `v'
+ 13.             }
+ 14.         }
+ 15.     }
+ 16. end
+
+. 
+end of do-file
+
+. 
+. * 4) Cleaning (read-only on input; writes a new cleaned file)
+. capture noisily do "code/02_clean_bf.do"
+
+. *******************************************************
+. * 02_clean_bf.do — Prepare cleaned analytic copy (read-only input)
+. *******************************************************
+. version 17
+
+. 
+. * Load input into memory (we will NOT overwrite it on disk)
+. use "$IN_ANALYTIC", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. 
+. * --- Create a separate work frame and copy dataset into it ---
+. cap frame drop work
+
+. frame copy default work          // copies current data into NEW frame "work"
+
+. frame change work
+
+. 
+. * Include utilities inside work frame
+. do "code/00_utils.do"
+
+. *******************************************************
+. * 00_utils.do — Utility programs (e.g., _coerce_num)
+. *******************************************************
+. version 17
+
+. 
+. * Coerce variables to numeric when they arrive as strings.
+. * - Handles "yes/no", "oui/non", "0/1/2" numeric strings, commas
+. cap program drop _coerce_num
+
+. program define _coerce_num
+  1.     syntax varlist
+  2.     foreach v of local varlist {
+  3.         capture confirm numeric variable `v'
+  4.         if _rc {
+  5.             * Attempt to destring first (ignore commas/spaces)
+.             capture destring `v', replace ignore(", ")
+  6.             if _rc {
+  7.                 * If still not numeric, map common text to numbers
+.                 gen double __tmp_num = .
+  8.                 replace __tmp_num = 1 if lower(trim(`v'))=="yes" | lower(tr
+> im(`v'))=="oui" | trim(`v')=="1"
+  9.                 replace __tmp_num = 0 if lower(trim(`v'))=="no"  | lower(tr
+> im(`v'))=="non" | trim(`v')=="0"
+ 10.                 replace __tmp_num = real(`v') if missing(__tmp_num) & regex
+> m(`v',"^-?[0-9.]+$")
+ 11.                 drop `v'
+ 12.                 rename __tmp_num `v'
+ 13.             }
+ 14.         }
+ 15.     }
+ 16. end
+
+. 
+end of do-file
+
+. 
+. * ---- Modality (0=F2F, 1=Remote); derive only inside work frame ----
+. cap confirm var Modality_Type
+
+. if _rc {
+.     cap confirm var Modality
+.     if !_rc {
+.         _coerce_num Modality
+.         gen byte Modality_Type = Modality
+.     }
+. }
+
+. label define modlbl 0 "F2F" 1 "Remote", replace
+
+. cap label values Modality_Type modlbl
+
+. 
+. * ---------- Admin1 English label (robust) — work frame only ----------
+. capture confirm var admin1_en
+
+. if _rc {
+.     * Try plausible admin1 variables; else create empty placeholder
+.     local admin_candidates admin1 admin1_name admin1_en_s ADMIN1_EN ADMIN1 reg
+> ion_en region Region
+.     local found ""
+.     foreach v of local admin_candidates {
+  2.         capture confirm var `v'
+  3.         if !_rc {
+  4.             local found "`v'"
+  5.             continue, break
+  6.         }
+  7.     }
+.     if "`found'" != "" {
+.         clonevar admin1_en = `found'
+.     }
+.     else {
+.         gen str40 admin1_en = ""
+.     }
+. }
+
+. label var admin1_en "Region (Admin1, EN)"
+
+. 
+. * Save a CLEANED analytic copy to a NEW file (original input untouched)
+. save "$OUT_CLEAN", replace
+file data/clean/bf_analytic_cleaned.dta saved
+
+. 
+. * Return to default frame; clean up
+. frame change default
+
+. cap frame drop work
+
+. 
+end of do-file
+
+. local rc = _rc
+
+. if `rc' != 0 {
+.     di as error "ERROR in 02_clean_bf.do (code = " %9.0g `rc' ")"
+.     log close master
+.     exit `rc'
+. }
+
+. 
+. * 5) Construct indices (on cleaned copy; writes another new file)
+. capture noisily do "code/03_construct_indices.do"
+
+. *******************************************************
+. * 03_construct_indices.do — Build FCS, rCSI, HHS on derived data
+. * - Works only on $OUT_CLEAN (a copy), never the original input
+. * - If FCS/rCSI/HHS already exist, do NOT overwrite them
+. *   (only fill missings from a recalculation), then rebuild categories
+. *******************************************************
+. version 17
+
+. 
+. * Load the cleaned analytic copy (NOT the original input)
+. use "$OUT_CLEAN", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. 
+. * Work in a separate frame
+. cap frame drop work2
+
+. frame copy default work2
+
+. frame change work2
+
+. 
+. do "code/00_utils.do"
+
+. *******************************************************
+. * 00_utils.do — Utility programs (e.g., _coerce_num)
+. *******************************************************
+. version 17
+
+. 
+. * Coerce variables to numeric when they arrive as strings.
+. * - Handles "yes/no", "oui/non", "0/1/2" numeric strings, commas
+. cap program drop _coerce_num
+
+. program define _coerce_num
+  1.     syntax varlist
+  2.     foreach v of local varlist {
+  3.         capture confirm numeric variable `v'
+  4.         if _rc {
+  5.             * Attempt to destring first (ignore commas/spaces)
+.             capture destring `v', replace ignore(", ")
+  6.             if _rc {
+  7.                 * If still not numeric, map common text to numbers
+.                 gen double __tmp_num = .
+  8.                 replace __tmp_num = 1 if lower(trim(`v'))=="yes" | lower(tr
+> im(`v'))=="oui" | trim(`v')=="1"
+  9.                 replace __tmp_num = 0 if lower(trim(`v'))=="no"  | lower(tr
+> im(`v'))=="non" | trim(`v')=="0"
+ 10.                 replace __tmp_num = real(`v') if missing(__tmp_num) & regex
+> m(`v',"^-?[0-9.]+$")
+ 11.                 drop `v'
+ 12.                 rename __tmp_num `v'
+ 13.             }
+ 14.         }
+ 15.     }
+ 16. end
+
+. 
+end of do-file
+
+. 
+. * ------------------ FCS ------------------
+. local fcs_all FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar
+
+. local fcs_present
+
+. foreach v of local fcs_all {
+  2.     capture confirm var `v'
+  3.     if !_rc local fcs_present `fcs_present' `v'
+  4. }
+
+. local fcs_n : word count `fcs_present'
+
+. if `fcs_n'==8 {
+.     _coerce_num `fcs_present'
+.     foreach x of local fcs_present {
+  2.         cap replace `x' = . if `x' < 0
+  3.         cap replace `x' = 7 if `x' > 7 & `x' != .
+  4.     }
+. 
+.     * Recalculate into a temp var; don't collide with existing FCS
+.     tempvar FCS_calc
+.     gen double `FCS_calc' = (FCSStap*2) + (FCSPulse*3) + (FCSDairy*4) + (FCSPr
+> *4) ///
+>                           + (FCSVeg*1) + (FCSFruit*1) + (FCSFat*0.5) + (FCSSug
+> ar*0.5)
+. 
+.     * If FCS exists, keep it; only fill missing values from calc
+.     capture confirm var FCS
+.     if _rc {
+.         gen double FCS = `FCS_calc'
+.     }
+.     else {
+.         replace FCS = `FCS_calc' if missing(FCS)
+(0 real changes made)
+.     }
+.     cap label var FCS "Food Consumption Score"
+. 
+.     * Categories (rebuild safely)
+.     cap drop FCS_cat
+.     gen byte FCS_cat = .
+(2,882 missing values generated)
+.     replace FCS_cat = 1 if FCS <= $FCS_CUT_POOR & FCS != .
+(942 real changes made)
+.     replace FCS_cat = 2 if FCS >  $FCS_CUT_POOR & FCS <= $FCS_CUT_BORDER
+(1,495 real changes made)
+.     replace FCS_cat = 3 if FCS >  $FCS_CUT_BORDER
+(445 real changes made)
+.     label define fcscat 1 "Poor" 2 "Borderline" 3 "Acceptable", replace
+.     label values FCS_cat fcscat
+. }
+
+. else {
+.     di as txt "Note: Missing some FCS components; FCS not (re)computed."
+. }
+
+. 
+. * ------------------ rCSI ------------------
+. local rcsi_all rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb
+
+. local rcsi_present
+
+. foreach v of local rcsi_all {
+  2.     capture confirm var `v'
+  3.     if !_rc local rcsi_present `rcsi_present' `v'
+  4. }
+
+. local rcsi_n : word count `rcsi_present'
+
+. if `rcsi_n'==5 {
+.     _coerce_num `rcsi_present'
+.     foreach r of local rcsi_present {
+  2.         cap replace `r' = . if `r' < 0
+  3.         cap replace `r' = 7 if `r' > 7 & `r' != .
+  4.     }
+. 
+.     tempvar rCSI_calc
+.     gen double `rCSI_calc' = (rCSILessQlty*1) + (rCSIBorrow*2) + (rCSIMealSize
+> *1) + (rCSIMealAdult*3) + (rCSIMealNb*1)
+. 
+.     capture confirm var rCSI
+.     if _rc {
+.         gen double rCSI = `rCSI_calc'
+.     }
+.     else {
+.         replace rCSI = `rCSI_calc' if missing(rCSI)
+(0 real changes made)
+.     }
+.     cap label var rCSI "Reduced Coping Strategy Index"
+. 
+.     cap drop rCSI_cat
+.     gen byte rCSI_cat = .
+(2,882 missing values generated)
+.     replace rCSI_cat = 1 if rCSI <= $RCSI_CUT1 & rCSI != .
+(1,196 real changes made)
+.     replace rCSI_cat = 2 if rCSI >  $RCSI_CUT1 & rCSI <= $RCSI_CUT2
+(605 real changes made)
+.     replace rCSI_cat = 3 if rCSI >= $RCSI_CUT2
+(1,170 real changes made)
+.     label define rcsicat 1 "Low" 2 "Medium" 3 "High", replace
+.     label values rCSI_cat rcsicat
+. }
+
+. else {
+.     di as txt "Note: Missing some rCSI items; rCSI not (re)computed."
+. }
+
+. 
+. * ------------------ HHS ------------------
+. * Try fallbacks for *_FR_S if main vars missing
+. foreach pair in "HHSNoFood HHSNoFood_FR_S" "HHSBedHung HHSBedHung_FR_S" "HHSNo
+> tEat HHSNotEat_FR_S" {
+  2.     gettoken main alt : pair
+  3.     capture confirm var `main'
+  4.     if _rc {
+  5.         capture confirm var `alt'
+  6.         if !_rc clonevar `main' = `alt'
+  7.     }
+  8. }
+
+. 
+. local hhs_all HHSNoFood HHSBedHung HHSNotEat
+
+. local hhs_present
+
+. foreach v of local hhs_all {
+  2.     capture confirm var `v'
+  3.     if !_rc local hhs_present `hhs_present' `v'
+  4. }
+
+. local hhs_n : word count `hhs_present'
+
+. if `hhs_n'==3 {
+.     _coerce_num `hhs_present'
+.     foreach h of local hhs_present {
+  2.         cap replace `h' = 0 if `h' < 0
+  3.         cap replace `h' = 2 if `h' > 2 & `h' != .
+  4.     }
+. 
+.     tempvar HHS_calc
+.     egen `HHS_calc' = rowtotal(HHSNoFood HHSBedHung HHSNotEat)
+. 
+.     capture confirm var HHS
+.     if _rc {
+.         gen double HHS = `HHS_calc'
+.     }
+.     else {
+.         replace HHS = `HHS_calc' if missing(HHS)
+.     }
+.     cap label var HHS "Household Hunger Scale"
+. 
+.     cap drop HHS_cat
+.     gen byte HHS_cat = .
+(2,882 missing values generated)
+.     replace HHS_cat = 1 if inrange(HHS,0,1)
+(2,187 real changes made)
+.     replace HHS_cat = 2 if inrange(HHS,2,3)
+(695 real changes made)
+.     replace HHS_cat = 3 if inrange(HHS,4,6)
+(0 real changes made)
+.     label define hhslbl 1 "Little/No" 2 "Moderate" 3 "Severe", replace
+.     label values HHS_cat hhslbl
+. }
+
+. else {
+.     di as txt "Note: Missing some HHS items; HHS not (re)computed."
+. }
+
+. 
+. * Save indices to a NEW dataset (does not touch $OUT_CLEAN)
+. save "$IN_FOR_TABLES", replace
+file data/clean/bf_with_indices.dta saved
+
+. 
+. frame change default
+
+. cap frame drop work2
+
+. 
+end of do-file
+
+. local rc = _rc
+
+. if `rc' != 0 {
+.     di as error "ERROR in 03_construct_indices.do (code = " %9.0g `rc' ")"
+.     log close master
+.     exit `rc'
+. }
+
+. 
+. * 6) Analysis checks (read-only on derived file)
+. capture noisily do "code/04_analysis.do"
+
+. *******************************************************
+. * 04_analysis.do — Sanity checks and quick tabs (patched)
+. * - Safe display formatting (no parse errors)
+. * - Guards when vars are missing or all-missing
+. *******************************************************
+. version 17
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. 
+. * ---------- Means (only if variables exist) ----------
+. capture confirm var FCS
+
+. if !_rc {
+.     quietly summarize FCS, meanonly
+.     if r(N)>0 & r(mean)<. {
+.         di as txt "Mean FCS: " as res %8.2f r(mean)
+Mean FCS:    26.58
+.     }
+.     else {
+.         di as txt "Mean FCS: " as error "NA (no non-missing observations)"
+.     }
+. }
+
+. 
+. capture confirm var rCSI
+
+. if !_rc {
+.     quietly summarize rCSI, meanonly
+.     if r(N)>0 & r(mean)<. {
+.         di as txt "Mean rCSI: " as res %8.2f r(mean)
+Mean rCSI:     8.71
+.     }
+.     else {
+.         di as txt "Mean rCSI: " as error "NA (no non-missing observations)"
+.     }
+. }
+
+. 
+. capture confirm var HHS
+
+. if !_rc {
+.     quietly summarize HHS, meanonly
+.     if r(N)>0 & r(mean)<. {
+.         di as txt "Mean HHS: " as res %8.2f r(mean)
+Mean HHS:     0.73
+.     }
+.     else {
+.         di as txt "Mean HHS: " as error "NA (no non-missing observations)"
+.     }
+. }
+
+. 
+. * ---------- Distributions (only if variables exist) ----------
+. capture confirm var FCS_cat
+
+. if !_rc {
+.     di as txt "FCS categories:"
+FCS categories:
+.     tab FCS_cat
+
+    FCS_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       Poor |        942       32.69       32.69
+ Borderline |      1,495       51.87       84.56
+ Acceptable |        445       15.44      100.00
+------------+-----------------------------------
+      Total |      2,882      100.00
+. }
+
+. 
+. capture confirm var rCSI_cat
+
+. if !_rc {
+.     di as txt "rCSI categories:"
+rCSI categories:
+.     tab rCSI_cat
+
+   rCSI_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        Low |      1,196       41.50       41.50
+     Medium |        516       17.90       59.40
+       High |      1,170       40.60      100.00
+------------+-----------------------------------
+      Total |      2,882      100.00
+. }
+
+. 
+. capture confirm var HHS_cat
+
+. if !_rc {
+.     di as txt "HHS categories:"
+HHS categories:
+.     tab HHS_cat
+
+    HHS_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+  Little/No |      2,187       75.88       75.88
+   Moderate |        695       24.12      100.00
+------------+-----------------------------------
+      Total |      2,882      100.00
+. }
+
+. 
+. * ---------- Modality & region coverage ----------
+. capture confirm var Modality_Type
+
+. if !_rc {
+.     di as txt "Survey mode coverage:"
+Survey mode coverage:
+.     tab Modality_Type, missing
+
+Modality_Ty |
+         pe |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        F2F |      1,863       64.64       64.64
+     Remote |      1,019       35.36      100.00
+------------+-----------------------------------
+      Total |      2,882      100.00
+. }
+
+. 
+. capture confirm var admin1_en
+
+. if !_rc {
+.     di as txt "Admin1 coverage:"
+Admin1 coverage:
+.     tab admin1_en, missing
+
+Region (Admin1, |
+            EN) |      Freq.     Percent        Cum.
+----------------+-----------------------------------
+Plateau Central |        794       27.55       27.55
+    Centro-Nord |        612       21.24       48.79
+           Nord |      1,476       51.21      100.00
+----------------+-----------------------------------
+          Total |      2,882      100.00
+. }
+
+. 
+. di as res "04_analysis.do completed."
+04_analysis.do completed.
+
+. 
+end of do-file
+
+. local rc = _rc
+
+. if `rc' != 0 {
+.     di as error "ERROR in 04_analysis.do (code = " %9.0g `rc' ")"
+.     log close master
+.     exit `rc'
+. }
+
+. 
+. * 7) Tables/exports (from derived file)
+. capture noisily do "code/05_tables.do"
+
+. *******************************************************
+. * 05_tables.do — Export tables to Excel (multi-sheet safe)
+. * - Read-only on $IN_FOR_TABLES
+. * - Means by modality via by: running sums (no egen/collapse)
+. * - Category shares via contract/fillin + by: sum (no egen)
+. * - Writes all sheets to one workbook: only FIRST uses replace
+. *******************************************************
+. version 17
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. 
+. * Ensure Modality_Type exists
+. capture confirm var Modality_Type
+
+. if _rc {
+.     di as error "Modality_Type not found; cannot produce by-mode tables."
+.     exit 459
+. }
+
+. 
+. * Workbook path (one file, many sheets)
+. local xlsx "$OUT_XLSX"
+
+. 
+. * Clean any leftovers (in memory only)
+. capture drop _calc_*
+
+. capture drop N mean_FCS mean_rCSI mean_HHS
+
+. 
+. * =====================================================
+. * 1) Means by modality WITHOUT collapse/egen
+. *    - N = total rows per mode
+. *    - Means = sum(non-missing)/count(non-missing)
+. * =====================================================
+. preserve
+
+. sort Modality_Type
+
+. bys Modality_Type: gen long _calc_N = _N
+
+. 
+. local keepvars "Modality_Type _calc_N"
+
+. 
+. foreach v in FCS rCSI HHS {
+  2.     capture confirm var `v'
+  3.     if !_rc {
+  4.         * ensure numeric source; create a numeric copy if needed
+.         local src `v'
+  5.         capture confirm numeric variable `v'
+  6.         if _rc {
+  7.             capture drop _calc_`v'_num
+  8.             destring `v', gen(_calc_`v'_num) force
+  9.             local src _calc_`v'_num
+ 10.         }
+ 11. 
+.         * running counts/sums by mode
+.         capture drop _calc_`v'_nonmiss _calc_`v'_val _calc_`v'_N _calc_`v'_sum
+ 12.         gen byte   _calc_`v'_nonmiss = !missing(`src')
+ 13.         gen double _calc_`v'_val     = cond(missing(`src'), 0, `src')
+ 14. 
+.         by Modality_Type: gen long   _calc_`v'_N   = sum(_calc_`v'_nonmiss)
+ 15.         by Modality_Type: gen double _calc_`v'_sum = sum(_calc_`v'_val)
+ 16.         by Modality_Type: replace _calc_`v'_N   = _calc_`v'_N[_N]
+ 17.         by Modality_Type: replace _calc_`v'_sum = _calc_`v'_sum[_N]
+ 18. 
+.         capture drop mean_`v'
+ 19.         gen double mean_`v' = _calc_`v'_sum / _calc_`v'_N if _calc_`v'_N > 
+> 0
+ 20. 
+.         local keepvars `keepvars' mean_`v'
+ 21.     }
+ 22. }
+(2,880 real changes made)
+(2,880 real changes made)
+(2,880 real changes made)
+(2,879 real changes made)
+(2,880 real changes made)
+(2,877 real changes made)
+
+. 
+. * one row per modality; guaranteed columns
+. bys Modality_Type: keep if _n==_N
+(2,880 observations deleted)
+
+. rename _calc_N N
+
+. local keepvars : subinstr local keepvars "_calc_N" "N", all
+
+. keep `keepvars'
+
+. foreach c in mean_FCS mean_rCSI mean_HHS {
+  2.     capture confirm var `c'
+  3.     if _rc gen double `c' = .
+  4. }
+
+. order Modality_Type N mean_FCS mean_rCSI mean_HHS
+
+. 
+. * FIRST sheet: create/overwrite workbook
+. export excel using "`xlsx'", sheet("by_mode_means") firstrow(variables) replac
+> e
+file output/tables/BF_tables.xlsx saved
+
+. restore
+
+. 
+. * =====================================================
+. * 2) Category shares by modality (FCS) — drop extras before reshape
+. * =====================================================
+. capture confirm var FCS_cat
+
+. if !_rc {
+.     preserve
+.     capture drop _calc_*
+.     keep Modality_Type FCS_cat
+.     keep if !missing(Modality_Type, FCS_cat)
+(0 observations deleted)
+.     contract Modality_Type FCS_cat
+.     fillin Modality_Type FCS_cat
+.     recode _freq .=0
+(0 changes made to _freq)
+. 
+.     sort Modality_Type FCS_cat
+.     by Modality_Type: gen double _calc_tot = sum(_freq)
+.     by Modality_Type: replace _calc_tot = _calc_tot[_N]
+(4 real changes made)
+. 
+.     gen double share = cond(_calc_tot>0, 100 * _freq / _calc_tot, .)
+.     keep Modality_Type FCS_cat share
+.     reshape wide share, i(Modality_Type) j(FCS_cat)
+(j = 1 2 3)
+
+Data                               Long   ->   Wide
+-----------------------------------------------------------------------------
+Number of observations                6   ->   2           
+Number of variables                   3   ->   4           
+j variable (3 values)           FCS_cat   ->   (dropped)
+xij variables:
+                                  share   ->   share1 share2 share3
+-----------------------------------------------------------------------------
+. 
+.     capture confirm var share1
+.     if !_rc rename share1 FCS_Poor
+.     capture confirm var share2
+.     if !_rc rename share2 FCS_Borderline
+.     capture confirm var share3
+.     if !_rc rename share3 FCS_Acceptable
+. 
+.     * Subsequent sheet: replace only the sheet, not the file
+.     export excel using "`xlsx'", sheet("FCS_shares") firstrow(variables) sheet
+> replace
+file output/tables/BF_tables.xlsx saved
+.     restore
+. }
+
+. 
+. * =====================================================
+. * 3) Category shares by modality (rCSI)
+. * =====================================================
+. capture confirm var rCSI_cat
+
+. if !_rc {
+.     preserve
+.     capture drop _calc_*
+.     keep Modality_Type rCSI_cat
+.     keep if !missing(Modality_Type, rCSI_cat)
+(0 observations deleted)
+.     contract Modality_Type rCSI_cat
+.     fillin Modality_Type rCSI_cat
+.     recode _freq .=0
+(0 changes made to _freq)
+. 
+.     sort Modality_Type rCSI_cat
+.     by Modality_Type: gen double _calc_tot = sum(_freq)
+.     by Modality_Type: replace _calc_tot = _calc_tot[_N]
+(4 real changes made)
+. 
+.     gen double share = cond(_calc_tot>0, 100 * _freq / _calc_tot, .)
+.     keep Modality_Type rCSI_cat share
+.     reshape wide share, i(Modality_Type) j(rCSI_cat)
+(j = 1 2 3)
+
+Data                               Long   ->   Wide
+-----------------------------------------------------------------------------
+Number of observations                6   ->   2           
+Number of variables                   3   ->   4           
+j variable (3 values)          rCSI_cat   ->   (dropped)
+xij variables:
+                                  share   ->   share1 share2 share3
+-----------------------------------------------------------------------------
+. 
+.     capture confirm var share1
+.     if !_rc rename share1 rCSI_Low
+.     capture confirm var share2
+.     if !_rc rename share2 rCSI_Medium
+.     capture confirm var share3
+.     if !_rc rename share3 rCSI_High
+. 
+.     export excel using "`xlsx'", sheet("rCSI_shares") firstrow(variables) shee
+> treplace
+file output/tables/BF_tables.xlsx saved
+.     restore
+. }
+
+. 
+. * =====================================================
+. * 4) Category shares by modality (HHS)
+. * =====================================================
+. capture confirm var HHS_cat
+
+. if !_rc {
+.     preserve
+.     capture drop _calc_*
+.     keep Modality_Type HHS_cat
+.     keep if !missing(Modality_Type, HHS_cat)
+(0 observations deleted)
+.     contract Modality_Type HHS_cat
+.     fillin Modality_Type HHS_cat
+.     recode _freq .=0
+(0 changes made to _freq)
+. 
+.     sort Modality_Type HHS_cat
+.     by Modality_Type: gen double _calc_tot = sum(_freq)
+.     by Modality_Type: replace _calc_tot = _calc_tot[_N]
+(2 real changes made)
+. 
+.     gen double share = cond(_calc_tot>0, 100 * _freq / _calc_tot, .)
+.     keep Modality_Type HHS_cat share
+.     reshape wide share, i(Modality_Type) j(HHS_cat)
+(j = 1 2)
+
+Data                               Long   ->   Wide
+-----------------------------------------------------------------------------
+Number of observations                4   ->   2           
+Number of variables                   3   ->   3           
+j variable (2 values)           HHS_cat   ->   (dropped)
+xij variables:
+                                  share   ->   share1 share2
+-----------------------------------------------------------------------------
+. 
+.     capture confirm var share1
+.     if !_rc rename share1 HHS_LittleNo
+.     capture confirm var share2
+.     if !_rc rename share2 HHS_Moderate
+.     capture confirm var share3
+.     if !_rc rename share3 HHS_Severe
+. 
+.     export excel using "`xlsx'", sheet("HHS_shares") firstrow(variables) sheet
+> replace
+file output/tables/BF_tables.xlsx saved
+.     restore
+. }
+
+. 
+. di as res "Tables exported (where indicators available) to: `xlsx'"
+Tables exported (where indicators available) to: output/tables/BF_tables.xlsx
+
+. 
+end of do-file
+
+. local rc = _rc
+
+. if `rc' != 0 {
+.     di as error "ERROR in 05_tables.do (code = " %9.0g `rc' ")"
+.     log close master
+.     exit `rc'
+. }
+
+. 
+. di as result "Pipeline completed successfully (input .dta untouched)."
+Pipeline completed successfully (input .dta untouched).
+
+. log close master
+      name:  master
+       log:  \\Cabinet.usask.ca\work$\aet816\Desktop\Research\logs/master_2025-0
+> 9-08.log
+  log type:  text
+ closed on:   8 Sep 2025, 13:24:09
+--------------------------------------------------------------------------------
