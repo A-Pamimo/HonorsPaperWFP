@@ -162,14 +162,24 @@ preserve
 restore
 
 * ==================================================
-* 3) FE vs No-FE comparison (FCS only, if available)
+* 3) FE vs No-FE comparison for key outcomes
+*    (FCS, rCSI, FES, HHS when available)
 * ==================================================
-capture confirm variable FCS
-if _rc {
+
+* Candidate outcomes for FE comparison
+local outcomes FCS rCSI FES HHS
+local any_outcome 0
+foreach v of local outcomes {
+    capture confirm variable `v'
+    if !_rc local any_outcome 1
+}
+
+* If none of the outcomes are present, write a note and exit gracefully
+if !`any_outcome' {
     preserve
         clear
         set obs 1
-        gen note = "FCS not found; skipping FE comparison."
+        gen note = "No key indicators found; skipping FE comparison."
         _xlsx_export, sheet("Enumerator_FE")
     restore
     display as result "11_enumerator_robustness.do complete → Enumerator sheet"
@@ -180,47 +190,53 @@ preserve
     tempfile fe
     capture postutil clear
     tempname H
-    postfile `H' str20 model double N coef se pval using "`fe'", replace
+    postfile `H' str20 outcome str20 model double N coef se pval using "`fe'", replace
 
-    * (a) No enumerator FE
-    cap noisily _regw regress FCS i.$MODE
-    if _rc {
-        post `H' ("No FE") (.) (.) (.) (.)
-    }
-    else {
-        scalar b = _b[1.$MODE]
-        scalar s = _se[1.$MODE]
-        scalar p = .
-        capture confirm scalar s
-        if !_rc & s>0 {
-            scalar p = 2*ttail(e(df_r), abs(b/s))
-        }
-        post `H' ("No FE") (e(N)) (b) (s) (p)
-    }
+    foreach y of local outcomes {
+        capture confirm variable `y'
+        if _rc continue
 
-    * (b) With enumerator FE
-    cap noisily _regw regress FCS i.$MODE i.`enum_id'
-    if _rc {
-        post `H' ("With FE") (.) (.) (.) (.)
-    }
-    else {
-        scalar b = _b[1.$MODE]
-        scalar s = _se[1.$MODE]
-        scalar p = .
-        capture confirm scalar s
-        if !_rc & s>0 {
-            scalar p = 2*ttail(e(df_r), abs(b/s))
+        * (a) No enumerator FE
+        cap noisily _regw regress `y' i.$MODE
+        if _rc {
+            post `H' ("`y'") ("No FE") (.) (.) (.) (.)
         }
-        post `H' ("With FE") (e(N)) (b) (s) (p)
+        else {
+            scalar b = _b[1.$MODE]
+            scalar s = _se[1.$MODE]
+            scalar p = .
+            capture confirm scalar s
+            if !_rc & s>0 {
+                scalar p = 2*ttail(e(df_r), abs(b/s))
+            }
+            post `H' ("`y'") ("No FE") (e(N)) (b) (s) (p)
+        }
+
+        * (b) With enumerator FE
+        cap noisily _regw regress `y' i.$MODE i.`enum_id'
+        if _rc {
+            post `H' ("`y'") ("With FE") (.) (.) (.) (.)
+        }
+        else {
+            scalar b = _b[1.$MODE]
+            scalar s = _se[1.$MODE]
+            scalar p = .
+            capture confirm scalar s
+            if !_rc & s>0 {
+                scalar p = 2*ttail(e(df_r), abs(b/s))
+            }
+            post `H' ("`y'") ("With FE") (e(N)) (b) (s) (p)
+        }
     }
 
     postclose `H'
     use "`fe'", clear
-    label var model "Model"
-    label var N     "N"
-    label var coef  "Coef on 1.$MODE"
-    label var se    "Std. Err."
-    label var pval  "p-value"
+    label var outcome "Outcome"
+    label var model   "Model"
+    label var N       "N"
+    label var coef    "Coef on 1.$MODE"
+    label var se      "Std. Err."
+    label var pval    "p-value"
     _xlsx_export, sheet("Enumerator_FE")
 restore
 
