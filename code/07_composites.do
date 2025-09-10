@@ -9,16 +9,21 @@ do "00_utils.do"
 use "$IN_FOR_TABLES", clear
 _mk_label
 
-* Composite (example)
-capture drop FS_composite
-gen double FS_composite = (FCS>0) + (rCSI>0) + (HHS>0)
-
-preserve
-    collapse (count) N = FS_composite (mean) FS_composite, by($MODE)
-    tostring $MODE, gen(mode_str)
-    replace mode_str = cond($MODE==0, "F2F", "Remote")
-    order mode_str FS_composite N
-    _xlsx_export, sheet("Composites")
-restore
+* Regress CARI/rCARI on modality and export coefficients
+tempfile __coef
+postfile _p str8 outcome double intercept coef_remote using `__coef'
+foreach y in CARI rCARI {
+    capture confirm variable `y'
+    if !_rc {
+        quietly _regw regress `y' i.$MODE
+        scalar b0 = _b[_cons]
+        capture scalar b1 = _b[1.$MODE]
+        post _p ("`y'") (b0) (b1)
+    }
+}
+postclose _p
+use `__coef', clear
+rename (v1 v2 v3) (outcome intercept coef_remote)
+_xlsx_export, sheet("Composites")
 
 display as result "07_composites.do complete → Composites sheet"
