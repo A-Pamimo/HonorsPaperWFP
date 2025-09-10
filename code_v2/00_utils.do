@@ -66,7 +66,7 @@ program define _xlsx_export
 
     * Decide whether sheet already exists
     tempname FOUND
-    qui _sheet_exists, sheet("`sheet'")
+    qui _sheet_exists, sheet("`sheet'") using("`file'")
     scalar `FOUND' = r(found)
 
     * If workbook doesn't exist at all, create new
@@ -105,13 +105,14 @@ program define _xlsx_export
 end
 
 * ----------------------------------------------------
-* _sheet_exists — r(found)=1 if sheet exists in $OUT_XLSX
+* _sheet_exists — r(found)=1 if sheet exists in workbook (default $OUT_XLSX)
 * ----------------------------------------------------
 capture program drop _sheet_exists
 program define _sheet_exists, rclass
-    syntax , Sheet(string)
-    tempfile __s
-    capture noisily import excel using "$OUT_XLSX", describe clear
+    syntax , Sheet(string) [USING(string)]
+    local file "`using'"
+    if "`file'" == "" local file "$OUT_XLSX"
+    capture noisily import excel using "`file'", describe
     if _rc {
         return scalar found = 0
         exit
