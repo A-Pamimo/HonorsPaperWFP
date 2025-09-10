@@ -28,7 +28,7 @@ global MODE Modality_Type
 
 * Baseline balance variables (edit to your actual columns)
 capture macro drop BAL_VARS
-global BAL_VARS "hhsize head_female head_age educ_head urban poor_pre shock_any"
+global BAL_VARS "HHSize S_HHHFemale HHH_Age HHH_Education urban poor_pre shock_any"
 
 * Optional survey design (leave blank if not applicable)
 capture macro drop PSU
