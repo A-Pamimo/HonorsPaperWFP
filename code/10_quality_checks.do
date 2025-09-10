@@ -109,6 +109,61 @@ else {
 }
 
 * ----------------------------------------------------
+* Item nonresponse rates by modality; flag high-missing variables
+* ----------------------------------------------------
+capture confirm variable $MODE
+if !_rc {
+    local miss_thresh 0.2
+    ds hh_id $MODE, not
+    foreach v of varlist `r(varlist)' {
+        foreach m in 0 1 {
+            quietly count if $MODE==`m'
+            local N`m' = r(N)
+            quietly count if missing(`v') & $MODE==`m'
+            local miss`m' = cond(`N`m''>0, r(N)/`N`m'', .)
+        }
+        local maxmiss = max(`miss0',`miss1')
+        if (`maxmiss' >= `miss_thresh') {
+            local detail "F2F=`=round(`miss0'*100,0.1)'% Remote=`=round(`miss1'*100,0.1)'%"
+            post `H' ("`v' missing") ("WARN") ("`detail'")
+        }
+    }
+}
+
+* ----------------------------------------------------
+* Numeric heaping tests (proportion multiples of 5)
+* ----------------------------------------------------
+local heap_vars head_age hhsize
+foreach v of local heap_vars {
+    capture confirm numeric variable `v'
+    if _rc {
+        post `H' ("`v' exists") ("WARN") ("Variable not found")
+    }
+    else {
+        quietly count if !missing(`v')
+        local N = r(N)
+        quietly count if mod(`v',5)==0 & !missing(`v')
+        local prop = cond(`N'>0, r(N)/`N', .)
+        local detail "`=round(`prop'*100,0.1)'% multiples of 5"
+        local status = cond(`prop'>=0.2,"WARN","OK")
+        post `H' ("`v' heaping") ("`status'") ("`detail'")
+    }
+}
+
+* ----------------------------------------------------
+* Interview duration distribution (mean & percentiles)
+* ----------------------------------------------------
+capture confirm numeric variable interview_minutes
+if _rc {
+    post `H' ("interview_minutes exists") ("WARN") ("Variable not found")
+}
+else {
+    quietly summarize interview_minutes, detail
+    local detail "mean=`=round(r(mean),0.1)' p25=`=round(r(p25),0.1)' p50=`=round(r(p50),0.1)' p75=`=round(r(p75),0.1)'"
+    post `H' ("interview_minutes dist") ("OK") ("`detail'")
+}
+
+* ----------------------------------------------------
 * Indices existence & crude range checks (WARNs)
 * ----------------------------------------------------
 foreach v in FCS rCSI HHS {
