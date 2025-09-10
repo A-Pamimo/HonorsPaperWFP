@@ -1,25 +1,59 @@
 *******************************************************
 * 00_config.do — Project configuration (paths, cutoffs)
 *******************************************************
-version 17
 
-* Project root — default to current working directory
+version 17
+set more off
+
+* Root project folder (defaults to parent of /code when run from /code)
+capture noisily cd "`c(pwd)'"
 global PROJ "`c(pwd)'"
 
-* Inputs/Outputs (edit as needed)
-global IN_ANALYTIC   "data/clean/Complete_BF_Household_Analysis.dta"
-global OUT_CLEAN     "data/clean/bf_analytic_cleaned.dta"
-global IN_FOR_TABLES "data/clean/bf_with_indices.dta"
-global OUT_XLSX      "output/tables/BF_tables.xlsx"
-global LOGDIR        "logs"
+* ===================== PATHS =========================
+* Use parent-relative paths so master.do can run from /code
+global IN_RAW            "../raw"
+global IN_ANALYTIC       "../data/clean/Complete_BF_Household_Analysis.dta"
+global OUT_CLEAN         "../data/clean/bf_analytic_cleaned.dta"
+global IN_FOR_TABLES     "../data/clean/bf_with_indices.dta"
+global OUT_XLSX          "../output/tables/results.xlsx"
 
-* Thresholds (switch to 28/42 if your context uses those)
-global FCS_CUT_POOR   21
-global FCS_CUT_BORDER 35
+* Country toggle (if you run multiple countries)
+capture macro drop COUNTRY
+global COUNTRY "BF"
 
-* rCSI bands (0–3 Low, 4–9 Medium, >=10 High as default)
-global RCSI_CUT1 3
-global RCSI_CUT2 9
+* ===== Core Analysis Controls =====
+* Mode variable used across scripts (0 = F2F, 1 = Remote)
+capture macro drop MODE
+global MODE Modality_Type
 
-* Labels for modality (0=F2F, 1=Remote)
-label define modlbl 0 "F2F" 1 "Remote", replace
+* Baseline balance variables (edit to your actual columns)
+capture macro drop BAL_VARS
+global BAL_VARS "hhsize head_female head_age educ_head urban poor_pre shock_any"
+
+* Optional survey design (leave blank if not applicable)
+capture macro drop PSU
+capture macro drop STRATA
+capture macro drop CLUSTVAR
+capture macro drop SURVEY_DESIGN
+global PSU           ""
+global STRATA        ""
+global CLUSTVAR      ""
+global SURVEY_DESIGN "0"
+
+* Weight(s) (optional; leave blank if none)
+capture macro drop WGT
+global WGT ""
+
+* Heterogeneity subgroups for 09_heterogeneity.do
+capture macro drop SUBGROUPS
+global SUBGROUPS "head_female urban poor_pre"
+
+* Feature flags
+capture macro drop FLAG_EXPORT
+global FLAG_EXPORT 1
+
+* Thresholds / cutoffs used downstream
+capture macro drop FCS_CUTOFF
+global FCS_CUTOFF 21
+
+display as result "00_config.do loaded"

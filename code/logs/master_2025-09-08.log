@@ -1,250 +1,74 @@
 --------------------------------------------------------------------------------
-      name:  <unnamed>
-       log:  \\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis\code\logs/m
-> aster_2025-09-08.log
+      name:  master
+       log:  C:\Users\aet816\Desktop\Research\code\logs/master_2025-09-08.log
   log type:  text
- opened on:   8 Sep 2025, 10:55:14
-
-. * Timestamped log
-. local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
-
-. log using "logs/master_`ts'.log", replace text
-log file already open
-r(604);
-
-end of do-file
-
-r(604);
-
-. do "\\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis\code\master.do"
-
-. *******************************************************
-. * master.do — Orchestrate the full BF pipeline
-. *******************************************************
-. version 17
-
-. clear all
-
-. set more off
+ opened on:   8 Sep 2025, 18:36:48
 
 . 
-. * Ensure folders exist before opening log
-. cap mkdir "logs"
-
-. cap mkdir "data"
-
-. cap mkdir "data/raw"
-
-. cap mkdir "data/clean"
-
-. cap mkdir "output"
-
-. cap mkdir "output/tables"
-
-. cap mkdir "output/figures"
-
-. 
-. local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
-
-. log using "logs/master_`ts'.log", replace text
-log file already open
-r(604);
-
-end of do-file
-
-r(604);
-
-. cd "\\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis"
-\\Cabinet.usask.ca\work$\aet816\Desktop\5_BF\9_Analysis
-
-. 
-. do "code/master.do"
+. * ---------------- 3) Utilities ----------------------------------------
+. do "`codedir'00_utils.do"
 
 . *******************************************************
-. * master.do — Orchestrate the full BF pipeline
-. *******************************************************
-. 
-. version 17
-
-. clear all
-
-. set more off
-
-. 
-. *------------------------------------------------------------------
-. * 1) Load config and create folders (setup before opening the log)
-. *------------------------------------------------------------------
-. do "code/00_config.do"
-
-. *******************************************************
-. * 00_config.do — Project configuration (paths, cutoffs)
+. * 00_utils.do — Utility programs (e.g., _coerce_num)
 . *******************************************************
 . version 17
 
 . 
-. * Project root — default to current working directory
-. global PROJ "`c(pwd)'"
+. * Coerce variables to numeric when they arrive as strings.
+. * - Handles "yes/no", "oui/non", "0/1/2" numeric strings, commas
+. cap program drop _coerce_num
 
-. 
-. * Inputs/Outputs (edit as needed)
-. global IN_ANALYTIC   "data/clean/Complete_BF_Household_Analysis.dta"
-
-. global OUT_CLEAN     "data/clean/bf_analytic_cleaned.dta"
-
-. global IN_FOR_TABLES "data/clean/bf_with_indices.dta"
-
-. global OUT_XLSX      "output/tables/BF_tables.xlsx"
-
-. global LOGDIR        "logs"
-
-. 
-. * Thresholds (switch to 28/42 if your context uses those)
-. global FCS_CUT_POOR   21
-
-. global FCS_CUT_BORDER 35
-
-. 
-. * rCSI bands (0–3 Low, 4–9 Medium, >=10 High as default)
-. global RCSI_CUT1 3
-
-. global RCSI_CUT2 9
-
-. 
-. * Labels for modality
-. label define modlbl 0 "F2F" 1 "Remote", replace
-
-. 
-end of do-file
-
-. do "code/01_setup.do"   // makes data/, output/, logs/, etc.
-
-. *******************************************************
-. * 01_setup.do — Session setup and folders
-. *******************************************************
-. version 17
-
-. clear all
-
-. set more off
-
-. 
-. * Create folders if not present
-. cap mkdir "data"
-
-. cap mkdir "data/raw"
-
-. cap mkdir "data/clean"
-
-. cap mkdir "output"
-
-. cap mkdir "output/tables"
-
-. cap mkdir "output/figures"
-
-. cap mkdir "logs"
+. program define _coerce_num
+  1.     syntax varlist
+  2.     foreach v of local varlist {
+  3.         capture confirm numeric variable `v'
+  4.         if _rc {
+  5.             * Attempt to destring first (ignore commas/spaces)
+.             capture destring `v', replace ignore(", ")
+  6.             if _rc {
+  7.                 * If still not numeric, map common text to numbers
+.                 gen double __tmp_num = .
+  8.                 replace __tmp_num = 1 if lower(trim(`v'))=="yes" | lower(tr
+> im(`v'))=="oui" | trim(`v')=="1"
+  9.                 replace __tmp_num = 0 if lower(trim(`v'))=="no"  | lower(tr
+> im(`v'))=="non" | trim(`v')=="0"
+ 10.                 replace __tmp_num = real(`v') if missing(__tmp_num) & regex
+> m(`v',"^-?[0-9.]+$")
+ 11.                 drop `v'
+ 12.                 rename __tmp_num `v'
+ 13.             }
+ 14.         }
+ 15.     }
+ 16. end
 
 . 
 end of do-file
 
 . 
-. *------------------------------------------------------------------
-. * 2) Open timestamped log inside $LOGDIR (created by setup)
-. *------------------------------------------------------------------
-. local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
-
-. log using "$LOGDIR/master_`ts'.log", replace text
-log file already open
-r(604);
-
-end of do-file
-
-r(604);
-
-. do "C:\Users\aet816\AppData\Local\Temp\STD6c98_000000.tmp"
+. * ---------------- 4) Cleaning (read-only on input; writes a copy) ------
+. capture noisily do "`codedir'02_clean_bf.do"
 
 . *******************************************************
-. * master.do — Orchestrate the full BF pipeline
-. *******************************************************
-. version 17
-
-. clear all
-
-. set more off
-
-. 
-. * 1) Config + setup (creates folders)
-. do "code/00_config.do"
-
-. *******************************************************
-. * 00_config.do — Project configuration (paths, cutoffs)
+. * 02_clean_bf.do — Prepare cleaned analytic copy (read-only input)
 . *******************************************************
 . version 17
 
 . 
-. * Project root — default to current working directory
-. global PROJ "`c(pwd)'"
+. * Load input into memory (we will NOT overwrite it on disk)
+. use "$IN_ANALYTIC", clear
+file data/clean/Complete_BF_Household_Analysis.dta not found
+r(601);
 
-. 
-. * Inputs/Outputs (edit as needed)
-. global IN_ANALYTIC   "data/clean/Complete_BF_Household_Analysis.dta"
-
-. global OUT_CLEAN     "data/clean/bf_analytic_cleaned.dta"
-
-. global IN_FOR_TABLES "data/clean/bf_with_indices.dta"
-
-. global OUT_XLSX      "output/tables/BF_tables.xlsx"
-
-. global LOGDIR        "logs"
-
-. 
-. * Thresholds (switch to 28/42 if your context uses those)
-. global FCS_CUT_POOR   21
-
-. global FCS_CUT_BORDER 35
-
-. 
-. * rCSI bands (0–3 Low, 4–9 Medium, >=10 High as default)
-. global RCSI_CUT1 3
-
-. global RCSI_CUT2 9
-
-. 
-. * Labels for modality
-. label define modlbl 0 "F2F" 1 "Remote", replace
-
-. 
 end of do-file
 
-. do "code/01_setup.do"
+. local rc = _rc
 
-. *******************************************************
-. * 01_setup.do — Session setup and folders
-. *******************************************************
-. version 17
-
-. clear all
-
-. set more off
-
-. 
-. * Create folders if not present
-. cap mkdir "data"
-
-. cap mkdir "data/raw"
-
-. cap mkdir "data/clean"
-
-. cap mkdir "output"
-
-. cap mkdir "output/tables"
-
-. cap mkdir "output/figures"
-
-. cap mkdir "logs"
-
-. 
-end of do-file
-
-. 
-. * ✅ Close any logs already open (from prior runs / Do-file Editor)
-. capture log close _all
+. if `rc' != 0 {
+.     di as error "ERROR in 02_clean_bf.do (code = " %9.0g `rc' ")"
+ERROR in 02_clean_bf.do (code =       601)
+.     log close master
+      name:  master
+       log:  C:\Users\aet816\Desktop\Research\code\logs/master_2025-09-08.log
+  log type:  text
+ closed on:   8 Sep 2025, 18:36:48
+--------------------------------------------------------------------------------

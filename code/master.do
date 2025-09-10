@@ -1,68 +1,26 @@
 *******************************************************
-* master.do — Orchestrate the BF pipeline (read-only input)
+* master.do — Orchestrates end-to-end pipeline
 *******************************************************
-version 17
+
 clear all
 set more off
 
-* --- Make this file location-aware so paths like code/… always work ---
-local this `"`c(filename)'"'
-local slash "/"
-if strpos("`this'","\")==0 local slash "/"
-else local slash "\"
-local codedir = substr("`this'", 1, strrpos("`this'","`slash'"))     // .../project/code/
-local projdir = subinstr("`codedir'", "code`slash'", "", .)           // .../project/
-cd "`projdir'"
+* ===== Standardized pipeline =====
+do "01_setup.do"
+do "00_config.do"
 
-* 1) Config + setup (creates folders)
-do "code/00_config.do"
-do "code/01_setup.do"
+do "02_clean_bf.do"
+do "03_construct_indices.do"
 
-* Close any logs that might already be open
-capture log close _all
+do "04_analysis.do"
+do "05_tables.do"
+do "06_balance.do"
+do "07_composites.do"
+do "08_indicators.do"
 
-* 2) Open a named log after setup (folder now exists)
-local ts : display %tdCCYY-NN-DD date(c(current_date), "DMY")
-log using "$LOGDIR/master_`ts'.log", name(master) replace text
+do "09_heterogeneity.do"
+capture noisily do "10_quality_checks.do"   // stops with error 498 if critical fails
+do "11_enumerator_robustness.do"
+do "12_module_length.do"
 
-* 3) Utilities
-do "code/00_utils.do"
-
-* 4) Cleaning (read-only on input; writes a new cleaned file)
-capture noisily do "code/02_clean_bf.do"
-local rc = _rc
-if `rc' != 0 {
-    di as error "ERROR in 02_clean_bf.do (code = " %9.0g `rc' ")"
-    log close master
-    exit `rc'
-}
-
-* 5) Construct indices (on cleaned copy; writes another new file)
-capture noisily do "code/03_construct_indices.do"
-local rc = _rc
-if `rc' != 0 {
-    di as error "ERROR in 03_construct_indices.do (code = " %9.0g `rc' ")"
-    log close master
-    exit `rc'
-}
-
-* 6) Analysis checks (read-only on derived file)
-capture noisily do "code/04_analysis.do"
-local rc = _rc
-if `rc' != 0 {
-    di as error "ERROR in 04_analysis.do (code = " %9.0g `rc' ")"
-    log close master
-    exit `rc'
-}
-
-* 7) Tables/exports (from derived file)
-capture noisily do "code/05_tables.do"
-local rc = _rc
-if `rc' != 0 {
-    di as error "ERROR in 05_tables.do (code = " %9.0g `rc' ")"
-    log close master
-    exit `rc'
-}
-
-di as result "Pipeline completed successfully (input .dta untouched)."
-log close master
+display as result "Pipeline completed successfully!"

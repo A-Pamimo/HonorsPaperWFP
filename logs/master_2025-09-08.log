@@ -1,9 +1,8 @@
 --------------------------------------------------------------------------------
       name:  master
-       log:  \\Cabinet.usask.ca\work$\aet816\Desktop\Research\logs/master_2025-0
-> 9-08.log
+       log:  C:\Users\aet816\Documents\Research_v2\logs/master_2025-09-08.log
   log type:  text
- opened on:   8 Sep 2025, 13:24:06
+ opened on:   8 Sep 2025, 20:02:14
 
 . 
 . * 3) Utilities
@@ -47,7 +46,7 @@ end of do-file
 
 . 
 . * 4) Cleaning (read-only on input; writes a new cleaned file)
-. capture noisily do "code/02_clean_bf.do"
+. cap noisily do "code/02_clean_bf.do"
 
 . *******************************************************
 . * 02_clean_bf.do — Prepare cleaned analytic copy (read-only input)
@@ -163,710 +162,1283 @@ file data/clean/bf_analytic_cleaned.dta saved
 . 
 end of do-file
 
-. local rc = _rc
-
-. if `rc' != 0 {
-.     di as error "ERROR in 02_clean_bf.do (code = " %9.0g `rc' ")"
-.     log close master
-.     exit `rc'
-. }
-
+. if _rc { di as err "ERROR in 02_clean_bf.do (rc=" %9.0g _rc ")"; log close mas
+> ter; exit _rc }
 . 
 . * 5) Construct indices (on cleaned copy; writes another new file)
-. capture noisily do "code/03_construct_indices.do"
-
-. *******************************************************
-. * 03_construct_indices.do — Build FCS, rCSI, HHS on derived data
-. * - Works only on $OUT_CLEAN (a copy), never the original input
-. * - If FCS/rCSI/HHS already exist, do NOT overwrite them
-. *   (only fill missings from a recalculation), then rebuild categories
-. *******************************************************
-. version 17
-
+. cap noisily do "code/03_construct_indices.do"
+. if _rc { di as err "ERROR in 03_construct_indices.do (rc=" %9.0g _rc ")"; log 
+> close master; exit _rc }
 . 
-. * Load the cleaned analytic copy (NOT the original input)
-. use "$OUT_CLEAN", clear
-(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
-
+. * 6) Analysis checks (console sanity)
+. cap noisily do "code/04_analysis.do"
+. if _rc { di as err "ERROR in 04_analysis.do (rc=" %9.0g _rc ")"; log close mas
+> ter; exit _rc }
 . 
-. * Work in a separate frame
-. cap frame drop work2
-
-. frame copy default work2
-
-. frame change work2
-
+. * 7) Tables (unweighted + weighted)
+. cap noisily do "code/05_tables.do"
+. if _rc { di as err "ERROR in 05_tables.do (rc=" %9.0g _rc ")"; log close maste
+> r; exit _rc }
 . 
-. do "code/00_utils.do"
-
-. *******************************************************
-. * 00_utils.do — Utility programs (e.g., _coerce_num)
-. *******************************************************
-. version 17
-
+. * ===== NEW: per professor's guide / Abate links =====
+. * 8) Balance tables (Tables 20–22)
+. cap noisily do "code/06_balance.do"
 . 
-. * Coerce variables to numeric when they arrive as strings.
-. * - Handles "yes/no", "oui/non", "0/1/2" numeric strings, commas
-. cap program drop _coerce_num
-
-. program define _coerce_num
-  1.     syntax varlist
-  2.     foreach v of local varlist {
-  3.         capture confirm numeric variable `v'
-  4.         if _rc {
-  5.             * Attempt to destring first (ignore commas/spaces)
-.             capture destring `v', replace ignore(", ")
-  6.             if _rc {
-  7.                 * If still not numeric, map common text to numbers
-.                 gen double __tmp_num = .
-  8.                 replace __tmp_num = 1 if lower(trim(`v'))=="yes" | lower(tr
-> im(`v'))=="oui" | trim(`v')=="1"
-  9.                 replace __tmp_num = 0 if lower(trim(`v'))=="no"  | lower(tr
-> im(`v'))=="non" | trim(`v')=="0"
- 10.                 replace __tmp_num = real(`v') if missing(__tmp_num) & regex
-> m(`v',"^-?[0-9.]+$")
- 11.                 drop `v'
- 12.                 rename __tmp_num `v'
- 13.             }
- 14.         }
- 15.     }
- 16. end
-
+. * 9) Composite indicators (CARI / rCARI) — Table 3
+. cap noisily do "code/07_composites.do"
 . 
+. * 10) Individual indicators (means/SD/ttest + regressions) — Table 4
+. cap noisily do "code/08_indicators.do"
+. 
+. * 11) Heterogeneity — Table 5
+. cap noisily do "code/09_heterogeneity.do"
+. 
+. * 12) Quality checks (nonresponse, heaping, Benford; enumerator-ready inputs)
+. cap noisily do "code/10_quality_checks.do"
+. 
+. * 13) Enumerator effects & robustness (FE; leave-one-out)
+. cap noisily do "code/11_enumerator_robustness.do"
+. 
+. * 14) Module length tests (short vs long FCS/FES) — Tables 11–15
+. cap noisily do "code/12_module_length.do"
+. 
+. * 15) Alternative LCS specs (LCS-FS vs LCS-EN) — Tables 16–19
+. cap noisily do "code/13_lcs_variants.do"
+. 
+. di as res "Pipeline completed (input .dta untouched)."
+. log close master
+. program error:  matching close brace not found
+r(198);
+
 end of do-file
 
-. 
-. * ------------------ FCS ------------------
-. local fcs_all FCSStap FCSPulse FCSDairy FCSPr FCSVeg FCSFruit FCSFat FCSSugar
-
-. local fcs_present
-
-. foreach v of local fcs_all {
-  2.     capture confirm var `v'
-  3.     if !_rc local fcs_present `fcs_present' `v'
-  4. }
-
-. local fcs_n : word count `fcs_present'
-
-. if `fcs_n'==8 {
-.     _coerce_num `fcs_present'
-.     foreach x of local fcs_present {
-  2.         cap replace `x' = . if `x' < 0
-  3.         cap replace `x' = 7 if `x' > 7 & `x' != .
-  4.     }
-. 
-.     * Recalculate into a temp var; don't collide with existing FCS
-.     tempvar FCS_calc
-.     gen double `FCS_calc' = (FCSStap*2) + (FCSPulse*3) + (FCSDairy*4) + (FCSPr
-> *4) ///
->                           + (FCSVeg*1) + (FCSFruit*1) + (FCSFat*0.5) + (FCSSug
-> ar*0.5)
-. 
-.     * If FCS exists, keep it; only fill missing values from calc
-.     capture confirm var FCS
-.     if _rc {
-.         gen double FCS = `FCS_calc'
-.     }
-.     else {
-.         replace FCS = `FCS_calc' if missing(FCS)
-(0 real changes made)
-.     }
-.     cap label var FCS "Food Consumption Score"
-. 
-.     * Categories (rebuild safely)
-.     cap drop FCS_cat
-.     gen byte FCS_cat = .
-(2,882 missing values generated)
-.     replace FCS_cat = 1 if FCS <= $FCS_CUT_POOR & FCS != .
-(942 real changes made)
-.     replace FCS_cat = 2 if FCS >  $FCS_CUT_POOR & FCS <= $FCS_CUT_BORDER
-(1,495 real changes made)
-.     replace FCS_cat = 3 if FCS >  $FCS_CUT_BORDER
-(445 real changes made)
-.     label define fcscat 1 "Poor" 2 "Borderline" 3 "Acceptable", replace
-.     label values FCS_cat fcscat
-. }
-
-. else {
-.     di as txt "Note: Missing some FCS components; FCS not (re)computed."
-. }
+r(198);
+. cd "C:\Users\aet816\Documents\Research_v2"
+C:\Users\aet816\Documents\Research_v2
 
 . 
-. * ------------------ rCSI ------------------
-. local rcsi_all rCSILessQlty rCSIBorrow rCSIMealSize rCSIMealAdult rCSIMealNb
-
-. local rcsi_present
-
-. foreach v of local rcsi_all {
-  2.     capture confirm var `v'
-  3.     if !_rc local rcsi_present `rcsi_present' `v'
-  4. }
-
-. local rcsi_n : word count `rcsi_present'
-
-. if `rcsi_n'==5 {
-.     _coerce_num `rcsi_present'
-.     foreach r of local rcsi_present {
-  2.         cap replace `r' = . if `r' < 0
-  3.         cap replace `r' = 7 if `r' > 7 & `r' != .
-  4.     }
-. 
-.     tempvar rCSI_calc
-.     gen double `rCSI_calc' = (rCSILessQlty*1) + (rCSIBorrow*2) + (rCSIMealSize
-> *1) + (rCSIMealAdult*3) + (rCSIMealNb*1)
-. 
-.     capture confirm var rCSI
-.     if _rc {
-.         gen double rCSI = `rCSI_calc'
-.     }
-.     else {
-.         replace rCSI = `rCSI_calc' if missing(rCSI)
-(0 real changes made)
-.     }
-.     cap label var rCSI "Reduced Coping Strategy Index"
-. 
-.     cap drop rCSI_cat
-.     gen byte rCSI_cat = .
-(2,882 missing values generated)
-.     replace rCSI_cat = 1 if rCSI <= $RCSI_CUT1 & rCSI != .
-(1,196 real changes made)
-.     replace rCSI_cat = 2 if rCSI >  $RCSI_CUT1 & rCSI <= $RCSI_CUT2
-(605 real changes made)
-.     replace rCSI_cat = 3 if rCSI >= $RCSI_CUT2
-(1,170 real changes made)
-.     label define rcsicat 1 "Low" 2 "Medium" 3 "High", replace
-.     label values rCSI_cat rcsicat
-. }
-
-. else {
-.     di as txt "Note: Missing some rCSI items; rCSI not (re)computed."
-. }
-
-. 
-. * ------------------ HHS ------------------
-. * Try fallbacks for *_FR_S if main vars missing
-. foreach pair in "HHSNoFood HHSNoFood_FR_S" "HHSBedHung HHSBedHung_FR_S" "HHSNo
-> tEat HHSNotEat_FR_S" {
-  2.     gettoken main alt : pair
-  3.     capture confirm var `main'
-  4.     if _rc {
-  5.         capture confirm var `alt'
-  6.         if !_rc clonevar `main' = `alt'
-  7.     }
-  8. }
-
-. 
-. local hhs_all HHSNoFood HHSBedHung HHSNotEat
-
-. local hhs_present
-
-. foreach v of local hhs_all {
-  2.     capture confirm var `v'
-  3.     if !_rc local hhs_present `hhs_present' `v'
-  4. }
-
-. local hhs_n : word count `hhs_present'
-
-. if `hhs_n'==3 {
-.     _coerce_num `hhs_present'
-.     foreach h of local hhs_present {
-  2.         cap replace `h' = 0 if `h' < 0
-  3.         cap replace `h' = 2 if `h' > 2 & `h' != .
-  4.     }
-. 
-.     tempvar HHS_calc
-.     egen `HHS_calc' = rowtotal(HHSNoFood HHSBedHung HHSNotEat)
-. 
-.     capture confirm var HHS
-.     if _rc {
-.         gen double HHS = `HHS_calc'
-.     }
-.     else {
-.         replace HHS = `HHS_calc' if missing(HHS)
-.     }
-.     cap label var HHS "Household Hunger Scale"
-. 
-.     cap drop HHS_cat
-.     gen byte HHS_cat = .
-(2,882 missing values generated)
-.     replace HHS_cat = 1 if inrange(HHS,0,1)
-(2,187 real changes made)
-.     replace HHS_cat = 2 if inrange(HHS,2,3)
-(695 real changes made)
-.     replace HHS_cat = 3 if inrange(HHS,4,6)
-(0 real changes made)
-.     label define hhslbl 1 "Little/No" 2 "Moderate" 3 "Severe", replace
-.     label values HHS_cat hhslbl
-. }
-
-. else {
-.     di as txt "Note: Missing some HHS items; HHS not (re)computed."
-. }
-
-. 
-. * Save indices to a NEW dataset (does not touch $OUT_CLEAN)
-. save "$IN_FOR_TABLES", replace
-file data/clean/bf_with_indices.dta saved
-
-. 
-. frame change default
-
-. cap frame drop work2
-
-. 
-end of do-file
-
-. local rc = _rc
-
-. if `rc' != 0 {
-.     di as error "ERROR in 03_construct_indices.do (code = " %9.0g `rc' ")"
-.     log close master
-.     exit `rc'
-. }
-
-. 
-. * 6) Analysis checks (read-only on derived file)
-. capture noisily do "code/04_analysis.do"
+. do "code/06_balance.do"
 
 . *******************************************************
-. * 04_analysis.do — Sanity checks and quick tabs (patched)
-. * - Safe display formatting (no parse errors)
-. * - Guards when vars are missing or all-missing
+. * 06_balance.do — Baseline balance by modality (Tables 20–22)
+. * - Uses LISTING_IN dataset (or IN_ANALYTIC if LISTING not set)
+. * - Unweighted t-tests by modality
+. * - (Optional) Weighted regressions of each baseline var on modality
+. *   with robust SEs (cluster at $CLUSTVAR if provided)
+. * - Exports to OUT_XLSX: sheets Balance_unw, Balance_wt
 . *******************************************************
 . version 17
 
-. use "$IN_FOR_TABLES", clear
+. set more off
+
+. 
+. * Pick data: listing-phase if available, else analytic
+. capture confirm file "$LISTING_IN"
+
+. if _rc use "$IN_ANALYTIC", clear
 (File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
 
-. 
-. * ---------- Means (only if variables exist) ----------
-. capture confirm var FCS
-
-. if !_rc {
-.     quietly summarize FCS, meanonly
-.     if r(N)>0 & r(mean)<. {
-.         di as txt "Mean FCS: " as res %8.2f r(mean)
-Mean FCS:    26.58
-.     }
-.     else {
-.         di as txt "Mean FCS: " as error "NA (no non-missing observations)"
-.     }
-. }
+. else     use "$LISTING_IN", clear
 
 . 
-. capture confirm var rCSI
-
-. if !_rc {
-.     quietly summarize rCSI, meanonly
-.     if r(N)>0 & r(mean)<. {
-.         di as txt "Mean rCSI: " as res %8.2f r(mean)
-Mean rCSI:     8.71
-.     }
-.     else {
-.         di as txt "Mean rCSI: " as error "NA (no non-missing observations)"
-.     }
-. }
-
-. 
-. capture confirm var HHS
-
-. if !_rc {
-.     quietly summarize HHS, meanonly
-.     if r(N)>0 & r(mean)<. {
-.         di as txt "Mean HHS: " as res %8.2f r(mean)
-Mean HHS:     0.73
-.     }
-.     else {
-.         di as txt "Mean HHS: " as error "NA (no non-missing observations)"
-.     }
-. }
-
-. 
-. * ---------- Distributions (only if variables exist) ----------
-. capture confirm var FCS_cat
-
-. if !_rc {
-.     di as txt "FCS categories:"
-FCS categories:
-.     tab FCS_cat
-
-    FCS_cat |      Freq.     Percent        Cum.
-------------+-----------------------------------
-       Poor |        942       32.69       32.69
- Borderline |      1,495       51.87       84.56
- Acceptable |        445       15.44      100.00
-------------+-----------------------------------
-      Total |      2,882      100.00
-. }
-
-. 
-. capture confirm var rCSI_cat
-
-. if !_rc {
-.     di as txt "rCSI categories:"
-rCSI categories:
-.     tab rCSI_cat
-
-   rCSI_cat |      Freq.     Percent        Cum.
-------------+-----------------------------------
-        Low |      1,196       41.50       41.50
-     Medium |        516       17.90       59.40
-       High |      1,170       40.60      100.00
-------------+-----------------------------------
-      Total |      2,882      100.00
-. }
-
-. 
-. capture confirm var HHS_cat
-
-. if !_rc {
-.     di as txt "HHS categories:"
-HHS categories:
-.     tab HHS_cat
-
-    HHS_cat |      Freq.     Percent        Cum.
-------------+-----------------------------------
-  Little/No |      2,187       75.88       75.88
-   Moderate |        695       24.12      100.00
-------------+-----------------------------------
-      Total |      2,882      100.00
-. }
-
-. 
-. * ---------- Modality & region coverage ----------
-. capture confirm var Modality_Type
-
-. if !_rc {
-.     di as txt "Survey mode coverage:"
-Survey mode coverage:
-.     tab Modality_Type, missing
-
-Modality_Ty |
-         pe |      Freq.     Percent        Cum.
-------------+-----------------------------------
-        F2F |      1,863       64.64       64.64
-     Remote |      1,019       35.36      100.00
-------------+-----------------------------------
-      Total |      2,882      100.00
-. }
-
-. 
-. capture confirm var admin1_en
-
-. if !_rc {
-.     di as txt "Admin1 coverage:"
-Admin1 coverage:
-.     tab admin1_en, missing
-
-Region (Admin1, |
-            EN) |      Freq.     Percent        Cum.
-----------------+-----------------------------------
-Plateau Central |        794       27.55       27.55
-    Centro-Nord |        612       21.24       48.79
-           Nord |      1,476       51.21      100.00
-----------------+-----------------------------------
-          Total |      2,882      100.00
-. }
-
-. 
-. di as res "04_analysis.do completed."
-04_analysis.do completed.
-
-. 
-end of do-file
-
-. local rc = _rc
-
-. if `rc' != 0 {
-.     di as error "ERROR in 04_analysis.do (code = " %9.0g `rc' ")"
-.     log close master
-.     exit `rc'
-. }
-
-. 
-. * 7) Tables/exports (from derived file)
-. capture noisily do "code/05_tables.do"
-
-. *******************************************************
-. * 05_tables.do — Export tables to Excel (multi-sheet safe)
-. * - Read-only on $IN_FOR_TABLES
-. * - Means by modality via by: running sums (no egen/collapse)
-. * - Category shares via contract/fillin + by: sum (no egen)
-. * - Writes all sheets to one workbook: only FIRST uses replace
-. *******************************************************
-. version 17
-
-. use "$IN_FOR_TABLES", clear
-(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
-
-. 
-. * Ensure Modality_Type exists
-. capture confirm var Modality_Type
+. * Ensure modality exists and is labeled
+. capture confirm var $MODE
 
 . if _rc {
-.     di as error "Modality_Type not found; cannot produce by-mode tables."
-.     exit 459
+.     di as err "06_balance: MODE ($MODE) not found. Skipping balance."
+.     exit
 . }
 
 . 
-. * Workbook path (one file, many sheets)
-. local xlsx "$OUT_XLSX"
+. label values $MODE modlbl
 
 . 
-. * Clean any leftovers (in memory only)
-. capture drop _calc_*
+. * Build list of baseline vars that actually exist
+. local basevars
 
-. capture drop N mean_FCS mean_rCSI mean_HHS
-
-. 
-. * =====================================================
-. * 1) Means by modality WITHOUT collapse/egen
-. *    - N = total rows per mode
-. *    - Means = sum(non-missing)/count(non-missing)
-. * =====================================================
-. preserve
-
-. sort Modality_Type
-
-. bys Modality_Type: gen long _calc_N = _N
-
-. 
-. local keepvars "Modality_Type _calc_N"
-
-. 
-. foreach v in FCS rCSI HHS {
-  2.     capture confirm var `v'
-  3.     if !_rc {
-  4.         * ensure numeric source; create a numeric copy if needed
-.         local src `v'
-  5.         capture confirm numeric variable `v'
-  6.         if _rc {
-  7.             capture drop _calc_`v'_num
-  8.             destring `v', gen(_calc_`v'_num) force
-  9.             local src _calc_`v'_num
- 10.         }
- 11. 
-.         * running counts/sums by mode
-.         capture drop _calc_`v'_nonmiss _calc_`v'_val _calc_`v'_N _calc_`v'_sum
- 12.         gen byte   _calc_`v'_nonmiss = !missing(`src')
- 13.         gen double _calc_`v'_val     = cond(missing(`src'), 0, `src')
- 14. 
-.         by Modality_Type: gen long   _calc_`v'_N   = sum(_calc_`v'_nonmiss)
- 15.         by Modality_Type: gen double _calc_`v'_sum = sum(_calc_`v'_val)
- 16.         by Modality_Type: replace _calc_`v'_N   = _calc_`v'_N[_N]
- 17.         by Modality_Type: replace _calc_`v'_sum = _calc_`v'_sum[_N]
- 18. 
-.         capture drop mean_`v'
- 19.         gen double mean_`v' = _calc_`v'_sum / _calc_`v'_N if _calc_`v'_N > 
-> 0
- 20. 
-.         local keepvars `keepvars' mean_`v'
- 21.     }
- 22. }
-(2,880 real changes made)
-(2,880 real changes made)
-(2,880 real changes made)
-(2,879 real changes made)
-(2,880 real changes made)
-(2,877 real changes made)
-
-. 
-. * one row per modality; guaranteed columns
-. bys Modality_Type: keep if _n==_N
-(2,880 observations deleted)
-
-. rename _calc_N N
-
-. local keepvars : subinstr local keepvars "_calc_N" "N", all
-
-. keep `keepvars'
-
-. foreach c in mean_FCS mean_rCSI mean_HHS {
-  2.     capture confirm var `c'
-  3.     if _rc gen double `c' = .
+. foreach v of global BAL_VARS {
+  2.     cap confirm var `v'
+  3.     if !_rc local basevars `basevars' `v'
   4. }
 
-. order Modality_Type N mean_FCS mean_rCSI mean_HHS
+. if "`basevars'"=="" {
+.     di as err "06_balance: None of BAL_VARS found. Skipping."
+06_balance: None of BAL_VARS found. Skipping.
+.     exit
+
+end of do-file
+
 
 . 
-. * FIRST sheet: create/overwrite workbook
-. export excel using "`xlsx'", sheet("by_mode_means") firstrow(variables) replac
-> e
+. do "code/07_composites.do"
+
+. *******************************************************
+. * 07_composites.do — Composite indices vs modality (Table 3)
+. * - Tries to use prebuilt CARI/rCARI if provided in config
+. * - Otherwise attempts minimal construction from FES/LCS/Income pieces if pres
+> ent
+. * - Runs regressions: composite = α + β Phone + controls (optional)
+. * - Weighted and unweighted versions; robust SEs (cluster at $CLUSTVAR if set)
+. * - Exports to OUT_XLSX: Sheet "Comp_Reg" (unw) and "Comp_Reg_wt" (wt)
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "07_composites: MODE ($MODE) not found. Skipping."
+.     exit
+. }
+
+. label values $MODE modlbl
+
+. 
+. * ---- 1) Ensure we have composite variables or try to build lightweight proxi
+> es ----
+. local composites
+
+. cap confirm var $CARI_VAR
+
+. if !_rc local composites `composites' $CARI_VAR
+
+. cap confirm var $rCARI_VAR
+
+. if !_rc local composites `composites' $rCARI_VAR
+
+. 
+. * Attempt simple FES proxy if FES missing but NUM/DEN exist
+. cap confirm var $FES_VAR
+
+. if _rc & "$FES_NUM"!="" & "$FES_DEN"!="" {
+.     cap confirm var $FES_NUM
+.     cap confirm var $FES_DEN
+.     if !_rc {
+.         gen double __fes = 100 * ( `=$FES_NUM' / `=$FES_DEN' )
+.         label var __fes "FES (%) (constructed)"
+.         local FES_here "__fes"
+.     }
+. }
+
+. else if !_rc {
+.     local FES_here "$FES_VAR"
+. }
+
+. 
+. * If you store a reduced CARI for Remote as a z-combo (example), you can wire 
+> it here.
+. * For now, we will use whatever you set in $CARI_VAR / $rCARI_VAR if available
+> .
+. if "`composites'"=="" {
+.     di as txt "07_composites: No CARI/rCARI variables supplied; looking for FE
+> S/LCS/Income to regress separately."
+07_composites: No CARI/rCARI variables supplied; looking for FES/LCS/Income to r
+> egress separately.
+. }
+
+. 
+. * ---- 2) Controls (optional): use heterogeneity set as controls if desired --
+> --
+. local controls ""
+
+. foreach c of global HETE_VARS {
+  2.     cap confirm var `c'
+  3.     if !_rc local controls `controls' `c'
+  4. }
+
+. 
+. * Helper: regression and post to table
+. program drop _post_regress
+program _post_regress not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. 
+. do "code/08_indicators.do"
+
+. *******************************************************
+. * 08_indicators.do — Individual indicators by modality (Table 4)
+. * - Indicators: FCS, rCSI, HHS (+ optional LCS/FES/Income if present)
+. * - Outputs:
+. *   • Ind_Means_Ttests (unweighted means/SDs + t-tests; Phone–F2F diff)
+. *   • Ind_Reg (unweighted regression β on Phone)
+. *   • Ind_Reg_wt (weighted regression β on Phone, if $WGT)
+. *******************************************************
+. version 17
+
+. set more off
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "08_indicators: MODE not found. Skipping."
+.     exit
+. }
+
+. label values $MODE modlbl
+
+. 
+. * Build indicator list
+. local indlist
+
+. foreach v in FCS rCSI HHS {
+  2.     cap confirm var `v'
+  3.     if !_rc local indlist `indlist' `v'
+  4. }
+
+. * Optional: LCS composite, FES, income vars if present
+. foreach v in $LCS_CRI_VAR $FES_VAR $INC_SRC_VAR $INC_CHG_VAR {
+  2.     if "`v'"=="" continue
+  3.     cap confirm var `v'
+  4.     if !_rc local indlist `indlist' `v'
+  5. }
+
+. 
+. if "`indlist'"=="" {
+.     di as err "08_indicators: No indicators found."
+.     exit
+. }
+
+. 
+. * ===== A) Unweighted means/SDs + t-tests =====
+. preserve
+
+. tempname mem
+
+. postfile `mem' str20 varname double mean_f2f sd_f2f mean_ph sd_ph diff tstat p
+> val using "`c(tmpdir)'/ind_t.dta", replace
+(file C:\Users\aet816\AppData\Local\Temp\7//ind_t.dta not found)
+
+. levelsof $MODE, local(modes)
+0 1
+
+. foreach y of local indlist {
+  2.     bysort $MODE: summarize `y'
+  3.     * group stats
+.     quietly summarize `y' if $MODE==0
+  4.     local mf = r(mean)
+  5.     local sf = r(sd)
+  6.     quietly summarize `y' if $MODE==1
+  7.     local mp = r(mean)
+  8.     local sp = r(sd)
+  9.     quietly ttest `y', by($MODE)
+ 10.     post `mem' ("`y'") (`mf') (`sf') (`mp') (`sp') (r(mu_2)-r(mu_1)) (r(t))
+>  (r(p))
+ 11. }
+
+--------------------------------------------------------------------------------
+-> Modality_Type = F2F
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+         FCS |      1,863    26.26087    10.65401        3.5         90
+
+--------------------------------------------------------------------------------
+-> Modality_Type = Remote
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+         FCS |      1,019    27.15407    9.076882         14         96
+
+variable __000001 already defined
+r(110);
+
+end of do-file
+
+r(110);
+
+. 
+. do "code/09_heterogeneity.do"
+
+. *******************************************************
+. * 09_heterogeneity.do — Modality interactions (Table 5)
+. * - For each indicator y in (FCS rCSI HHS + optional others), run:
+. *   y = α + β Phone + γ (X) + δ (Phone×X) + controls + e
+. * - Outputs: Hete_Reg (unweighted) and Hete_Reg_wt (weighted, if $WGT)
+. *******************************************************
+. version 17
+
+. set more off
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "09_heterogeneity: MODE not found. Skipping."
+.     exit
+. }
+
+. label values $MODE modlbl
+
+. 
+. * Indicators set
+. local indlist
+
+. foreach v in FCS rCSI HHS {
+  2.     cap confirm var `v'
+  3.     if !_rc local indlist `indlist' `v'
+  4. }
+
+. foreach v in $LCS_CRI_VAR $FES_VAR $INC_SRC_VAR $INC_CHG_VAR {
+  2.     if "`v'"=="" continue
+  3.     cap confirm var `v'
+  4.     if !_rc local indlist `indlist' `v'
+  5. }
+
+. if "`indlist'"=="" exit
+
+. 
+. * Heterogeneity variables
+. local hetes
+
+. foreach h of global HETE_VARS {
+  2.     cap confirm var `h'
+  3.     if !_rc local hetes `hetes' `h'
+  4. }
+
+. if "`hetes'"=="" {
+.     di as txt "09_heterogeneity: No HETE_VARS found. Skipping."
+09_heterogeneity: No HETE_VARS found. Skipping.
+.     exit
+
+end of do-file
+
+
+. 
+. do "code/10_quality_checks.do"
+
+. *******************************************************
+. * 10_quality_checks.do — Data quality checks by modality
+. * - Item nonresponse: share missing by var and modality
+. * - Heaping: share ending in 0 or 5 for selected numeric vars
+. * - Benford (first digit) distance: for selected vars (if positive, multi-digi
+> t)
+. * - Exports: Quality_Nonresp, Quality_Heaping, Quality_Benford
+. *******************************************************
+. version 17
+
+. set more off
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "10_quality_checks: MODE not found. Skipping."
+.     exit
+. }
+
+. label values $MODE modlbl
+
+. 
+. * ===== A) Item nonresponse =====
+. * Choose vars to evaluate: all indicators & key modules if present
+. local qvars
+
+. foreach v in FCS rCSI HHS $FES_VAR $LCS_CRI_VAR $INC_SRC_VAR $INC_CHG_VAR {
+  2.     if "`v'"=="" continue
+  3.     cap confirm var `v'
+  4.     if !_rc local qvars `qvars' `v'
+  5. }
+
+. if "`qvars'"!="" {
+.     preserve
+.     tempname mem
+.     postfile `mem' str20 varname double miss_f2f miss_ph using "`c(tmpdir)'/q_
+> miss.dta", replace
+(file C:\Users\aet816\AppData\Local\Temp\7//q_miss.dta not found)
+.     foreach v of local qvars {
+  2.         quietly mean missing = missing(`v'), over($MODE)
+  3.         * Means table stores means of indicator "missing" by group
+.         matrix M = r(table)
+  4.         * Columns: group levels order; we assume 0 then 1
+.         local m0 = M[1,1]
+  5.         local m1 = M[1,2]
+  6.         post `mem' ("`v'") (100*`m0') (100*`m1')
+  7.     }
+invalid syntax
+r(198);
+.     postclose `mem'
+.     use "`c(tmpdir)'/q_miss.dta", clear
+.     export excel using "$OUT_XLSX", sheet("Quality_Nonresp") firstrow(variable
+> s) sheetreplace
+.     restore
+. }
+r(198);
+
+end of do-file
+
+r(198);
+
+. 
+. do "code/11_enumerator_robustness.do"
+
+. *******************************************************
+. * 11_enumerator_robustness.do — Enumerator FE & leave-one-out
+. * - Outcome set: FCS rCSI HHS (extend as needed)
+. * - FE spec: y = α + β Phone + i.enumerator + controls
+. * - Leave-one-out: re-estimate β after dropping each enumerator
+. * - Exports: Enumerator_FE, Enumerator_LOEO
+. *******************************************************
+. version 17
+
+. set more off
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. capture confirm var $MODE
+
+. if _rc { di as err "11_enumerator: MODE not found."; exit }
+. label values $MODE modlbl
+. 
+. cap confirm var $ENUM_ID
+. if _rc {
+.     di as txt "11_enumerator: ENUM_ID not set; skipping."
+.     exit
+. }
+. 
+. local outcomes
+. foreach y in FCS rCSI HHS {
+  2.     cap confirm var `y'
+  3.     if !_rc local outcomes `outcomes' `y'
+  4. }
+. if "`outcomes'"=="" exit
+. 
+. * Controls (optional)
+. local controls ""
+. foreach c of global HETE_VARS {
+  2.     cap confirm var `c'
+  3.     if !_rc local controls `controls' `c'
+  4. }
+. 
+. * ===== A) FE regressions (unweighted & weighted if weight exists) =====
+. tempname mem
+. postfile `mem' str8 outcome double beta_phone se t pval N using "`c(tmpdir)'/e
+> num_fe.dta", replace
+. local vceopt ""
+. if "$CLUSTVAR"!="" {
+.     cap confirm var $CLUSTVAR
+.     if !_rc local vceopt "vce(cluster $CLUSTVAR)"
+. }
+. foreach y of local outcomes {
+  2.     cap noi regress `y' i.$MODE `controls' i.$ENUM_ID, robust `vceopt'
+  3.     if _rc continue
+  4.     matrix b = e(b)
+  5.     matrix V = e(V)
+  6.     local N = e(N)
+  7.     local beta = b[1,"1.$MODE"]
+  8.     local se   = sqrt(V[rownumb(V,"1.$MODE"),rownumb(V,"1.$MODE")])
+  9.     local t    = `beta'/`se'
+ 10.     local p    = 2*ttail(e(df_r),abs(`t'))
+ 11.     post `mem' ("`y'") (`beta') (`se') (`t') (`p') (`N')
+ 12. }
+. postclose `mem'
+. use "`c(tmpdir)'/enum_fe.dta", clear
+. export excel using "$OUT_XLSX", sheet("Enumerator_FE") firstrow(variables) she
+> etreplace
+. 
+. * Weighted FE (if available)
+. cap confirm var $WGT
+. if _rc exit
+. tempname memw
+. postfile `memw' str8 outcome double beta_phone se t pval N using "`c(tmpdir)'/
+> enum_few.dta", replace
+. foreach y of local outcomes {
+  2.     cap noi regress `y' i.$MODE `controls' i.$ENUM_ID [pw=$WGT], robust `vc
+> eopt'
+  3.     if _rc continue
+  4.     matrix b = e(b)
+  5.     matrix V = e(V)
+  6.     local N = e(N)
+  7.     local beta = b[1,"1.$MODE"]
+  8.     local se   = sqrt(V[rownumb(V,"1.$MODE"),rownumb(V,"1.$MODE")])
+  9.     local t    = `beta'/`se'
+ 10.     local p    = 2*ttail(e(df_r),abs(`t'))
+ 11.     post `memw' ("`y'") (`beta') (`se') (`t') (`p') (`N')
+ 12. }
+. postclose `memw'
+. use "`c(tmpdir)'/enum_few.dta", clear
+. export excel using "$OUT_XLSX", sheet("Enumerator_FE_wt") firstrow(variables) 
+> sheetreplace
+. 
+. * ===== B) Leave-one-enumerator-out (LOEO) for each outcome =====
+. preserve
+. tempname meml
+. postfile `meml' str8 outcome str12 enum_id double beta_phone se using "`c(tmpd
+> ir)'/enum_loeo.dta", replace
+. levelsof $ENUM_ID, local(enums)
+. foreach y of local outcomes {
+  2.     foreach e of local enums {
+  3.         preserve
+  4.         keep if $ENUM_ID != `e'
+  5.         cap noi regress `y' i.$MODE `controls' i.$ENUM_ID, robust `vceopt'
+  6.         if _rc { restore; continue }
+  7.         matrix b = e(b)
+  8.         matrix V = e(V)
+  9.         local beta = b[1,"1.$MODE"]
+ 10.         local se   = sqrt(V[rownumb(V,"1.$MODE"),rownumb(V,"1.$MODE")])
+ 11.         post `meml' ("`y'") ("`e'") (`beta') (`se')
+ 12.         restore
+ 13.     }
+ 14. }
+. postclose `meml'
+. use "`c(tmpdir)'/enum_loeo.dta", clear
+. export excel using "$OUT_XLSX", sheet("Enumerator_LOEO") firstrow(variables) s
+> heetreplace
+. restore
+. program error:  matching close brace not found
+r(198);
+
+end of do-file
+
+r(198);
+. 
+. do "code/12_module_length.do"
+
+. *******************************************************
+. * 12_module_length.do — Short vs Long module comparisons (F2F)
+. * - Requires variables for long/short versions (set globals below)
+. * - Prefers paired t-tests if same HH observed; else unpaired by F2F subset
+. * - Exports: ModuleLen_FCS, ModuleLen_FES
+. *******************************************************
+. version 17
+
+. set more off
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. 
+. * Only F2F
+. capture confirm var $MODE
+
+. if _rc exit
+
+. keep if $MODE==0
+(1,019 observations deleted)
+
+. 
+. * EDIT THESE to your variable names for short/long versions
+. * If absent, script will skip gracefully.
+. global FCS_LONG "FCS_long"
+
+. global FCS_SHORT "FCS_short"
+
+. global FES_LONG "FES_long"
+
+. global FES_SHORT "FES_short"
+
+. 
+. * Household ID to do paired tests (if available)
+. global HHID "household_id"
+
+. 
+. local pairs "FCS FES"
+
+. foreach p of local pairs {
+  2.     local L : global `p'_LONG
+  3.     local S : global `p'_SHORT
+  4.     if "`L'"=="" | "`S'"=="" continue
+  5.     cap confirm var `L'
+  6.     cap confirm var `S'
+  7.     if _rc continue
+  8. 
+.     * Prefer paired if HHID exists and both values present within HH
+.     local paired 0
+  9.     cap confirm var $HHID
+ 10.     if !_rc {
+ 11.         bysort $HHID: gen byte __both = !missing(`L') & !missing(`S')
+ 12.         count if __both==1
+ 13.         if r(N)>0 local paired 1
+ 14.     }
+ 15. 
+.     preserve
+ 16.     if `paired' {
+ 17.         * Paired within HH
+.         keep if __both==1
+ 18.         ttest `L' = `S'
+ 19.         postfile _mp str10 metric double mean_long mean_short diff tstat pv
+> al using "`c(tmpdir)'/ml_`p'.dta", replace
+ 20.         quietly summarize `L'; local ml = r(mean)
+ 21.         quietly summarize `S'; local ms = r(mean)
+ 22.         post _mp ("`p'") (`ml') (`ms') (`ml'-`ms') (r(t)) (r(p))
+ 23.         postclose _mp
+ 24.     }
+ 25.     else {
+ 26.         * Unpaired within F2F sample
+.         ttest `L' == `S'
+ 27.         postfile _mp str10 metric double mean_long mean_short diff tstat pv
+> al using "`c(tmpdir)'/ml_`p'.dta", replace
+ 28.         quietly summarize `L'; local ml = r(mean)
+ 29.         quietly summarize `S'; local ms = r(mean)
+ 30.         post _mp ("`p'") (`ml') (`ms') (`ml'-`ms') (r(t)) (r(p))
+ 31.         postclose _mp
+ 32.     }
+ 33.     use "`c(tmpdir)'/ml_`p'.dta", clear
+ 34.     export excel using "$OUT_XLSX", sheet("ModuleLen_`p'") firstrow(variabl
+> es) sheetreplace
+ 35.     restore
+ 36.     cap drop __both
+ 37. }
+global not allowed
+r(101);
+
+end of do-file
+
+r(101);
+
+. 
+. do "code/13_lcs_variants.do"
+file code/13_lcs_variants.do not found
+r(601);
+
+. cd "C:\Users\aet816\Documents\Research_v2"
+C:\Users\aet816\Documents\Research_v2
+
+. 
+. do "code/06_balance.do"
+
+. *******************************************************
+. * 06_balance.do — Baseline balance by modality (Tables 20–22)
+. * - Uses LISTING_IN dataset (or IN_ANALYTIC if LISTING not set)
+. * - Unweighted t-tests by modality
+. * - (Optional) Weighted regressions of each baseline var on modality
+. *   with robust SEs (cluster at $CLUSTVAR if provided)
+. * - Exports to OUT_XLSX: sheets Balance_unw, Balance_wt
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. * Pick data: listing-phase if available, else analytic
+. capture confirm file "$LISTING_IN"
+
+. if _rc use "$IN_ANALYTIC", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. else     use "$LISTING_IN", clear
+
+. 
+. * Ensure modality exists and is labeled
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "06_balance: MODE ($MODE) not found. Skipping balance."
+.     exit
+. }
+
+. 
+. label values $MODE modlbl
+
+. 
+. * Build list of baseline vars that actually exist
+. local basevars
+
+. foreach v of global BAL_VARS {
+  2.     cap confirm var `v'
+  3.     if !_rc local basevars `basevars' `v'
+  4. }
+
+. if "`basevars'"=="" {
+.     di as err "06_balance: None of BAL_VARS found. Skipping."
+06_balance: None of BAL_VARS found. Skipping.
+.     exit
+
+end of do-file
+
+
+. 
+. do "code/07_composites.do"
+
+. *******************************************************
+. * 07_composites.do — Composite indices vs modality (Table 3)
+. * - Uses $IN_FOR_TABLES and $MODE
+. * - Regress y on Phone indicator (unweighted + weighted if $WGT)
+. * - y ∈ {$CARI_VAR, $rCARI_VAR, FES proxy if needed}
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. cap confirm var $MODE
+
+. if _rc exit
+
+. label values $MODE modlbl
+
+. 
+. * Build list of outcomes
+. local ylist
+
+. foreach y in $CARI_VAR $rCARI_VAR {
+  2.     if "`y'"=="" continue
+  3.     cap confirm var `y'
+  4.     if !_rc local ylist `ylist' `y'
+  5. }
+
+. 
+. * FES: use $FES_VAR if present; else build simple % if NUM/DEN exist
+. local FES_here
+
+. cap confirm var $FES_VAR
+
+. if !_rc local FES_here "$FES_VAR"
+
+. else if "$FES_NUM"!="" & "$FES_DEN"!="" {
+.     cap confirm var $FES_NUM
+.     cap confirm var $FES_DEN
+.     if !_rc {
+.         tempvar __fes
+.         gen double `__fes' = 100*(`=$FES_NUM'/`=$FES_DEN')
+.         label var `__fes' "FES (%)"
+.         local FES_here "`__fes'"
+.     }
+. }
+
+. if "`FES_here'"!="" local ylist `ylist' `FES_here'
+
+. if "`ylist'"=="" exit
+
+. 
+. * Optional controls
+. local controls
+
+. foreach c of global HETE_VARS {
+  2.     cap confirm var `c'
+  3.     if !_rc local controls `controls' `c'
+  4. }
+
+. 
+. * Unweighted + weighted (if $WGT exists)
+. tempname mem
+
+. postfile `mem' str20 outcome str6 spec double beta se t p using ///
+>     "`c(tmpdir)'/comp_reg.dta", replace
+(file C:\Users\aet816\AppData\Local\Temp\7//comp_reg.dta not found)
+
+. 
+. foreach y of local ylist {
+  2.     cap noi regress `y' i.$MODE `controls', robust
+  3.     if !_rc {
+  4.         matrix b = e(b)
+  5.         matrix V = e(V)
+  6.         local beta = b[1,"1.$MODE"]
+  7.         local se   = sqrt(V[rownumb(V,"1.$MODE"),rownumb(V,"1.$MODE")])
+  8.         local t    = `beta'/`se'
+  9.         local p    = 2*ttail(e(df_r),abs(`t'))
+ 10.         post `mem' ("`y'") ("unw") (`beta') (`se') (`t') (`p')
+ 11.     }
+ 12.     cap confirm var $WGT
+ 13.     if !_rc {
+ 14.         cap noi regress `y' i.$MODE `controls' [pw=$WGT], robust
+ 15.         if !_rc {
+ 16.             matrix b = e(b)
+ 17.             matrix V = e(V)
+ 18.             local beta = b[1,"1.$MODE"]
+ 19.             local se   = sqrt(V[rownumb(V,"1.$MODE"),rownumb(V,"1.$MODE")])
+ 20.             local t    = `beta'/`se'
+ 21.             local p    = 2*ttail(e(df_r),abs(`t'))
+ 22.             post `mem' ("`y'") ("wt") (`beta') (`se') (`t') (`p')
+ 23.         }
+ 24.     }
+ 25. }
+
+Linear regression                               Number of obs     =      2,882
+                                                F(1, 2880)        =       2.39
+                                                Prob > F          =     0.1224
+                                                R-squared         =     0.0011
+                                                Root MSE          =     .21558
+
+-------------------------------------------------------------------------------
+              |               Robust
+          FES | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+Modality_Type |
+      Remote  |  -.0148254   .0095932    -1.55   0.122    -.0336357    .0039848
+        _cons |    .686734   .0039721   172.89   0.000     .6789456    .6945224
+-------------------------------------------------------------------------------
+
+. postclose `mem'
+
+. use "`c(tmpdir)'/comp_reg.dta", clear
+
+. export excel using "$OUT_XLSX", sheet("Comp_Reg") firstrow(variables) sheetrep
+> lace
+file output/tables/BF_tables.xlsx saved
+
+. 
+end of do-file
+
+. 
+. do "code/08_indicators.do"
+
+. *******************************************************
+. * 08_indicators.do — Individual indicators (Table 4)
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. cap confirm var $MODE
+
+. if _rc exit
+
+. label values $MODE modlbl
+
+. 
+. * Clean any leftover Stata temp names to avoid collisions
+. cap drop __*
+
+. 
+. * Build indicator list
+. local indlist
+
+. foreach v in FCS rCSI HHS $LCS_CRI_VAR $FES_VAR $INC_SRC_VAR $INC_CHG_VAR {
+  2.     if "`v'"=="" continue
+  3.     cap confirm var `v'
+  4.     if !_rc local indlist `indlist' `v'
+  5. }
+
+. if "`indlist'"=="" exit
+
+. 
+. * A) Unweighted means/SD + t-tests
+. preserve
+
+. tempname mem
+
+. postfile `mem' str20 varname double mean_f2f sd_f2f mean_ph sd_ph diff tstat p
+> val ///
+>     using "`c(tmpdir)'/ind_t.dta", replace
+
+. foreach y of local indlist {
+  2.     quietly summarize `y' if $MODE==0
+  3.     local mf = r(mean)
+  4.     local sf = r(sd)
+  5.     quietly summarize `y' if $MODE==1
+  6.     local mp = r(mean)
+  7.     local sp = r(sd)
+  8.     quietly ttest `y', by($MODE)
+  9.     post `mem' ("`y'") (`mf') (`sf') (`mp') (`sp') (r(mu_2)-r(mu_1)) (r(t))
+>  (r(p))
+ 10. }
+
+. postclose `mem'
+
+. use "`c(tmpdir)'/ind_t.dta", clear
+
+. export excel using "$OUT_XLSX", sheet("Ind_Means_Ttests") firstrow(variables) 
+> sheetreplace
 file output/tables/BF_tables.xlsx saved
 
 . restore
 
 . 
-. * =====================================================
-. * 2) Category shares by modality (FCS) — drop extras before reshape
-. * =====================================================
-. capture confirm var FCS_cat
+. * B) Unweighted regressions on Phone
+. tempname mem2
 
-. if !_rc {
-.     preserve
-.     capture drop _calc_*
-.     keep Modality_Type FCS_cat
-.     keep if !missing(Modality_Type, FCS_cat)
-(0 observations deleted)
-.     contract Modality_Type FCS_cat
-.     fillin Modality_Type FCS_cat
-.     recode _freq .=0
-(0 changes made to _freq)
-. 
-.     sort Modality_Type FCS_cat
-.     by Modality_Type: gen double _calc_tot = sum(_freq)
-.     by Modality_Type: replace _calc_tot = _calc_tot[_N]
-(4 real changes made)
-. 
-.     gen double share = cond(_calc_tot>0, 100 * _freq / _calc_tot, .)
-.     keep Modality_Type FCS_cat share
-.     reshape wide share, i(Modality_Type) j(FCS_cat)
-(j = 1 2 3)
+. postfile `mem2' str20 varname double beta se t p N using ///
+>     "`c(tmpdir)'/ind_reg.dta", replace
+(file C:\Users\aet816\AppData\Local\Temp\7//ind_reg.dta not found)
 
-Data                               Long   ->   Wide
------------------------------------------------------------------------------
-Number of observations                6   ->   2           
-Number of variables                   3   ->   4           
-j variable (3 values)           FCS_cat   ->   (dropped)
-xij variables:
-                                  share   ->   share1 share2 share3
------------------------------------------------------------------------------
-. 
-.     capture confirm var share1
-.     if !_rc rename share1 FCS_Poor
-.     capture confirm var share2
-.     if !_rc rename share2 FCS_Borderline
-.     capture confirm var share3
-.     if !_rc rename share3 FCS_Acceptable
-. 
-.     * Subsequent sheet: replace only the sheet, not the file
-.     export excel using "`xlsx'", sheet("FCS_shares") firstrow(variables) sheet
-> replace
+. foreach y of local indlist {
+  2.     cap noi regress `y' i.$MODE, robust
+  3.     if _rc continue
+  4.     matrix b = e(b)
+  5.     matrix V = e(V)
+  6.     local N = e(N)
+  7.     local beta = b[1,"1.$MODE"]
+  8.     local se   = sqrt(V[rownumb(V,"1.$MODE"),rownumb(V,"1.$MODE")])
+  9.     local t    = `beta'/`se'
+ 10.     local p    = 2*ttail(e(df_r),abs(`t'))
+ 11.     post `mem2' ("`y'") (`beta') (`se') (`t') (`p') (`N')
+ 12. }
+
+Linear regression                               Number of obs     =      2,882
+                                                F(1, 2880)        =       5.63
+                                                Prob > F          =     0.0177
+                                                R-squared         =     0.0018
+                                                Root MSE          =     10.125
+
+-------------------------------------------------------------------------------
+              |               Robust
+          FCS | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+Modality_Type |
+      Remote  |   .8932031   .3765201     2.37   0.018     .1549269    1.631479
+        _cons |   26.26087   .2468543   106.38   0.000     25.77684     26.7449
+-------------------------------------------------------------------------------
+
+Linear regression                               Number of obs     =      2,882
+                                                F(1, 2880)        =      69.55
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0204
+                                                Root MSE          =     9.4725
+
+-------------------------------------------------------------------------------
+              |               Robust
+         rCSI | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+Modality_Type |
+      Remote  |  -2.856383   .3424969    -8.34   0.000    -3.527947   -2.184819
+        _cons |   9.716049    .237145    40.97   0.000     9.251058    10.18104
+-------------------------------------------------------------------------------
+
+Linear regression                               Number of obs     =      2,882
+                                                F(1, 2880)        =      27.92
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0104
+                                                Root MSE          =     1.0361
+
+-------------------------------------------------------------------------------
+              |               Robust
+          HHS | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+Modality_Type |
+      Remote  |   .2216923    .041956     5.28   0.000     .1394255    .3039591
+        _cons |   .6468062   .0228165    28.35   0.000      .602068    .6915445
+-------------------------------------------------------------------------------
+
+Linear regression                               Number of obs     =      2,882
+                                                F(1, 2880)        =       2.39
+                                                Prob > F          =     0.1224
+                                                R-squared         =     0.0011
+                                                Root MSE          =     .21558
+
+-------------------------------------------------------------------------------
+              |               Robust
+          FES | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+Modality_Type |
+      Remote  |  -.0148254   .0095932    -1.55   0.122    -.0336357    .0039848
+        _cons |    .686734   .0039721   172.89   0.000     .6789456    .6945224
+-------------------------------------------------------------------------------
+
+. postclose `mem2'
+
+. use "`c(tmpdir)'/ind_reg.dta", clear
+
+. export excel using "$OUT_XLSX", sheet("Ind_Reg") firstrow(variables) sheetrepl
+> ace
 file output/tables/BF_tables.xlsx saved
-.     restore
-. }
 
 . 
-. * =====================================================
-. * 3) Category shares by modality (rCSI)
-. * =====================================================
-. capture confirm var rCSI_cat
+. * C) Weighted regressions (if weight exists)
+. cap confirm var $WGT
 
-. if !_rc {
-.     preserve
-.     capture drop _calc_*
-.     keep Modality_Type rCSI_cat
-.     keep if !missing(Modality_Type, rCSI_cat)
-(0 observations deleted)
-.     contract Modality_Type rCSI_cat
-.     fillin Modality_Type rCSI_cat
-.     recode _freq .=0
-(0 changes made to _freq)
-. 
-.     sort Modality_Type rCSI_cat
-.     by Modality_Type: gen double _calc_tot = sum(_freq)
-.     by Modality_Type: replace _calc_tot = _calc_tot[_N]
-(4 real changes made)
-. 
-.     gen double share = cond(_calc_tot>0, 100 * _freq / _calc_tot, .)
-.     keep Modality_Type rCSI_cat share
-.     reshape wide share, i(Modality_Type) j(rCSI_cat)
-(j = 1 2 3)
+. if _rc exit
 
-Data                               Long   ->   Wide
------------------------------------------------------------------------------
-Number of observations                6   ->   2           
-Number of variables                   3   ->   4           
-j variable (3 values)          rCSI_cat   ->   (dropped)
-xij variables:
-                                  share   ->   share1 share2 share3
------------------------------------------------------------------------------
-. 
-.     capture confirm var share1
-.     if !_rc rename share1 rCSI_Low
-.     capture confirm var share2
-.     if !_rc rename share2 rCSI_Medium
-.     capture confirm var share3
-.     if !_rc rename share3 rCSI_High
-. 
-.     export excel using "`xlsx'", sheet("rCSI_shares") firstrow(variables) shee
-> treplace
-file output/tables/BF_tables.xlsx saved
-.     restore
-. }
-
-. 
-. * =====================================================
-. * 4) Category shares by modality (HHS)
-. * =====================================================
-. capture confirm var HHS_cat
-
-. if !_rc {
-.     preserve
-.     capture drop _calc_*
-.     keep Modality_Type HHS_cat
-.     keep if !missing(Modality_Type, HHS_cat)
-(0 observations deleted)
-.     contract Modality_Type HHS_cat
-.     fillin Modality_Type HHS_cat
-.     recode _freq .=0
-(0 changes made to _freq)
-. 
-.     sort Modality_Type HHS_cat
-.     by Modality_Type: gen double _calc_tot = sum(_freq)
-.     by Modality_Type: replace _calc_tot = _calc_tot[_N]
-(2 real changes made)
-. 
-.     gen double share = cond(_calc_tot>0, 100 * _freq / _calc_tot, .)
-.     keep Modality_Type HHS_cat share
-.     reshape wide share, i(Modality_Type) j(HHS_cat)
-(j = 1 2)
-
-Data                               Long   ->   Wide
------------------------------------------------------------------------------
-Number of observations                4   ->   2           
-Number of variables                   3   ->   3           
-j variable (2 values)           HHS_cat   ->   (dropped)
-xij variables:
-                                  share   ->   share1 share2
------------------------------------------------------------------------------
-. 
-.     capture confirm var share1
-.     if !_rc rename share1 HHS_LittleNo
-.     capture confirm var share2
-.     if !_rc rename share2 HHS_Moderate
-.     capture confirm var share3
-.     if !_rc rename share3 HHS_Severe
-. 
-.     export excel using "`xlsx'", sheet("HHS_shares") firstrow(variables) sheet
-> replace
-file output/tables/BF_tables.xlsx saved
-.     restore
-. }
-
-. 
-. di as res "Tables exported (where indicators available) to: `xlsx'"
-Tables exported (where indicators available) to: output/tables/BF_tables.xlsx
-
-. 
 end of do-file
 
-. local rc = _rc
-
-. if `rc' != 0 {
-.     di as error "ERROR in 05_tables.do (code = " %9.0g `rc' ")"
-.     log close master
-.     exit `rc'
-. }
 
 . 
-. di as result "Pipeline completed successfully (input .dta untouched)."
-Pipeline completed successfully (input .dta untouched).
+. do "code/09_heterogeneity.do"
 
-. log close master
-      name:  master
-       log:  \\Cabinet.usask.ca\work$\aet816\Desktop\Research\logs/master_2025-0
-> 9-08.log
-  log type:  text
- closed on:   8 Sep 2025, 13:24:09
---------------------------------------------------------------------------------
+. *******************************************************
+. * 09_heterogeneity.do — Modality interactions (Table 5)
+. * - For each indicator y in (FCS rCSI HHS + optional others), run:
+. *   y = α + β Phone + γ (X) + δ (Phone×X) + controls + e
+. * - Outputs: Hete_Reg (unweighted) and Hete_Reg_wt (weighted, if $WGT)
+. *******************************************************
+. version 17
+
+. set more off
+
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "09_heterogeneity: MODE not found. Skipping."
+.     exit
+. }
+
+. label values $MODE modlbl
+
+. 
+. * Indicators set
+. local indlist
+
+. foreach v in FCS rCSI HHS {
+  2.     cap confirm var `v'
+  3.     if !_rc local indlist `indlist' `v'
+  4. }
+
+. foreach v in $LCS_CRI_VAR $FES_VAR $INC_SRC_VAR $INC_CHG_VAR {
+  2.     if "`v'"=="" continue
+  3.     cap confirm var `v'
+  4.     if !_rc local indlist `indlist' `v'
+  5. }
+
+. if "`indlist'"=="" exit
+
+. 
+. * Heterogeneity variables
+. local hetes
+
+. foreach h of global HETE_VARS {
+  2.     cap confirm var `h'
+  3.     if !_rc local hetes `hetes' `h'
+  4. }
+
+. if "`hetes'"=="" {
+.     di as txt "09_heterogeneity: No HETE_VARS found. Skipping."
+09_heterogeneity: No HETE_VARS found. Skipping.
+.     exit
+
+end of do-file
+
+
+. 
+. do "code/10_quality_checks.do"
+
+. *******************************************************
+. * 10_quality_checks.do — Data quality (nonresponse)
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. cap confirm var $MODE
+
+. if _rc exit
+
+. label values $MODE modlbl
+
+. 
+. * Variables to check
+. local qvars
+
+. foreach v in FCS rCSI HHS $FES_VAR $LCS_CRI_VAR $INC_SRC_VAR $INC_CHG_VAR {
+  2.     if "`v'"=="" continue
+  3.     cap confirm var `v'
+  4.     if !_rc local qvars `qvars' `v'
+  5. }
+
+. if "`qvars'"=="" exit
+
+. 
+. preserve
+
+. tempname mem
+
+. postfile `mem' str30 varname double miss_f2f miss_ph using ///
+>     "`c(tmpdir)'/q_miss.dta", replace
+
+. foreach v of local qvars {
+  2.     quietly mean miss = missing(`v'), over($MODE)
+  3.     matrix M = r(table)
+  4.     scalar s0 = M[1,1]
+  5.     scalar s1 = M[1,2]
+  6.     local m0 = scalar(s0)
+  7.     local m1 = scalar(s1)
+  8.     post `mem' ("`v'") (100*`m0') (100*`m1')
+  9. }
+invalid syntax
+r(198);
+
+end of do-file
+
+r(198);
+
+. 
+. do "code/11_enumerator_robustness.do"
+
+. *******************************************************
+. * 11_enumerator_robustness.do — Enumerator FE & LOEO
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. cap confirm var $MODE
+
+. if _rc exit
+
+. label values $MODE modlbl
+
+. 
+. cap confirm var $ENUM_ID
+
+. if _rc exit
+
+end of do-file
+
+
+. 
+. do "code/12_module_length.do"
+
+. *******************************************************
+. * 12_module_length.do — Short vs Long (F2F only)
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. use "$IN_FOR_TABLES", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. cap confirm var $MODE
+
+. if _rc exit
+
+. keep if $MODE==0
+(1,019 observations deleted)
+
+. 
+. * Variables (edit in 00_config; these default names are placeholders)
+. * globals expected: FCS_LONG, FCS_SHORT, FES_LONG, FES_SHORT, HHID
+. local HHID "$HHID"
+
+. 
+. foreach p in FCS FES {
+  2.     local L : global `p'_LONG
+  3.     local S : global `p'_SHORT
+  4.     if "`L'"=="" | "`S'"=="" continue
+  5.     cap confirm var `L'
+  6.     cap confirm var `S'
+  7.     if _rc continue
+  8. 
+.     preserve
+  9.     local paired 0
+ 10.     if "`HHID'"!="" {
+ 11.         cap confirm var `HHID'
+ 12.         if !_rc {
+ 13.             bysort `HHID': gen byte __both = !missing(`L') & !missing(`S')
+ 14.             count if __both==1
+ 15.             if r(N)>0 local paired 1
+ 16.         }
+ 17.     }
+ 18. 
+.     tempname mem
+ 19.     postfile `mem' str10 metric double mean_long mean_short diff tstat pval
+>  using ///
+>         "`c(tmpdir)'/ml_`p'.dta", replace
+ 20. 
+.     if `paired' {
+ 21.         keep if __both==1
+ 22.         quietly summarize `L'; local ml = r(mean)
+ 23.         quietly summarize `S'; local ms = r(mean)
+ 24.         quietly ttest `L' = `S'
+ 25.         post `mem' ("`p'") (`ml') (`ms') (`ml'-`ms') (r(t)) (r(p))
+ 26.     }
+ 27.     else {
+ 28.         quietly summarize `L'; local ml = r(mean)
+ 29.         quietly summarize `S'; local ms = r(mean)
+ 30.         quietly ttest `L' == `S'
+ 31.         post `mem' ("`p'") (`ml') (`ms') (`ml'-`ms') (r(t)) (r(p))
+ 32.     }
+ 33.     postclose `mem'
+ 34.     use "`c(tmpdir)'/ml_`p'.dta", clear
+ 35.     export excel using "$OUT_XLSX", sheet("ModuleLen_`p'") firstrow(variabl
+> es) sheetreplace
+ 36.     restore
+ 37.     cap drop __both
+ 38. }
+global not allowed
+r(101);
+
+end of do-file
+
+r(101);
+
+. 
+. do "code/13_lcs_variants.do"
+file code/13_lcs_variants.do not found
+r(601);
+
+. do "code/06_balance.do"
+
+. *******************************************************
+. * 06_balance.do — Baseline balance by modality (Tbls 20–22)
+. * Requires in 00_config.do:
+. *   - global MODE       (e.g., "Modality_Type", 0=F2F 1=Remote)
+. *   - global BAL_VARS   (space-separated baseline vars)
+. *   - global LISTING_IN (path) or will fall back to $IN_ANALYTIC
+. *   - global OUT_XLSX   (workbook path)
+. * Optional:
+. *   - global WGT        (pweight var) to add weighted panel
+. *   - global CLUSTVAR   (cluster id) for weighted SEs
+. *******************************************************
+. version 17
+
+. set more off
+
+. 
+. * --- 1) Pick dataset (listing preferred) ---
+. capture confirm file "$LISTING_IN"
+
+. if _rc     use "$IN_ANALYTIC", clear
+(File created by user 'appuser' at Fri Oct 11 09:14:10 2024)
+
+. else       use "$LISTING_IN",  clear
+
+. 
+. * --- 2) Guard: modality available? ---
+. capture confirm var $MODE
+
+. if _rc {
+.     di as err "06_balance: MODE ($MODE) not found. Set it in 00_config.do."
+.     exit 498
+. }
+
+. label values $MODE modlbl
+
+. 
+. * --- 3) Collect baseline variables that exist ---
+. local basevars
+
+. foreach v of global BAL_VARS {
+  2.     cap confirm var `v'
+  3.     if !_rc local basevars `basevars' `v'
+  4. }
+
+. if "`basevars'"=="" {
+.     di as err "06_balance: None of BAL_VARS found in this dataset."
+06_balance: None of BAL_VARS found in this dataset.
+.     di as txt "Tip: open 00_config.do and set BAL_VARS to the actual names."
+Tip: open 00_config.do and set BAL_VARS to the actual names.
+.     exit 459
+r(459);
+. }
+r(459);
+
+end of do-file
+
+r(459);
+
+. exit, clear
