@@ -45,7 +45,7 @@ if _rc {
             gen double ``_`k''' = .
             capture confirm variable `v_`k''
             if !_rc {
-                gen double ``_`k''' = max(0, min(7, `v_`k''))
+                replace ``_`k''' = max(0, min(7, `v_`k''))
             }
             else replace ``_`k''' = 0
         }
