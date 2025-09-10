@@ -48,6 +48,31 @@ global WGT ""
 capture macro drop SUBGROUPS
 global SUBGROUPS "head_female urban poor_pre"
 
+* Verify subgroup variables exist in data and are binary (0/1)
+capture noisily {
+    use "$IN_FOR_TABLES", clear
+    local __sg_list "$SUBGROUPS"
+    local __keep ""
+    foreach sg of local __sg_list {
+        capture confirm numeric variable `sg'
+        if _rc {
+            di as error "SUBGROUP `sg' missing or non-numeric; dropping"
+            continue
+        }
+        quietly count if inlist(`sg',0,1)
+        local n01 = r(N)
+        quietly count if !missing(`sg')
+        if r(N)==`n01' & r(N)>0 {
+            local __keep "`__keep' `sg'"
+        }
+        else {
+            di as error "SUBGROUP `sg' not binary 0/1; dropping"
+        }
+    }
+    global SUBGROUPS "`__keep'"
+    clear
+}
+
 * Feature flags
 capture macro drop FLAG_EXPORT
 global FLAG_EXPORT 1
