@@ -90,6 +90,87 @@ if _rc {
     }
 }
 
+* ===== LCS =====
+capture confirm variable LCS
+if _rc {
+    local stress "Lcs_stress_DomAsset Lcs_stress_HealthEdu Lcs_stress_Saving Lcs_stress_BorrowCash LcsEN_stress_DomAsset LcsEN_stress_HealthEdu LcsEN_stress_Saving LcsEN_stress_BorrowCash"
+    local crisis "Lcs_crisis_ProdAssets Lcs_crisis_DomMigration Lcs_crisis_ChildWork LcsEN_crisis_ProdAssets LcsEN_crisis_DomMigration LcsEN_crisis_ChildWork"
+    local emergency "Lcs_em_ResAsset Lcs_em_Begged Lcs_em_FemAnimal LcsEN_em_ResAsset LcsEN_em_Begged LcsEN_em_FemAnimal"
+    gen byte LCS = 0
+    local found_any 0
+    foreach v of local stress {
+        capture confirm variable `v'
+        if !_rc {
+            replace LCS = max(LCS, 1*(`v'==1)) if !missing(`v')
+            local found_any 1
+        }
+    }
+    foreach v of local crisis {
+        capture confirm variable `v'
+        if !_rc {
+            replace LCS = max(LCS, 2*(`v'==1)) if !missing(`v')
+            local found_any 1
+        }
+    }
+    foreach v of local emergency {
+        capture confirm variable `v'
+        if !_rc {
+            replace LCS = max(LCS, 3*(`v'==1)) if !missing(`v')
+            local found_any 1
+        }
+    }
+    if !`found_any' {
+        replace LCS = .
+    }
+}
+
+* ===== FES =====
+capture confirm variable FES
+if _rc {
+    local cand "FES CARI_FES_Raw FES_Raw FoodExpShare food_exp_share"
+    local chosen ""
+    foreach v of local cand {
+        capture confirm variable `v'
+        if !_rc & "`chosen'"=="" local chosen "`v'"
+    }
+    if "`chosen'" != "" {
+        gen double FES = `chosen'
+    }
+    else {
+        local food_cand "food_exp foodexpenditure FoodExp"
+        local tot_cand "total_exp totalexpenditure exp_total"
+        local food_var ""
+        local tot_var ""
+        foreach v of local food_cand {
+            capture confirm variable `v'
+            if !_rc & "`food_var'"=="" local food_var "`v'"
+        }
+        foreach v of local tot_cand {
+            capture confirm variable `v'
+            if !_rc & "`tot_var'"=="" local tot_var "`v'"
+        }
+        if "`food_var'"!="" & "`tot_var'"!="" {
+            gen double FES = 100*`food_var'/`tot_var'
+        }
+        else gen double FES = .
+    }
+}
+
+* ===== income =====
+capture confirm variable income
+if _rc {
+    local cand "Income_Recode_Cat Income_Recode Income_3pt HHIncome_3pt income"
+    local chosen ""
+    foreach v of local cand {
+        capture confirm variable `v'
+        if !_rc & "`chosen'"=="" local chosen "`v'"
+    }
+    if "`chosen'"!="" {
+        gen double income = `chosen'
+    }
+    else gen double income = .
+}
+
 * ===== HHS =====
 capture confirm variable HHS
 if _rc {
