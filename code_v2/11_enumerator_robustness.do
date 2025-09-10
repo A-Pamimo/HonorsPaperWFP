@@ -7,20 +7,6 @@ set more off
 
 do "00_utils.do"
 
-* ---- Weighted runner (uses $WGT only if set) ----
-capture program drop _regw
-program define _regw
-    version 17
-    syntax anything
-    if "$WGT" != "" {
-        `anything' [pweight=$WGT]
-    }
-    else {
-        `anything'
-    }
-end
-* --------------------------------------------------
-
 * Prefer the dataset with indices if it exists (FCS/rCSI/HHS), else cleaned
 capture confirm file "$IN_FOR_TABLES"
 if !_rc {
