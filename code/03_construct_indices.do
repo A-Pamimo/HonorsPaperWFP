@@ -112,6 +112,139 @@ if _rc {
     }
 }
 
+* ===== FES =====
+capture confirm variable FES
+if _rc {
+    local food_exp_vars "exp_food food_exp foodexpenditure food_expenses"
+    local tot_exp_vars  "exp_total total_exp total_expenditure total_expenses exp_tot"
+    local fvar ""
+    local tvar ""
+    foreach v of local food_exp_vars {
+        capture confirm variable `v'
+        if !_rc & "`fvar'"=="" local fvar "`v'"
+    }
+    foreach v of local tot_exp_vars {
+        capture confirm variable `v'
+        if !_rc & "`tvar'"=="" local tvar "`v'"
+    }
+    if "`fvar'"!="" & "`tvar'"!="" {
+        gen double FES = 100*(`fvar'/`tvar')
+    }
+    else {
+        gen double FES = .
+    }
+}
+
+* ===== LCS =====
+capture confirm variable LCS
+if _rc {
+    local stress   "lcs_stress1 lcs_stress2 lcs_stress3 stress1 stress2 stress3"
+    local crisis   "lcs_crisis1 lcs_crisis2 lcs_crisis3 crisis1 crisis2 crisis3"
+    local emergency "lcs_emerg1 lcs_emergency1 lcs_emergency2 lcs_emergency3 emerg1 emerg2 emerg3"
+    local stress_vars   ""
+    local crisis_vars   ""
+    local emergency_vars ""
+    foreach v of local stress {
+        capture confirm variable `v'
+        if !_rc local stress_vars "`stress_vars' `v'"
+    }
+    foreach v of local crisis {
+        capture confirm variable `v'
+        if !_rc local crisis_vars "`crisis_vars' `v'"
+    }
+    foreach v of local emergency {
+        capture confirm variable `v'
+        if !_rc local emergency_vars "`emergency_vars' `v'"
+    }
+    egen byte _stress_any = rowmax(`stress_vars')
+    egen byte _crisis_any = rowmax(`crisis_vars')
+    egen byte _emerg_any  = rowmax(`emergency_vars')
+    replace _stress_any = 0 if missing(_stress_any)
+    replace _crisis_any = 0 if missing(_crisis_any)
+    replace _emerg_any  = 0 if missing(_emerg_any)
+    gen byte LCS = 0
+    replace LCS = max(LCS,1) if _stress_any
+    replace LCS = max(LCS,2) if _crisis_any
+    replace LCS = max(LCS,3) if _emerg_any
+    drop _stress_any _crisis_any _emerg_any
+}
+
+* ===== Income source & change =====
+capture confirm variable income_source
+if _rc {
+    local src_cands "income_source inc_source main_income_source incomesrc"
+    local chosen ""
+    foreach v of local src_cands {
+        capture confirm variable `v'
+        if !_rc & "`chosen'"=="" local chosen "`v'"
+    }
+    if "`chosen'"!="" {
+        quietly _ensure_numeric `chosen'
+        local tmp `r(src)'
+        rename `tmp' income_source
+    }
+    else gen double income_source = .
+}
+
+capture confirm variable income_change
+if _rc {
+    local chg_cands "income_change inc_change main_income_change incomechg"
+    local chosen ""
+    foreach v of local chg_cands {
+        capture confirm variable `v'
+        if !_rc & "`chosen'"=="" local chosen "`v'"
+    }
+    if "`chosen'"!="" {
+        quietly _ensure_numeric `chosen'
+        local tmp `r(src)'
+        rename `tmp' income_change
+    }
+    else gen double income_change = .
+}
+
+* ===== CARI and rCARI =====
+* rCSI categories
+gen byte rCSI_cat = .
+replace rCSI_cat = 1 if rCSI <=3
+replace rCSI_cat = 2 if rCSI>3  & rCSI<=9
+replace rCSI_cat = 3 if rCSI>9  & rCSI<=18
+replace rCSI_cat = 4 if rCSI>18
+
+* Food consumption phase from FCS and rCSI
+gen byte FC_phase = .
+replace FC_phase = 4 if FCS<=21 | rCSI_cat==4
+replace FC_phase = 3 if FC_phase==. & (FCS<=35 | rCSI_cat==3)
+replace FC_phase = 2 if FC_phase==. & rCSI_cat==2
+replace FC_phase = 1 if FC_phase==. & rCSI_cat==1
+
+* FES categories
+gen byte FES_cat = .
+replace FES_cat = 1 if FES<=50
+replace FES_cat = 2 if FES>50 & FES<=65
+replace FES_cat = 3 if FES>65
+
+* LCS phase (1..4)
+gen byte LCS_phase = .
+replace LCS_phase = LCS + 1 if !missing(LCS)
+
+* HHS phase for CARI
+gen byte HHS_phase = .
+replace HHS_phase = 1 if HHS<=1
+replace HHS_phase = 3 if HHS>1 & HHS<=3
+replace HHS_phase = 4 if HHS>3
+
+* Income source/change phases (1..4)
+gen byte IncSrc_phase = income_source
+gen byte IncChg_phase = income_change
+
+* Economic vulnerability components
+egen byte eco_f2f = rowmax(FES_cat LCS_phase)
+egen byte eco_remote = rowmax(FES_cat LCS_phase IncSrc_phase IncChg_phase)
+
+* Final CARI/rCARI
+egen byte CARI = rowmax(FC_phase eco_f2f HHS_phase)
+egen byte rCARI = rowmax(FC_phase eco_remote)
+
 * Save for tables/analysis
 save "$IN_FOR_TABLES", replace
 display as result "03_construct_indices.do complete → $IN_FOR_TABLES"
