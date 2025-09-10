@@ -1,11 +1,17 @@
+*======================================================
+* FILE: code/12_module_length.do
+*======================================================
+
 *******************************************************
 * 12_module_length.do — Interview/module timing
 *******************************************************
 
 version 17
 set more off
+
 do "00_utils.do"
 
+* Load dataset (prefer cleaned analytic)
 use "$OUT_CLEAN", clear
 _mk_label
 
@@ -18,6 +24,7 @@ if _rc {
         format starttime %tc
     }
 }
+
 capture confirm variable endtime
 if _rc {
     capture confirm variable endtime_raw
@@ -26,6 +33,7 @@ if _rc {
         format endtime %tc
     }
 }
+
 capture confirm variable interview_minutes
 if _rc {
     capture confirm variable starttime
@@ -38,6 +46,7 @@ if _rc {
     }
 }
 
+* ---------- Summary by mode ----------
 preserve
     collapse (count) N = interview_minutes (mean) mean_long = interview_minutes (sd) sd = interview_minutes, by($MODE)
     tostring $MODE, gen(mode_str)
@@ -51,58 +60,45 @@ preserve
     save `__time'
 restore
 
-* ===== Long vs short FCS/FES modules =====
-tempfile __tests
-postfile __h str20 stat str10 mode_str double mean_long mean_short tstat pval N using `__tests', replace
-
-capture confirm variable FCS
-local rcFCS = _rc
-capture confirm variable FCS_S
-local rcFCSS = _rc
-if (`rcFCS'==0 & `rcFCSS'==0) {
-    gen byte __hasFCS = !missing(FCS) & !missing(FCS_S)
-    quietly count if __hasFCS
-    if (r(N)>0) {
-        quietly ttest FCS == FCS_S if __hasFCS
-        post __h ("FCS") ("All") (r(mu_1)) (r(mu_2)) (r(t)) (r(p)) (r(N_1))
-        levelsof $MODE if __hasFCS, local(modes)
-        foreach m of local modes {
-            quietly ttest FCS == FCS_S if __hasFCS & $MODE==`m'
-            local modestring = cond(`m'==0, "F2F", "Remote")
-            post __h ("FCS") ("`modestring'") (r(mu_1)) (r(mu_2)) (r(t)) (r(p)) (r(N_1))
-        }
-    }
-    drop __hasFCS
-}
-
-capture confirm variable FES
-local rcFES = _rc
-capture confirm variable FES_S
-local rcFESS = _rc
-if (`rcFES'==0 & `rcFESS'==0) {
-    gen byte __hasFES = !missing(FES) & !missing(FES_S)
-    quietly count if __hasFES
-    if (r(N)>0) {
-        quietly ttest FES == FES_S if __hasFES
-        post __h ("FES") ("All") (r(mu_1)) (r(mu_2)) (r(t)) (r(p)) (r(N_1))
-        levelsof $MODE if __hasFES, local(modes)
-        foreach m of local modes {
-            quietly ttest FES == FES_S if __hasFES & $MODE==`m'
-            local modestring = cond(`m'==0, "F2F", "Remote")
-            post __h ("FES") ("`modestring'") (r(mu_1)) (r(mu_2)) (r(t)) (r(p)) (r(N_1))
-        }
-    }
-    drop __hasFES
-}
-
-postclose __h
-use `__tests', clear
-gen sd = .
-save `__tests', replace
-
+* Export interview-time summary
 use `__time', clear
-append using `__tests'
-order stat mode_str mean_long mean_short sd tstat pval N
-_xlsx_export, sheet("ModuleLength")
+_xlsx_export, sheet("Interview_Time")
 
-display as result "12_module_length.do complete → ModuleLength sheet"
+* ===== Long vs short FCS modules (paired) =====
+tempfile __tests
+preserve
+    keep FCS FCS_S $MODE
+
+    * Ensure numeric fields to avoid type issues
+    _ensure_numeric FCS
+    local F1 `r(name)'
+    _ensure_numeric FCS_S
+    local F2 `r(name)'
+
+    * Keep only rows with both values
+    keep if !missing(`F1', `F2')
+
+    * Paired t-test overall
+    quietly ttest `F1' == `F2'
+    scalar t_all = r(t)
+    scalar p_all = r(p)
+    quietly summarize `F1'
+    scalar m_long  = r(mean)
+    quietly summarize `F2'
+    scalar m_short = r(mean)
+    scalar diff    = m_long - m_short
+    scalar Npairs  = r(N)
+
+    * Build tiny results table
+    clear
+    set obs 1
+    gen str20 stat = "FCS long vs short"
+    gen double mean_long  = m_long
+    gen double mean_short = m_short
+    gen double diff_mean  = diff
+    gen double tstat      = t_all
+    gen double pval       = p_all
+    gen double N          = Npairs
+
+    _xlsx_export, sheet("FCS_Paired")
+restore

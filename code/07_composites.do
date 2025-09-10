@@ -1,3 +1,7 @@
+*======================================================
+* FILE: code/07_composites.do
+*======================================================
+
 *******************************************************
 * 07_composites.do — Composite indicators by mode
 *******************************************************
@@ -12,6 +16,7 @@ _mk_label
 * Regress CARI/rCARI on modality and export coefficients
 tempfile __coef
 postfile _p str8 outcome double intercept coef_remote using `__coef'
+
 foreach y in CARI rCARI {
     capture confirm variable `y'
     if !_rc {
@@ -22,8 +27,7 @@ foreach y in CARI rCARI {
     }
 }
 postclose _p
-use `__coef', clear
-rename (v1 v2 v3) (outcome intercept coef_remote)
-_xlsx_export, sheet("Composites")
 
-display as result "07_composites.do complete → Composites sheet"
+use `__coef', clear
+order outcome intercept coef_remote
+_xlsx_export, sheet("Composites")

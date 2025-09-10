@@ -1,20 +1,44 @@
+*======================================================
+* FILE: code/06_balance.do
+*======================================================
+
 *******************************************************
 * 06_balance.do — Baseline balance by modality (Tbls)
 *******************************************************
 
 version 17
 set more off
-do "00_utils.do"
 
-* Pick dataset (analytic preferred if exists)
-capture confirm file "$IN_ANALYTIC"
-if _rc {
-    use "$OUT_CLEAN", clear
+* Always load helpers
+do "$CODE/00_utils.do"
+
+* Pick dataset (prefer the one with indices and both modes)
+capture confirm file "$IN_FOR_TABLES"
+if !_rc {
+    use "$IN_FOR_TABLES", clear
 }
 else {
-    use "$IN_ANALYTIC", clear
+    capture confirm file "$OUT_CLEAN"
+    if !_rc use "$OUT_CLEAN", clear
+    else    use "$IN_ANALYTIC", clear
 }
+
 _mk_label
+
+* Ensure we actually have two groups
+quietly levelsof $MODE if !missing($MODE), local(L)
+local has0 = strpos("`L'","0")>0
+local has1 = strpos("`L'","1")>0
+if !(`has0' & `has1') {
+    di as error "Balance: only one modality present; skipping."
+    preserve
+        clear
+        set obs 1
+        gen note = "Only one modality present; balance table skipped."
+        _xlsx_export, sheet("Balance")
+    restore
+    exit
+}
 
 tempfile bal
 capture postutil clear
@@ -37,18 +61,7 @@ foreach v of global BAL_VARS {
     local d  = `m1' - `m0'
     post `H' ("`v'") (`m0') (`m1') (`d') (`t') (`p') (`n0') (`n1')
 }
-
 postclose `H'
+
 use "`bal'", clear
-label var varname     "Variable"
-label var mean_f2f    "Mean (F2F)"
-label var mean_remote "Mean (Remote)"
-label var diff        "Diff (R - F2F)"
-label var tstat       "t-stat"
-label var pval        "p-value"
-label var N_f2f       "N F2F"
-label var N_remote    "N Remote"
-
 _xlsx_export, sheet("Balance")
-
-display as result "06_balance.do complete → Balance sheet"
