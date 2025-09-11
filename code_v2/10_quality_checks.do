@@ -6,32 +6,6 @@ version 17
 set more off
 do "00_utils.do"
 
-* Helpers (safe if duplicated)
-capture program drop _regw
-program define _regw
-    version 17
-    syntax anything
-    if "$WGT" != "" {
-        `anything' [pweight=$WGT]
-    }
-    else {
-        `anything'
-    }
-end
-
-capture program drop _xlsx_export
-program define _xlsx_export
-    syntax , Sheet(string)
-    local file "$OUT_XLSX"
-    capture confirm file "`file'"
-    if _rc {
-        export excel using "`file'", sheet("`sheet'") firstrow(variables) replace
-    }
-    else {
-        export excel using "`file'", sheet("`sheet'", replace) firstrow(variables)
-    }
-end
-
 use "$OUT_CLEAN", clear
 _mk_label
 

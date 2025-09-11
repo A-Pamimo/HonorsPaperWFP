@@ -7,54 +7,6 @@ set more off
 
 do "00_utils.do"
 
-* ---- NEW: run command with weights only if $WGT is set (helper, safe to keep) ----
-capture program drop _regw
-program define _regw
-    version 17
-    syntax anything
-    if "$WGT" != "" {
-        `anything' [pweight=$WGT]
-    }
-    else {
-        `anything'
-    }
-end
-* -----------------------------------------------------------
-
-* (These are harmless if duplicated across files.)
-capture program drop _xlsx_export
-program define _xlsx_export
-    // Export current dataset to Excel sheet, preserving other sheets
-    // Usage: _xlsx_export , sheet("SheetName")
-    syntax , Sheet(string)
-    local file "$OUT_XLSX"
-    capture confirm file "`file'"
-    if _rc {
-        export excel using "`file'", sheet("`sheet'") firstrow(variables) replace
-    }
-    else {
-        export excel using "`file'", sheet("`sheet'", replace) firstrow(variables)
-    }
-end
-
-capture program drop _sheet_exists
-program define _sheet_exists, rclass
-    // Return r(found)=1 if sheet exists in $OUT_XLSX, else 0
-    syntax , Sheet(string)
-    tempfile __s
-    capture noisily import excel using "$OUT_XLSX", describe clear
-    if _rc {
-        return scalar found = 0
-        exit
-    }
-    local sheets = r(worksheetlist)
-    local found 0
-    foreach s of local sheets {
-        if "`s'" == "`sheet'" local found 1
-    }
-    return scalar found = `found'
-end
-
 * ----------------------------------------------------
 * 1) Load the best available input
 * ----------------------------------------------------

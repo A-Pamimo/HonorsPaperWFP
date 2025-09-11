@@ -42,6 +42,21 @@ program define _mk_label
 end
 
 * ----------------------------------------------------
+* _regw — run command with pweight=$WGT if defined
+* ----------------------------------------------------
+capture program drop _regw
+program define _regw
+    version 17
+    syntax anything
+    if "$WGT" != "" {
+        `anything' [pweight=$WGT]
+    }
+    else {
+        `anything'
+    }
+end
+
+* ----------------------------------------------------
 * _xlsx_export — robust Excel exporter
 *   - Creates workbook/dir if missing
 *   - Checks whether sheet exists and chooses replace vs create

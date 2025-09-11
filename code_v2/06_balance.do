@@ -10,7 +10,7 @@ version 17
 set more off
 
 * Always load helpers
-do "$CODE/00_utils.do"
+do "00_utils.do"
 
 * Pick dataset (prefer the one with indices and both modes)
 capture confirm file "$IN_FOR_TABLES"
