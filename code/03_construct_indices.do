@@ -93,37 +93,85 @@ if _rc {
 * ===== LCS =====
 capture confirm variable LCS
 if _rc {
-    local stress "Lcs_stress_DomAsset Lcs_stress_HealthEdu Lcs_stress_Saving Lcs_stress_BorrowCash LcsEN_stress_DomAsset LcsEN_stress_HealthEdu LcsEN_stress_Saving LcsEN_stress_BorrowCash"
-    local crisis "Lcs_crisis_ProdAssets Lcs_crisis_DomMigration Lcs_crisis_ChildWork LcsEN_crisis_ProdAssets LcsEN_crisis_DomMigration LcsEN_crisis_ChildWork"
-    local emergency "Lcs_em_ResAsset Lcs_em_Begged Lcs_em_FemAnimal LcsEN_em_ResAsset LcsEN_em_Begged LcsEN_em_FemAnimal"
-    gen byte LCS = 0
     local found_any 0
-    foreach v of local stress {
+
+    * Strategy 1: detailed variable names
+    local stress1 "Lcs_stress_DomAsset Lcs_stress_HealthEdu Lcs_stress_Saving Lcs_stress_BorrowCash LcsEN_stress_DomAsset LcsEN_stress_HealthEdu LcsEN_stress_Saving LcsEN_stress_BorrowCash"
+    local crisis1 "Lcs_crisis_ProdAssets Lcs_crisis_DomMigration Lcs_crisis_ChildWork LcsEN_crisis_ProdAssets LcsEN_crisis_DomMigration LcsEN_crisis_ChildWork"
+    local emergency1 "Lcs_em_ResAsset Lcs_em_Begged Lcs_em_FemAnimal LcsEN_em_ResAsset LcsEN_em_Begged LcsEN_em_FemAnimal"
+
+    local stress_vars ""
+    local crisis_vars ""
+    local emergency_vars ""
+    foreach v of local stress1 {
         capture confirm variable `v'
-        if !_rc {
+        if !_rc local stress_vars "`stress_vars' `v'"
+    }
+    foreach v of local crisis1 {
+        capture confirm variable `v'
+        if !_rc local crisis_vars "`crisis_vars' `v'"
+    }
+    foreach v of local emergency1 {
+        capture confirm variable `v'
+        if !_rc local emergency_vars "`emergency_vars' `v'"
+    }
+    local any "`stress_vars' `crisis_vars' `emergency_vars'"
+    if "`any'" != "" {
+        gen byte LCS = 0
+        foreach v of local stress_vars {
             replace LCS = max(LCS, 1*(`v'==1)) if !missing(`v')
-            local found_any 1
         }
-    }
-    foreach v of local crisis {
-        capture confirm variable `v'
-        if !_rc {
+        foreach v of local crisis_vars {
             replace LCS = max(LCS, 2*(`v'==1)) if !missing(`v')
-            local found_any 1
         }
-    }
-    foreach v of local emergency {
-        capture confirm variable `v'
-        if !_rc {
+        foreach v of local emergency_vars {
             replace LCS = max(LCS, 3*(`v'==1)) if !missing(`v')
+        }
+        local found_any 1
+    }
+
+    * Strategy 2: generic numbered variables
+    if !`found_any' {
+        local stress2 "lcs_stress1 lcs_stress2 lcs_stress3 stress1 stress2 stress3"
+        local crisis2 "lcs_crisis1 lcs_crisis2 lcs_crisis3 crisis1 crisis2 crisis3"
+        local emergency2 "lcs_emerg1 lcs_emergency1 lcs_emergency2 lcs_emergency3 emerg1 emerg2 emerg3"
+
+        local stress_vars ""
+        local crisis_vars ""
+        local emergency_vars ""
+        foreach v of local stress2 {
+            capture confirm variable `v'
+            if !_rc local stress_vars "`stress_vars' `v'"
+        }
+        foreach v of local crisis2 {
+            capture confirm variable `v'
+            if !_rc local crisis_vars "`crisis_vars' `v'"
+        }
+        foreach v of local emergency2 {
+            capture confirm variable `v'
+            if !_rc local emergency_vars "`emergency_vars' `v'"
+        }
+        local any "`stress_vars' `crisis_vars' `emergency_vars'"
+        if "`any'" != "" {
+            egen byte _stress_any = rowmax(`stress_vars')
+            egen byte _crisis_any = rowmax(`crisis_vars')
+            egen byte _emerg_any  = rowmax(`emergency_vars')
+            replace _stress_any = 0 if missing(_stress_any)
+            replace _crisis_any = 0 if missing(_crisis_any)
+            replace _emerg_any  = 0 if missing(_emerg_any)
+            gen byte LCS = 0
+            replace LCS = max(LCS,1) if _stress_any
+            replace LCS = max(LCS,2) if _crisis_any
+            replace LCS = max(LCS,3) if _emerg_any
+            drop _stress_any _crisis_any _emerg_any
             local found_any 1
         }
     }
+
     if !`found_any' {
-        replace LCS = .
+        gen byte LCS = .
     }
 }
-
 * ===== FES =====
 capture confirm variable FES
 if _rc {
@@ -137,8 +185,8 @@ if _rc {
         gen double FES = `chosen'
     }
     else {
-        local food_cand "food_exp foodexpenditure FoodExp"
-        local tot_cand "total_exp totalexpenditure exp_total"
+        local food_cand "exp_food food_exp foodexpenditure FoodExp food_expenses"
+        local tot_cand "exp_total total_exp totalexpenditure exp_tot total_expenditure total_expenses"
         local food_var ""
         local tot_var ""
         foreach v of local food_cand {
@@ -191,63 +239,6 @@ if _rc {
     else {
         gen double HHS = .
     }
-}
-
-* ===== FES =====
-capture confirm variable FES
-if _rc {
-    local food_exp_vars "exp_food food_exp foodexpenditure food_expenses"
-    local tot_exp_vars  "exp_total total_exp total_expenditure total_expenses exp_tot"
-    local fvar ""
-    local tvar ""
-    foreach v of local food_exp_vars {
-        capture confirm variable `v'
-        if !_rc & "`fvar'"=="" local fvar "`v'"
-    }
-    foreach v of local tot_exp_vars {
-        capture confirm variable `v'
-        if !_rc & "`tvar'"=="" local tvar "`v'"
-    }
-    if "`fvar'"!="" & "`tvar'"!="" {
-        gen double FES = 100*(`fvar'/`tvar')
-    }
-    else {
-        gen double FES = .
-    }
-}
-
-* ===== LCS =====
-capture confirm variable LCS
-if _rc {
-    local stress   "lcs_stress1 lcs_stress2 lcs_stress3 stress1 stress2 stress3"
-    local crisis   "lcs_crisis1 lcs_crisis2 lcs_crisis3 crisis1 crisis2 crisis3"
-    local emergency "lcs_emerg1 lcs_emergency1 lcs_emergency2 lcs_emergency3 emerg1 emerg2 emerg3"
-    local stress_vars   ""
-    local crisis_vars   ""
-    local emergency_vars ""
-    foreach v of local stress {
-        capture confirm variable `v'
-        if !_rc local stress_vars "`stress_vars' `v'"
-    }
-    foreach v of local crisis {
-        capture confirm variable `v'
-        if !_rc local crisis_vars "`crisis_vars' `v'"
-    }
-    foreach v of local emergency {
-        capture confirm variable `v'
-        if !_rc local emergency_vars "`emergency_vars' `v'"
-    }
-    egen byte _stress_any = rowmax(`stress_vars')
-    egen byte _crisis_any = rowmax(`crisis_vars')
-    egen byte _emerg_any  = rowmax(`emergency_vars')
-    replace _stress_any = 0 if missing(_stress_any)
-    replace _crisis_any = 0 if missing(_crisis_any)
-    replace _emerg_any  = 0 if missing(_emerg_any)
-    gen byte LCS = 0
-    replace LCS = max(LCS,1) if _stress_any
-    replace LCS = max(LCS,2) if _crisis_any
-    replace LCS = max(LCS,3) if _emerg_any
-    drop _stress_any _crisis_any _emerg_any
 }
 
 * ===== Income source & change =====
