@@ -100,13 +100,18 @@ if (!is.na(inc_primary) && inc_primary %in% names(df)) {
 } else {
   # crude reconstruction placeholder: document in Appendix A1 after inspecting sources
   alt1 <- pick_first("CARI_Inc", c("CARI_Inc","CARI_Inc_Re","CARI_Inc_Raw","rCARI_Inc_~","HHIncome_3pt","HHIncChg_3pt"))
-  df <- df %>% mutate(Income4 = factor(case_when(
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) <= 1 ~ "lowest",
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 2 ~ "low",
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 3 ~ "medium",
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) >= 4 ~ "high",
-    TRUE ~ NA_character_
-  ), levels=c("lowest","low","medium","high")))
+  if (is.na(alt1)) {
+    warning("No alternative income column found; Income4 set to NA")
+    df <- df %>% mutate(Income4 = factor(NA_character_, levels=c("lowest","low","medium","high")))
+  } else {
+    df <- df %>% mutate(Income4 = factor(case_when(
+      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) <= 1 ~ "lowest",
+      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 2 ~ "low",
+      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 3 ~ "medium",
+      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) >= 4 ~ "high",
+      TRUE ~ NA_character_
+    ), levels=c("lowest","low","medium","high")))
+  }
 }
 
 # Controls (select one proxy per concept if available)
