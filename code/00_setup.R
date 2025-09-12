@@ -28,6 +28,6 @@ renv::record(setNames(rep("*", length(pkgs)), pkgs))
 renv::restore(confirm = FALSE)
 
 # Load utilities
-source(here::here("code","utils.R"))
+source(here::here("R","utils.R"))
 log_init()
 log_msg("00_setup.R complete")

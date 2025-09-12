@@ -3,7 +3,7 @@
 suppressPackageStartupMessages({
   library(tidyverse); library(data.table); library(modelsummary); library(gt); library(here)
 })
-source(here::here("code","utils.R")); log_msg("02_descriptives: start")
+source(here::here("R","utils.R")); log_msg("02_descriptives: start")
 
 analytic <- readRDS(here::here("output","intermediate","analytic_harmonized.rds"))
 

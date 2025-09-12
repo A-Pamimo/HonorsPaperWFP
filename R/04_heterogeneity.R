@@ -3,7 +3,7 @@
 suppressPackageStartupMessages({
   library(tidyverse); library(fixest); library(modelsummary); library(broom); library(here)
 })
-source(here::here("code","utils.R")); log_msg("04_heterogeneity: start")
+source(here::here("R","utils.R")); log_msg("04_heterogeneity: start")
 
 d <- readRDS(here::here("output","intermediate","analytic_harmonized.rds"))
 cluster_var <- cluster_picker(d)
