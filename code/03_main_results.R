@@ -4,7 +4,7 @@ suppressPackageStartupMessages({
   library(tidyverse); library(fixest); library(sandwich); library(clubSandwich)
   library(modelsummary); library(broom); library(here)
 })
-source(here::here("code","utils.R")); log_msg("03_main_results: start")
+source(here::here("R","utils.R")); log_msg("03_main_results: start")
 
 d <- readRDS(here::here("output","intermediate","analytic_harmonized.rds"))
 cluster_var <- cluster_picker(d)

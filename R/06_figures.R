@@ -3,7 +3,7 @@
 suppressPackageStartupMessages({
   library(tidyverse); library(ggplot2); library(ggdist); library(patchwork); library(here)
 })
-source(here::here("code","utils.R")); log_msg("06_figures: start")
+source(here::here("R","utils.R")); log_msg("06_figures: start")
 
 d <- readRDS(here::here("output","intermediate","analytic_harmonized.rds"))
 

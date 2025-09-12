@@ -5,7 +5,7 @@ suppressPackageStartupMessages({
   library(janitor); library(stringr); library(lubridate); library(here)
 })
 
-source(here::here("code","utils.R")); log_msg("01_prepare: start")
+source(here::here("R","utils.R")); log_msg("01_prepare: start")
 
 raw_path <- here::here("data","raw","Complete_BF_Household_Analysis.dta")
 stopifnot(file.exists(raw_path))
@@ -99,14 +99,7 @@ if (!is.na(inc_primary) && inc_primary %in% names(df)) {
   df <- df %>% mutate(Income4 = as_factor_safe(.data[[inc_primary]]))
 } else {
   # crude reconstruction placeholder: document in Appendix A1 after inspecting sources
-  alt1 <- pick_first(df, c("CARI_Inc","CARI_Inc_Re","CARI_Inc_Raw","rCARI_Inc_~","HHIncome_3pt","HHIncChg_3pt"))
-  df <- df %>% mutate(Income4 = factor(case_when(
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) <= 1 ~ "lowest",
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 2 ~ "low",
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 3 ~ "medium",
-    !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) >= 4 ~ "high",
-    TRUE ~ NA_character_
-  ), levels=c("lowest","low","medium","high")))
+
 }
 
 # Controls (select one proxy per concept if available)
