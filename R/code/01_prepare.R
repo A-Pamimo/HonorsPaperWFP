@@ -19,31 +19,31 @@ log_msg("Loaded rows:", nrow(df), " cols:", ncol(df))
 names_orig <- names(df)
 
 # --- Variable mapping per system prompt ---------------------------------------
-pick_first <- function(nm, candidates) {
-  for (c in candidates) {
+pick_first <- function(df, candidates) {
+  for (cand in candidates) {
     # allow regex-like shortnames (with ~)
-    c_regex <- gsub("~", ".*", c)
-    hit <- names(df)[str_detect(names(df), fixed(c, ignore_case = FALSE)) | str_detect(names(df), regex(c_regex, ignore_case = TRUE))]
+    c_regex <- gsub("~", ".*", cand)
+    hit <- names(df)[str_detect(names(df), fixed(cand, ignore_case = FALSE)) |
+                      str_detect(names(df), regex(c_regex, ignore_case = TRUE))]
     if (length(hit) > 0) return(hit[1])
   }
   return(NA_character_)
 }
 
 # Modality -> Remote factor(F2F, Remote)
-mod_candidates <- c("modality","modality_t","modality_l")
-mod_col <- pick_first("Modality", c("Modality","Modality_T~e","Modality_L~h"))
+mod_col <- pick_first(df, c("Modality","Modality_T~e","Modality_L~h"))
 if (is.na(mod_col)) stop("No modality column found by candidates")
 df <- df %>% mutate(Remote = ifelse(.data[[mod_col]] %in% c("Remote","Phone","CATI",1L, "1","remote","phone"), 1L, 0L),
                     Remote = factor(Remote, levels=c(0,1), labels=c("F2F","Remote")))
 
 # Country
-country_col <- pick_first("country", c("FCG_Country","FCG_Countr~r","ADMIN1Name","S_Geo_Admin1"))
+country_col <- pick_first(df, c("FCG_Country","FCG_Countr~r","ADMIN1Name","S_Geo_Admin1"))
 if (is.na(country_col)) country_col <- "country" # fallback if already harmonized
 df <- df %>% mutate(country_raw = .data[[country_col]], country = as_factor_safe(.data[[country_col]]))
 
 # FCS and groups
-fcs_col <- pick_first("FCS", c("FCS"))
-fcs_grp <- pick_first("FCS group", c("FCSCat28","FCS_4pt_CARI","FCS_4pt_CA~y"))
+fcs_col <- pick_first(df, c("FCS"))
+fcs_grp <- pick_first(df, c("FCSCat28","FCS_4pt_CARI","FCS_4pt_CA~y"))
 df <- df %>% mutate(FCS = suppressWarnings(as.numeric(.data[[fcs_col]])))
 if (!is.na(fcs_grp) && fcs_grp %in% names(df)) {
   df <- df %>% mutate(FCS_group = as_factor_safe(.data[[fcs_grp]]))
@@ -52,8 +52,8 @@ if (!is.na(fcs_grp) && fcs_grp %in% names(df)) {
 }
 
 # rCSI and group
-rcsi_col <- pick_first("rCSI", c("rCSI","RCSI","rcsi"))
-rcsi_grp <- pick_first("rCSI group", c("rCSI_Group"))
+rcsi_col <- pick_first(df, c("rCSI","RCSI","rcsi"))
+rcsi_grp <- pick_first(df, c("rCSI_Group"))
 if (!is.na(rcsi_col)) df <- df %>% mutate(rCSI = suppressWarnings(as.numeric(.data[[rcsi_col]])))
 if (!is.na(rcsi_grp) && rcsi_grp %in% names(df)) {
   df <- df %>% mutate(rCSI_group = as_factor_safe(.data[[rcsi_grp]]))
@@ -64,7 +64,7 @@ if (!is.na(rcsi_grp) && rcsi_grp %in% names(df)) {
 }
 
 # LCS severity flags
-lcs_cat <- pick_first("LCS_Cat", c("LCS_Cat"))
+lcs_cat <- pick_first(df, c("LCS_Cat"))
 lcs_prefixes <- c("^lcs_","^lcsen_","^lcsen_em_","^lcs_stress","^lcs_crisis","^lcs_em_")
 lcs_cols <- names(df)[str_detect(names(df), paste(lcs_prefixes, collapse="|"))]
 if (!is.na(lcs_cat) && lcs_cat %in% names(df)) {
@@ -80,8 +80,8 @@ df <- df %>% mutate(LCS_crisem = if ("LCS_Cat" %in% names(.)) {
                     })
 
 # FES and bands
-fes_col <- pick_first("FES", c("FES","fes"))
-fes_band <- pick_first("FES band", c("FES_Cat","CARI_FES_Cat","CC_FES_Cat"))
+fes_col <- pick_first(df, c("FES","fes"))
+fes_band <- pick_first(df, c("FES_Cat","CARI_FES_Cat","CC_FES_Cat"))
 if (!is.na(fes_col)) {
   df <- df %>% mutate(FES = suppressWarnings(as.numeric(.data[[fes_col]])),
                       FES = ifelse(!is.na(FES) & FES > 1, FES/100, FES))
@@ -94,24 +94,12 @@ if (!is.na(fes_col)) {
 }
 
 # Income (prefer 4-cat CARI_Inc_Cat; else reconstruct)
-inc_primary <- pick_first("CARI_Inc_Cat", c("CARI_Inc_Cat"))
+inc_primary <- pick_first(df, c("CARI_Inc_Cat"))
 if (!is.na(inc_primary) && inc_primary %in% names(df)) {
   df <- df %>% mutate(Income4 = as_factor_safe(.data[[inc_primary]]))
 } else {
   # crude reconstruction placeholder: document in Appendix A1 after inspecting sources
-  alt1 <- pick_first("CARI_Inc", c("CARI_Inc","CARI_Inc_Re","CARI_Inc_Raw","rCARI_Inc_~","HHIncome_3pt","HHIncChg_3pt"))
-  if (is.na(alt1)) {
-    warning("No alternative income column found; Income4 set to NA")
-    df <- df %>% mutate(Income4 = factor(NA_character_, levels=c("lowest","low","medium","high")))
-  } else {
-    df <- df %>% mutate(Income4 = factor(case_when(
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) <= 1 ~ "lowest",
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 2 ~ "low",
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 3 ~ "medium",
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) >= 4 ~ "high",
-      TRUE ~ NA_character_
-    ), levels=c("lowest","low","medium","high")))
-  }
+
 }
 
 # Controls (select one proxy per concept if available)
@@ -119,7 +107,8 @@ pick_one <- function(cands) {
   hit <- NA_character_
   for (c in cands) {
     c_regex <- gsub("~", ".*", c)
-    nm <- names(df)[str_detect(names(df), fixed(c, ignore_case = FALSE)) | str_detect(names(df), regex(c_regex, ignore_case = TRUE))]
+    nm <- names(df)[str_detect(names(df), fixed(c, ignore_case = FALSE)) |
+                      str_detect(names(df), regex(c_regex, ignore_case = TRUE))]
     if (length(nm) > 0) { hit <- nm[1]; break }
   }
   hit
