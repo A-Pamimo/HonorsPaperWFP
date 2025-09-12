@@ -5,7 +5,7 @@ suppressPackageStartupMessages({
   library(janitor); library(stringr); library(lubridate); library(here)
 })
 
-source(here::here("code","utils.R")); log_msg("01_prepare: start")
+source(here::here("R","utils.R")); log_msg("01_prepare: start")
 
 raw_path <- here::here("data","raw","Complete_BF_Household_Analysis.dta")
 stopifnot(file.exists(raw_path))
