@@ -114,7 +114,8 @@ pick_one <- function(cands) {
   hit <- NA_character_
   for (c in cands) {
     c_regex <- gsub("~", ".*", c)
-    nm <- names(df)[str_detect(names(df), fixed(c, ignore_case = FALSE)) | str_detect(names(df), regex(c_regex, ignore_case = TRUE))]
+    nm <- names(df)[str_detect(names(df), fixed(c, ignore_case = FALSE)) |
+                      str_detect(names(df), regex(c_regex, ignore_case = TRUE))]
     if (length(nm) > 0) { hit <- nm[1]; break }
   }
   hit
