@@ -30,8 +30,8 @@ if ("FES" %in% names(d)) {
 
 # Categorical: LCS_crisem via logit
 if ("LCS_crisem" %in% names(d)) {
-  f <- as.formula(paste0("LCS_crisem ~ Remote + ", ctrl_fml, " + factor(country)"))
-  mods[["LCS_logit"]] <- glm(f, data = d, family = binomial())
+  f <- as.formula(paste0("LCS_crisem ~ Remote + ", ctrl_fml, " | country"))
+  mods[["LCS_logit"]] <- feglm(f, data = d, family = binomial(), cluster = cluster_var)
 }
 
 tex <- modelsummary(mods, output = "latex",
