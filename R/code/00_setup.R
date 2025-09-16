@@ -23,5 +23,5 @@ if (!file.exists(here::here("renv.lock"))) {
   try(renv::restore(), silent = TRUE)
 }
 
-source(here::here("code","utils.R"))
+source(here::here("utils.R"))
 log_msg("00_setup.R complete")
