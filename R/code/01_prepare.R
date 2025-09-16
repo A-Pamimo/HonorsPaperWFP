@@ -4,7 +4,7 @@ suppressPackageStartupMessages({
   library(janitor); library(stringr); library(lubridate); library(here)
 })
 
-source(here::here("R","utils.R")); log_msg("01_prepare: start")
+source(here::here("code","utils.R")); log_msg("01_prepare: start")
 
 # --- Input
 raw_path <- here::here("data","raw","Complete_BF_Household_Analysis.dta")
@@ -12,14 +12,11 @@ stopifnot(file.exists(raw_path))
 
 df <- haven::read_dta(raw_path) %>%
   janitor::clean_names()
-
 log_msg("Loaded rows:", nrow(df), " cols:", ncol(df))
 
-# Keep a copy of original names for mapping
 names_orig <- names(df)
 
-# --- Variable mapping helpers --------------------------------------------------
-# pick_first: return first column name that matches any candidate (supports "~" wildcard)
+# helper
 pick_first <- function(nm, candidates) {
   for (c in candidates) {
     c_regex <- gsub("~", ".*", c)
@@ -30,25 +27,23 @@ pick_first <- function(nm, candidates) {
   return(NA_character_)
 }
 
-# --- Modality -> Remote factor(F2F, Remote) -----------------------------------
+# Modality
 mod_col <- pick_first("Modality", c("Modality","Modality_T~e","Modality_L~h"))
-if (is.na(mod_col)) stop("No modality column found by candidates")
-df <- df %>%
-  mutate(
-    Remote = ifelse(.data[[mod_col]] %in% c("Remote","Phone","CATI",1L,"1","remote","phone"), 1L, 0L),
-    Remote = factor(Remote, levels = c(0,1), labels = c("F2F","Remote"))
-  )
+stopifnot(!is.na(mod_col))
+df <- df %>% mutate(
+  Remote = ifelse(.data[[mod_col]] %in% c("Remote","Phone","CATI",1L,"1","remote","phone"), 1L, 0L),
+  Remote = factor(Remote, levels = c(0,1), labels = c("F2F","Remote"))
+)
 
-# --- Country -------------------------------------------------------------------
+# Country
 country_col <- pick_first("country", c("FCG_Country","FCG_Countr~r","ADMIN1Name","S_Geo_Admin1"))
-if (is.na(country_col)) country_col <- "country" # fallback if already harmonized
-df <- df %>%
-  mutate(
-    country_raw = .data[[country_col]],
-    country = as_factor_safe(.data[[country_col]])
-  )
+if (is.na(country_col)) country_col <- "country"
+df <- df %>% mutate(
+  country_raw = .data[[country_col]],
+  country = as_factor_safe(.data[[country_col]])
+)
 
-# --- FCS and groups ------------------------------------------------------------
+# FCS
 fcs_col <- pick_first("FCS", c("FCS"))
 fcs_grp <- pick_first("FCS group", c("FCSCat28","FCS_4pt_CARI","FCS_4pt_CA~y"))
 df <- df %>% mutate(FCS = suppressWarnings(as.numeric(.data[[fcs_col]])))
@@ -59,12 +54,10 @@ if (!is.na(fcs_grp) && fcs_grp %in% names(df)) {
                                       labels = c("poor","borderline","acceptable")))
 }
 
-# --- rCSI and group ------------------------------------------------------------
+# rCSI
 rcsi_col <- pick_first("rCSI", c("rCSI","RCSI","rcsi"))
 rcsi_grp <- pick_first("rCSI group", c("rCSI_Group"))
-if (!is.na(rcsi_col)) {
-  df <- df %>% mutate(rCSI = suppressWarnings(as.numeric(.data[[rcsi_col]])))
-}
+if (!is.na(rcsi_col)) df <- df %>% mutate(rCSI = suppressWarnings(as.numeric(.data[[rcsi_col]])))
 if (!is.na(rcsi_grp) && rcsi_grp %in% names(df)) {
   df <- df %>% mutate(rCSI_group = as_factor_safe(.data[[rcsi_grp]]))
 } else if (!is.na(rcsi_col)) {
@@ -77,83 +70,46 @@ if (!is.na(rcsi_grp) && rcsi_grp %in% names(df)) {
   )
 }
 
-# --- LCS severity flags --------------------------------------------------------
+# LCS
 lcs_cat <- pick_first("LCS_Cat", c("LCS_Cat"))
 lcs_prefixes <- c("^lcs_","^lcsen_","^lcsen_em_","^lcs_stress","^lcs_crisis","^lcs_em_")
 lcs_cols <- names(df)[str_detect(names(df), paste(lcs_prefixes, collapse = "|"))]
-
 if (!is.na(lcs_cat) && lcs_cat %in% names(df)) {
   df <- df %>% mutate(LCS_Cat = as_factor_safe(.data[[lcs_cat]]))
 }
-
 df <- df %>% mutate(
   LCS_crisem = if ("LCS_Cat" %in% names(.)) {
     .data[["LCS_Cat"]] %in% c("Crisis","Emergency")
   } else if (length(lcs_cols) > 0) {
-    # proxy: if any emergency/crisis coping strategy used (NA -> FALSE)
-    rowSums(across(all_of(lcs_cols), ~ as.numeric(.x %in% c(1, TRUE, "yes", "Yes"))), na.rm = TRUE) > 0
-  } else {
-    NA
-  }
+    rowSums(across(all_of(lcs_cols), ~ as.numeric(.x %in% c(1,TRUE,"yes","Yes"))), na.rm = TRUE) > 0
+  } else NA
 )
 
-# --- FES and bands -------------------------------------------------------------
+# FES
 fes_col  <- pick_first("FES", c("FES","fes"))
 fes_band <- pick_first("FES band", c("FES_Cat","CARI_FES_Cat","CC_FES_Cat"))
 if (!is.na(fes_col)) {
-  df <- df %>%
-    mutate(
-      FES = suppressWarnings(as.numeric(.data[[fes_col]])),
-      FES = ifelse(!is.na(FES) & FES > 1, FES/100, FES)
-    )
+  df <- df %>% mutate(
+    FES = suppressWarnings(as.numeric(.data[[fes_col]])),
+    FES = ifelse(!is.na(FES) & FES > 1, FES/100, FES)
+  )
   if (!is.na(fes_band) && fes_band %in% names(df)) {
     df <- df %>% mutate(FES_band = as_factor_safe(.data[[fes_band]]))
   } else {
     df <- df %>% mutate(
-      FES_band = cut(FES, breaks = c(-Inf, 0.50, 0.65, 0.75, Inf),
+      FES_band = cut(FES, breaks = c(-Inf,0.50,0.65,0.75,Inf),
                      labels = c("<50%","50–65%","65–75%","≥75%"))
     )
   }
 }
 
-# --- Income (prefer 4-cat CARI_Inc_Cat; else reconstruct) ----------------------
+# Income
 inc_primary <- pick_first("CARI_Inc_Cat", c("CARI_Inc_Cat"))
 if (!is.na(inc_primary) && inc_primary %in% names(df)) {
   df <- df %>% mutate(Income4 = as_factor_safe(.data[[inc_primary]]))
-} else {
-  # crude reconstruction placeholder: document exact logic in Appendix A1 after inspecting the instrument
-  alt1 <- pick_first("CARI_Inc", c("CARI_Inc","CARI_Inc_Re","CARI_Inc_Raw","rCARI_Inc_~","HHIncome_3pt","HHIncChg_3pt"))
-<<<<<<< HEAD
-  if (is.na(alt1)) {
-    warning("No alternative income column found; Income4 set to NA")
-    df <- df %>% mutate(Income4 = factor(NA_character_, levels=c("lowest","low","medium","high")))
-  } else {
-    df <- df %>% mutate(Income4 = factor(case_when(
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) <= 1 ~ "lowest",
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 2 ~ "low",
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 3 ~ "medium",
-      !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) >= 4 ~ "high",
-      TRUE ~ NA_character_
-    ), levels=c("lowest","low","medium","high")))
-  }
-=======
-  df <- df %>%
-    mutate(
-      Income4 = factor(
-        case_when(
-          !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) <= 1 ~ "lowest",
-          !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 2 ~ "low",
-          !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) == 3 ~ "medium",
-          !is.na(.data[[alt1]]) & as.numeric(.data[[alt1]]) >= 4 ~ "high",
-          TRUE ~ NA_character_
-        ),
-        levels = c("lowest","low","medium","high")
-      )
-    )
->>>>>>> acdaba9 (Commit all changes in R folder)
 }
 
-# --- Controls (select one proxy per concept if available) ----------------------
+# Controls
 pick_one <- function(cands) {
   hit <- NA_character_
   for (c in cands) {
@@ -164,7 +120,6 @@ pick_one <- function(cands) {
   }
   hit
 }
-
 ctrls <- list(
   HHSize        = pick_one(c("HHSize","S_hh_size")),
   RESPFemale    = pick_one(c("RESPFemale")),
@@ -175,12 +130,10 @@ ctrls <- list(
   asset_index   = pick_one(c("EXP_pctile","WealthSimp~s","WealthBasi~s","WealthAdvE~s","MDD_Index")),
   earners       = pick_one(c("R_Num_Adult","R_Num_Male","R_Num_Female"))
 )
-
-# Drop any NA selections and log the final chosen controls
 ctrls_final <- ctrls[!vapply(ctrls, is.na, logical(1))]
-log_msg("Chosen controls:", if (length(ctrls_final)) paste(names(ctrls_final), collapse = ", ") else "NONE")
+log_msg("Chosen controls:", paste(names(ctrls_final), collapse=", "))
 
-# --- Variable map (for Appendix A1) --------------------------------------------
+# varmap
 varmap <- tibble(
   analysis_name = c("Remote","country","country_raw",
                     "FCS","FCS_group","rCSI","rCSI_group",
@@ -195,22 +148,18 @@ varmap <- tibble(
 )
 readr::write_csv(varmap, here::here("output","intermediate","TableA1_varmap.csv"))
 
-# --- Build analytic dataset ----------------------------------------------------
+# analytic dataset
 keep_ctrls <- unlist(ctrls_final, use.names = FALSE)
-
 analytic <- df %>%
   select(any_of(c(
     "Remote","country","country_raw",
     "FCS","FCS_group","rCSI","rCSI_group",
-    "LCS_Cat","LCS_crisem",
-    "FES","FES_band","Income4",
+    "LCS_Cat","LCS_crisem","FES","FES_band","Income4",
     keep_ctrls
   ))) %>%
-  # rename control columns to their analysis names
   rename(!!!setNames(keep_ctrls, names(ctrls_final))) %>%
   mutate(across(where(is.labelled), haven::zap_labels))
 
-# --- Save outputs --------------------------------------------------------------
 saveRDS(analytic, here::here("output","intermediate","analytic_harmonized.rds"))
 readr::write_csv(analytic, here::here("output","intermediate","analytic_harmonized.csv"))
 log_msg("01_prepare: saved analytic_harmonized.* and TableA1_varmap.csv")
