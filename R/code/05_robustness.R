@@ -2,7 +2,7 @@
 suppressPackageStartupMessages({
   library(tidyverse); library(fixest); library(modelsummary); library(broom); library(here)
 })
-source(here::here("code","utils.R")); log_msg("05_robustness: start")
+source(here::here("utils.R")); log_msg("05_robustness: start")
 
 d <- readRDS(here::here("output","intermediate","analytic_harmonized.rds"))
 cluster_var <- cluster_picker(d)

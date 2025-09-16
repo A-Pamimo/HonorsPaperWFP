@@ -1,0 +1,30 @@
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p \num{< 0.1}, * p \num{< 0.05}, ** p \num{< 0.01}, *** p \num{< 0.001}},
+note{ }={Controls: HHSize + HHH\_Sex + HHH\_Age + earners. FE: country where feasible; enumerator FE when available. SEs clustered at: robust (HC). FES winsorized at 1st/99th pct. Binary outcomes via FE-logit/GLM.},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]},
+column{2}={}{halign=c,},
+column{1}={}{halign=l,},
+hline{10}={1-2}{solid, black, 0.05em},
+}                     %% tabularray inner close
+\toprule
+& FES\_w \\ \midrule %% TinyTableHeader
+HHSize & 0.000 \\
+& (0.001) \\
+HHH\_Sex & -0.039*** \\
+& (0.011) \\
+HHH\_Age & 0.000 \\
+& (0.000) \\
+earners & -0.003 \\
+& (0.002) \\
+R2 & 0.018 \\
+RMSE & 0.17 \\
+AIC & -1299.6 \\
+BIC & -1261.0 \\
+\bottomrule
+\end{talltblr}
+\end{table} 
